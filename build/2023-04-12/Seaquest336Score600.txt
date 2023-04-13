@@ -1,0 +1,22 @@
+Number of Species: 17
+compat_thresh: 3
+Generation 150: overall_average = 5.3072
+orig fitness of Species167(Size 32): 420 last improved 15
+orig fitness of Species196(Size 2): 420 last improved 1
+orig fitness of Species197(Size 27): 420 last improved 0
+orig fitness of Species176(Size 15): 340 last improved 7
+orig fitness of Species194(Size 5): 340 last improved 2
+orig fitness of Species182(Size 6): 320 last improved 9
+orig fitness of Species184(Size 9): 300 last improved 5
+orig fitness of Species165(Size 10): 260 last improved 13
+orig fitness of Species185(Size 4): 180 last improved 7
+orig fitness of Species168(Size 1): 140 last improved 15
+orig fitness of Species193(Size 6): 140 last improved 1
+orig fitness of Species199(Size 1): 140 last improved 0
+orig fitness of Species171(Size 9): 80 last improved 10
+orig fitness of Species179(Size 10): 80 last improved 6
+orig fitness of Species180(Size 5): 80 last improved 11
+orig fitness of Species190(Size 6): 80 last improved 5
+orig fitness of Species189(Size 2): 0 last improved 3
+19 generations since last population fitness record: 600
+Elapsed time: 25858

@@ -20,7 +20,4 @@ orig fitness of Species157(Size 7): 350 last improved 3
 orig fitness of Species160(Size 8): 285 last improved 1
 orig fitness of Species161(Size 7): 285 last improved 1
 11 generations since last population fitness record: 1015
-Elapsed time: 11547
-
-1: Play
-Agent score: 285 time: 2903
+Elapsed time: 12146
