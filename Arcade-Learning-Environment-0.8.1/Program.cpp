@@ -17,6 +17,7 @@ void Program::Config()
 	string temp;
 	ifstream iFile("CONFIG", ios::in);
 	iFile >> temp >> ALE_RANDOM_SEED;
+	iFile >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
 	iFile >> temp >> FACTOR_DOWNSCALED_X;
 	iFile >> temp >> FACTOR_DOWNSCALED_Y;
 	iFile >> temp >> FACTOR_DOWNSCALED_MULTIPLE;
@@ -34,12 +35,14 @@ void Program::Config()
 
 	// ALE
 	mALE.setInt("random_seed", ALE_RANDOM_SEED);
+	mALE.setFloat("repeat_action_probability", ALE_REPEAT_ACTION_PROBABILITY);
 }
 
 void Program::Info() const
 {
 	cout << "ALE NEAT made by David Erikssen\n";
 	cout << "ALE_RANDOM_SEED = " << ALE_RANDOM_SEED << "\n";
+	cout << "ALE_REPEAT_ACTION_PROBABILITY = " << ALE_REPEAT_ACTION_PROBABILITY << "\n";
 	cout << "FACTOR_DOWNSCALED_X = " << FACTOR_DOWNSCALED_X << "\n";
 	cout << "FACTOR_DOWNSCALED_Y = " << FACTOR_DOWNSCALED_Y << "\n";
 	cout << "FACTOR_DOWNSCALED_MULTIPLE = " << FACTOR_DOWNSCALED_MULTIPLE << "\n";
@@ -80,12 +83,32 @@ void Program::LoadRom()
 	mIsRomLoaded = true;
 }
 
-void Program::Play()
+void Program::LogStart(ofstream &log)
+{
+	string s;
+	ifstream iFile;
+
+	s = "CONFIG";
+	log << s << "\n";
+	iFile.open(s, ios::in);
+	while (getline(iFile, s)) { log << s << "\n"; }
+	iFile.close();
+	log << "\n";
+
+	s = "NEAT.ne";
+	log << s << "\n";
+	iFile.open(s, ios::in);
+	while (getline(iFile, s)) { log << s << "\n"; }
+	iFile.close();
+	log << "\nLOG\n";
+}
+
+void Program::Play(size_t games, bool SDL)
 {
 	// ALE
 	cout << "\nALE\n";
-	mALE.setBool("display_screen", true);
-	mALE.setBool("sound", true);
+	mALE.setBool("display_screen", SDL);
+	mALE.setBool("sound", SDL);
 	while (!mIsRomLoaded) { LoadRom(); }
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
@@ -104,35 +127,39 @@ void Program::Play()
 		return;
 	}
 
-	mALE.reset_game();
-	ale::reward_t totalReward = 0;
-	while (!mALE.game_over() && mALE.getEpisodeFrameNumber() < MAXIMUM_NUMBER_OF_FRAMES)
+	for (size_t i = 1; i <= games; i++)
 	{
-		// Get grayscale screen and downsample
-		vector<unsigned char> grayscale_output_buffer;
-		mALE.getScreenGrayscale(grayscale_output_buffer);
-		vector<float> input = ProcessInput(grayscale_output_buffer);
-
-		// Input sensor data and read output
-		network->load_sensors(input);
-		network->activate();
-
-		size_t highestActivationIndex = 0;
-		double highestActivationValue = -DBL_MAX;
-		for (size_t j = 0; j < network->outputs.size(); j++)
+		mALE.reset_game();
+		ale::reward_t totalReward = 0;
+		while (!mALE.game_over() && mALE.getEpisodeFrameNumber() < MAXIMUM_NUMBER_OF_FRAMES)
 		{
-			double activation = network->outputs[j]->activation;
-			if (highestActivationValue < activation)
-			{
-				highestActivationIndex = j;
-				highestActivationValue = activation;
-			}
-		}
+			// Get grayscale screen and downsample
+			vector<unsigned char> grayscale_output_buffer;
+			mALE.getScreenGrayscale(grayscale_output_buffer);
+			vector<float> input = ProcessInput(grayscale_output_buffer);
 
-		ale::Action action = legal_actions[highestActivationIndex];
-		totalReward += mALE.act(action);
+			// Input sensor data and read output
+			network->load_sensors(input);
+			network->activate();
+
+			size_t highestActivationIndex = 0;
+			double highestActivationValue = -DBL_MAX;
+			for (size_t j = 0; j < network->outputs.size(); j++)
+			{
+				double activation = network->outputs[j]->activation;
+				if (highestActivationValue < activation)
+				{
+					highestActivationIndex = j;
+					highestActivationValue = activation;
+				}
+			}
+
+			ale::Action action = legal_actions[highestActivationIndex];
+			totalReward += mALE.act(action);
+		}
+		cout << "Game " << i << " score: " << totalReward << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 	}
-	cout << "Agent score: " << totalReward << " time: " << mALE.getEpisodeFrameNumber() << "\n\n";
+	cout << "\n";
 }
 
 vector<float> Program::ProcessInput(const vector<unsigned char> &input) const
@@ -180,25 +207,27 @@ void Program::Run()
 	Info();
 	while (true)
 	{
-		cout << "1: Play" << endl;
-		cout << "2: Train" << endl;
-		cout << "3: LoadAgent" << endl;
-		cout << "4: LoadRom" << endl;
-		cout << "5: LoadConfig" << endl;
-		cout << "6: Info" << endl;
-		cout << "Any other character to quit" << endl;
+		cout << "1: Play\n";
+		cout << "2: Train\n";
+		cout << "3: LoadAgent\n";
+		cout << "4: LoadRom\n";
+		cout << "5: LoadConfig\n";
+		cout << "6: Info\n";
+		cout << "7: Play100\n";
+		cout << "Any other character to quit\n";
 
 		char answer = _getch();
-		cout << endl;
+		cout << "\n";
 
 		switch (answer)
 		{
-		case '1': Play(); break;
+		case '1': Play(1, true); break;
 		case '2': Train(); break;
 		case '3': LoadAgent(); break;
 		case '4': LoadRom(); break;
 		case '5': Config(); break;
 		case '6': Info(); break;
+		case '7': Play(100, false); break;
 		default: return;
 		}
 	}
@@ -227,6 +256,10 @@ void Program::Train()
 	string filename;
 	getline(cin, filename);
 
+	// Log file open
+	ofstream logfile(filename + ".txt", ofstream::out);
+	LogStart(logfile);
+
 	if (mAgent != NULL) { delete mAgent; }
 	mAgent = NULL;
 	double agentFitness = -DBL_MAX;
@@ -238,6 +271,7 @@ void Program::Train()
 
 		Organism *champion = NULL;
 		double championFitness = -DBL_MAX;
+		double generationFitness = 0;
 
 		for (vector<Organism*>::iterator i = population.organisms.begin(); i != population.organisms.end(); ++i)
 		{
@@ -273,7 +307,8 @@ void Program::Train()
 				totalReward += mALE.act(action);
 			}
 			organism->fitness = (double)totalReward;
-			cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
+			generationFitness += (double)totalReward;
+			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 
 			if (championFitness < organism->fitness)
 			{
@@ -290,15 +325,25 @@ void Program::Train()
 			agentFitness = championFitness;
 		}
 
-		//Create the next generation
+		// Log output
+		logfile << "Generation " << generation << " species[" << population.species.size() << "]: fitness average " << generationFitness / (double)NEAT::pop_size << " max " << championFitness << "\n";
+
+		// Create the next generation
 		population.epoch((int)generation);
 	}
-	cout << "Elapsed time: " << time(NULL) - start << "\n\n";
+	cout << "Elapsed time: " << time(NULL) - start << "\n";
 
 	// Write agent to file
 	if (mAgent != NULL)
 	{
 		ofstream ofs(filename, ofstream::out);
 		mAgent->gnome->print_to_file(ofs);
+		ofs.close();
+		cout << "Agent saved to file: " << filename << "\n";
 	}
+
+	// Log file close
+	logfile.close();
+
+	cout << "\n";
 }

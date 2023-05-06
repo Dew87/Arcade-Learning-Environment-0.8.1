@@ -2,7 +2,7 @@
 #define PROGRAM_HPP
 
 #include <ale_interface.hpp>
-#include "population.h"
+#include "NEAT/population.h"
 
 class Program
 {
@@ -16,12 +16,15 @@ private:
 	void Info() const;
 	void LoadAgent();
 	void LoadRom();
-	void Play();
+	void LogStart(std::ofstream &log);
+	void Play(size_t games, bool SDL);
 	std::vector<float> ProcessInput(const std::vector<unsigned char> &input) const;
+	void Test();
 	void Train();
 
 	// CONFIG
 	unsigned int ALE_RANDOM_SEED;
+	float ALE_REPEAT_ACTION_PROBABILITY;
 	unsigned int FACTOR_DOWNSCALED_X;
 	unsigned int FACTOR_DOWNSCALED_Y;
 	unsigned int FACTOR_DOWNSCALED_MULTIPLE;

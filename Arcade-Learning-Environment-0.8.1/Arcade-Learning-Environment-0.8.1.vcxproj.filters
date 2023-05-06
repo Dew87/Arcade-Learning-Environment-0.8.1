@@ -561,41 +561,41 @@
     <ClCompile Include="games\supported\Zaxxon.cpp">
       <Filter>Source Files\games\supported</Filter>
     </ClCompile>
-    <ClCompile Include="gene.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="genome.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="innovation.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="link.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="neat.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="network.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="nnode.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="organism.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="population.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="species.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
-    <ClCompile Include="trait.cpp">
-      <Filter>Source Files\NEAT</Filter>
-    </ClCompile>
     <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\gene.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\genome.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\innovation.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\link.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\neat.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\network.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\nnode.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\organism.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\population.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\species.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
+    <ClCompile Include="NEAT\trait.cpp">
+      <Filter>Source Files\NEAT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1127,41 +1127,41 @@
     <ClInclude Include="games\supported\Zaxxon.hpp">
       <Filter>Header Files\games\supported</Filter>
     </ClInclude>
-    <ClInclude Include="gene.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="genome.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="innovation.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="link.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="neat.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="network.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="nnode.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="organism.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="population.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="species.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
-    <ClInclude Include="trait.h">
-      <Filter>Header Files\NEAT</Filter>
-    </ClInclude>
     <ClInclude Include="Program.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\gene.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\genome.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\innovation.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\link.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\neat.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\network.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\nnode.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\organism.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\population.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\species.h">
+      <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="NEAT\trait.h">
+      <Filter>Header Files\NEAT</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
