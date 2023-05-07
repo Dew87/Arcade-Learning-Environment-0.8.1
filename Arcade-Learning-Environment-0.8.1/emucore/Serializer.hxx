@@ -21,83 +21,87 @@
 
 #include <sstream>
 
-namespace ale {
-namespace stella {
-
-/**
-  This class implements a Serializer device, whereby data is
-  serialized and sent to an output binary file in a system-
-  independent way.
-
-  All bytes and integers are written as int's.  Strings are
-  written as characters prepended by the length of the string.
-  Boolean values are written using a special pattern.
-
-  @author  Stephen Anthony
-  @version $Id: Serializer.hxx,v 1.12 2007/01/01 18:04:49 stephena Exp $
-
-  Revised for ALE on Sep 20, 2009
-  The new version uses a stringstream (not a file stream)
-*/
-class Serializer
+namespace ale
 {
-  public:
-    /**
-      Creates a new Serializer device.
+    namespace stella
+    {
 
-    */
-    Serializer(void);
+        /**
+          This class implements a Serializer device, whereby data is
+          serialized and sent to an output binary file in a system-
+          independent way.
 
-    /**
-      Destructor
-    */
-    virtual ~Serializer(void);
+          All bytes and integers are written as int's.  Strings are
+          written as characters prepended by the length of the string.
+          Boolean values are written using a special pattern.
+
+          @author  Stephen Anthony
+          @version $Id: Serializer.hxx,v 1.12 2007/01/01 18:04:49 stephena Exp $
+
+          Revised for ALE on Sep 20, 2009
+          The new version uses a stringstream (not a file stream)
+        */
+        class Serializer
+        {
+        public:
+            /**
+              Creates a new Serializer device.
+
+            */
+            Serializer(void);
+
+            /**
+              Destructor
+            */
+            virtual ~Serializer(void);
 
 
-    /**
-      Closes the current output stream.
-    */
-    void close(void);
+            /**
+              Closes the current output stream.
+            */
+            void close(void);
 
-    bool isOpen(void) {return true;}
+            bool isOpen(void) { return true; }
 
-    /**
-      Writes an int value to the current output stream.
+            /**
+              Writes an int value to the current output stream.
 
-      @param value The int value to write to the output stream.
-    */
-    void putInt(int value);
+              @param value The int value to write to the output stream.
+            */
+            void putInt(int value);
 
-    /**
-      Writes a string to the current output stream.
+            /**
+              Writes a string to the current output stream.
 
-      @param str The string to write to the output stream.
-    */
-    void putString(const std::string& str);
+              @param str The string to write to the output stream.
+            */
+            void putString(const std::string& str);
 
-    /**
-      Writes a boolean value to the current output stream.
+            /**
+              Writes a boolean value to the current output stream.
 
-      @param b The boolean value to write to the output stream.
-    */
-    void putBool(bool b);
+              @param b The boolean value to write to the output stream.
+            */
+            void putBool(bool b);
 
-    // Accessor for myStream
-    // TODO: don't copy the whole streams.
-    std::string get_str(void) const {
-        return myStream.str();
-    }
-  private:
-    // The stream to send the serialized data to.
-    std::stringstream myStream;
+            // Accessor for myStream
+            // TODO: don't copy the whole streams.
+            std::string get_str(void) const
+            {
+                return myStream.str();
+            }
+        private:
+            // The stream to send the serialized data to.
+            std::stringstream myStream;
 
-    enum {
-      TruePattern  = 0xfab1fab2,
-      FalsePattern = 0xbad1bad2
-    };
-};
+            enum
+            {
+                TruePattern = 0xfab1fab2,
+                FalsePattern = 0xbad1bad2
+            };
+        };
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #endif

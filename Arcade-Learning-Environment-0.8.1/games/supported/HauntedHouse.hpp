@@ -28,48 +28,50 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class HauntedHouseSettings : public RomSettings {
- public:
-  HauntedHouseSettings();
+    class HauntedHouseSettings : public RomSettings
+    {
+    public:
+        HauntedHouseSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "haunted_house"; }
+        const char* rom() const override { return "haunted_house"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "f0a6e99f5875891246c3dbecbf2d2cea"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "f0a6e99f5875891246c3dbecbf2d2cea"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  int lives() override { return isTerminal() ? 0 : m_lives; }
+        int lives() override { return isTerminal() ? 0 : m_lives; }
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t m, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+        DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_matches;
-  int m_lives;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_matches;
+        int m_lives;
+    };
 
 }  // namespace ale
 

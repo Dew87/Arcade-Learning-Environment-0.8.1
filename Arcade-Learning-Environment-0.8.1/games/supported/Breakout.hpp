@@ -30,69 +30,71 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-/* RL wrapper for Breakout */
-class BreakoutSettings : public RomSettings {
- public:
-  BreakoutSettings();
+    /* RL wrapper for Breakout */
+    class BreakoutSettings : public RomSettings
+    {
+    public:
+        BreakoutSettings();
 
-  // reset
-  void reset() override;
+        // reset
+        void reset() override;
 
-  // is end of game
-  bool isTerminal() const override;
+        // is end of game
+        bool isTerminal() const override;
 
-  // get the most recently observed reward
-  reward_t getReward() const override;
+        // get the most recently observed reward
+        reward_t getReward() const override;
 
-  // the rom-name
-  const char* rom() const override { return "breakout"; }
+        // the rom-name
+        const char* rom() const override { return "breakout"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "f34f08e5eb96e500e851a80be3277a56"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "f34f08e5eb96e500e851a80be3277a56"; }
 
-  // get the available number of modes
-  unsigned int getNumModes() const { return 12; }
+        // get the available number of modes
+        unsigned int getNumModes() const { return 12; }
 
-  // create a new instance of the rom
-  RomSettings* clone() const override;
+        // create a new instance of the rom
+        RomSettings* clone() const override;
 
-  // is an action part of the minimal set?
-  bool isMinimal(const Action& a) const override;
+        // is an action part of the minimal set?
+        bool isMinimal(const Action& a) const override;
 
-  // process the latest information from ALE
-  void step(const stella::System& system) override;
+        // process the latest information from ALE
+        void step(const stella::System& system) override;
 
-  // saves the state of the rom settings
-  void saveState(stella::Serializer& ser) override;
+        // saves the state of the rom settings
+        void saveState(stella::Serializer& ser) override;
 
-  // loads the state of the rom settings
-  void loadState(stella::Deserializer& ser) override;
+        // loads the state of the rom settings
+        void loadState(stella::Deserializer& ser) override;
 
-  // remaining lives
-  int lives() override { return isTerminal() ? 0 : m_lives; }
+        // remaining lives
+        int lives() override { return isTerminal() ? 0 : m_lives; }
 
-  // returns a list of mode that the game can be played in
-  // in this game, there are 8 available modes
-  ModeVect getAvailableModes() override;
+        // returns a list of mode that the game can be played in
+        // in this game, there are 8 available modes
+        ModeVect getAvailableModes() override;
 
-  // set the mode of the game
-  // the given mode must be one returned by the previous function
-  void setMode(game_mode_t, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        // set the mode of the game
+        // the given mode must be one returned by the previous function
+        void setMode(game_mode_t, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  // returns a list of difficulties that the game can be played in
-  // in this game, there are 2 available difficulties
-  DifficultyVect getAvailableDifficulties() override;
+        // returns a list of difficulties that the game can be played in
+        // in this game, there are 2 available difficulties
+        DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  bool m_started;
-  reward_t m_reward;
-  reward_t m_score;
-  int m_lives;
-};
+    private:
+        bool m_terminal;
+        bool m_started;
+        reward_t m_reward;
+        reward_t m_score;
+        int m_lives;
+    };
 
 }  // namespace ale
 

@@ -19,148 +19,152 @@
 #ifndef CARTRIDGECV_HXX
 #define CARTRIDGECV_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Cart.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  Cartridge class used for Commavid's extra-RAM games.
-
-  $F000-$F3FF read from RAM
-  $F400-$F7FF write to RAM
-  $F800-$FFFF ROM
-
-  @author  Eckhard Stolberg
-  @version $Id: CartCV.hxx,v 1.9 2007/01/14 16:17:53 stephena Exp $
-*/
-class CartridgeCV : public Cartridge
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge using the specified image
+    namespace stella
+    {
 
-      @param image Pointer to the ROM image
-    */
-    CartridgeCV(const uint8_t* image, uint32_t size);
+        /**
+          Cartridge class used for Commavid's extra-RAM games.
 
-    /**
-      Destructor
-    */
-    virtual ~CartridgeCV();
+          $F000-$F3FF read from RAM
+          $F400-$F7FF write to RAM
+          $F800-$FFFF ROM
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+          @author  Eckhard Stolberg
+          @version $Id: CartCV.hxx,v 1.9 2007/01/14 16:17:53 stephena Exp $
+        */
+        class CartridgeCV : public Cartridge
+        {
+        public:
+            /**
+              Create a new cartridge using the specified image
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+              @param image Pointer to the ROM image
+            */
+            CartridgeCV(const uint8_t* image, uint32_t size);
 
-    /**
-      Reset cartridge to its power-on state
-    */
-    virtual void reset();
+            /**
+              Destructor
+            */
+            virtual ~CartridgeCV();
 
-    /**
-      Install cartridge in the specified system.  Invoked by the system
-      when the cartridge is attached to it.
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Reset cartridge to its power-on state
+            */
+            virtual void reset();
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+            /**
+              Install cartridge in the specified system.  Invoked by the system
+              when the cartridge is attached to it.
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+            /**
+              Saves the current state of this device to the given Serializer.
 
-    /**
-      Install pages for the specified bank in the system.
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-      @param bank The bank that should be installed in the system
-    */
-    virtual void bank(uint16_t bank);
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-    /**
-      Get the current bank.
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank();
+            /**
+              Install pages for the specified bank in the system.
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount();
+              @param bank The bank that should be installed in the system
+            */
+            virtual void bank(uint16_t bank);
 
-    /**
-      Patch the cartridge ROM.
+            /**
+              Get the current bank.
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value);
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank();
 
-    /**
-      Access the internal ROM image for this cartridge.
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount();
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size);
+            /**
+              Patch the cartridge ROM.
 
-  public:
-    /**
-      Get the byte at the specified address
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value);
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+            /**
+              Access the internal ROM image for this cartridge.
 
-    /**
-      Change the byte at the specified address to the given value
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size);
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+        public:
+            /**
+              Get the byte at the specified address
 
-  private:
-    // The 2k ROM image for the cartridge
-    uint8_t myImage[2048];
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
 
-    // The 1024 bytes of RAM
-    uint8_t myRAM[1024];
+            /**
+              Change the byte at the specified address to the given value
 
-    // Pointer to the initial RAM data from the cart
-    // This doesn't always exist, so we don't pre-allocate it
-    uint8_t* myInitialRAM;
-};
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
 
-}  // namespace stella
+        private:
+            // The 2k ROM image for the cartridge
+            uint8_t myImage[2048];
+
+            // The 1024 bytes of RAM
+            uint8_t myRAM[1024];
+
+            // Pointer to the initial RAM data from the cart
+            // This doesn't always exist, so we don't pre-allocate it
+            uint8_t* myInitialRAM;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

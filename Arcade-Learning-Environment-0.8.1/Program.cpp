@@ -15,17 +15,17 @@ void Program::Config()
 {
 	// CONFIG load
 	string temp;
-	ifstream iFile("CONFIG", ios::in);
-	iFile >> temp >> ALE_RANDOM_SEED;
-	iFile >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
-	iFile >> temp >> FACTOR_DOWNSCALED_X;
-	iFile >> temp >> FACTOR_DOWNSCALED_Y;
-	iFile >> temp >> FACTOR_DOWNSCALED_MULTIPLE;
-	iFile >> temp >> GENERATIONS;
-	iFile >> temp >> MAXIMUM_NUMBER_OF_FRAMES;
-	iFile >> temp >> PIXELS_X;
-	iFile >> temp >> PIXELS_Y;
-	iFile.close();
+	ifstream ifs("CONFIG", ios::in);
+	ifs >> temp >> ALE_RANDOM_SEED;
+	ifs >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
+	ifs >> temp >> FACTOR_DOWNSCALED_X;
+	ifs >> temp >> FACTOR_DOWNSCALED_Y;
+	ifs >> temp >> FACTOR_DOWNSCALED_MULTIPLE;
+	ifs >> temp >> GENERATIONS;
+	ifs >> temp >> MAXIMUM_NUMBER_OF_FRAMES;
+	ifs >> temp >> PIXELS_X;
+	ifs >> temp >> PIXELS_Y;
+	ifs.close();
 
 	// Calculations
 	PIXELS_DOWNSCALED_X = PIXELS_X / FACTOR_DOWNSCALED_X;
@@ -64,11 +64,11 @@ void Program::LoadAgent()
 
 	// Read from file
 	int id;
-	ifstream iFile(str, ios::in);
-	iFile >> str >> id;
+	ifstream ifs(str, ios::in);
+	ifs >> str >> id;
 	cout << "Reading in Genome id " << id << endl;
-	Genome *genome = new Genome(id, iFile);
-	iFile.close();
+	Genome *genome = new Genome(id, ifs);
+	ifs.close();
 
 	if (mAgent != NULL) { delete mAgent; }
 	mAgent = new Organism(0.0, genome, 1);
@@ -85,21 +85,21 @@ void Program::LoadRom()
 
 void Program::LogStart(ofstream &log)
 {
-	string s;
-	ifstream iFile;
+	string line;
+	ifstream ifs;
 
-	s = "CONFIG";
-	log << s << "\n";
-	iFile.open(s, ios::in);
-	while (getline(iFile, s)) { log << s << "\n"; }
-	iFile.close();
+	line = "CONFIG";
+	log << line << "\n";
+	ifs.open(line);
+	while (getline(ifs, line)) { log << line << "\n"; }
+	ifs.close();
 	log << "\n";
 
-	s = "NEAT.ne";
-	log << s << "\n";
-	iFile.open(s, ios::in);
-	while (getline(iFile, s)) { log << s << "\n"; }
-	iFile.close();
+	line = "NEAT.ne";
+	log << line << "\n";
+	ifs.open(line);
+	while (getline(ifs, line)) { log << line << "\n"; }
+	ifs.close();
 	log << "\nLOG\n";
 }
 
@@ -257,8 +257,8 @@ void Program::Train()
 	getline(cin, filename);
 
 	// Log file open
-	ofstream logfile(filename + ".txt", ofstream::out);
-	LogStart(logfile);
+	ofstream log(filename + ".txt", ofstream::app);
+	LogStart(log);
 
 	if (mAgent != NULL) { delete mAgent; }
 	mAgent = NULL;
@@ -326,7 +326,7 @@ void Program::Train()
 		}
 
 		// Log output
-		logfile << "Generation " << generation << " species[" << population.species.size() << "]: fitness average " << generationFitness / (double)NEAT::pop_size << " max " << championFitness << "\n";
+		log << "Generation " << generation << " species[" << population.species.size() << "]: fitness average " << generationFitness / (double)NEAT::pop_size << " max " << championFitness << "\n";
 
 		// Create the next generation
 		population.epoch((int)generation);
@@ -336,14 +336,14 @@ void Program::Train()
 	// Write agent to file
 	if (mAgent != NULL)
 	{
-		ofstream ofs(filename, ofstream::out);
+		ofstream ofs(filename, ofstream::app);
 		mAgent->gnome->print_to_file(ofs);
 		ofs.close();
 		cout << "Agent saved to file: " << filename << "\n";
 	}
 
 	// Log file close
-	logfile.close();
+	log.close();
 
 	cout << "\n";
 }

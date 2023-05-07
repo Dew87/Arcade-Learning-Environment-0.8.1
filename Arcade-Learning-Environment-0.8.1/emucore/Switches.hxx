@@ -19,53 +19,55 @@
 #ifndef SWITCHES_HXX
 #define SWITCHES_HXX
 
-namespace ale {
-namespace stella {
-
-class Event;
-class Properties;
-class Switches;
-
-
-/**
-  This class represents the console switches of the game console.
-
-  @author  Bradford W. Mott
-  @version $Id: Switches.hxx,v 1.4 2007/01/01 18:04:50 stephena Exp $
-*/
-class Switches
+namespace ale
 {
-  public:
-    /**
-      Create a new set of switches using the specified events and
-      properties
+    namespace stella
+    {
 
-      @param event The event object to use for events
-    */
-    Switches(const Event& event, const Properties& properties);
+        class Event;
+        class Properties;
+        class Switches;
 
-    /**
-      Destructor
-    */
-    virtual ~Switches();
 
-  public:
-    /**
-      Get the value of the console switches
+        /**
+          This class represents the console switches of the game console.
 
-      @return The 8 bits which represent the state of the console switches
-    */
-    uint8_t read();
+          @author  Bradford W. Mott
+          @version $Id: Switches.hxx,v 1.4 2007/01/01 18:04:50 stephena Exp $
+        */
+        class Switches
+        {
+        public:
+            /**
+              Create a new set of switches using the specified events and
+              properties
 
-  private:
-    // Reference to the event object to use
-    const Event& myEvent;
+              @param event The event object to use for events
+            */
+            Switches(const Event& event, const Properties& properties);
 
-    // State of the console switches
-    uint8_t mySwitches;
-};
+            /**
+              Destructor
+            */
+            virtual ~Switches();
 
-}  // namespace stella
+        public:
+            /**
+              Get the value of the console switches
+
+              @return The 8 bits which represent the state of the console switches
+            */
+            uint8_t read();
+
+        private:
+            // Reference to the event object to use
+            const Event& myEvent;
+
+            // State of the console switches
+            uint8_t mySwitches;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

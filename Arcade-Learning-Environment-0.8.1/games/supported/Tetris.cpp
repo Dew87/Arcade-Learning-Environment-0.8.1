@@ -29,84 +29,97 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-TetrisSettings::TetrisSettings() { reset(); }
+    TetrisSettings::TetrisSettings() { reset(); }
 
-/* create a new instance of the rom */
-RomSettings* TetrisSettings::clone() const {
-  return new TetrisSettings(*this);
-}
+    /* create a new instance of the rom */
+    RomSettings* TetrisSettings::clone() const
+    {
+        return new TetrisSettings(*this);
+    }
 
-/* process the latest information from ALE */
-void TetrisSettings::step(const System& system) {
-  // update the reward
-  reward_t score = getDecimalScore(0x71, 0x72, &system);
-  if (score > m_score) {
-    m_reward = score - m_score;
-  } else {
-    m_reward = 0;
-  }
-  m_score = score;
+    /* process the latest information from ALE */
+    void TetrisSettings::step(const System& system)
+    {
+        // update the reward
+        reward_t score = getDecimalScore(0x71, 0x72, &system);
+        if (score > m_score)
+        {
+            m_reward = score - m_score;
+        }
+        else
+        {
+            m_reward = 0;
+        }
+        m_score = score;
 
-  if (!m_started) {
-    m_started = true;
-  }
+        if (!m_started)
+        {
+            m_started = true;
+        }
 
-  int byte_val = readRam(&system, 0x73);
-  m_terminal = m_started && (byte_val & 0x80);
-  if (m_terminal) {
-    m_score = 0;
-    m_started = false;
-  }
-}
+        int byte_val = readRam(&system, 0x73);
+        m_terminal = m_started && (byte_val & 0x80);
+        if (m_terminal)
+        {
+            m_score = 0;
+            m_started = false;
+        }
+    }
 
-/* is end of game */
-bool TetrisSettings::isTerminal() const { return m_terminal; };
+    /* is end of game */
+    bool TetrisSettings::isTerminal() const { return m_terminal; };
 
-/* get the most recently observed reward */
-reward_t TetrisSettings::getReward() const { return m_reward; }
+    /* get the most recently observed reward */
+    reward_t TetrisSettings::getReward() const { return m_reward; }
 
-/* is an action part of the minimal set? */
-bool TetrisSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-      return true;
-    default:
-      return false;
-  }
-}
+    /* is an action part of the minimal set? */
+    bool TetrisSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-/* reset the state of the game */
-void TetrisSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_lives = 0;
-  m_terminal = false;
-  m_started = false;
-}
+    /* reset the state of the game */
+    void TetrisSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_lives = 0;
+        m_terminal = false;
+        m_started = false;
+    }
 
-/* saves the state of the rom settings */
-void TetrisSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-  ser.putBool(m_started);
-  ser.putInt(m_lives);
-}
+    /* saves the state of the rom settings */
+    void TetrisSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+        ser.putBool(m_started);
+        ser.putInt(m_lives);
+    }
 
-// loads the state of the rom settings
-void TetrisSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-  m_started = ser.getBool();
-  m_lives = ser.getInt();
-}
+    // loads the state of the rom settings
+    void TetrisSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+        m_started = ser.getBool();
+        m_lives = ser.getInt();
+    }
 
 }  // namespace ale

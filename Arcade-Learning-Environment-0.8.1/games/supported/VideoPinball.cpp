@@ -29,111 +29,126 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-VideoPinballSettings::VideoPinballSettings() { reset(); }
+    VideoPinballSettings::VideoPinballSettings() { reset(); }
 
-/* create a new instance of the rom */
-RomSettings* VideoPinballSettings::clone() const {
-  return new VideoPinballSettings(*this);
-}
-
-/* process the latest information from ALE */
-void VideoPinballSettings::step(const System& system) {
-  // update the reward
-  int score = getDecimalScore(0xB0, 0xB2, 0xB4, &system);
-  int reward = score - m_score;
-  m_reward = reward;
-  m_score = score;
-
-  // update terminal status
-  int flag = readRam(&system, 0xAF) & 0x1;
-  m_terminal = flag != 0;
-
-  // The lives in video pinball are displayed as ball number; so #1 == 3 lives
-  int lives_byte = readRam(&system, 0x99) & 0x7;
-  // And of course, we keep the 'extra ball' counter in a different memory location
-  int extra_ball = readRam(&system, 0xA8) & 0x1;
-
-  m_lives = 4 + extra_ball - lives_byte;
-}
-
-/* is end of game */
-bool VideoPinballSettings::isTerminal() const { return m_terminal; };
-
-/* get the most recently observed reward */
-reward_t VideoPinballSettings::getReward() const { return m_reward; }
-
-/* is an action part of the minimal set? */
-bool VideoPinballSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
-
-/* reset the state of the game */
-void VideoPinballSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_terminal = false;
-  m_lives = 3;
-}
-
-/* saves the state of the rom settings */
-void VideoPinballSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-  ser.putInt(m_lives);
-}
-
-// loads the state of the rom settings
-void VideoPinballSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-  m_lives = ser.getInt();
-}
-
-// returns a list of mode that the game can be played in
-ModeVect VideoPinballSettings::getAvailableModes() {
-  return {0, 2};
-}
-
-// set the mode of the game
-// the given mode must be one returned by the previous function
-void VideoPinballSettings::setMode(
-    game_mode_t m, System& system,
-    std::unique_ptr<StellaEnvironmentWrapper> environment) {
-  if (m == 0 || m == 2) {
-    // read the mode we are currently in
-    unsigned char mode = readRam(&system, 0xC1);
-    // press select until the correct mode is reached
-    while (mode != m) {
-      environment->pressSelect(2);
-      mode = readRam(&system, 0xC1);
+    /* create a new instance of the rom */
+    RomSettings* VideoPinballSettings::clone() const
+    {
+        return new VideoPinballSettings(*this);
     }
-    //reset the environment to apply changes.
-    environment->softReset();
-  } else {
-    throw std::runtime_error("This mode doesn't currently exist for this game");
-  }
-}
 
-DifficultyVect VideoPinballSettings::getAvailableDifficulties() {
-  return {0, 1};
-}
+    /* process the latest information from ALE */
+    void VideoPinballSettings::step(const System& system)
+    {
+        // update the reward
+        int score = getDecimalScore(0xB0, 0xB2, 0xB4, &system);
+        int reward = score - m_score;
+        m_reward = reward;
+        m_score = score;
+
+        // update terminal status
+        int flag = readRam(&system, 0xAF) & 0x1;
+        m_terminal = flag != 0;
+
+        // The lives in video pinball are displayed as ball number; so #1 == 3 lives
+        int lives_byte = readRam(&system, 0x99) & 0x7;
+        // And of course, we keep the 'extra ball' counter in a different memory location
+        int extra_ball = readRam(&system, 0xA8) & 0x1;
+
+        m_lives = 4 + extra_ball - lives_byte;
+    }
+
+    /* is end of game */
+    bool VideoPinballSettings::isTerminal() const { return m_terminal; };
+
+    /* get the most recently observed reward */
+    reward_t VideoPinballSettings::getReward() const { return m_reward; }
+
+    /* is an action part of the minimal set? */
+    bool VideoPinballSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    /* reset the state of the game */
+    void VideoPinballSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_terminal = false;
+        m_lives = 3;
+    }
+
+    /* saves the state of the rom settings */
+    void VideoPinballSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+        ser.putInt(m_lives);
+    }
+
+    // loads the state of the rom settings
+    void VideoPinballSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+        m_lives = ser.getInt();
+    }
+
+    // returns a list of mode that the game can be played in
+    ModeVect VideoPinballSettings::getAvailableModes()
+    {
+        return { 0, 2 };
+    }
+
+    // set the mode of the game
+    // the given mode must be one returned by the previous function
+    void VideoPinballSettings::setMode(
+        game_mode_t m, System& system,
+        std::unique_ptr<StellaEnvironmentWrapper> environment)
+    {
+        if (m == 0 || m == 2)
+        {
+            // read the mode we are currently in
+            unsigned char mode = readRam(&system, 0xC1);
+            // press select until the correct mode is reached
+            while (mode != m)
+            {
+                environment->pressSelect(2);
+                mode = readRam(&system, 0xC1);
+            }
+            //reset the environment to apply changes.
+            environment->softReset();
+        }
+        else
+        {
+            throw std::runtime_error("This mode doesn't currently exist for this game");
+        }
+    }
+
+    DifficultyVect VideoPinballSettings::getAvailableDifficulties()
+    {
+        return { 0, 1 };
+    }
 
 }  // namespace ale

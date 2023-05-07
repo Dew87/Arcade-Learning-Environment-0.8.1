@@ -44,93 +44,97 @@
 #include "emucore/Settings.hxx"
 #include "environment/stella_environment_wrapper.hpp"
 
-namespace ale {
+namespace ale
+{
 
-namespace stella{
-class System;
-}
+    namespace stella
+    {
+        class System;
+    }
 
-// rom support interface
-class RomSettings {
- public:
-  RomSettings();
+    // rom support interface
+    class RomSettings
+    {
+    public:
+        RomSettings();
 
-  virtual ~RomSettings() {}
+        virtual ~RomSettings() {}
 
-  // reset
-  virtual void reset() {}
+        // reset
+        virtual void reset() {}
 
-  // This method is called with the collection of settings that will be used to
-  // create the Stella emulator for the environment. Overriders may modify these
-  // settings when this is needed for the correct behavior of the ROM in Stella.
-  virtual void modifyEnvironmentSettings(stella::Settings& settings) {}
+        // This method is called with the collection of settings that will be used to
+        // create the Stella emulator for the environment. Overriders may modify these
+        // settings when this is needed for the correct behavior of the ROM in Stella.
+        virtual void modifyEnvironmentSettings(stella::Settings& settings) {}
 
-  // is end of game
-  virtual bool isTerminal() const = 0;
+        // is end of game
+        virtual bool isTerminal() const = 0;
 
-  // get the most recently observed reward
-  virtual reward_t getReward() const = 0;
+        // get the most recently observed reward
+        virtual reward_t getReward() const = 0;
 
-  // the rom-name
-  virtual const char* rom() const = 0;
+        // the rom-name
+        virtual const char* rom() const = 0;
 
-  // the md5 of the supported ROM version
-  virtual const char* md5() const = 0;
+        // the md5 of the supported ROM version
+        virtual const char* md5() const = 0;
 
-  // create a new instance of the rom
-  virtual RomSettings* clone() const = 0;
+        // create a new instance of the rom
+        virtual RomSettings* clone() const = 0;
 
-  // is an action part of the minimal set?
-  virtual bool isMinimal(const Action& a) const = 0;
+        // is an action part of the minimal set?
+        virtual bool isMinimal(const Action& a) const = 0;
 
-  // process the latest information from ALE
-  virtual void step(const stella::System& system) = 0;
+        // process the latest information from ALE
+        virtual void step(const stella::System& system) = 0;
 
-  // saves the state of the rom settings
-  virtual void saveState(stella::Serializer& ser) = 0;
+        // saves the state of the rom settings
+        virtual void saveState(stella::Serializer& ser) = 0;
 
-  // loads the state of the rom settings
-  virtual void loadState(stella::Deserializer& ser) = 0;
+        // loads the state of the rom settings
+        virtual void loadState(stella::Deserializer& ser) = 0;
 
-  // is an action legal (default: yes)
-  virtual bool isLegal(const Action& a) const;
+        // is an action legal (default: yes)
+        virtual bool isLegal(const Action& a) const;
 
-  // Remaining lives.
-  virtual int lives() {
-    return isTerminal() ? 0 : 1;
-  }
+        // Remaining lives.
+        virtual int lives()
+        {
+            return isTerminal() ? 0 : 1;
+        }
 
-  // Returns a restricted (minimal) set of actions. If not overriden, this is all actions.
-  virtual ActionVect getMinimalActionSet();
+        // Returns a restricted (minimal) set of actions. If not overriden, this is all actions.
+        virtual ActionVect getMinimalActionSet();
 
-  // Returns the set of all legal actions
-  ActionVect getAllActions();
+        // Returns the set of all legal actions
+        ActionVect getAllActions();
 
-  // Returns a list of actions that are required to start the game.
-  // By default this is an empty list.
-  virtual ActionVect getStartingActions();
+        // Returns a list of actions that are required to start the game.
+        // By default this is an empty list.
+        virtual ActionVect getStartingActions();
 
-  // Returns a list of mode that the game can be played in.
-  // By default, there is only one available mode.
-  virtual ModeVect getAvailableModes();
+        // Returns a list of mode that the game can be played in.
+        // By default, there is only one available mode.
+        virtual ModeVect getAvailableModes();
 
-  // Set the mode of the game. The given mode must be
-  // one returned by the previous function.
-  virtual void setMode(
-      game_mode_t, stella::System& system,
-      std::unique_ptr<StellaEnvironmentWrapper> environment);
+        // Set the mode of the game. The given mode must be
+        // one returned by the previous function.
+        virtual void setMode(
+            game_mode_t, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment);
 
-  // Return the default mode for the game.
-  virtual game_mode_t getDefaultMode();
+        // Return the default mode for the game.
+        virtual game_mode_t getDefaultMode();
 
-  // Returns a list of difficulties that the game can be played in.
-  // By default, there is only one available difficulty.
-  virtual DifficultyVect getAvailableDifficulties();
+        // Returns a list of difficulties that the game can be played in.
+        // By default, there is only one available difficulty.
+        virtual DifficultyVect getAvailableDifficulties();
 
- protected:
-  // Helper function that checks if our settings support this given mode.
-  bool isModeSupported(game_mode_t m);
-};
+    protected:
+        // Helper function that checks if our settings support this given mode.
+        bool isModeSupported(game_mode_t m);
+    };
 
 }  // namespace ale
 

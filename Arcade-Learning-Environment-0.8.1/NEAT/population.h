@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,8 @@
 #include "species.h"
 #include "organism.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
 	class Species;
 	class Organism;
@@ -33,23 +34,24 @@ namespace NEAT {
 	//   A Population is a group of Organisms   
 	//   including their species                        
 	// ---------------------------------------------  
-	class Population {
+	class Population
+	{
 
-	protected: 
+	protected:
 
 		// A Population can be spawned off of a single Genome 
 		// There will be size Genomes added to the Population 
 		// The Population does not have to be empty to add Genomes 
-		bool spawn(Genome *g,int size);
+		bool spawn(Genome *g, int size);
 
 	public:
 
-        std::vector<Organism*> organisms; //The organisms in the Population
+		std::vector<Organism*> organisms; //The organisms in the Population
 
-        std::vector<Species*> species;  // Species in the Population. Note that the species should comprise all the genomes 
+		std::vector<Species*> species;  // Species in the Population. Note that the species should comprise all the genomes 
 
 		// ******* Member variables used during reproduction *******
-        std::vector<Innovation*> innovations;  // For holding the genetic innovations of the newest generation
+		std::vector<Innovation*> innovations;  // For holding the genetic innovations of the newest generation
 		int cur_node_id;  //Current label number available
 		double cur_innov_num;
 
@@ -79,7 +81,7 @@ namespace NEAT {
 		// Prints the champions of each species to files starting with directory_prefix
 		// The file name are as follows: [prefix]g[generation_num]cs[species_num]
 		// Thus, they can be indexed by generation or species
-		bool print_species_champs_tofiles(char *directory_prefix,int generation);
+		bool print_species_champs_tofiles(char *directory_prefix, int generation);
 
 		// Run verify on all Genomes in this Population (Debugging)
 		bool verify();
@@ -94,16 +96,16 @@ namespace NEAT {
 		bool rank_within_species();
 
 		// Construct off of a single spawning Genome 
-		Population(Genome *g,int size);
+		Population(Genome *g, int size);
 
 		// Construct off of a single spawning Genome without mutation
-		Population(Genome *g,int size, float power);
-		
+		Population(Genome *g, int size, float power);
+
 		//MSC Addition
 		// Construct off of a vector of genomes with a mutation rate of "power"
 		Population(std::vector<Genome*> genomeList, float power);
 
-		bool clone(Genome *g,int size, float power);
+		bool clone(Genome *g, int size, float power);
 
 		//// Special constructor to create a population of random topologies     
 		//// uses Genome(int i, int o, int n,int nmax, bool r, double linkprob) 
@@ -119,7 +121,7 @@ namespace NEAT {
 		// It does the latter if it sees the species list is empty
 		~Population();
 
-		
+
 
 	};
 

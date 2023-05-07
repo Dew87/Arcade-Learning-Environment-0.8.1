@@ -27,110 +27,125 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-HumanCannonballSettings::HumanCannonballSettings() { reset(); }
+    HumanCannonballSettings::HumanCannonballSettings() { reset(); }
 
-RomSettings* HumanCannonballSettings::clone() const {
-  return new HumanCannonballSettings(*this);
-}
-
-void HumanCannonballSettings::step(const System& system) {
-  int score = getDecimalScore(0xb6, &system);
-  m_reward = score - m_score;
-  m_score = score;
-  // Game terminates either when the player gets 7 points of 7 misses.
-  m_misses = getDecimalScore(0xb7, &system);
-  m_terminal = score == 7 || m_misses == 7;
-}
-
-bool HumanCannonballSettings::isTerminal() const { return m_terminal; }
-
-reward_t HumanCannonballSettings::getReward() const { return m_reward; }
-
-bool HumanCannonballSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPRIGHT:
-    case PLAYER_A_UPLEFT:
-    case PLAYER_A_DOWNRIGHT:
-    case PLAYER_A_DOWNLEFT:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-    case PLAYER_A_DOWNFIRE:
-    case PLAYER_A_UPRIGHTFIRE:
-    case PLAYER_A_UPLEFTFIRE:
-    case PLAYER_A_DOWNRIGHTFIRE:
-    case PLAYER_A_DOWNLEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
-
-void HumanCannonballSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_misses = 0;
-  m_terminal = false;
-}
-
-void HumanCannonballSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putInt(m_misses);
-  ser.putBool(m_terminal);
-}
-
-void HumanCannonballSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_misses = ser.getInt();
-  m_terminal = ser.getBool();
-}
-
-// According to https://atariage.com/manual_html_page.php?SoftwareLabelID=237
-// the left difficulty switch sets the width of the water tower (target).
-DifficultyVect HumanCannonballSettings::getAvailableDifficulties() {
-  return {0, 1};
-}
-
-// According to https://atariage.com/manual_html_page.php?SoftwareLabelID=237
-// there are 8 variations of the game with both a one and two-player version.
-// Game modes alter the cannon control, speed control, cannon angle control,
-// whether the tower (target) is movable and the appearance of a moving window
-// obstacle.
-ModeVect HumanCannonballSettings::getAvailableModes() {
-  return {0, 1, 2, 3, 4, 5, 6, 7};
-}
-
-void HumanCannonballSettings::setMode(
-    game_mode_t m, System& system,
-    std::unique_ptr<StellaEnvironmentWrapper> environment) {
-  if (m < 8) {
-    // Read the mode we are currently in along with number of players.
-    unsigned char mode = readRam(&system, 0xb6) - 1;
-    unsigned char players = readRam(&system, 0xb7);
-
-    // Press select until the correct mode is reached for single player only.
-    while (mode != m || players != 1) {
-      environment->pressSelect(2);
-      mode = readRam(&system, 0xb6) - 1;
-      players = readRam(&system, 0xb7);
+    RomSettings* HumanCannonballSettings::clone() const
+    {
+        return new HumanCannonballSettings(*this);
     }
 
-    // Reset the environment to apply changes.
-    environment->softReset();
-  } else {
-    throw std::runtime_error("This game mode is not supported.");
-  }
-}
+    void HumanCannonballSettings::step(const System& system)
+    {
+        int score = getDecimalScore(0xb6, &system);
+        m_reward = score - m_score;
+        m_score = score;
+        // Game terminates either when the player gets 7 points of 7 misses.
+        m_misses = getDecimalScore(0xb7, &system);
+        m_terminal = score == 7 || m_misses == 7;
+    }
+
+    bool HumanCannonballSettings::isTerminal() const { return m_terminal; }
+
+    reward_t HumanCannonballSettings::getReward() const { return m_reward; }
+
+    bool HumanCannonballSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPRIGHT:
+        case PLAYER_A_UPLEFT:
+        case PLAYER_A_DOWNRIGHT:
+        case PLAYER_A_DOWNLEFT:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+        case PLAYER_A_DOWNFIRE:
+        case PLAYER_A_UPRIGHTFIRE:
+        case PLAYER_A_UPLEFTFIRE:
+        case PLAYER_A_DOWNRIGHTFIRE:
+        case PLAYER_A_DOWNLEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    void HumanCannonballSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_misses = 0;
+        m_terminal = false;
+    }
+
+    void HumanCannonballSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putInt(m_misses);
+        ser.putBool(m_terminal);
+    }
+
+    void HumanCannonballSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_misses = ser.getInt();
+        m_terminal = ser.getBool();
+    }
+
+    // According to https://atariage.com/manual_html_page.php?SoftwareLabelID=237
+    // the left difficulty switch sets the width of the water tower (target).
+    DifficultyVect HumanCannonballSettings::getAvailableDifficulties()
+    {
+        return { 0, 1 };
+    }
+
+    // According to https://atariage.com/manual_html_page.php?SoftwareLabelID=237
+    // there are 8 variations of the game with both a one and two-player version.
+    // Game modes alter the cannon control, speed control, cannon angle control,
+    // whether the tower (target) is movable and the appearance of a moving window
+    // obstacle.
+    ModeVect HumanCannonballSettings::getAvailableModes()
+    {
+        return { 0, 1, 2, 3, 4, 5, 6, 7 };
+    }
+
+    void HumanCannonballSettings::setMode(
+        game_mode_t m, System& system,
+        std::unique_ptr<StellaEnvironmentWrapper> environment)
+    {
+        if (m < 8)
+        {
+            // Read the mode we are currently in along with number of players.
+            unsigned char mode = readRam(&system, 0xb6) - 1;
+            unsigned char players = readRam(&system, 0xb7);
+
+            // Press select until the correct mode is reached for single player only.
+            while (mode != m || players != 1)
+            {
+                environment->pressSelect(2);
+                mode = readRam(&system, 0xb6) - 1;
+                players = readRam(&system, 0xb7);
+            }
+
+            // Reset the environment to apply changes.
+            environment->softReset();
+        }
+        else
+        {
+            throw std::runtime_error("This game mode is not supported.");
+        }
+    }
 
 }  // namespace ale

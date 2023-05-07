@@ -16,25 +16,27 @@
 #ifndef SCREEN_HXX
 #define SCREEN_HXX
 
-namespace ale {
-namespace stella {
-
-class OSystem;
-
-class Screen
+namespace ale
 {
-  public:
-    Screen(OSystem* osystem) { myOSystem = osystem; }
-    virtual ~Screen() { };
+    namespace stella
+    {
 
-  public:
-    virtual void render() { };
+        class OSystem;
 
-  protected:
-    OSystem* myOSystem;
-};
+        class Screen
+        {
+        public:
+            Screen(OSystem* osystem) { myOSystem = osystem; }
+            virtual ~Screen() {};
 
-}  // namespace stella
+        public:
+            virtual void render() {};
+
+        protected:
+            OSystem* myOSystem;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

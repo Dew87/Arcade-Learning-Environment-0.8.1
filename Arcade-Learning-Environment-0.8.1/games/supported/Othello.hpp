@@ -28,46 +28,48 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class OthelloSettings : public RomSettings {
- public:
-  OthelloSettings();
+    class OthelloSettings : public RomSettings
+    {
+    public:
+        OthelloSettings();
 
-  virtual void reset();
+        virtual void reset();
 
-  virtual bool isTerminal() const;
+        virtual bool isTerminal() const;
 
-  virtual reward_t getReward() const;
+        virtual reward_t getReward() const;
 
-  virtual const char* rom() const { return "othello"; }
+        virtual const char* rom() const { return "othello"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "113cd09c9771ac278544b7e90efe7df2"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "113cd09c9771ac278544b7e90efe7df2"; }
 
-  virtual RomSettings* clone() const;
+        virtual RomSettings* clone() const;
 
-  virtual bool isMinimal(const Action& a) const;
+        virtual bool isMinimal(const Action& a) const;
 
-  virtual void step(const stella::System& system);
+        virtual void step(const stella::System& system);
 
-  virtual void saveState(stella::Serializer& ser);
+        virtual void saveState(stella::Serializer& ser);
 
-  virtual void loadState(stella::Deserializer& ser);
+        virtual void loadState(stella::Deserializer& ser);
 
-  virtual ModeVect getAvailableModes();
+        virtual ModeVect getAvailableModes();
 
-  virtual void setMode(game_mode_t m, stella::System& system,
-                       std::unique_ptr<StellaEnvironmentWrapper> environment);
+        virtual void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment);
 
-  virtual DifficultyVect getAvailableDifficulties();
+        virtual DifficultyVect getAvailableDifficulties();
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-  int m_no_input;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_score;
+        int m_no_input;
+    };
 
 }  // namespace ale
 

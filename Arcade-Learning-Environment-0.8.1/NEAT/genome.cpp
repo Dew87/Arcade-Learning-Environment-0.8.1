@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,26 +20,29 @@
 #include <sstream>
 using namespace NEAT;
 
-Genome::Genome(int id, std::vector<Trait*> t, std::vector<NNode*> n, std::vector<Gene*> g) {
-	genome_id=id;
-	traits=t;
-	nodes=n; 
-	genes=g;
+Genome::Genome(int id, std::vector<Trait*> t, std::vector<NNode*> n, std::vector<Gene*> g)
+{
+	genome_id = id;
+	traits = t;
+	nodes = n;
+	genes = g;
 }
 
 
-Genome::Genome(int id, std::vector<Trait*> t, std::vector<NNode*> n, std::vector<Link*> links) {
+Genome::Genome(int id, std::vector<Trait*> t, std::vector<NNode*> n, std::vector<Link*> links)
+{
 	std::vector<Link*>::iterator curlink;
 	Gene *tempgene;
-	traits=t;
-	nodes=n;
+	traits = t;
+	nodes = n;
 
-	genome_id=id;
+	genome_id = id;
 
 	//We go through the links and turn them into original genes
-	for(curlink=links.begin();curlink!=links.end();++curlink) {
+	for (curlink = links.begin(); curlink != links.end(); ++curlink)
+	{
 		//Create genes one at a time
-		tempgene=new Gene((*curlink)->linktrait, (*curlink)->weight,(*curlink)->in_node,(*curlink)->out_node,(*curlink)->is_recurrent,1.0,0.0);
+		tempgene = new Gene((*curlink)->linktrait, (*curlink)->weight, (*curlink)->in_node, (*curlink)->out_node, (*curlink)->is_recurrent, 1.0, 0.0);
 		genes.push_back(tempgene);
 	}
 
@@ -53,27 +56,30 @@ Genome::Genome(const Genome& genome)
 	std::vector<NNode*>::const_iterator curnode;
 	std::vector<Gene*>::const_iterator curgene;
 
-	for(curtrait=genome.traits.begin(); curtrait!=genome.traits.end(); ++curtrait) {
+	for (curtrait = genome.traits.begin(); curtrait != genome.traits.end(); ++curtrait)
+	{
 		traits.push_back(new Trait(**curtrait));
 	}
 
 	Trait *assoc_trait;
 	//Duplicate NNodes
-	for(curnode=genome.nodes.begin();curnode!=genome.nodes.end();++curnode) {
+	for (curnode = genome.nodes.begin(); curnode != genome.nodes.end(); ++curnode)
+	{
 		//First, find the trait that this node points to
-		if (((*curnode)->nodetrait)==0) assoc_trait=0;
-		else {
-			curtrait=traits.begin();
-			while(((*curtrait)->trait_id)!=(((*curnode)->nodetrait)->trait_id))
+		if (((*curnode)->nodetrait) == 0) assoc_trait = 0;
+		else
+		{
+			curtrait = traits.begin();
+			while (((*curtrait)->trait_id) != (((*curnode)->nodetrait)->trait_id))
 				++curtrait;
-			assoc_trait=(*curtrait);
+			assoc_trait = (*curtrait);
 		}
 
-		NNode* newnode=new NNode(*curnode,assoc_trait);
+		NNode* newnode = new NNode(*curnode, assoc_trait);
 
-		(*curnode)->dup=newnode;  //Remember this node's old copy
+		(*curnode)->dup = newnode;  //Remember this node's old copy
 		//    (*curnode)->activation_count=55;
-		nodes.push_back(newnode);    
+		nodes.push_back(newnode);
 	}
 
 	NNode *inode; //For forming a gene 
@@ -81,91 +87,101 @@ Genome::Genome(const Genome& genome)
 	Trait *traitptr;
 
 	//Duplicate Genes
-	for(curgene=genome.genes.begin(); curgene!=genome.genes.end(); ++curgene) {
+	for (curgene = genome.genes.begin(); curgene != genome.genes.end(); ++curgene)
+	{
 		//First find the nodes connected by the gene's link
 
-		inode=(((*curgene)->lnk)->in_node)->dup;
-		onode=(((*curgene)->lnk)->out_node)->dup;
+		inode = (((*curgene)->lnk)->in_node)->dup;
+		onode = (((*curgene)->lnk)->out_node)->dup;
 
 		//Get a pointer to the trait expressed by this gene
-		traitptr=((*curgene)->lnk)->linktrait;
-		if (traitptr==0) assoc_trait=0;
-		else {
-			curtrait=traits.begin();
-			while(((*curtrait)->trait_id)!=(traitptr->trait_id))
+		traitptr = ((*curgene)->lnk)->linktrait;
+		if (traitptr == 0) assoc_trait = 0;
+		else
+		{
+			curtrait = traits.begin();
+			while (((*curtrait)->trait_id) != (traitptr->trait_id))
 				++curtrait;
-			assoc_trait=(*curtrait);
+			assoc_trait = (*curtrait);
 		}
 
-		Gene* newgene=new Gene(*curgene,assoc_trait,inode,onode);
+		Gene* newgene = new Gene(*curgene, assoc_trait, inode, onode);
 		genes.push_back(newgene);
 
 	}
 }
 
-Genome::Genome(int id, std::ifstream &iFile) {
+Genome::Genome(int id, std::ifstream &iFile)
+{
 
 	char curword[128];  //max word size of 128 characters
 	char curline[1024]; //max line size of 1024 characters
 	char delimiters[] = " \n";
 
-	int done=0;
+	int done = 0;
 
 	//int pause;
 
-	genome_id=id;
+	genome_id = id;
 
 	iFile.getline(curline, sizeof(curline));
 	int wordcount = NEAT::getUnitCount(curline, delimiters);
 	int curwordnum = 0;
 
 	//Loop until file is finished, parsing each line
-	while (!done) {
+	while (!done)
+	{
 
-        //std::cout << curline << std::endl;
+		//std::cout << curline << std::endl;
 
-		if (curwordnum > wordcount || wordcount == 0) {
+		if (curwordnum > wordcount || wordcount == 0)
+		{
 			iFile.getline(curline, sizeof(curline));
 			wordcount = NEAT::getUnitCount(curline, delimiters);
 			curwordnum = 0;
 		}
-        
-        std::stringstream ss(curline);
+
+		std::stringstream ss(curline);
 		//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-        ss >> curword;
+		ss >> curword;
 
 		//printf(curword);
 		//printf(" test\n");
 		//Check for end of Genome
-		if (strcmp(curword,"genomeend")==0) {
+		if (strcmp(curword, "genomeend") == 0)
+		{
 			//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-            ss >> curword;
+			ss >> curword;
 			int idcheck = atoi(curword);
 			//iFile>>idcheck;
-			if (idcheck!=genome_id) printf("ERROR: id mismatch in genome");
-			done=1;
+			if (idcheck != genome_id) printf("ERROR: id mismatch in genome");
+			done = 1;
 		}
 
 		//Ignore genomestart if it hasn't been gobbled yet
-		else if (strcmp(curword,"genomestart")==0) {
+		else if (strcmp(curword, "genomestart") == 0)
+		{
 			++curwordnum;
 			//cout<<"genomestart"<<endl;
 		}
 
 		//Ignore comments surrounded by - they get printed to screen
-		else if (strcmp(curword,"/*")==0) {
+		else if (strcmp(curword, "/*") == 0)
+		{
 			//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-            ss >> curword;
-			while (strcmp(curword,"*/")!=0) {
+			ss >> curword;
+			while (strcmp(curword, "*/") != 0)
+			{
 				//cout<<curword<<" ";
 				//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-                ss >> curword;
+				ss >> curword;
 			}
 			//cout<<endl;
 		}
 
 		//Read in a trait
-		else if (strcmp(curword,"trait")==0) {
+		else if (strcmp(curword, "trait") == 0)
+		{
 			Trait *newtrait;
 
 			char argline[1024];
@@ -173,47 +189,49 @@ Genome::Genome(int id, std::ifstream &iFile) {
 
 			curwordnum = wordcount + 1;
 
-            ss.getline(argline, 1024);
+			ss.getline(argline, 1024);
 			//Allocate the new trait
-			newtrait=new Trait(argline);
+			newtrait = new Trait(argline);
 
 			//Add trait to vector of traits
 			traits.push_back(newtrait);
 		}
 
 		//Read in a node
-		else if (strcmp(curword,"node")==0) {
+		else if (strcmp(curword, "node") == 0)
+		{
 			NNode *newnode;
 
 			char argline[1024];
 			//strcpy(argline, NEAT::getUnits(curline, curwordnum, wordcount, delimiters));
 			curwordnum = wordcount + 1;
-            
-            ss.getline(argline, 1024);
+
+			ss.getline(argline, 1024);
 			//Allocate the new node
-			newnode=new NNode(argline,traits);
+			newnode = new NNode(argline, traits);
 
 			//Add the node to the list of nodes
 			nodes.push_back(newnode);
 		}
 
 		//Read in a Gene
-		else if (strcmp(curword,"gene")==0) {
+		else if (strcmp(curword, "gene") == 0)
+		{
 			Gene *newgene;
 
 			char argline[1024];
 			//strcpy(argline, NEAT::getUnits(curline, curwordnum, wordcount, delimiters));
 			curwordnum = wordcount + 1;
 
-            ss.getline(argline, 1024);
-            //std::cout << "New gene: " << ss.str() << std::endl;
+			ss.getline(argline, 1024);
+			//std::cout << "New gene: " << ss.str() << std::endl;
 			//Allocate the new Gene
-            newgene=new Gene(argline,traits,nodes);
+			newgene = new Gene(argline, traits, nodes);
 
 			//Add the gene to the genome
 			genes.push_back(newgene);
 
-            //std::cout<<"Added gene " << newgene << std::endl;
+			//std::cout<<"Added gene " << newgene << std::endl;
 		}
 
 	}
@@ -221,7 +239,8 @@ Genome::Genome(int id, std::ifstream &iFile) {
 }
 
 
-Genome::Genome(int new_id,int i, int o, int n,int nmax, bool r, double linkprob) {
+Genome::Genome(int new_id, int i, int o, int n, int nmax, bool r, double linkprob)
+{
 	int totalnodes;
 	bool *cm; //The connection matrix which will be randomized
 	bool *cmp; //Connection matrix pointer
@@ -240,12 +259,12 @@ Genome::Genome(int new_id,int i, int o, int n,int nmax, bool r, double linkprob)
 
 	int first_output; //Number of first output node
 
-	totalnodes=i+o+nmax;
-	matrixdim=totalnodes*totalnodes;
-	cm=new bool[matrixdim];  //Dimension the connection matrix
-	maxnode=i+n;
+	totalnodes = i + o + nmax;
+	matrixdim = totalnodes * totalnodes;
+	cm = new bool[matrixdim];  //Dimension the connection matrix
+	maxnode = i + n;
 
-	first_output=totalnodes-o+1;
+	first_output = totalnodes - o + 1;
 
 	//For creating the new genes
 	NNode *newnode;
@@ -258,47 +277,51 @@ Genome::Genome(int new_id,int i, int o, int n,int nmax, bool r, double linkprob)
 	std::vector<NNode*>::iterator node_iter;
 
 	//Assign the id
-	genome_id=new_id;
+	genome_id = new_id;
 
 	//cout<<"Assigned id "<<genome_id<<endl;
 
 	//Step through the connection matrix, randomly assigning bits
-	cmp=cm;
-	for(count=0;count<matrixdim;count++) {
-		if (randfloat()<linkprob)
-			*cmp=true;
-		else *cmp=false;
+	cmp = cm;
+	for (count = 0; count < matrixdim; count++)
+	{
+		if (randfloat() < linkprob)
+			*cmp = true;
+		else *cmp = false;
 		cmp++;
 	}
 
 	//Create a dummy trait (this is for future expansion of the system)
-	newtrait=new Trait(1,0,0,0,0,0,0,0,0,0);
+	newtrait = new Trait(1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	traits.push_back(newtrait);
 
 	//Build the input nodes
-	for(ncount=1;ncount<=i;ncount++) {
-		if (ncount<i)
-			newnode=new NNode(SENSOR,ncount,INPUT);
-		else newnode=new NNode(SENSOR,ncount,BIAS);
+	for (ncount = 1; ncount <= i; ncount++)
+	{
+		if (ncount < i)
+			newnode = new NNode(SENSOR, ncount, INPUT);
+		else newnode = new NNode(SENSOR, ncount, BIAS);
 
-		newnode->nodetrait=newtrait;
+		newnode->nodetrait = newtrait;
 
 		//Add the node to the list of nodes
 		nodes.push_back(newnode);
 	}
 
 	//Build the hidden nodes
-	for(ncount=i+1;ncount<=i+n;ncount++) {
-		newnode=new NNode(NEURON,ncount,HIDDEN);
-		newnode->nodetrait=newtrait;
+	for (ncount = i + 1; ncount <= i + n; ncount++)
+	{
+		newnode = new NNode(NEURON, ncount, HIDDEN);
+		newnode->nodetrait = newtrait;
 		//Add the node to the list of nodes
 		nodes.push_back(newnode);
 	}
 
 	//Build the output nodes
-	for(ncount=first_output;ncount<=totalnodes;ncount++) {
-		newnode=new NNode(NEURON,ncount,OUTPUT);
-		newnode->nodetrait=newtrait;
+	for (ncount = first_output; ncount <= totalnodes; ncount++)
+	{
+		newnode = new NNode(NEURON, ncount, OUTPUT);
+		newnode->nodetrait = newtrait;
 		//Add the node to the list of nodes
 		nodes.push_back(newnode);
 	}
@@ -306,81 +329,86 @@ Genome::Genome(int new_id,int i, int o, int n,int nmax, bool r, double linkprob)
 	//cout<<"Built nodes"<<endl;
 
 	//Connect the nodes 
-	ccount=1;  //Start the connection counter
+	ccount = 1;  //Start the connection counter
 
 	//Step through the connection matrix, creating connection genes
-	cmp=cm;
-	count=0;
-	for(col=1;col<=totalnodes;col++)
-		for(row=1;row<=totalnodes;row++) {
+	cmp = cm;
+	count = 0;
+	for (col = 1; col <= totalnodes; col++)
+		for (row = 1; row <= totalnodes; row++)
+		{
 			//Only try to create a link if it is in the matrix
 			//and not leading into a sensor
 
-			if ((*cmp==true)&&(col>i)&&
-				((col<=maxnode)||(col>=first_output))&&
-				((row<=maxnode)||(row>=first_output))) {
-					//If it isn't recurrent, create the connection no matter what
-					if (col>row) {
+			if ((*cmp == true) && (col > i) &&
+				((col <= maxnode) || (col >= first_output)) &&
+				((row <= maxnode) || (row >= first_output)))
+			{
+				//If it isn't recurrent, create the connection no matter what
+				if (col > row)
+				{
 
-						//Retrieve the in_node
-						node_iter=nodes.begin();
-						while((*node_iter)->node_id!=row)
-							node_iter++;
+					//Retrieve the in_node
+					node_iter = nodes.begin();
+					while ((*node_iter)->node_id != row)
+						node_iter++;
 
-						in_node=(*node_iter);
+					in_node = (*node_iter);
 
-						//Retrieve the out_node
-						node_iter=nodes.begin();
-						while((*node_iter)->node_id!=col)
-							node_iter++;
+					//Retrieve the out_node
+					node_iter = nodes.begin();
+					while ((*node_iter)->node_id != col)
+						node_iter++;
 
-						out_node=(*node_iter);
+					out_node = (*node_iter);
 
-						//Create the gene
-						new_weight=randposneg()*randfloat();
-						newgene=new Gene(newtrait,new_weight, in_node, out_node,false,count,new_weight);
+					//Create the gene
+					new_weight = randposneg() * randfloat();
+					newgene = new Gene(newtrait, new_weight, in_node, out_node, false, count, new_weight);
 
-						//Add the gene to the genome
-						genes.push_back(newgene);
-					}
-					else if (r) {
-						//Create a recurrent connection
+					//Add the gene to the genome
+					genes.push_back(newgene);
+				}
+				else if (r)
+				{
+					//Create a recurrent connection
 
-						//Retrieve the in_node
-						node_iter=nodes.begin();
-						while((*node_iter)->node_id!=row)
-							node_iter++;
+					//Retrieve the in_node
+					node_iter = nodes.begin();
+					while ((*node_iter)->node_id != row)
+						node_iter++;
 
-						in_node=(*node_iter);
+					in_node = (*node_iter);
 
-						//Retrieve the out_node
-						node_iter=nodes.begin();
-						while((*node_iter)->node_id!=col)
-							node_iter++;
+					//Retrieve the out_node
+					node_iter = nodes.begin();
+					while ((*node_iter)->node_id != col)
+						node_iter++;
 
-						out_node=(*node_iter);
+					out_node = (*node_iter);
 
-						//Create the gene
-						new_weight=randposneg()*randfloat();
-						newgene=new Gene(newtrait,new_weight, in_node, out_node,true,count,new_weight);
+					//Create the gene
+					new_weight = randposneg() * randfloat();
+					newgene = new Gene(newtrait, new_weight, in_node, out_node, true, count, new_weight);
 
-						//Add the gene to the genome
-						genes.push_back(newgene);
-
-					}
+					//Add the gene to the genome
+					genes.push_back(newgene);
 
 				}
 
-				count++; //increment gene counter	    
-				cmp++;
+			}
+
+			count++; //increment gene counter	    
+			cmp++;
 		}
 
-		delete [] cm;
+	delete[] cm;
 
 }
 
 
-Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
+Genome::Genome(int num_in, int num_out, int num_hidden, int type)
+{
 
 	//Temporary lists of nodes
 	std::vector<NNode*> inputs;
@@ -402,27 +430,29 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 
 
 	//Assign the id 0
-	genome_id=0;
+	genome_id = 0;
 
 	//Create a dummy trait (this is for future expansion of the system)
-	newtrait=new Trait(1,0,0,0,0,0,0,0,0,0);
+	newtrait = new Trait(1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	traits.push_back(newtrait);
 
 	//Adjust hidden number
-	if (type==0) 
-		num_hidden=0;
-	else if (type==1)
-		num_hidden=num_in*num_out;
+	if (type == 0)
+		num_hidden = 0;
+	else if (type == 1)
+		num_hidden = num_in * num_out;
 
 	//Create the inputs and outputs
 
 	//Build the input nodes
-	for(ncount=1;ncount<=num_in;ncount++) {
-		if (ncount<num_in)
-			newnode=new NNode(SENSOR,ncount,INPUT);
-		else { 
-			newnode=new NNode(SENSOR,ncount,BIAS);
-			bias=newnode;
+	for (ncount = 1; ncount <= num_in; ncount++)
+	{
+		if (ncount < num_in)
+			newnode = new NNode(SENSOR, ncount, INPUT);
+		else
+		{
+			newnode = new NNode(SENSOR, ncount, BIAS);
+			bias = newnode;
 		}
 
 		//newnode->nodetrait=newtrait;
@@ -433,8 +463,9 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 	}
 
 	//Build the hidden nodes
-	for(ncount=num_in+1;ncount<=num_in+num_hidden;ncount++) {
-		newnode=new NNode(NEURON,ncount,HIDDEN);
+	for (ncount = num_in + 1; ncount <= num_in + num_hidden; ncount++)
+	{
+		newnode = new NNode(NEURON, ncount, HIDDEN);
 		//newnode->nodetrait=newtrait;
 		//Add the node to the list of nodes
 		nodes.push_back(newnode);
@@ -442,8 +473,9 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 	}
 
 	//Build the output nodes
-	for(ncount=num_in+num_hidden+1;ncount<=num_in+num_hidden+num_out;ncount++) {
-		newnode=new NNode(NEURON,ncount,OUTPUT);
+	for (ncount = num_in + num_hidden + 1; ncount <= num_in + num_hidden + num_out; ncount++)
+	{
+		newnode = new NNode(NEURON, ncount, OUTPUT);
 		//newnode->nodetrait=newtrait;
 		//Add the node to the list of nodes
 		nodes.push_back(newnode);
@@ -451,20 +483,23 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 	}
 
 	//Create the links depending on the type
-	if (type==0) {
+	if (type == 0)
+	{
 		//Just connect inputs straight to outputs
 
-		count=1;
+		count = 1;
 
 		//Loop over the outputs
-		for(curnode1=outputs.begin();curnode1!=outputs.end();++curnode1) {
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
 			//Loop over the inputs
-			for(curnode2=inputs.begin();curnode2!=inputs.end();++curnode2) {
+			for (curnode2 = inputs.begin(); curnode2 != inputs.end(); ++curnode2)
+			{
 				//Connect each input to each output
-				newgene=new Gene(newtrait,0, (*curnode2), (*curnode1),false,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), false, count, 0);
 
 				//Add the gene to the genome
-				genes.push_back(newgene);	 
+				genes.push_back(newgene);
 
 				count++;
 
@@ -474,24 +509,27 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 
 	} //end type 0
 	//A split link from each input to each output
-	else if (type==1) {
-		count=1; //Start the gene number counter
+	else if (type == 1)
+	{
+		count = 1; //Start the gene number counter
 
-		curnode3=hidden.begin(); //One hidden for ever input-output pair
+		curnode3 = hidden.begin(); //One hidden for ever input-output pair
 		//Loop over the outputs
-		for(curnode1=outputs.begin();curnode1!=outputs.end();++curnode1) {
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
 			//Loop over the inputs
-			for(curnode2=inputs.begin();curnode2!=inputs.end();++curnode2) {
+			for (curnode2 = inputs.begin(); curnode2 != inputs.end(); ++curnode2)
+			{
 
 				//Connect Input to hidden
-				newgene=new Gene(newtrait,0, (*curnode2), (*curnode3),false,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode3), false, count, 0);
 				//Add the gene to the genome
 				genes.push_back(newgene);
 
 				count++; //Next gene
 
 				//Connect hidden to output
-				newgene=new Gene(newtrait,0, (*curnode3), (*curnode1),false,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode3), (*curnode1), false, count, 0);
 				//Add the gene to the genome
 				genes.push_back(newgene);
 
@@ -503,19 +541,22 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 
 	}//end type 1
 	//Fully connected 
-	else if (type==2) {
-		count=1; //Start gene counter at 1
+	else if (type == 2)
+	{
+		count = 1; //Start gene counter at 1
 
 
 		//Connect all inputs to all hidden nodes
-		for(curnode1=hidden.begin();curnode1!=hidden.end();++curnode1) {
+		for (curnode1 = hidden.begin(); curnode1 != hidden.end(); ++curnode1)
+		{
 			//Loop over the inputs
-			for(curnode2=inputs.begin();curnode2!=inputs.end();++curnode2) {
+			for (curnode2 = inputs.begin(); curnode2 != inputs.end(); ++curnode2)
+			{
 				//Connect each input to each hidden
-				newgene=new Gene(newtrait,0, (*curnode2), (*curnode1),false,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), false, count, 0);
 
 				//Add the gene to the genome
-				genes.push_back(newgene);	 
+				genes.push_back(newgene);
 
 				count++;
 
@@ -523,14 +564,16 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 		}
 
 		//Connect all hidden units to all outputs
-		for(curnode1=outputs.begin();curnode1!=outputs.end();++curnode1) {
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
 			//Loop over the inputs
-			for(curnode2=hidden.begin();curnode2!=hidden.end();++curnode2) {
+			for (curnode2 = hidden.begin(); curnode2 != hidden.end(); ++curnode2)
+			{
 				//Connect each input to each hidden
-				newgene=new Gene(newtrait,0, (*curnode2), (*curnode1),false,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), false, count, 0);
 
 				//Add the gene to the genome
-				genes.push_back(newgene);	 
+				genes.push_back(newgene);
 
 				count++;
 
@@ -538,24 +581,27 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 		}
 
 		//Connect the bias to all outputs
-		for(curnode1=outputs.begin();curnode1!=outputs.end();++curnode1) {
-			newgene=new Gene(newtrait,0, bias, (*curnode1),false,count,0);
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
+			newgene = new Gene(newtrait, 0, bias, (*curnode1), false, count, 0);
 
 			//Add the gene to the genome
-			genes.push_back(newgene);	 
+			genes.push_back(newgene);
 
 			count++;
 		}
 
 		//Recurrently connect the hidden nodes
-		for(curnode1=hidden.begin();curnode1!=hidden.end();++curnode1) {
+		for (curnode1 = hidden.begin(); curnode1 != hidden.end(); ++curnode1)
+		{
 			//Loop Over all Hidden
-			for(curnode2=hidden.begin();curnode2!=hidden.end();++curnode2) {
+			for (curnode2 = hidden.begin(); curnode2 != hidden.end(); ++curnode2)
+			{
 				//Connect each hidden to each hidden
-				newgene=new Gene(newtrait,0, (*curnode2), (*curnode1),true,count,0);
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), true, count, 0);
 
 				//Add the gene to the genome
-				genes.push_back(newgene);	 
+				genes.push_back(newgene);
 
 				count++;
 
@@ -567,7 +613,8 @@ Genome::Genome(int num_in,int num_out,int num_hidden,int type) {
 
 }
 
-Genome* Genome::new_Genome_load(char *filename) {
+Genome* Genome::new_Genome_load(char *filename)
+{
 	Genome *newgenome;
 
 	int id;
@@ -585,64 +632,71 @@ Genome* Genome::new_Genome_load(char *filename) {
 	//	return 0;
 	//}
 
-	iFile>>curword;
+	iFile >> curword;
 	//iFile.getline(curline, sizeof(curline));
 	//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
 
 	//Bypass initial comment
-	if (strcmp(curword,"/*")==0) {
+	if (strcmp(curword, "/*") == 0)
+	{
 		//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-		iFile>>curword;
-		while (strcmp(curword,"*/")!=0) {
-			printf("%s ",curword);
+		iFile >> curword;
+		while (strcmp(curword, "*/") != 0)
+		{
+			printf("%s ", curword);
 			//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
-			iFile>>curword;
+			iFile >> curword;
 		}
 
 		//cout<<endl;
-		iFile>>curword;
+		iFile >> curword;
 		//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
 	}
 
 	//strcpy(curword, NEAT::getUnit(curline, curwordnum++, delimiters));
 	//id = atoi(curword);
-	iFile>>id;
+	iFile >> id;
 
-	newgenome=new Genome(id,iFile);
+	newgenome = new Genome(id, iFile);
 
 	iFile.close();
 
 	return newgenome;
 }
 
-Genome::~Genome() {
+Genome::~Genome()
+{
 	std::vector<Trait*>::iterator curtrait;
 	std::vector<NNode*>::iterator curnode;
 	std::vector<Gene*>::iterator curgene;
 
-	for(curtrait=traits.begin();curtrait!=traits.end();++curtrait) {
+	for (curtrait = traits.begin(); curtrait != traits.end(); ++curtrait)
+	{
 		delete (*curtrait);
 	}
 
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
 		delete (*curnode);
 	}
 
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
 		delete (*curgene);
 	}
 
 }
 
-Network *Genome::genesis(int id) {
-	std::vector<NNode*>::iterator curnode; 
+Network *Genome::genesis(int id)
+{
+	std::vector<NNode*>::iterator curnode;
 	std::vector<Gene*>::iterator curgene;
 	NNode *newnode;
 	Trait *curtrait;
 	Link *curlink;
 	Link *newlink;
 
-	double maxweight=0.0; //Compute the maximum weight for adaptation purposes
+	double maxweight = 0.0; //Compute the maximum weight for adaptation purposes
 	double weight_mag; //Measures absolute value of weights
 
 	//Inputs and outputs will be collected here for the network
@@ -660,71 +714,75 @@ Network *Genome::genesis(int id) {
 	Network *newnet;
 
 	//Create the nodes
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
-		newnode=new NNode((*curnode)->type,(*curnode)->node_id);
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
+		newnode = new NNode((*curnode)->type, (*curnode)->node_id);
 
 		//Derive the node parameters from the trait pointed to
-		curtrait=(*curnode)->nodetrait;
+		curtrait = (*curnode)->nodetrait;
 		newnode->derive_trait(curtrait);
 
 		//Check for input or output designation of node
-		if (((*curnode)->gen_node_label)==INPUT) 
+		if (((*curnode)->gen_node_label) == INPUT)
 			inlist.push_back(newnode);
-		if (((*curnode)->gen_node_label)==BIAS) 
+		if (((*curnode)->gen_node_label) == BIAS)
 			inlist.push_back(newnode);
-		if (((*curnode)->gen_node_label)==OUTPUT)
+		if (((*curnode)->gen_node_label) == OUTPUT)
 			outlist.push_back(newnode);
 
 		//Keep track of all nodes, not just input and output
 		all_list.push_back(newnode);
 
 		//Have the node specifier point to the node it generated
-		(*curnode)->analogue=newnode;
+		(*curnode)->analogue = newnode;
 
 	}
 
 	//Create the links by iterating through the genes
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
 		//Only create the link if the gene is enabled
-		if (((*curgene)->enable)==true) {
-			curlink=(*curgene)->lnk;
-			inode=(curlink->in_node)->analogue;
-			onode=(curlink->out_node)->analogue;
+		if (((*curgene)->enable) == true)
+		{
+			curlink = (*curgene)->lnk;
+			inode = (curlink->in_node)->analogue;
+			onode = (curlink->out_node)->analogue;
 			//NOTE: This line could be run through a recurrency check if desired
 			// (no need to in the current implementation of NEAT)
-			newlink=new Link(curlink->weight,inode,onode,curlink->is_recurrent);
+			newlink = new Link(curlink->weight, inode, onode, curlink->is_recurrent);
 
 			(onode->incoming).push_back(newlink);
 			(inode->outgoing).push_back(newlink);
 
 			//Derive link's parameters from its Trait pointer
-			curtrait=(curlink->linktrait);
+			curtrait = (curlink->linktrait);
 
 			newlink->derive_trait(curtrait);
 
 			//Keep track of maximum weight
-			if (newlink->weight>0)
-				weight_mag=newlink->weight;
-			else weight_mag=-newlink->weight;
-			if (weight_mag>maxweight)
-				maxweight=weight_mag;
+			if (newlink->weight > 0)
+				weight_mag = newlink->weight;
+			else weight_mag = -newlink->weight;
+			if (weight_mag > maxweight)
+				maxweight = weight_mag;
 		}
 	}
 
 	//Create the new network
-	newnet=new Network(inlist,outlist,all_list,id);
+	newnet = new Network(inlist, outlist, all_list, id);
 
 	//Attach genotype and phenotype together
-	newnet->genotype=this;
-	phenotype=newnet;
+	newnet->genotype = this;
+	phenotype = newnet;
 
-	newnet->maxweight=maxweight;
+	newnet->maxweight = maxweight;
 
 	return newnet;
 
 }
 
-bool Genome::verify() {
+bool Genome::verify()
+{
 	std::vector<NNode*>::iterator curnode;
 	std::vector<Gene*>::iterator curgene;
 	std::vector<Gene*>::iterator curgene2;
@@ -739,35 +797,39 @@ bool Genome::verify() {
 
 	//cout<<"Verifying Genome id: "<<this->genome_id<<endl;
 
-	if (this==0) {
+	if (this == 0)
+	{
 		//cout<<"ERROR GENOME EMPTY"<<endl;
 		//cin>>pause;
 	}
 
 	//Check each gene's nodes
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
-		inode=((*curgene)->lnk)->in_node;
-		onode=((*curgene)->lnk)->out_node;
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
+		inode = ((*curgene)->lnk)->in_node;
+		onode = ((*curgene)->lnk)->out_node;
 
 		//Look for inode
-		curnode=nodes.begin();
-		while((curnode!=nodes.end())&&
-			((*curnode)!=inode))
+		curnode = nodes.begin();
+		while ((curnode != nodes.end()) &&
+			((*curnode) != inode))
 			++curnode;
 
-		if (curnode==nodes.end()) {
+		if (curnode == nodes.end())
+		{
 			//cout<<"MISSING iNODE FROM GENE NOT IN NODES OF GENOME!!"<<endl;
 			//cin>>pause;
 			return false;
 		}
 
 		//Look for onode
-		curnode=nodes.begin();
-		while((curnode!=nodes.end())&&
-			((*curnode)!=onode))
+		curnode = nodes.begin();
+		while ((curnode != nodes.end()) &&
+			((*curnode) != onode))
 			++curnode;
 
-		if (curnode==nodes.end()) {
+		if (curnode == nodes.end())
+		{
 			//cout<<"MISSING oNODE FROM GENE NOT IN NODES OF GENOME!!"<<endl;
 			//cin>>pause;
 			return false;
@@ -776,31 +838,36 @@ bool Genome::verify() {
 	}
 
 	//Check for NNodes being out of order
-	last_id=0;
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
-		if ((*curnode)->node_id<last_id) {
+	last_id = 0;
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
+		if ((*curnode)->node_id < last_id)
+		{
 			//cout<<"ALERT: NODES OUT OF ORDER in "<<this<<endl;
 			//cin>>pause;
 			return false;
 		}
 
-		last_id=(*curnode)->node_id;
+		last_id = (*curnode)->node_id;
 	}
 
 
 	//Make sure there are no duplicate genes
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
 
-		for(curgene2=genes.begin();curgene2!=genes.end();++curgene2) {
-			if (((*curgene)!=(*curgene2))&&
-				((((*curgene)->lnk)->is_recurrent)==(((*curgene2)->lnk)->is_recurrent))&&
-				((((((*curgene2)->lnk)->in_node)->node_id)==((((*curgene)->lnk)->in_node)->node_id))&&
-				(((((*curgene2)->lnk)->out_node)->node_id)==((((*curgene)->lnk)->out_node)->node_id)))) {
-					//cout<<"ALERT: DUPLICATE GENES: "<<(*curgene)<<(*curgene2)<<endl;
-					//cout<<"INSIDE GENOME: "<<this<<endl;
+		for (curgene2 = genes.begin(); curgene2 != genes.end(); ++curgene2)
+		{
+			if (((*curgene) != (*curgene2)) &&
+				((((*curgene)->lnk)->is_recurrent) == (((*curgene2)->lnk)->is_recurrent)) &&
+				((((((*curgene2)->lnk)->in_node)->node_id) == ((((*curgene)->lnk)->in_node)->node_id)) &&
+					(((((*curgene2)->lnk)->out_node)->node_id) == ((((*curgene)->lnk)->out_node)->node_id))))
+			{
+				//cout<<"ALERT: DUPLICATE GENES: "<<(*curgene)<<(*curgene2)<<endl;
+				//cout<<"INSIDE GENOME: "<<this<<endl;
 
-					//cin>>pause;
-				}
+				//cin>>pause;
+			}
 
 
 		}
@@ -826,14 +893,17 @@ bool Genome::verify() {
 
 	//Check for 2 disables in a row
 	//Note:  Again, this is not necessarily a bad sign
-	if (nodes.size()>=500) {
-		disab=false;
-		for(curgene=genes.begin();curgene!=genes.end();++curgene) {
-			if ((((*curgene)->enable)==false)&&(disab==true)) {
+	if (nodes.size() >= 500)
+	{
+		disab = false;
+		for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+		{
+			if ((((*curgene)->enable) == false) && (disab == true))
+			{
 				//cout<<"ALERT: 2 DISABLES IN A ROW: "<<this<<endl;
 			}
-			if (((*curgene)->enable)==false) disab=true;
-			else disab=false;
+			if (((*curgene)->enable) == false) disab = true;
+			else disab = false;
 		}
 	}
 
@@ -844,35 +914,40 @@ bool Genome::verify() {
 
 
 //Print the genome to a file
-void Genome::print_to_file(std::ofstream &outFile) {
-  std::vector<Trait*>::iterator curtrait;
-  std::vector<NNode*>::iterator curnode;
-  std::vector<Gene*>::iterator curgene;
+void Genome::print_to_file(std::ofstream &outFile)
+{
+	std::vector<Trait*>::iterator curtrait;
+	std::vector<NNode*>::iterator curnode;
+	std::vector<Gene*>::iterator curgene;
 
-  outFile<<"genomestart "<<genome_id<<std::endl;
+	outFile << "genomestart " << genome_id << std::endl;
 
-  //Output the traits
-  for(curtrait=traits.begin();curtrait!=traits.end();++curtrait) {
-    (*curtrait)->trait_id=curtrait-traits.begin()+1;
-    (*curtrait)->print_to_file(outFile);
-  }
+	//Output the traits
+	for (curtrait = traits.begin(); curtrait != traits.end(); ++curtrait)
+	{
+		(*curtrait)->trait_id = curtrait - traits.begin() + 1;
+		(*curtrait)->print_to_file(outFile);
+	}
 
-  //Output the nodes
-  for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
-    (*curnode)->print_to_file(outFile);
-  }
+	//Output the nodes
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
+		(*curnode)->print_to_file(outFile);
+	}
 
-  //Output the genes
-  for(curgene=genes.begin();curgene!=genes.end();++curgene) {
-    (*curgene)->print_to_file(outFile);
-  }
+	//Output the genes
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
+		(*curgene)->print_to_file(outFile);
+	}
 
-  outFile<<"genomeend "<<genome_id<<std::endl;
+	outFile << "genomeend " << genome_id << std::endl;
 
 }
 
 
-void Genome::print_to_file(std::ostream &outFile) {
+void Genome::print_to_file(std::ostream &outFile)
+{
 	std::vector<Trait*>::iterator curtrait;
 	std::vector<NNode*>::iterator curnode;
 	std::vector<Gene*>::iterator curgene;
@@ -880,49 +955,56 @@ void Genome::print_to_file(std::ostream &outFile) {
 	//char tempbuf[128];
 	//sprintf(tempbuf, "genomestart %d\n", genome_id);
 	//outFile.write(strlen(tempbuf), tempbuf);
-    outFile<<"genomestart "<<genome_id<<std::endl;
+	outFile << "genomestart " << genome_id << std::endl;
 
 	//Output the traits
-	for(curtrait=traits.begin();curtrait!=traits.end();++curtrait) {
-		(*curtrait)->trait_id=curtrait-traits.begin()+1;
+	for (curtrait = traits.begin(); curtrait != traits.end(); ++curtrait)
+	{
+		(*curtrait)->trait_id = curtrait - traits.begin() + 1;
 		(*curtrait)->print_to_file(outFile);
 	}
 
 	//Output the nodes
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
 		(*curnode)->print_to_file(outFile);
 	}
 
 	//Output the genes
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
 		(*curgene)->print_to_file(outFile);
 	}
 
 	//char tempbuf2[128];
 	//sprintf(tempbuf2, sizeof(tempbuf2), "genomeend %d\n", genome_id);
 	//outFile.write(strlen(tempbuf2), tempbuf2);
-    outFile << "genomeend " << genome_id << std::endl << std::endl << std::endl;
+	outFile << "genomeend " << genome_id << std::endl << std::endl << std::endl;
 	//char tempbuf4[1024];
 	//sprintf(tempbuf4, sizeof(tempbuf4), "\n\n");
 	//outFile.write(strlen(tempbuf4), tempbuf4);
 }
 
-void Genome::print_to_filename(char *filename) {
+void Genome::print_to_filename(char *filename)
+{
 	std::ofstream oFile(filename);
 	//oFile.open(filename, std::ostream::Write);
 	print_to_file(oFile);
 	oFile.close();
 }
 
-int Genome::get_last_node_id() {
-	return ((*(nodes.end() - 1))->node_id)+1;
+int Genome::get_last_node_id()
+{
+	return ((*(nodes.end() - 1))->node_id) + 1;
 }
 
-double Genome::get_last_gene_innovnum() {
-	return ((*(genes.end() - 1))->innovation_num)+1;
+double Genome::get_last_gene_innovnum()
+{
+	return ((*(genes.end() - 1))->innovation_num) + 1;
 }
 
-Genome *Genome::duplicate(int new_id) {
+Genome *Genome::duplicate(int new_id)
+{
 	//Collections for the new Genome
 	std::vector<Trait*> traits_dup;
 	std::vector<NNode*> nodes_dup;
@@ -948,74 +1030,81 @@ Genome *Genome::duplicate(int new_id) {
 	//verify();
 
 	//Duplicate the traits
-	for(curtrait=traits.begin();curtrait!=traits.end();++curtrait) {
-		newtrait=new Trait(*curtrait);
+	for (curtrait = traits.begin(); curtrait != traits.end(); ++curtrait)
+	{
+		newtrait = new Trait(*curtrait);
 		traits_dup.push_back(newtrait);
 	}
 
 	//Duplicate NNodes
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
 		//First, find the trait that this node points to
-		if (((*curnode)->nodetrait)==0) assoc_trait=0;
-		else {
-			curtrait=traits_dup.begin();
-			while(((*curtrait)->trait_id)!=(((*curnode)->nodetrait)->trait_id))
+		if (((*curnode)->nodetrait) == 0) assoc_trait = 0;
+		else
+		{
+			curtrait = traits_dup.begin();
+			while (((*curtrait)->trait_id) != (((*curnode)->nodetrait)->trait_id))
 				++curtrait;
-			assoc_trait=(*curtrait);
+			assoc_trait = (*curtrait);
 		}
 
-		newnode=new NNode(*curnode,assoc_trait);
+		newnode = new NNode(*curnode, assoc_trait);
 
-		(*curnode)->dup=newnode;  //Remember this node's old copy
+		(*curnode)->dup = newnode;  //Remember this node's old copy
 		//    (*curnode)->activation_count=55;
-		nodes_dup.push_back(newnode);    
+		nodes_dup.push_back(newnode);
 	}
 
 	//Duplicate Genes
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
 		//First find the nodes connected by the gene's link
 
-		inode=(((*curgene)->lnk)->in_node)->dup;
-		onode=(((*curgene)->lnk)->out_node)->dup;
+		inode = (((*curgene)->lnk)->in_node)->dup;
+		onode = (((*curgene)->lnk)->out_node)->dup;
 
 		//Get a pointer to the trait expressed by this gene
-		traitptr=((*curgene)->lnk)->linktrait;
-		if (traitptr==0) assoc_trait=0;
-		else {
-			curtrait=traits_dup.begin();
-			while(((*curtrait)->trait_id)!=(traitptr->trait_id))
+		traitptr = ((*curgene)->lnk)->linktrait;
+		if (traitptr == 0) assoc_trait = 0;
+		else
+		{
+			curtrait = traits_dup.begin();
+			while (((*curtrait)->trait_id) != (traitptr->trait_id))
 				++curtrait;
-			assoc_trait=(*curtrait);
+			assoc_trait = (*curtrait);
 		}
 
-		newgene=new Gene(*curgene,assoc_trait,inode,onode);
+		newgene = new Gene(*curgene, assoc_trait, inode, onode);
 		genes_dup.push_back(newgene);
 
 	}
 
 	//Finally, return the genome
-	newgenome=new Genome(new_id,traits_dup,nodes_dup,genes_dup);
+	newgenome = new Genome(new_id, traits_dup, nodes_dup, genes_dup);
 
 	return newgenome;
 
 }
 
-void Genome::mutate_random_trait() {
+void Genome::mutate_random_trait()
+{
 	std::vector<Trait*>::iterator thetrait; //Trait to be mutated
 	int traitnum;
 
 	//Choose a random traitnum
-	traitnum=randint(0,(traits.size())-1);
+	traitnum = randint(0, (traits.size()) - 1);
 
 	//Retrieve the trait and mutate it
-	thetrait=traits.begin();
+	thetrait = traits.begin();
 	(*(thetrait[traitnum])).mutate();
 
 	//TRACK INNOVATION? (future possibility)
 
 }
 
-void Genome::mutate_link_trait(int times) {
+void Genome::mutate_link_trait(int times)
+{
 	int traitnum;
 	int genenum;
 	std::vector<Gene*>::iterator thegene;     //Link to be mutated
@@ -1023,24 +1112,26 @@ void Genome::mutate_link_trait(int times) {
 	int count;
 	int loop;
 
-	for(loop=1;loop<=times;loop++) {
+	for (loop = 1; loop <= times; loop++)
+	{
 
 		//Choose a random traitnum
-		traitnum=randint(0,(traits.size())-1);
+		traitnum = randint(0, (traits.size()) - 1);
 
 		//Choose a random linknum
-		genenum=randint(0,genes.size()-1);
+		genenum = randint(0, genes.size() - 1);
 
 		//set the link to point to the new trait
-		thegene=genes.begin();
-		for(count=0;count<genenum;count++)
+		thegene = genes.begin();
+		for (count = 0; count < genenum; count++)
 			++thegene;
 
 		//Do not alter frozen genes
-		if (!((*thegene)->frozen)) {
-			thetrait=traits.begin();
+		if (!((*thegene)->frozen))
+		{
+			thetrait = traits.begin();
 
-			((*thegene)->lnk)->linktrait=thetrait[traitnum];
+			((*thegene)->lnk)->linktrait = thetrait[traitnum];
 
 		}
 		//TRACK INNOVATION- future use
@@ -1049,7 +1140,8 @@ void Genome::mutate_link_trait(int times) {
 	}
 }
 
-void Genome::mutate_node_trait(int times) {
+void Genome::mutate_node_trait(int times)
+{
 	int traitnum;
 	int nodenum;
 	std::vector<NNode*>::iterator thenode;     //Link to be mutated
@@ -1058,25 +1150,27 @@ void Genome::mutate_node_trait(int times) {
 	int count;
 	int loop;
 
-	for(loop=1;loop<=times;loop++) {
+	for (loop = 1; loop <= times; loop++)
+	{
 
 		//Choose a random traitnum
-		traitnum=randint(0,(traits.size())-1);
+		traitnum = randint(0, (traits.size()) - 1);
 
 		//Choose a random nodenum
-		nodenum=randint(0,nodes.size()-1);
+		nodenum = randint(0, nodes.size() - 1);
 
 		//set the link to point to the new trait
-		thenode=nodes.begin();
-		for(count=0;count<nodenum;count++)
+		thenode = nodes.begin();
+		for (count = 0; count < nodenum; count++)
 			++thenode;
 
 		//Do not mutate frozen nodes
-		if (!((*thenode)->frozen)) {
+		if (!((*thenode)->frozen))
+		{
 
-			thetrait=traits.begin();
+			thetrait = traits.begin();
 
-			(*thenode)->nodetrait=thetrait[traitnum];
+			(*thenode)->nodetrait = thetrait[traitnum];
 
 		}
 		//TRACK INNOVATION! - possible future use
@@ -1091,7 +1185,8 @@ void Genome::mutate_node_trait(int times) {
 	}
 }
 
-void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
+void Genome::mutate_link_weights(double power, double rate, mutator mut_type)
+{
 	std::vector<Gene*>::iterator curgene;
 	double num;  //counts gene placement
 	double gene_total;
@@ -1164,20 +1259,20 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 
 	//}
 
-	
+
 
 	// ------------------------------------------------------ 
 
-	if (randfloat()>0.5) severe=true;
-	else severe=false;
+	if (randfloat() > 0.5) severe = true;
+	else severe = false;
 
 	//Go through all the Genes and perturb their link's weights
-	num=0.0;
-	gene_total=(double) genes.size();
-	endpart=gene_total*0.8;
+	num = 0.0;
+	gene_total = (double)genes.size();
+	endpart = gene_total * 0.8;
 	//powermod=randposneg()*power*randfloat();  //Make power of mutation random
 	//powermod=randfloat();
-	powermod=1.0;
+	powermod = 1.0;
 
 	//Possibility: Jiggle the newest gene randomly
 	//if (gene_total>10.0) {
@@ -1200,7 +1295,7 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 		}
 	}
 
-	
+
 	for(curgene=genes.begin();curgene!=genes.end();curgene++) {
 		if (randfloat()<0.2) {
 			randnum=randposneg()*randfloat()*power*powermod;
@@ -1216,9 +1311,10 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 
 
 	//Loop on all genes  (ORIGINAL METHOD)
-	for(curgene=genes.begin();curgene!=genes.end();curgene++) {
+	for (curgene = genes.begin(); curgene != genes.end(); curgene++)
+	{
 
-		
+
 		//Possibility: Have newer genes mutate with higher probability
 		//Only make mutation power vary along genome if it's big enough
 		//if (gene_total>=10.0) {
@@ -1235,25 +1331,31 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 		//which a random float will signify that kind of mutation.  
 
 		//Don't mutate weights of frozen links
-		if (!((*curgene)->frozen)) {
+		if (!((*curgene)->frozen))
+		{
 
-			if (severe) {
-				gausspoint=0.3;
-				coldgausspoint=0.1;
+			if (severe)
+			{
+				gausspoint = 0.3;
+				coldgausspoint = 0.1;
 			}
-			else if ((gene_total>=10.0)&&(num>endpart)) {
-				gausspoint=0.5;  //Mutate by modification % of connections
-				coldgausspoint=0.3; //Mutate the rest by replacement % of the time
+			else if ((gene_total >= 10.0) && (num > endpart))
+			{
+				gausspoint = 0.5;  //Mutate by modification % of connections
+				coldgausspoint = 0.3; //Mutate the rest by replacement % of the time
 			}
-			else {
+			else
+			{
 				//Half the time don't do any cold mutations
-				if (randfloat()>0.5) {
-					gausspoint=1.0-rate;
-					coldgausspoint=1.0-rate-0.1;
+				if (randfloat() > 0.5)
+				{
+					gausspoint = 1.0 - rate;
+					coldgausspoint = 1.0 - rate - 0.1;
 				}
-				else {
-					gausspoint=1.0-rate;
-					coldgausspoint=1.0-rate;
+				else
+				{
+					gausspoint = 1.0 - rate;
+					coldgausspoint = 1.0 - rate;
 				}
 			}
 
@@ -1261,17 +1363,18 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 			//randnum=gaussrand()*powermod;
 			//randnum=gaussrand();
 
-			randnum=randposneg()*randfloat()*power*powermod;
-            //std::cout << "RANDOM: " << randnum << " " << randposneg() << " " << randfloat() << " " << power << " " << powermod << std::endl;
-			if (mut_type==GAUSSIAN) {
-				randchoice=randfloat();
-				if (randchoice>gausspoint)
-					((*curgene)->lnk)->weight+=randnum;
-				else if (randchoice>coldgausspoint)
-					((*curgene)->lnk)->weight=randnum;
+			randnum = randposneg() * randfloat() * power * powermod;
+			//std::cout << "RANDOM: " << randnum << " " << randposneg() << " " << randfloat() << " " << power << " " << powermod << std::endl;
+			if (mut_type == GAUSSIAN)
+			{
+				randchoice = randfloat();
+				if (randchoice > gausspoint)
+					((*curgene)->lnk)->weight += randnum;
+				else if (randchoice > coldgausspoint)
+					((*curgene)->lnk)->weight = randnum;
 			}
-			else if (mut_type==COLDGAUSSIAN)
-				((*curgene)->lnk)->weight=randnum;
+			else if (mut_type == COLDGAUSSIAN)
+				((*curgene)->lnk)->weight = randnum;
 
 			//Cap the weights at 8.0 (experimental)
 			if (((*curgene)->lnk)->weight > 8.0) ((*curgene)->lnk)->weight = 8.0;
@@ -1279,9 +1382,9 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 
 			//Record the innovation
 			//(*curgene)->mutation_num+=randnum;
-			(*curgene)->mutation_num=((*curgene)->lnk)->weight;
+			(*curgene)->mutation_num = ((*curgene)->lnk)->weight;
 
-			num+=1.0;
+			num += 1.0;
 
 		}
 
@@ -1290,68 +1393,73 @@ void Genome::mutate_link_weights(double power,double rate,mutator mut_type) {
 
 }
 
-void Genome::mutate_toggle_enable(int times) {
+void Genome::mutate_toggle_enable(int times)
+{
 	int genenum;
 	int count;
 	std::vector<Gene*>::iterator thegene;  //Gene to toggle
 	std::vector<Gene*>::iterator checkgene;  //Gene to check
 	int genecount;
 
-	for (count=1;count<=times;count++) {
+	for (count = 1; count <= times; count++)
+	{
 
 		//Choose a random genenum
-		genenum=randint(0,genes.size()-1);
+		genenum = randint(0, genes.size() - 1);
 
 		//find the gene
-		thegene=genes.begin();
-		for(genecount=0;genecount<genenum;genecount++)
+		thegene = genes.begin();
+		for (genecount = 0; genecount < genenum; genecount++)
 			++thegene;
 
 		//Toggle the enable on this gene
-		if (((*thegene)->enable)==true) {
+		if (((*thegene)->enable) == true)
+		{
 			//We need to make sure that another gene connects out of the in-node
 			//Because if not a section of network will break off and become isolated
-			checkgene=genes.begin();
-			while((checkgene!=genes.end())&&
-				(((((*checkgene)->lnk)->in_node)!=(((*thegene)->lnk)->in_node))||
-				(((*checkgene)->enable)==false)||
-				((*checkgene)->innovation_num==(*thegene)->innovation_num)))
+			checkgene = genes.begin();
+			while ((checkgene != genes.end()) &&
+				(((((*checkgene)->lnk)->in_node) != (((*thegene)->lnk)->in_node)) ||
+					(((*checkgene)->enable) == false) ||
+					((*checkgene)->innovation_num == (*thegene)->innovation_num)))
 				++checkgene;
 
 			//Disable the gene if it's safe to do so
-			if (checkgene!=genes.end())
-				(*thegene)->enable=false;
+			if (checkgene != genes.end())
+				(*thegene)->enable = false;
 		}
-		else (*thegene)->enable=true;
+		else (*thegene)->enable = true;
 	}
 }
 
-void Genome::mutate_gene_reenable() {
+void Genome::mutate_gene_reenable()
+{
 	std::vector<Gene*>::iterator thegene;  //Gene to enable
 
-	thegene=genes.begin();
+	thegene = genes.begin();
 
 	//Search for a disabled gene
-	while((thegene!=genes.end())&&((*thegene)->enable==true))
+	while ((thegene != genes.end()) && ((*thegene)->enable == true))
 		++thegene;
 
 	//Reenable it
-	if (thegene!=genes.end())
-		if (((*thegene)->enable)==false) (*thegene)->enable=true;
+	if (thegene != genes.end())
+		if (((*thegene)->enable) == false) (*thegene)->enable = true;
 
 }
 
-bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,double &curinnov) {
+bool Genome::mutate_add_node(std::vector<Innovation*> &innovs, int &curnode_id, double &curinnov)
+{
 	std::vector<Gene*>::iterator thegene;  //random gene containing the original link
 	int genenum;  //The random gene number
 	NNode *in_node; //Here are the nodes connected by the gene
-	NNode *out_node; 
+	NNode *out_node;
 	Link *thelink;  //The link inside the random gene
 
 	//double randmult;  //using a gaussian to find the random gene
 
 	std::vector<Innovation*>::iterator theinnov; //For finding a historical match
-	bool done=false;
+	bool done = false;
 
 	Gene *newgene1{};  //The new Genes
 	Gene *newgene2{};
@@ -1365,43 +1473,46 @@ bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,do
 	bool found;
 
 	//First, find a random gene already in the genome  
-	trycount=0;
-	found=false;
+	trycount = 0;
+	found = false;
 
 	//Split next link with a bias towards older links
 	//NOTE: 7/2/01 - for robots, went back to random split
 	//        because of large # of inputs
-	if (false) {
-		thegene=genes.begin();
-		while (((thegene!=genes.end())
-			&&(!((*thegene)->enable)))||
-			((thegene!=genes.end())
-			&&(((*thegene)->lnk->in_node)->gen_node_label==BIAS)))
+	if (false)
+	{
+		thegene = genes.begin();
+		while (((thegene != genes.end())
+			&& (!((*thegene)->enable))) ||
+			((thegene != genes.end())
+				&& (((*thegene)->lnk->in_node)->gen_node_label == BIAS)))
 			++thegene;
 
 		//Now randomize which node is chosen at this point
 		//We bias the search towards older genes because 
 		//this encourages splitting to distribute evenly
-		while (((thegene!=genes.end())&&
-			(randfloat()<0.3))||
-			((thegene!=genes.end())
-			&&(((*thegene)->lnk->in_node)->gen_node_label==BIAS)))
+		while (((thegene != genes.end()) &&
+			(randfloat() < 0.3)) ||
+			((thegene != genes.end())
+				&& (((*thegene)->lnk->in_node)->gen_node_label == BIAS)))
 		{
 			++thegene;
 		}
 
-		if ((!(thegene==genes.end()))&&
+		if ((!(thegene == genes.end())) &&
 			((*thegene)->enable))
 		{
-			found=true;
+			found = true;
 		}
 	}
 	//In this else:
 	//Alternative random gaussian choice of genes NOT USED in this
 	//version of NEAT
 	//NOTE: 7/2/01 now we use this after all
-	else {
-		while ((trycount<20)&&(!found)) {
+	else
+	{
+		while ((trycount < 20) && (!found))
+		{
 
 			//Choose a random genenum
 			//randmult=gaussrand()/4;
@@ -1413,17 +1524,17 @@ bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,do
 			//This old totally random selection is bad- splitting
 			//inside something recently splitted adds little power
 			//to the system (should use a gaussian if doing it this way)
-			genenum=randint(0,genes.size()-1);
+			genenum = randint(0, genes.size() - 1);
 
 			//find the gene
-			thegene=genes.begin();
-			for(int genecount=0;genecount<genenum;genecount++)
+			thegene = genes.begin();
+			for (int genecount = 0; genecount < genenum; genecount++)
 				++thegene;
 
 			//If either the gene is disabled, or it has a bias input, try again
-			if (!(((*thegene)->enable==false)||
-				(((((*thegene)->lnk)->in_node)->gen_node_label)==BIAS)))
-				found=true;
+			if (!(((*thegene)->enable == false) ||
+				(((((*thegene)->lnk)->in_node)->gen_node_label) == BIAS)))
+				found = true;
 
 			++trycount;
 
@@ -1431,57 +1542,61 @@ bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,do
 	}
 
 	//If we couldn't find anything so say goodbye
-	if (!found) 
+	if (!found)
 		return false;
 
 	//Disabled the gene
-	(*thegene)->enable=false;
+	(*thegene)->enable = false;
 
 	//Extract the link
-	thelink=(*thegene)->lnk;
-	oldweight=(*thegene)->lnk->weight;
+	thelink = (*thegene)->lnk;
+	oldweight = (*thegene)->lnk->weight;
 
 	//Extract the nodes
-	in_node=thelink->in_node;
-	out_node=thelink->out_node;
+	in_node = thelink->in_node;
+	out_node = thelink->out_node;
 
 	//Check to see if this innovation has already been done   
 	//in another genome
 	//Innovations are used to make sure the same innovation in
 	//two separate genomes in the same generation receives
 	//the same innovation number.
-	theinnov=innovs.begin();
+	theinnov = innovs.begin();
 
-	while(!done) {
+	while (!done)
+	{
 
-		if (theinnov==innovs.end()) {
+		if (theinnov == innovs.end())
+		{
 
 			//The innovation is totally novel
 
 			//Get the old link's trait
-			traitptr=thelink->linktrait;
+			traitptr = thelink->linktrait;
 
 			//Create the new NNode
 			//By convention, it will point to the first trait
-			newnode=new NNode(NEURON,curnode_id++,HIDDEN);
-			newnode->nodetrait=(*(traits.begin()));
+			newnode = new NNode(NEURON, curnode_id++, HIDDEN);
+			newnode->nodetrait = (*(traits.begin()));
 
 			//Create the new Genes
-			if (thelink->is_recurrent) {
-				newgene1=new Gene(traitptr,1.0,in_node,newnode,true,curinnov,0);
-				newgene2=new Gene(traitptr,oldweight,newnode,out_node,false,curinnov+1,0);
-				curinnov+=2.0;
+			if (thelink->is_recurrent)
+			{
+				newgene1 = new Gene(traitptr, 1.0, in_node, newnode, true, curinnov, 0);
+				newgene2 = new Gene(traitptr, oldweight, newnode, out_node, false, curinnov + 1, 0);
+				curinnov += 2.0;
 			}
-			else {
-				newgene1=new Gene(traitptr,1.0,in_node,newnode,false,curinnov,0);
-				newgene2=new Gene(traitptr,oldweight,newnode,out_node,false,curinnov+1,0);
-				curinnov+=2.0;
+			else
+			{
+				newgene1 = new Gene(traitptr, 1.0, in_node, newnode, false, curinnov, 0);
+				newgene2 = new Gene(traitptr, oldweight, newnode, out_node, false, curinnov + 1, 0);
+				curinnov += 2.0;
 			}
 
 			//Add the innovations (remember what was done)
-			innovs.push_back(new Innovation(in_node->node_id,out_node->node_id,curinnov-2.0,curinnov-1.0,newnode->node_id,(*thegene)->innovation_num));      
+			innovs.push_back(new Innovation(in_node->node_id, out_node->node_id, curinnov - 2.0, curinnov - 1.0, newnode->node_id, (*thegene)->innovation_num));
 
-			done=true;
+			done = true;
 		}
 
 		// We check to see if an innovation already occured that was:
@@ -1492,34 +1607,36 @@ bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,do
 		//   in this generation
 		//   so we make it match the original, identical mutation which occured
 		//   elsewhere in the population by coincidence 
-		else if (((*theinnov)->innovation_type==NEWNODE)&&
-			((*theinnov)->node_in_id==(in_node->node_id))&&
-			((*theinnov)->node_out_id==(out_node->node_id))&&
-			((*theinnov)->old_innov_num==(*thegene)->innovation_num)) 
+		else if (((*theinnov)->innovation_type == NEWNODE) &&
+			((*theinnov)->node_in_id == (in_node->node_id)) &&
+			((*theinnov)->node_out_id == (out_node->node_id)) &&
+			((*theinnov)->old_innov_num == (*thegene)->innovation_num))
 		{
 
 			//Here, the innovation has been done before
 
 			//Get the old link's trait
-			traitptr=thelink->linktrait;
+			traitptr = thelink->linktrait;
 
 			//Create the new NNode
-			newnode=new NNode(NEURON,(*theinnov)->newnode_id,HIDDEN);      
+			newnode = new NNode(NEURON, (*theinnov)->newnode_id, HIDDEN);
 			//By convention, it will point to the first trait
 			//Note: In future may want to change this
-			newnode->nodetrait=(*(traits.begin()));
+			newnode->nodetrait = (*(traits.begin()));
 
 			//Create the new Genes
-			if (thelink->is_recurrent) {
-				newgene1=new Gene(traitptr,1.0,in_node,newnode,true,(*theinnov)->innovation_num1,0);
-				newgene2=new Gene(traitptr,oldweight,newnode,out_node,false,(*theinnov)->innovation_num2,0);
+			if (thelink->is_recurrent)
+			{
+				newgene1 = new Gene(traitptr, 1.0, in_node, newnode, true, (*theinnov)->innovation_num1, 0);
+				newgene2 = new Gene(traitptr, oldweight, newnode, out_node, false, (*theinnov)->innovation_num2, 0);
 			}
-			else {
-				newgene1=new Gene(traitptr,1.0,in_node,newnode,false,(*theinnov)->innovation_num1,0);
-				newgene2=new Gene(traitptr,oldweight,newnode,out_node,false,(*theinnov)->innovation_num2,0);
+			else
+			{
+				newgene1 = new Gene(traitptr, 1.0, in_node, newnode, false, (*theinnov)->innovation_num1, 0);
+				newgene2 = new Gene(traitptr, oldweight, newnode, out_node, false, (*theinnov)->innovation_num2, 0);
 			}
 
-			done=true;
+			done = true;
 		}
 		else ++theinnov;
 	}
@@ -1527,24 +1644,25 @@ bool Genome::mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,do
 	//Now add the new NNode and new Genes to the Genome
 	//genes.push_back(newgene1);   //Old way to add genes- may result in genes becoming out of order
 	//genes.push_back(newgene2);
-	add_gene(genes,newgene1);  //Add genes in correct order
-	add_gene(genes,newgene2);
-	node_insert(nodes,newnode);
+	add_gene(genes, newgene1);  //Add genes in correct order
+	add_gene(genes, newgene2);
+	node_insert(nodes, newnode);
 
 	return true;
 
-} 
+}
 
-bool Genome::mutate_add_link(std::vector<Innovation*> &innovs,double &curinnov,int tries) {
+bool Genome::mutate_add_link(std::vector<Innovation*> &innovs, double &curinnov, int tries)
+{
 
-	int nodenum1,nodenum2;  //Random node numbers
-	std::vector<NNode*>::iterator thenode1,thenode2;  //Random node iterators
+	int nodenum1, nodenum2;  //Random node numbers
+	std::vector<NNode*>::iterator thenode1, thenode2;  //Random node iterators
 	int nodecount;  //Counter for finding nodes
 	int trycount; //Iterates over attempts to find an unconnected pair of nodes
 	NNode *nodep1{}; //Pointers to the nodes
 	NNode *nodep2{}; //Pointers to the nodes
 	std::vector<Gene*>::iterator thegene; //Searches for existing link
-	bool found=false;  //Tells whether an open pair was found
+	bool found = false;  //Tells whether an open pair was found
 	std::vector<Innovation*>::iterator theinnov; //For finding a historical match
 	int recurflag; //Indicates whether proposed link is recurrent
 	Gene *newgene{};  //The new Gene
@@ -1564,186 +1682,205 @@ bool Genome::mutate_add_link(std::vector<Innovation*> &innovs,double &curinnov,i
 	//Note that we check for recursion to control the frequency of
 	//adding recurrent links rather than to prevent any paricular
 	//kind of error
-	int thresh=(nodes.size())*(nodes.size());
-	int count=0;
+	int thresh = (nodes.size()) * (nodes.size());
+	int count = 0;
 
 	//Make attempts to find an unconnected pair
-	trycount=0;
+	trycount = 0;
 
 
 	//Decide whether to make this recurrent
-	if (randfloat()<NEAT::recur_only_prob) 
-		do_recur=true;
-	else do_recur=false;
+	if (randfloat() < NEAT::recur_only_prob)
+		do_recur = true;
+	else do_recur = false;
 
 	//Find the first non-sensor so that the to-node won't look at sensors as
 	//possible destinations
-	first_nonsensor=0;
-	thenode1=nodes.begin();
-	while(((*thenode1)->get_type())==SENSOR) {
+	first_nonsensor = 0;
+	thenode1 = nodes.begin();
+	while (((*thenode1)->get_type()) == SENSOR)
+	{
 		first_nonsensor++;
 		++thenode1;
 	}
 
 	//Here is the recurrent finder loop- it is done separately
-	if (do_recur) {
+	if (do_recur)
+	{
 
-		while(trycount<tries) {
+		while (trycount < tries)
+		{
 
 			//Some of the time try to make a recur loop
-			if (randfloat()>0.5) {
-				loop_recur=true;
+			if (randfloat() > 0.5)
+			{
+				loop_recur = true;
 			}
-			else loop_recur=false;
+			else loop_recur = false;
 
-			if (loop_recur) {
-				nodenum1=randint(first_nonsensor,nodes.size()-1);
-				nodenum2=nodenum1;
+			if (loop_recur)
+			{
+				nodenum1 = randint(first_nonsensor, nodes.size() - 1);
+				nodenum2 = nodenum1;
 			}
-			else {
+			else
+			{
 				//Choose random nodenums
-				nodenum1=randint(0,nodes.size()-1);
-				nodenum2=randint(first_nonsensor,nodes.size()-1);
+				nodenum1 = randint(0, nodes.size() - 1);
+				nodenum2 = randint(first_nonsensor, nodes.size() - 1);
 			}
 
 			//Find the first node
-			thenode1=nodes.begin();
-			for(nodecount=0;nodecount<nodenum1;nodecount++)
+			thenode1 = nodes.begin();
+			for (nodecount = 0; nodecount < nodenum1; nodecount++)
 				++thenode1;
 
 			//Find the second node
-			thenode2=nodes.begin();
-			for(nodecount=0;nodecount<nodenum2;nodecount++)
+			thenode2 = nodes.begin();
+			for (nodecount = 0; nodecount < nodenum2; nodecount++)
 				++thenode2;
 
-			nodep1=(*thenode1);
-			nodep2=(*thenode2);
+			nodep1 = (*thenode1);
+			nodep2 = (*thenode2);
 
 			//See if a recur link already exists  ALSO STOP AT END OF GENES!!!!
-			thegene=genes.begin();
-			while ((thegene!=genes.end()) && 
-				((nodep2->type)!=SENSOR) &&   //Don't allow SENSORS to get input
-				(!((((*thegene)->lnk)->in_node==nodep1)&&
-				(((*thegene)->lnk)->out_node==nodep2)&&
-				((*thegene)->lnk)->is_recurrent))) {
-					++thegene;
-				}
+			thegene = genes.begin();
+			while ((thegene != genes.end()) &&
+				((nodep2->type) != SENSOR) &&   //Don't allow SENSORS to get input
+				(!((((*thegene)->lnk)->in_node == nodep1) &&
+					(((*thegene)->lnk)->out_node == nodep2) &&
+					((*thegene)->lnk)->is_recurrent)))
+			{
+				++thegene;
+			}
 
-				if (thegene!=genes.end())
+			if (thegene != genes.end())
+				trycount++;
+			else
+			{
+				count = 0;
+				recurflag = phenotype->is_recur(nodep1->analogue, nodep2->analogue, count, thresh);
+
+				//ADDED: CONSIDER connections out of outputs recurrent
+				if (((nodep1->type) == OUTPUT) ||
+					((nodep2->type) == OUTPUT))
+					recurflag = true;
+
+				//Exit if the network is faulty (contains an infinite loop)
+				//NOTE: A loop doesn't really matter
+				//if (count>thresh) {
+				//  cout<<"LOOP DETECTED DURING A RECURRENCY CHECK"<<std::endl;
+				//  return false;
+				//}
+
+				//Make sure it finds the right kind of link (recur)
+				if (!(recurflag))
 					trycount++;
-				else {
-					count=0;
-					recurflag=phenotype->is_recur(nodep1->analogue,nodep2->analogue,count,thresh);
-
-					//ADDED: CONSIDER connections out of outputs recurrent
-					if (((nodep1->type)==OUTPUT)||
-						((nodep2->type)==OUTPUT))
-						recurflag=true;
-
-					//Exit if the network is faulty (contains an infinite loop)
-					//NOTE: A loop doesn't really matter
-					//if (count>thresh) {
-					//  cout<<"LOOP DETECTED DURING A RECURRENCY CHECK"<<std::endl;
-					//  return false;
-					//}
-
-					//Make sure it finds the right kind of link (recur)
-					if (!(recurflag))
-						trycount++;
-					else {
-						trycount=tries;
-						found=true;
-					}
-
+				else
+				{
+					trycount = tries;
+					found = true;
 				}
+
+			}
 
 		}
 	}
-	else {
+	else
+	{
 		//Loop to find a nonrecurrent link
-		while(trycount<tries) {
+		while (trycount < tries)
+		{
 
 			//cout<<"TRY "<<trycount<<std::endl;
 
 			//Choose random nodenums
-			nodenum1=randint(0,nodes.size()-1);
-			nodenum2=randint(first_nonsensor,nodes.size()-1);
+			nodenum1 = randint(0, nodes.size() - 1);
+			nodenum2 = randint(first_nonsensor, nodes.size() - 1);
 
 			//Find the first node
-			thenode1=nodes.begin();
-			for(nodecount=0;nodecount<nodenum1;nodecount++)
+			thenode1 = nodes.begin();
+			for (nodecount = 0; nodecount < nodenum1; nodecount++)
 				++thenode1;
 
 			//cout<<"RETRIEVED NODE# "<<(*thenode1)->node_id<<std::endl;
 
 			//Find the second node
-			thenode2=nodes.begin();
-			for(nodecount=0;nodecount<nodenum2;nodecount++)
+			thenode2 = nodes.begin();
+			for (nodecount = 0; nodecount < nodenum2; nodecount++)
 				++thenode2;
 
-			nodep1=(*thenode1);
-			nodep2=(*thenode2);
+			nodep1 = (*thenode1);
+			nodep2 = (*thenode2);
 
 			//See if a link already exists  ALSO STOP AT END OF GENES!!!!
-			thegene=genes.begin();
-			while ((thegene!=genes.end()) && 
-				((nodep2->type)!=SENSOR) &&   //Don't allow SENSORS to get input
-				(!((((*thegene)->lnk)->in_node==nodep1)&&
-				(((*thegene)->lnk)->out_node==nodep2)&&
-				(!(((*thegene)->lnk)->is_recurrent))))) {
-					++thegene;
+			thegene = genes.begin();
+			while ((thegene != genes.end()) &&
+				((nodep2->type) != SENSOR) &&   //Don't allow SENSORS to get input
+				(!((((*thegene)->lnk)->in_node == nodep1) &&
+					(((*thegene)->lnk)->out_node == nodep2) &&
+					(!(((*thegene)->lnk)->is_recurrent)))))
+			{
+				++thegene;
+			}
+
+			if (thegene != genes.end())
+				trycount++;
+			else
+			{
+
+				count = 0;
+				recurflag = phenotype->is_recur(nodep1->analogue, nodep2->analogue, count, thresh);
+
+				//ADDED: CONSIDER connections out of outputs recurrent
+				if (((nodep1->type) == OUTPUT) ||
+					((nodep2->type) == OUTPUT))
+					recurflag = true;
+
+				//Exit if the network is faulty (contains an infinite loop)
+				if (count > thresh)
+				{
+					//cout<<"LOOP DETECTED DURING A RECURRENCY CHECK"<<std::endl;
+					//return false;
 				}
 
-				if (thegene!=genes.end())
+				//Make sure it finds the right kind of link (recur or not)
+				if (recurflag)
 					trycount++;
-				else {
-
-					count=0;
-					recurflag=phenotype->is_recur(nodep1->analogue,nodep2->analogue,count,thresh);
-
-					//ADDED: CONSIDER connections out of outputs recurrent
-					if (((nodep1->type)==OUTPUT)||
-						((nodep2->type)==OUTPUT))
-						recurflag=true;
-
-					//Exit if the network is faulty (contains an infinite loop)
-					if (count>thresh) {
-						//cout<<"LOOP DETECTED DURING A RECURRENCY CHECK"<<std::endl;
-						//return false;
-					}
-
-					//Make sure it finds the right kind of link (recur or not)
-					if (recurflag)
-						trycount++;
-					else {
-						trycount=tries;
-						found=true;
-					}
-
+				else
+				{
+					trycount = tries;
+					found = true;
 				}
+
+			}
 
 		} //End of normal link finding loop
 	}
 
 	//Continue only if an open link was found
-	if (found) {
+	if (found)
+	{
 
 		//Check to see if this innovation already occured in the population
-		theinnov=innovs.begin();
+		theinnov = innovs.begin();
 
 		//If it was supposed to be recurrent, make sure it gets labeled that way
-		if (do_recur) recurflag=1;
+		if (do_recur) recurflag = 1;
 
-		done=false;
+		done = false;
 
-		while(!done) {
+		while (!done)
+		{
 
 			//The innovation is totally novel
-			if (theinnov==innovs.end()) {
+			if (theinnov == innovs.end())
+			{
 
 				//If the phenotype does not exist, exit on false,print error
 				//Note: This should never happen- if it does there is a bug
-				if (phenotype==0) {
+				if (phenotype == 0)
+				{
 					//cout<<"ERROR: Attempt to add link to genome with no phenotype"<<std::endl;
 					return false;
 				}
@@ -1765,38 +1902,40 @@ bool Genome::mutate_add_link(std::vector<Innovation*> &innovs,double &curinnov,i
 				//  if (randfloat()<recur_prob) recurflag=1;
 
 				//Choose a random trait
-				traitnum=randint(0,(traits.size())-1);
-				thetrait=traits.begin();
+				traitnum = randint(0, (traits.size()) - 1);
+				thetrait = traits.begin();
 
 				//Choose the new weight
 				//newweight=(gaussrand())/1.5;  //Could use a gaussian
-				newweight=randposneg()*randfloat()*1.0; //used to be 10.0
+				newweight = randposneg() * randfloat() * 1.0; //used to be 10.0
 
 				//Create the new gene
-				newgene=new Gene(((thetrait[traitnum])),newweight,nodep1,nodep2,recurflag,curinnov,newweight);
+				newgene = new Gene(((thetrait[traitnum])), newweight, nodep1, nodep2, recurflag, curinnov, newweight);
 
 				//Add the innovation
-				innovs.push_back(new Innovation(nodep1->node_id,nodep2->node_id,curinnov,newweight,traitnum));
+				innovs.push_back(new Innovation(nodep1->node_id, nodep2->node_id, curinnov, newweight, traitnum));
 
-				curinnov=curinnov+1.0;
+				curinnov = curinnov + 1.0;
 
-				done=true;
+				done = true;
 			}
 			//OTHERWISE, match the innovation in the innovs list
-			else if (((*theinnov)->innovation_type==NEWLINK)&&
-				((*theinnov)->node_in_id==(nodep1->node_id))&&
-				((*theinnov)->node_out_id==(nodep2->node_id))&&
-				((*theinnov)->recur_flag==(bool)recurflag)) {
+			else if (((*theinnov)->innovation_type == NEWLINK) &&
+				((*theinnov)->node_in_id == (nodep1->node_id)) &&
+				((*theinnov)->node_out_id == (nodep2->node_id)) &&
+				((*theinnov)->recur_flag == (bool)recurflag))
+			{
 
-					thetrait=traits.begin();
+				thetrait = traits.begin();
 
-					//Create new gene
-					newgene=new Gene(((thetrait[(*theinnov)->new_traitnum])),(*theinnov)->new_weight,nodep1,nodep2,recurflag,(*theinnov)->innovation_num1,0);
+				//Create new gene
+				newgene = new Gene(((thetrait[(*theinnov)->new_traitnum])), (*theinnov)->new_weight, nodep1, nodep2, recurflag, (*theinnov)->innovation_num1, 0);
 
-					done=true;
+				done = true;
 
-				}
-			else {
+			}
+			else
+			{
 				//Keep looking for a matching innovation from this generation
 				++theinnov;
 			}
@@ -1804,23 +1943,25 @@ bool Genome::mutate_add_link(std::vector<Innovation*> &innovs,double &curinnov,i
 
 		//Now add the new Genes to the Genome
 		//genes.push_back(newgene);  //Old way - could result in out-of-order innovation numbers in rtNEAT
-		add_gene(genes,newgene);  //Adds the gene in correct order
+		add_gene(genes, newgene);  //Adds the gene in correct order
 
 
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 
 }
 
 
-void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov) {
+void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs, double &curinnov)
+{
 
 	std::vector<NNode*> sensors;
 	std::vector<NNode*> outputs;
-	NNode *node;	
+	NNode *node;
 	NNode *sensor;
 	NNode *output;
 	Gene *gene;
@@ -1828,10 +1969,10 @@ void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov
 	double newweight = 0.0;
 	Gene* newgene;
 
-	int i,j; //counters
+	int i, j; //counters
 	bool found;
 
-	bool done;	
+	bool done;
 
 	int outputConnections;
 
@@ -1841,8 +1982,9 @@ void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov
 	std::vector<Innovation*>::iterator theinnov; //For finding a historical match
 
 	//Find all the sensors and outputs
-	for (i = 0; i < nodes.size(); i++) {
-		node=nodes[i];
+	for (i = 0; i < nodes.size(); i++)
+	{
+		node = nodes[i];
 
 		if ((node->type) == SENSOR)
 			sensors.push_back(node);
@@ -1851,22 +1993,25 @@ void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov
 	}
 
 	// eliminate from contention any sensors that are already connected
-    std::vector<NNode*>::iterator iter;
-	for (iter = sensors.begin(); iter != sensors.end(); ++iter) {	
+	std::vector<NNode*>::iterator iter;
+	for (iter = sensors.begin(); iter != sensors.end(); ++iter)
+	{
 		sensor = *iter;
 
-		outputConnections=0;
+		outputConnections = 0;
 
 
-		for (int j = 0; j < genes.size(); j++) {
-			gene=genes[j];
+		for (int j = 0; j < genes.size(); j++)
+		{
+			gene = genes[j];
 
 			if ((gene->lnk)->out_node->gen_node_label == OUTPUT)
-				outputConnections++;	
+				outputConnections++;
 
 		}
 
-		if (outputConnections == outputs.size()) {
+		if (outputConnections == outputs.size())
+		{
 			iter = sensors.erase(iter); //Does this work? remove by number from a vector?
 		}
 
@@ -1877,74 +2022,80 @@ void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov
 		return;
 
 	//Pick randomly from remaining sensors
-	sensor=sensors[randint(0,sensors.size()-1)];
+	sensor = sensors[randint(0, sensors.size() - 1)];
 
 	//Add new links to chosen sensor, avoiding redundancy
-	for (int i = 0; i < outputs.size(); i++) {
-		output=outputs[i];
+	for (int i = 0; i < outputs.size(); i++)
+	{
+		output = outputs[i];
 
-		found=false;
-		for (j = 0; j < genes.size(); j++) {
-			gene=genes[j];
-			if ((gene->lnk->in_node==sensor)&&
-				(gene->lnk->out_node==output))
-				found=true;	
+		found = false;
+		for (j = 0; j < genes.size(); j++)
+		{
+			gene = genes[j];
+			if ((gene->lnk->in_node == sensor) &&
+				(gene->lnk->out_node == output))
+				found = true;
 		}
 
 		//Record the innovation
-		if (!found) {
-			theinnov=innovs.begin();
-			done=false;
+		if (!found)
+		{
+			theinnov = innovs.begin();
+			done = false;
 
-			while (!done) {
+			while (!done)
+			{
 				//The innovation is novel
-				if (theinnov==innovs.end()) {
+				if (theinnov == innovs.end())
+				{
 
 					//Choose a random trait
-					traitnum=randint(0,(traits.size())-1);
-					thetrait=traits.begin();
+					traitnum = randint(0, (traits.size()) - 1);
+					thetrait = traits.begin();
 
 					//Choose the new weight
 					//newweight=(gaussrand())/1.5;  //Could use a gaussian
-					newweight=randposneg()*randfloat()*3.0; //used to be 10.0
+					newweight = randposneg() * randfloat() * 3.0; //used to be 10.0
 
 					//Create the new gene
-					newgene=new Gene(((thetrait[traitnum])),
-						newweight,sensor,output,false,
-						curinnov,newweight);
+					newgene = new Gene(((thetrait[traitnum])),
+						newweight, sensor, output, false,
+						curinnov, newweight);
 
 					//Add the innovation
 					innovs.push_back(new Innovation(sensor->node_id,
-						output->node_id,curinnov,newweight,traitnum));
+						output->node_id, curinnov, newweight, traitnum));
 
-					curinnov=curinnov+1.0;
+					curinnov = curinnov + 1.0;
 
-					done=true;
+					done = true;
 				} //end novel innovation case
 				//OTHERWISE, match the innovation in the innovs list
-				else if (((*theinnov)->innovation_type==NEWLINK)&&
-					((*theinnov)->node_in_id==(sensor->node_id))&&
-					((*theinnov)->node_out_id==(output->node_id))&&
-					((*theinnov)->recur_flag==false)) {
+				else if (((*theinnov)->innovation_type == NEWLINK) &&
+					((*theinnov)->node_in_id == (sensor->node_id)) &&
+					((*theinnov)->node_out_id == (output->node_id)) &&
+					((*theinnov)->recur_flag == false))
+				{
 
-						thetrait=traits.begin();
+					thetrait = traits.begin();
 
-						//Create new gene
-						newgene=
-							new Gene(((thetrait[(*theinnov)->new_traitnum])),
-							(*theinnov)->new_weight,sensor,output,
-							false,(*theinnov)->innovation_num1,0);
+					//Create new gene
+					newgene =
+						new Gene(((thetrait[(*theinnov)->new_traitnum])),
+							(*theinnov)->new_weight, sensor, output,
+							false, (*theinnov)->innovation_num1, 0);
 
-						done=true;
+					done = true;
 
-					} //end prior innovation case
-					//Keep looking for matching innovation
+				} //end prior innovation case
+				//Keep looking for matching innovation
 				else ++theinnov;
 
 			}  //end while
 
 			//genes.push_back(newgene);
-			add_gene(genes,newgene);  //adds the gene in correct order
+			add_gene(genes, newgene);  //adds the gene in correct order
 
 
 		} //end case where the gene didn't previously exist
@@ -1955,49 +2106,53 @@ void Genome::mutate_add_sensor(std::vector<Innovation*> &innovs,double &curinnov
 
 //Adds a new gene that has been created through a mutation in the
 //*correct order* into the list of genes in the genome
-void Genome::add_gene(std::vector<Gene*> &glist,Gene *g) {
-  std::vector<Gene*>::iterator curgene;
-  double p1innov;
+void Genome::add_gene(std::vector<Gene*> &glist, Gene *g)
+{
+	std::vector<Gene*>::iterator curgene;
+	double p1innov;
 
-  double inum=g->innovation_num;
+	double inum = g->innovation_num;
 
-  //std::cout<<"**ADDING GENE: "<<g->innovation_num<<std::endl;
+	//std::cout<<"**ADDING GENE: "<<g->innovation_num<<std::endl;
 
-  curgene=glist.begin();
-  while ((curgene!=glist.end())&&
-	 (((*curgene)->innovation_num)<inum)) {
-    //p1innov=(*curgene)->innovation_num;
-    //printf("Innov num: %f",p1innov);  
-    ++curgene;
+	curgene = glist.begin();
+	while ((curgene != glist.end()) &&
+		(((*curgene)->innovation_num) < inum))
+	{
+		//p1innov=(*curgene)->innovation_num;
+		//printf("Innov num: %f",p1innov);  
+		++curgene;
 
-    //Con::printf("looking gene %f", (*curgene)->innovation_num);
-  }
+		//Con::printf("looking gene %f", (*curgene)->innovation_num);
+	}
 
 
-  glist.insert(curgene,g);
+	glist.insert(curgene, g);
 
 }
 
 
-void Genome::node_insert(std::vector<NNode*> &nlist,NNode *n) {
+void Genome::node_insert(std::vector<NNode*> &nlist, NNode *n)
+{
 	std::vector<NNode*>::iterator curnode;
 
-	int id=n->node_id;
+	int id = n->node_id;
 
-	curnode=nlist.begin();
-	while ((curnode!=nlist.end())&&
-		(((*curnode)->node_id)<id)) 
+	curnode = nlist.begin();
+	while ((curnode != nlist.end()) &&
+		(((*curnode)->node_id) < id))
 		++curnode;
 
-	nlist.insert(curnode,n);
+	nlist.insert(curnode, n);
 
 }
 
-Genome *Genome::mate_multipoint(Genome *g,int genomeid,double fitness1,double fitness2, bool interspec_flag) {
+Genome *Genome::mate_multipoint(Genome *g, int genomeid, double fitness1, double fitness2, bool interspec_flag)
+{
 	//The baby Genome will contain these new Traits, NNodes, and Genes
-	std::vector<Trait*> newtraits; 
-	std::vector<NNode*> newnodes;   
-	std::vector<Gene*> newgenes;    
+	std::vector<Trait*> newtraits;
+	std::vector<NNode*> newnodes;
+	std::vector<Gene*> newgenes;
 	Genome *new_genome;
 
 	std::vector<Gene*>::iterator curgene2;  //Checks for link duplication
@@ -2023,7 +2178,7 @@ Genome *Genome::mate_multipoint(Genome *g,int genomeid,double fitness1,double fi
 
 	bool disable;  //Set to true if we want to disabled a chosen gene
 
-	disable=false;
+	disable = false;
 	Gene *newgene;
 
 	bool p1better; //Tells if the first genome (this one) has better fitness or not
@@ -2033,9 +2188,10 @@ Genome *Genome::mate_multipoint(Genome *g,int genomeid,double fitness1,double fi
 	//First, average the Traits from the 2 parents to form the baby's Traits
 	//It is assumed that trait lists are the same length
 	//In the future, may decide on a different method for trait mating
-	p2trait=(g->traits).begin();
-	for(p1trait=traits.begin();p1trait!=traits.end();++p1trait) {
-		newtrait=new Trait(*p1trait,*p2trait);  //Construct by averaging
+	p2trait = (g->traits).begin();
+	for (p1trait = traits.begin(); p1trait != traits.end(); ++p1trait)
+	{
+		newtrait = new Trait(*p1trait, *p2trait);  //Construct by averaging
 		newtraits.push_back(newtrait);
 		++p2trait;
 	}
@@ -2043,249 +2199,274 @@ Genome *Genome::mate_multipoint(Genome *g,int genomeid,double fitness1,double fi
 	//Figure out which genome is better
 	//The worse genome should not be allowed to add extra structural baggage
 	//If they are the same, use the smaller one's disjoint and excess genes only
-	if (fitness1>fitness2) 
-		p1better=true;
-	else if (fitness1==fitness2) {
-		if (genes.size()<(g->genes.size()))
-			p1better=true;
-		else p1better=false;
+	if (fitness1 > fitness2)
+		p1better = true;
+	else if (fitness1 == fitness2)
+	{
+		if (genes.size() < (g->genes.size()))
+			p1better = true;
+		else p1better = false;
 	}
-	else 
-		p1better=false;
+	else
+		p1better = false;
 
 	//NEW 3/17/03 Make sure all sensors and outputs are included
-	for(curnode=(g->nodes).begin();curnode!=(g->nodes).end();++curnode) {
-		if ((((*curnode)->gen_node_label)==INPUT)||
-			(((*curnode)->gen_node_label)==BIAS)||
-			(((*curnode)->gen_node_label)==OUTPUT)) {
-				if (!((*curnode)->nodetrait)) nodetraitnum=0;
-				else
-					nodetraitnum=(((*curnode)->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;
+	for (curnode = (g->nodes).begin(); curnode != (g->nodes).end(); ++curnode)
+	{
+		if ((((*curnode)->gen_node_label) == INPUT) ||
+			(((*curnode)->gen_node_label) == BIAS) ||
+			(((*curnode)->gen_node_label) == OUTPUT))
+		{
+			if (!((*curnode)->nodetrait)) nodetraitnum = 0;
+			else
+				nodetraitnum = (((*curnode)->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
 
-				//Create a new node off the sensor or output
-				new_onode=new NNode((*curnode),newtraits[nodetraitnum]);
+			//Create a new node off the sensor or output
+			new_onode = new NNode((*curnode), newtraits[nodetraitnum]);
 
-				//Add the new node
-				node_insert(newnodes,new_onode);
+			//Add the new node
+			node_insert(newnodes, new_onode);
 
-			}
+		}
 
 	}
 
 
 	//Now move through the Genes of each parent until both genomes end
-	p1gene=genes.begin();
-	p2gene=(g->genes).begin();
-	while(!((p1gene==genes.end())&&
-		(p2gene==(g->genes).end()))) {
+	p1gene = genes.begin();
+	p2gene = (g->genes).begin();
+	while (!((p1gene == genes.end()) &&
+		(p2gene == (g->genes).end())))
+	{
 
 
-			skip=false;  //Default to not skipping a chosen gene
+		skip = false;  //Default to not skipping a chosen gene
 
-			if (p1gene==genes.end()) {
-				chosengene=*p2gene;
-				++p2gene;
-				if (p1better) skip=true;  //Skip excess from the worse genome
-			}
-			else if (p2gene==(g->genes).end()) {
-				chosengene=*p1gene;
-				++p1gene;
-				if (!p1better) skip=true; //Skip excess from the worse genome
-			}
-			else {
-				//Extract current innovation numbers
-				p1innov=(*p1gene)->innovation_num;
-				p2innov=(*p2gene)->innovation_num;
+		if (p1gene == genes.end())
+		{
+			chosengene = *p2gene;
+			++p2gene;
+			if (p1better) skip = true;  //Skip excess from the worse genome
+		}
+		else if (p2gene == (g->genes).end())
+		{
+			chosengene = *p1gene;
+			++p1gene;
+			if (!p1better) skip = true; //Skip excess from the worse genome
+		}
+		else
+		{
+			//Extract current innovation numbers
+			p1innov = (*p1gene)->innovation_num;
+			p2innov = (*p2gene)->innovation_num;
 
-				if (p1innov==p2innov) {
-					if (randfloat()<0.5) {
-						chosengene=*p1gene;
-					}
-					else {
-						chosengene=*p2gene;
-					}
-
-					//If one is disabled, the corresponding gene in the offspring
-					//will likely be disabled
-					if ((((*p1gene)->enable)==false)||
-						(((*p2gene)->enable)==false)) 
-						if (randfloat()<0.75) disable=true;
-
-					++p1gene;
-					++p2gene;
-
+			if (p1innov == p2innov)
+			{
+				if (randfloat() < 0.5)
+				{
+					chosengene = *p1gene;
 				}
-				else if (p1innov<p2innov) {
-					chosengene=*p1gene;
-					++p1gene;
-
-					if (!p1better) skip=true;
-
-				}
-				else if (p2innov<p1innov) {
-					chosengene=*p2gene;
-					++p2gene;
-					if (p1better) skip=true;
-				}
-			}
-
-			/*
-			//Uncomment this line to let growth go faster (from both parents excesses)
-			skip=false;
-
-			//For interspecies mating, allow all genes through:
-			if (interspec_flag)
-				skip=false;
-			*/
-
-			//Check to see if the chosengene conflicts with an already chosen gene
-			//i.e. do they represent the same link    
-			curgene2=newgenes.begin();
-			while ((curgene2!=newgenes.end())&&
-				(!((((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-				(((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&((((*curgene2)->lnk)->is_recurrent)== (((chosengene)->lnk)->is_recurrent)) ))&&
-				(!((((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&
-				(((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-				(!((((*curgene2)->lnk)->is_recurrent)))&&
-				(!((((chosengene)->lnk)->is_recurrent))) )))
-			{	
-				++curgene2;
-			}
-
-			if (curgene2!=newgenes.end()) skip=true;  //Links conflicts, abort adding
-
-			if (!skip) {
-
-				//Now add the chosengene to the baby
-
-				//First, get the trait pointer
-				if ((((chosengene->lnk)->linktrait))==0) traitnum=(*(traits.begin()))->trait_id - 1; 
 				else
-					traitnum=(((chosengene->lnk)->linktrait)->trait_id)-(*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
-
-				//Next check for the nodes, add them if not in the baby Genome already
-				inode=(chosengene->lnk)->in_node;
-				onode=(chosengene->lnk)->out_node;
-
-				//Check for inode in the newnodes list
-				if (inode->node_id<onode->node_id) {
-					//inode before onode
-
-					//Checking for inode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=inode->node_id)) 
-						++curnode;
-
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//(normalized trait number for new NNode)
-
-						//old buggy version:
-						// if (!(onode->nodetrait)) nodetraitnum=((*(traits.begin()))->trait_id);
-						if (!(inode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((inode->nodetrait)->trait_id)-((*(traits.begin()))->trait_id);			       
-
-						new_inode=new NNode(inode,newtraits[nodetraitnum]);
-						node_insert(newnodes,new_inode);
-
-					}
-					else {
-						new_inode=(*curnode);
-
-					}
-
-					//Checking for onode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=onode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-
-						if (!(onode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
-
-						new_onode=new NNode(onode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_onode);
-
-					}
-					else {
-						new_onode=(*curnode);
-					}
-
+				{
+					chosengene = *p2gene;
 				}
-				//If the onode has a higher id than the inode we want to add it first
-				else {
-					//Checking for onode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=onode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-						if (!(onode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
 
-						new_onode=new NNode(onode,newtraits[nodetraitnum]);
-						//newnodes.push_back(new_onode);
-						node_insert(newnodes,new_onode);
+				//If one is disabled, the corresponding gene in the offspring
+				//will likely be disabled
+				if ((((*p1gene)->enable) == false) ||
+					(((*p2gene)->enable) == false))
+					if (randfloat() < 0.75) disable = true;
 
-					}
-					else {
-						new_onode=(*curnode);
+				++p1gene;
+				++p2gene;
 
-					}
-
-					//Checking for inode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=inode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-						if (!(inode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((inode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			    
-
-						new_inode=new NNode(inode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_inode);
-
-					}
-					else {
-						new_inode=(*curnode);
-
-					}
-
-				} //End NNode checking section- NNodes are now in new Genome
-
-				//Add the Gene
-				newgene=new Gene(chosengene,newtraits[traitnum],new_inode,new_onode);
-				if (disable) {
-					newgene->enable=false;
-					disable=false;
-				}
-				newgenes.push_back(newgene);
 			}
+			else if (p1innov < p2innov)
+			{
+				chosengene = *p1gene;
+				++p1gene;
 
+				if (!p1better) skip = true;
+
+			}
+			else if (p2innov < p1innov)
+			{
+				chosengene = *p2gene;
+				++p2gene;
+				if (p1better) skip = true;
+			}
 		}
 
-		new_genome=new Genome(genomeid,newtraits,newnodes,newgenes);
+		/*
+		//Uncomment this line to let growth go faster (from both parents excesses)
+		skip=false;
 
-		//Return the baby Genome
-		return (new_genome);
+		//For interspecies mating, allow all genes through:
+		if (interspec_flag)
+			skip=false;
+		*/
+
+		//Check to see if the chosengene conflicts with an already chosen gene
+		//i.e. do they represent the same link    
+		curgene2 = newgenes.begin();
+		while ((curgene2 != newgenes.end()) &&
+			(!((((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+				(((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) && ((((*curgene2)->lnk)->is_recurrent) == (((chosengene)->lnk)->is_recurrent)))) &&
+			(!((((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) &&
+				(((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+				(!((((*curgene2)->lnk)->is_recurrent))) &&
+				(!((((chosengene)->lnk)->is_recurrent))))))
+		{
+			++curgene2;
+		}
+
+		if (curgene2 != newgenes.end()) skip = true;  //Links conflicts, abort adding
+
+		if (!skip)
+		{
+
+			//Now add the chosengene to the baby
+
+			//First, get the trait pointer
+			if ((((chosengene->lnk)->linktrait)) == 0) traitnum = (*(traits.begin()))->trait_id - 1;
+			else
+				traitnum = (((chosengene->lnk)->linktrait)->trait_id) - (*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
+
+			//Next check for the nodes, add them if not in the baby Genome already
+			inode = (chosengene->lnk)->in_node;
+			onode = (chosengene->lnk)->out_node;
+
+			//Check for inode in the newnodes list
+			if (inode->node_id < onode->node_id)
+			{
+				//inode before onode
+
+				//Checking for inode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
+					++curnode;
+
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//(normalized trait number for new NNode)
+
+					//old buggy version:
+					// if (!(onode->nodetrait)) nodetraitnum=((*(traits.begin()))->trait_id);
+					if (!(inode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((inode->nodetrait)->trait_id) - ((*(traits.begin()))->trait_id);
+
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
+					node_insert(newnodes, new_inode);
+
+				}
+				else
+				{
+					new_inode = (*curnode);
+
+				}
+
+				//Checking for onode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+
+					if (!(onode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_onode);
+
+				}
+				else
+				{
+					new_onode = (*curnode);
+				}
+
+			}
+			//If the onode has a higher id than the inode we want to add it first
+			else
+			{
+				//Checking for onode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+					if (!(onode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+					//newnodes.push_back(new_onode);
+					node_insert(newnodes, new_onode);
+
+				}
+				else
+				{
+					new_onode = (*curnode);
+
+				}
+
+				//Checking for inode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+					if (!(inode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((inode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_inode);
+
+				}
+				else
+				{
+					new_inode = (*curnode);
+
+				}
+
+			} //End NNode checking section- NNodes are now in new Genome
+
+			//Add the Gene
+			newgene = new Gene(chosengene, newtraits[traitnum], new_inode, new_onode);
+			if (disable)
+			{
+				newgene->enable = false;
+				disable = false;
+			}
+			newgenes.push_back(newgene);
+		}
+
+	}
+
+	new_genome = new Genome(genomeid, newtraits, newnodes, newgenes);
+
+	//Return the baby Genome
+	return (new_genome);
 
 }
 
-Genome *Genome::mate_multipoint_avg(Genome *g,int genomeid,double fitness1,double fitness2,bool interspec_flag) {
+Genome *Genome::mate_multipoint_avg(Genome *g, int genomeid, double fitness1, double fitness2, bool interspec_flag)
+{
 	//The baby Genome will contain these new Traits, NNodes, and Genes
 	std::vector<Trait*> newtraits;
 	std::vector<NNode*> newnodes;
@@ -2336,299 +2517,322 @@ Genome *Genome::mate_multipoint_avg(Genome *g,int genomeid,double fitness1,doubl
 	//First, average the Traits from the 2 parents to form the baby's Traits
 	//It is assumed that trait lists are the same length
 	//In future, could be done differently
-	p2trait=(g->traits).begin();
-	for(p1trait=traits.begin();p1trait!=traits.end();++p1trait) {
-		newtrait=new Trait(*p1trait,*p2trait);  //Construct by averaging
+	p2trait = (g->traits).begin();
+	for (p1trait = traits.begin(); p1trait != traits.end(); ++p1trait)
+	{
+		newtrait = new Trait(*p1trait, *p2trait);  //Construct by averaging
 		newtraits.push_back(newtrait);
 		++p2trait;
 	}
 
 	//Set up the avgene
-	avgene=new Gene(0,0,0,0,0,0,0);
+	avgene = new Gene(0, 0, 0, 0, 0, 0, 0);
 
 	//NEW 3/17/03 Make sure all sensors and outputs are included
-	for(curnode=(g->nodes).begin();curnode!=(g->nodes).end();++curnode) {
-		if ((((*curnode)->gen_node_label)==INPUT)||
-			(((*curnode)->gen_node_label)==OUTPUT)||
-			(((*curnode)->gen_node_label)==BIAS)) {
-				if (!((*curnode)->nodetrait)) nodetraitnum=0;
-				else
-					nodetraitnum=(((*curnode)->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;
+	for (curnode = (g->nodes).begin(); curnode != (g->nodes).end(); ++curnode)
+	{
+		if ((((*curnode)->gen_node_label) == INPUT) ||
+			(((*curnode)->gen_node_label) == OUTPUT) ||
+			(((*curnode)->gen_node_label) == BIAS))
+		{
+			if (!((*curnode)->nodetrait)) nodetraitnum = 0;
+			else
+				nodetraitnum = (((*curnode)->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
 
-				//Create a new node off the sensor or output
-				new_onode=new NNode((*curnode),newtraits[nodetraitnum]);
+			//Create a new node off the sensor or output
+			new_onode = new NNode((*curnode), newtraits[nodetraitnum]);
 
-				//Add the new node
-				node_insert(newnodes,new_onode);
+			//Add the new node
+			node_insert(newnodes, new_onode);
 
-			}
+		}
 
 	}
 
 	//Figure out which genome is better
 	//The worse genome should not be allowed to add extra structural baggage
 	//If they are the same, use the smaller one's disjoint and excess genes only
-	if (fitness1>fitness2) 
-		p1better=true;
-	else if (fitness1==fitness2) {
-		if (genes.size()<(g->genes.size()))
-			p1better=true;
-		else p1better=false;
+	if (fitness1 > fitness2)
+		p1better = true;
+	else if (fitness1 == fitness2)
+	{
+		if (genes.size() < (g->genes.size()))
+			p1better = true;
+		else p1better = false;
 	}
-	else 
-		p1better=false;
+	else
+		p1better = false;
 
 
 	//Now move through the Genes of each parent until both genomes end
-	p1gene=genes.begin();
-	p2gene=(g->genes).begin();
-	while(!((p1gene==genes.end())&&
-		(p2gene==(g->genes).end()))) {
+	p1gene = genes.begin();
+	p2gene = (g->genes).begin();
+	while (!((p1gene == genes.end()) &&
+		(p2gene == (g->genes).end())))
+	{
 
-			avgene->enable=true;  //Default to enabled
+		avgene->enable = true;  //Default to enabled
 
-			skip=false;
+		skip = false;
 
-			if (p1gene==genes.end()) {
-				chosengene=*p2gene;
-				++p2gene;
+		if (p1gene == genes.end())
+		{
+			chosengene = *p2gene;
+			++p2gene;
 
-				if (p1better) skip=true;
-
-			}
-			else if (p2gene==(g->genes).end()) {
-				chosengene=*p1gene;
-				++p1gene;
-
-				if (!p1better) skip=true;
-			}
-			else {
-				//Extract current innovation numbers
-				p1innov=(*p1gene)->innovation_num;
-				p2innov=(*p2gene)->innovation_num;
-
-				if (p1innov==p2innov) {
-					//Average them into the avgene
-					if (randfloat()>0.5) (avgene->lnk)->linktrait=((*p1gene)->lnk)->linktrait;
-					else (avgene->lnk)->linktrait=((*p2gene)->lnk)->linktrait;
-
-					//WEIGHTS AVERAGED HERE
-					(avgene->lnk)->weight=(((*p1gene)->lnk)->weight+((*p2gene)->lnk)->weight)/2.0;
-
-				
-
-					////BLX-alpha method (Eschelman et al 1993)
-					////Not used in this implementation, but the commented code works
-					////with alpha=0.5, this will produce babies evenly in exploitation and exploration space
-					////and uniformly distributed throughout
-					//blx_alpha=-0.4;
-					//w1=(((*p1gene)->lnk)->weight);
-					//w2=(((*p2gene)->lnk)->weight);
-					//if (w1>w2) {
-					//blx_max=w1; blx_min=w2;
-					//}
-					//else {
-					//blx_max=w2; blx_min=w1;
-					//}
-					//blx_range=blx_max-blx_min;
-					//blx_explore=blx_alpha*blx_range;
-					////Now extend the range into the exploraton space
-					//blx_min-=blx_explore;
-					//blx_max+=blx_explore;
-					//blx_range=blx_max-blx_min;
-					////Set the weight in the new range
-					//(avgene->lnk)->weight=blx_min+blx_pos*blx_range;
-					//
-
-					if (randfloat()>0.5) (avgene->lnk)->in_node=((*p1gene)->lnk)->in_node;
-					else (avgene->lnk)->in_node=((*p2gene)->lnk)->in_node;
-
-					if (randfloat()>0.5) (avgene->lnk)->out_node=((*p1gene)->lnk)->out_node;
-					else (avgene->lnk)->out_node=((*p2gene)->lnk)->out_node;
-
-					if (randfloat()>0.5) (avgene->lnk)->is_recurrent=((*p1gene)->lnk)->is_recurrent;
-					else (avgene->lnk)->is_recurrent=((*p2gene)->lnk)->is_recurrent;
-
-					avgene->innovation_num=(*p1gene)->innovation_num;
-					avgene->mutation_num=((*p1gene)->mutation_num+(*p2gene)->mutation_num)/2.0;
-
-					if ((((*p1gene)->enable)==false)||
-						(((*p2gene)->enable)==false)) 
-						if (randfloat()<0.75) avgene->enable=false;
-
-					chosengene=avgene;
-					++p1gene;
-					++p2gene;
-				}
-				else if (p1innov<p2innov) {
-					chosengene=*p1gene;
-					++p1gene;
-
-					if (!p1better) skip=true;
-				}
-				else if (p2innov<p1innov) {
-					chosengene=*p2gene;
-					++p2gene;
-
-					if (p1better) skip=true;
-				}
-			}
-
-			/*
-			//THIS LINE MUST BE DELETED TO SLOW GROWTH
-			skip=false;
-
-			//For interspecies mating, allow all genes through:
-			if (interspec_flag)
-				skip=false;
-			*/
-
-			//Check to see if the chosengene conflicts with an already chosen gene
-			//i.e. do they represent the same link    
-			curgene2=newgenes.begin();
-			while ((curgene2!=newgenes.end()))
-
-			{
-
-				if (((((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-					(((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&
-					((((*curgene2)->lnk)->is_recurrent)== (((chosengene)->lnk)->is_recurrent)))||
-					((((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-					(((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&
-					(!((((*curgene2)->lnk)->is_recurrent)))&&
-					(!((((chosengene)->lnk)->is_recurrent)))     ))
-				{ 
-					skip=true;
-
-				}
-				++curgene2;
-			}
-
-			if (!skip) {
-
-				//Now add the chosengene to the baby
-
-				//First, get the trait pointer
-				if ((((chosengene->lnk)->linktrait))==0) traitnum=(*(traits.begin()))->trait_id - 1;
-				else
-					traitnum=(((chosengene->lnk)->linktrait)->trait_id)-(*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
-
-				//Next check for the nodes, add them if not in the baby Genome already
-				inode=(chosengene->lnk)->in_node;
-				onode=(chosengene->lnk)->out_node;
-
-				//Check for inode in the newnodes list
-				if (inode->node_id<onode->node_id) {
-
-					//Checking for inode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=inode->node_id)) 
-						++curnode;
-
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-
-						if (!(inode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((inode->nodetrait)->trait_id)-((*(traits.begin()))->trait_id);			       
-
-						new_inode=new NNode(inode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_inode);
-					}
-					else {
-						new_inode=(*curnode);
-
-					}
-
-					//Checking for onode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=onode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-
-						if (!(onode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			
-						new_onode=new NNode(onode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_onode);
-					}
-					else {
-						new_onode=(*curnode);
-					}
-				}
-				//If the onode has a higher id than the inode we want to add it first
-				else {
-					//Checking for onode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=onode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-						if (!(onode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
-
-						new_onode=new NNode(onode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_onode);
-					}
-					else {
-						new_onode=(*curnode);
-					}
-
-					//Checking for inode's existence
-					curnode=newnodes.begin();
-					while((curnode!=newnodes.end())&&
-						((*curnode)->node_id!=inode->node_id)) 
-						++curnode;
-					if (curnode==newnodes.end()) {
-						//Here we know the node doesn't exist so we have to add it
-						//normalized trait number for new NNode
-						if (!(inode->nodetrait)) nodetraitnum=0;
-						else
-							nodetraitnum=((inode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
-
-						new_inode=new NNode(inode,newtraits[nodetraitnum]);
-
-						node_insert(newnodes,new_inode);
-					}
-					else {
-						new_inode=(*curnode);
-
-					}
-
-				} //End NNode checking section- NNodes are now in new Genome
-
-				//Add the Gene
-				newgene=new Gene(chosengene,newtraits[traitnum],new_inode,new_onode);
-
-				newgenes.push_back(newgene);
-
-			}  //End if which checked for link duplicationb
+			if (p1better) skip = true;
 
 		}
+		else if (p2gene == (g->genes).end())
+		{
+			chosengene = *p1gene;
+			++p1gene;
 
-		delete avgene;  //Clean up used object
+			if (!p1better) skip = true;
+		}
+		else
+		{
+			//Extract current innovation numbers
+			p1innov = (*p1gene)->innovation_num;
+			p2innov = (*p2gene)->innovation_num;
 
-		//Return the baby Genome
-		return (new Genome(genomeid,newtraits,newnodes,newgenes));
+			if (p1innov == p2innov)
+			{
+				//Average them into the avgene
+				if (randfloat() > 0.5) (avgene->lnk)->linktrait = ((*p1gene)->lnk)->linktrait;
+				else (avgene->lnk)->linktrait = ((*p2gene)->lnk)->linktrait;
+
+				//WEIGHTS AVERAGED HERE
+				(avgene->lnk)->weight = (((*p1gene)->lnk)->weight + ((*p2gene)->lnk)->weight) / 2.0;
+
+
+
+				////BLX-alpha method (Eschelman et al 1993)
+				////Not used in this implementation, but the commented code works
+				////with alpha=0.5, this will produce babies evenly in exploitation and exploration space
+				////and uniformly distributed throughout
+				//blx_alpha=-0.4;
+				//w1=(((*p1gene)->lnk)->weight);
+				//w2=(((*p2gene)->lnk)->weight);
+				//if (w1>w2) {
+				//blx_max=w1; blx_min=w2;
+				//}
+				//else {
+				//blx_max=w2; blx_min=w1;
+				//}
+				//blx_range=blx_max-blx_min;
+				//blx_explore=blx_alpha*blx_range;
+				////Now extend the range into the exploraton space
+				//blx_min-=blx_explore;
+				//blx_max+=blx_explore;
+				//blx_range=blx_max-blx_min;
+				////Set the weight in the new range
+				//(avgene->lnk)->weight=blx_min+blx_pos*blx_range;
+				//
+
+				if (randfloat() > 0.5) (avgene->lnk)->in_node = ((*p1gene)->lnk)->in_node;
+				else (avgene->lnk)->in_node = ((*p2gene)->lnk)->in_node;
+
+				if (randfloat() > 0.5) (avgene->lnk)->out_node = ((*p1gene)->lnk)->out_node;
+				else (avgene->lnk)->out_node = ((*p2gene)->lnk)->out_node;
+
+				if (randfloat() > 0.5) (avgene->lnk)->is_recurrent = ((*p1gene)->lnk)->is_recurrent;
+				else (avgene->lnk)->is_recurrent = ((*p2gene)->lnk)->is_recurrent;
+
+				avgene->innovation_num = (*p1gene)->innovation_num;
+				avgene->mutation_num = ((*p1gene)->mutation_num + (*p2gene)->mutation_num) / 2.0;
+
+				if ((((*p1gene)->enable) == false) ||
+					(((*p2gene)->enable) == false))
+					if (randfloat() < 0.75) avgene->enable = false;
+
+				chosengene = avgene;
+				++p1gene;
+				++p2gene;
+			}
+			else if (p1innov < p2innov)
+			{
+				chosengene = *p1gene;
+				++p1gene;
+
+				if (!p1better) skip = true;
+			}
+			else if (p2innov < p1innov)
+			{
+				chosengene = *p2gene;
+				++p2gene;
+
+				if (p1better) skip = true;
+			}
+		}
+
+		/*
+		//THIS LINE MUST BE DELETED TO SLOW GROWTH
+		skip=false;
+
+		//For interspecies mating, allow all genes through:
+		if (interspec_flag)
+			skip=false;
+		*/
+
+		//Check to see if the chosengene conflicts with an already chosen gene
+		//i.e. do they represent the same link    
+		curgene2 = newgenes.begin();
+		while ((curgene2 != newgenes.end()))
+
+		{
+
+			if (((((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+				(((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) &&
+				((((*curgene2)->lnk)->is_recurrent) == (((chosengene)->lnk)->is_recurrent))) ||
+				((((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+					(((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) &&
+					(!((((*curgene2)->lnk)->is_recurrent))) &&
+					(!((((chosengene)->lnk)->is_recurrent)))))
+			{
+				skip = true;
+
+			}
+			++curgene2;
+		}
+
+		if (!skip)
+		{
+
+			//Now add the chosengene to the baby
+
+			//First, get the trait pointer
+			if ((((chosengene->lnk)->linktrait)) == 0) traitnum = (*(traits.begin()))->trait_id - 1;
+			else
+				traitnum = (((chosengene->lnk)->linktrait)->trait_id) - (*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
+
+			//Next check for the nodes, add them if not in the baby Genome already
+			inode = (chosengene->lnk)->in_node;
+			onode = (chosengene->lnk)->out_node;
+
+			//Check for inode in the newnodes list
+			if (inode->node_id < onode->node_id)
+			{
+
+				//Checking for inode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
+					++curnode;
+
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+
+					if (!(inode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((inode->nodetrait)->trait_id) - ((*(traits.begin()))->trait_id);
+
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_inode);
+				}
+				else
+				{
+					new_inode = (*curnode);
+
+				}
+
+				//Checking for onode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+
+					if (!(onode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_onode);
+				}
+				else
+				{
+					new_onode = (*curnode);
+				}
+			}
+			//If the onode has a higher id than the inode we want to add it first
+			else
+			{
+				//Checking for onode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+					if (!(onode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_onode);
+				}
+				else
+				{
+					new_onode = (*curnode);
+				}
+
+				//Checking for inode's existence
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
+					++curnode;
+				if (curnode == newnodes.end())
+				{
+					//Here we know the node doesn't exist so we have to add it
+					//normalized trait number for new NNode
+					if (!(inode->nodetrait)) nodetraitnum = 0;
+					else
+						nodetraitnum = ((inode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
+
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
+
+					node_insert(newnodes, new_inode);
+				}
+				else
+				{
+					new_inode = (*curnode);
+
+				}
+
+			} //End NNode checking section- NNodes are now in new Genome
+
+			//Add the Gene
+			newgene = new Gene(chosengene, newtraits[traitnum], new_inode, new_onode);
+
+			newgenes.push_back(newgene);
+
+		}  //End if which checked for link duplicationb
+
+	}
+
+	delete avgene;  //Clean up used object
+
+	//Return the baby Genome
+	return (new Genome(genomeid, newtraits, newnodes, newgenes));
 
 }
 
-Genome *Genome::mate_singlepoint(Genome *g,int genomeid) {
+Genome *Genome::mate_singlepoint(Genome *g, int genomeid)
+{
 	//The baby Genome will contain these new Traits, NNodes, and Genes
-	std::vector<Trait*> newtraits; 
-	std::vector<NNode*> newnodes;   
-	std::vector<Gene*> newgenes;    
+	std::vector<Trait*> newtraits;
+	std::vector<NNode*> newnodes;
+	std::vector<Gene*> newgenes;
 
 	//iterators for moving through the two parents' traits
 	std::vector<Trait*>::iterator p1trait;
@@ -2663,250 +2867,276 @@ Genome *Genome::mate_singlepoint(Genome *g,int genomeid) {
 
 	//First, average the Traits from the 2 parents to form the baby's Traits
 	//It is assumed that trait lists are the same length
-	p2trait=(g->traits).begin();
-	for(p1trait=traits.begin();p1trait!=traits.end();++p1trait) {
-		newtrait=new Trait(*p1trait,*p2trait);  //Construct by averaging
+	p2trait = (g->traits).begin();
+	for (p1trait = traits.begin(); p1trait != traits.end(); ++p1trait)
+	{
+		newtrait = new Trait(*p1trait, *p2trait);  //Construct by averaging
 		newtraits.push_back(newtrait);
 		++p2trait;
 	}
 
 	//Set up the avgene
-	avgene=new Gene(0,0,0,0,0,0,0);
+	avgene = new Gene(0, 0, 0, 0, 0, 0, 0);
 
 	//Decide where to cross  (p1gene will always be in smaller Genome)
-	if (genes.size()<(g->genes).size()) {
-		crosspoint=randint(0,(genes.size())-1);
-		p1gene=genes.begin();
-		p2gene=(g->genes).begin();
-		stopper=(g->genes).end();
-		p1stop=genes.end();
-		p2stop=(g->genes).end();
+	if (genes.size() < (g->genes).size())
+	{
+		crosspoint = randint(0, (genes.size()) - 1);
+		p1gene = genes.begin();
+		p2gene = (g->genes).begin();
+		stopper = (g->genes).end();
+		p1stop = genes.end();
+		p2stop = (g->genes).end();
 	}
-	else {
-		crosspoint=randint(0,((g->genes).size())-1);
-		p2gene=genes.begin();
-		p1gene=(g->genes).begin();
-		stopper=genes.end();
-		p1stop=(g->genes.end());
-		p2stop=genes.end();
+	else
+	{
+		crosspoint = randint(0, ((g->genes).size()) - 1);
+		p2gene = genes.begin();
+		p1gene = (g->genes).begin();
+		stopper = genes.end();
+		p1stop = (g->genes.end());
+		p2stop = genes.end();
 	}
 
-	genecounter=0;  //Ready to count to crosspoint
+	genecounter = 0;  //Ready to count to crosspoint
 
-	skip=false;  //Default to not skip a Gene
+	skip = false;  //Default to not skip a Gene
 	//Note that we skip when we are on the wrong Genome before
 	//crossing
 
 	//Now move through the Genes of each parent until both genomes end
-	while(p2gene!=stopper) {
+	while (p2gene != stopper)
+	{
 
-		avgene->enable=true;  //Default to true
+		avgene->enable = true;  //Default to true
 
-		if (p1gene==p1stop) {
-			chosengene=*p2gene;
+		if (p1gene == p1stop)
+		{
+			chosengene = *p2gene;
 			++p2gene;
 		}
-		else if (p2gene==p2stop) {
-			chosengene=*p1gene;
+		else if (p2gene == p2stop)
+		{
+			chosengene = *p1gene;
 			++p1gene;
 		}
-		else {
+		else
+		{
 			//Extract current innovation numbers
 
 			//if (p1gene==g->genes.end()) cout<<"WARNING p1"<<std::endl;
 			//if (p2gene==g->genes.end()) cout<<"WARNING p2"<<std::endl;
 
-			p1innov=(*p1gene)->innovation_num;
-			p2innov=(*p2gene)->innovation_num;
+			p1innov = (*p1gene)->innovation_num;
+			p2innov = (*p2gene)->innovation_num;
 
-			if (p1innov==p2innov) {
+			if (p1innov == p2innov)
+			{
 
 				//Pick the chosengene depending on whether we've crossed yet
-				if (genecounter<crosspoint) {
-					chosengene=*p1gene;
+				if (genecounter < crosspoint)
+				{
+					chosengene = *p1gene;
 				}
-				else if (genecounter>crosspoint) {
-					chosengene=*p2gene;
+				else if (genecounter > crosspoint)
+				{
+					chosengene = *p2gene;
 				}
 				//We are at the crosspoint here
-				else {
+				else
+				{
 
 					//Average them into the avgene
-					if (randfloat()>0.5) (avgene->lnk)->linktrait=((*p1gene)->lnk)->linktrait;
-					else (avgene->lnk)->linktrait=((*p2gene)->lnk)->linktrait;
+					if (randfloat() > 0.5) (avgene->lnk)->linktrait = ((*p1gene)->lnk)->linktrait;
+					else (avgene->lnk)->linktrait = ((*p2gene)->lnk)->linktrait;
 
 					//WEIGHTS AVERAGED HERE
-					(avgene->lnk)->weight=(((*p1gene)->lnk)->weight+((*p2gene)->lnk)->weight)/2.0;
+					(avgene->lnk)->weight = (((*p1gene)->lnk)->weight + ((*p2gene)->lnk)->weight) / 2.0;
 
 
-					if (randfloat()>0.5) (avgene->lnk)->in_node=((*p1gene)->lnk)->in_node;
-					else (avgene->lnk)->in_node=((*p2gene)->lnk)->in_node;
+					if (randfloat() > 0.5) (avgene->lnk)->in_node = ((*p1gene)->lnk)->in_node;
+					else (avgene->lnk)->in_node = ((*p2gene)->lnk)->in_node;
 
-					if (randfloat()>0.5) (avgene->lnk)->out_node=((*p1gene)->lnk)->out_node;
-					else (avgene->lnk)->out_node=((*p2gene)->lnk)->out_node;
+					if (randfloat() > 0.5) (avgene->lnk)->out_node = ((*p1gene)->lnk)->out_node;
+					else (avgene->lnk)->out_node = ((*p2gene)->lnk)->out_node;
 
-					if (randfloat()>0.5) (avgene->lnk)->is_recurrent=((*p1gene)->lnk)->is_recurrent;
-					else (avgene->lnk)->is_recurrent=((*p2gene)->lnk)->is_recurrent;
+					if (randfloat() > 0.5) (avgene->lnk)->is_recurrent = ((*p1gene)->lnk)->is_recurrent;
+					else (avgene->lnk)->is_recurrent = ((*p2gene)->lnk)->is_recurrent;
 
-					avgene->innovation_num=(*p1gene)->innovation_num;
-					avgene->mutation_num=((*p1gene)->mutation_num+(*p2gene)->mutation_num)/2.0;
+					avgene->innovation_num = (*p1gene)->innovation_num;
+					avgene->mutation_num = ((*p1gene)->mutation_num + (*p2gene)->mutation_num) / 2.0;
 
-					if ((((*p1gene)->enable)==false)||
-						(((*p2gene)->enable)==false)) 
-						avgene->enable=false;
+					if ((((*p1gene)->enable) == false) ||
+						(((*p2gene)->enable) == false))
+						avgene->enable = false;
 
-					chosengene=avgene;
+					chosengene = avgene;
 				}
 
 				++p1gene;
 				++p2gene;
 				++genecounter;
 			}
-			else if (p1innov<p2innov) {
-				if (genecounter<crosspoint) {
-					chosengene=*p1gene;
+			else if (p1innov < p2innov)
+			{
+				if (genecounter < crosspoint)
+				{
+					chosengene = *p1gene;
 					++p1gene;
 					++genecounter;
 				}
-				else {
-					chosengene=*p2gene;
+				else
+				{
+					chosengene = *p2gene;
 					++p2gene;
 				}
 			}
-			else if (p2innov<p1innov) {
+			else if (p2innov < p1innov)
+			{
 				++p2gene;
-				skip=true;  //Special case: we need to skip to the next iteration
+				skip = true;  //Special case: we need to skip to the next iteration
 				//becase this Gene is before the crosspoint on the wrong Genome
 			}
 		}
 
 		//Check to see if the chosengene conflicts with an already chosen gene
 		//i.e. do they represent the same link    
-		curgene2=newgenes.begin();
+		curgene2 = newgenes.begin();
 
-		while ((curgene2!=newgenes.end())&&
-			(!((((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-			(((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&((((*curgene2)->lnk)->is_recurrent)== (((chosengene)->lnk)->is_recurrent)) ))&&
-			(!((((((*curgene2)->lnk)->in_node)->node_id)==((((chosengene)->lnk)->out_node)->node_id))&&
-			(((((*curgene2)->lnk)->out_node)->node_id)==((((chosengene)->lnk)->in_node)->node_id))&&
-			(!((((*curgene2)->lnk)->is_recurrent)))&&
-			(!((((chosengene)->lnk)->is_recurrent))) )))
+		while ((curgene2 != newgenes.end()) &&
+			(!((((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+				(((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) && ((((*curgene2)->lnk)->is_recurrent) == (((chosengene)->lnk)->is_recurrent)))) &&
+			(!((((((*curgene2)->lnk)->in_node)->node_id) == ((((chosengene)->lnk)->out_node)->node_id)) &&
+				(((((*curgene2)->lnk)->out_node)->node_id) == ((((chosengene)->lnk)->in_node)->node_id)) &&
+				(!((((*curgene2)->lnk)->is_recurrent))) &&
+				(!((((chosengene)->lnk)->is_recurrent))))))
 		{
 
 			++curgene2;
 		}
 
 
-		if (curgene2!=newgenes.end()) skip=true;  //Link is a duplicate
+		if (curgene2 != newgenes.end()) skip = true;  //Link is a duplicate
 
-		if (!skip) {
+		if (!skip)
+		{
 			//Now add the chosengene to the baby
 
 			//First, get the trait pointer
-			if ((((chosengene->lnk)->linktrait))==0) traitnum=(*(traits.begin()))->trait_id - 1;
+			if ((((chosengene->lnk)->linktrait)) == 0) traitnum = (*(traits.begin()))->trait_id - 1;
 			else
-				traitnum=(((chosengene->lnk)->linktrait)->trait_id)-(*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
+				traitnum = (((chosengene->lnk)->linktrait)->trait_id) - (*(traits.begin()))->trait_id;  //The subtracted number normalizes depending on whether traits start counting at 1 or 0
 
 			//Next check for the nodes, add them if not in the baby Genome already
-			inode=(chosengene->lnk)->in_node;
-			onode=(chosengene->lnk)->out_node;
+			inode = (chosengene->lnk)->in_node;
+			onode = (chosengene->lnk)->out_node;
 
 			//Check for inode in the newnodes list
-			if (inode->node_id<onode->node_id) {
+			if (inode->node_id < onode->node_id)
+			{
 				//cout<<"inode before onode"<<std::endl;
 				//Checking for inode's existence
-				curnode=newnodes.begin();
-				while((curnode!=newnodes.end())&&
-					((*curnode)->node_id!=inode->node_id)) 
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
 					++curnode;
 
-				if (curnode==newnodes.end()) {
+				if (curnode == newnodes.end())
+				{
 					//Here we know the node doesn't exist so we have to add it
 					//normalized trait number for new NNode
 
-					if (!(inode->nodetrait)) nodetraitnum=0;
+					if (!(inode->nodetrait)) nodetraitnum = 0;
 					else
-						nodetraitnum=((inode->nodetrait)->trait_id)-((*(traits.begin()))->trait_id);			       
+						nodetraitnum = ((inode->nodetrait)->trait_id) - ((*(traits.begin()))->trait_id);
 
-					new_inode=new NNode(inode,newtraits[nodetraitnum]);
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
 
-					node_insert(newnodes,new_inode);
+					node_insert(newnodes, new_inode);
 				}
-				else {
-					new_inode=(*curnode);
+				else
+				{
+					new_inode = (*curnode);
 				}
 
 				//Checking for onode's existence
-				curnode=newnodes.begin();
-				while((curnode!=newnodes.end())&&
-					((*curnode)->node_id!=onode->node_id)) 
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
 					++curnode;
-				if (curnode==newnodes.end()) {
+				if (curnode == newnodes.end())
+				{
 					//Here we know the node doesn't exist so we have to add it
 					//normalized trait number for new NNode
 
-					if (!(onode->nodetrait)) nodetraitnum=0;
+					if (!(onode->nodetrait)) nodetraitnum = 0;
 					else
-						nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			     
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
 
-					new_onode=new NNode(onode,newtraits[nodetraitnum]);
-					node_insert(newnodes,new_onode);
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+					node_insert(newnodes, new_onode);
 
 				}
-				else {
-					new_onode=(*curnode);
+				else
+				{
+					new_onode = (*curnode);
 				}
 			}
 			//If the onode has a higher id than the inode we want to add it first
-			else {
+			else
+			{
 				//Checking for onode's existence
-				curnode=newnodes.begin();
-				while((curnode!=newnodes.end())&&
-					((*curnode)->node_id!=onode->node_id)) 
+				curnode = newnodes.begin();
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != onode->node_id))
 					++curnode;
-				if (curnode==newnodes.end()) {
+				if (curnode == newnodes.end())
+				{
 					//Here we know the node doesn't exist so we have to add it
 					//normalized trait number for new NNode
-					if (!(onode->nodetrait)) nodetraitnum=0;
+					if (!(onode->nodetrait)) nodetraitnum = 0;
 					else
-						nodetraitnum=((onode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
+						nodetraitnum = ((onode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
 
-					new_onode=new NNode(onode,newtraits[nodetraitnum]);
-					node_insert(newnodes,new_onode);
+					new_onode = new NNode(onode, newtraits[nodetraitnum]);
+					node_insert(newnodes, new_onode);
 				}
-				else {
-					new_onode=(*curnode);
+				else
+				{
+					new_onode = (*curnode);
 				}
 
 				//Checking for inode's existence
-				curnode=newnodes.begin();
+				curnode = newnodes.begin();
 
-				while((curnode!=newnodes.end())&&
-					((*curnode)->node_id!=inode->node_id)) 
+				while ((curnode != newnodes.end()) &&
+					((*curnode)->node_id != inode->node_id))
 					++curnode;
-				if (curnode==newnodes.end()) {
+				if (curnode == newnodes.end())
+				{
 					//Here we know the node doesn't exist so we have to add it
 					//normalized trait number for new NNode
-					if (!(inode->nodetrait)) nodetraitnum=0;
+					if (!(inode->nodetrait)) nodetraitnum = 0;
 					else
-						nodetraitnum=((inode->nodetrait)->trait_id)-(*(traits.begin()))->trait_id;			       
+						nodetraitnum = ((inode->nodetrait)->trait_id) - (*(traits.begin()))->trait_id;
 
-					new_inode=new NNode(inode,newtraits[nodetraitnum]);
+					new_inode = new NNode(inode, newtraits[nodetraitnum]);
 					//newnodes.push_back(new_inode);
-					node_insert(newnodes,new_inode);
+					node_insert(newnodes, new_inode);
 				}
-				else {
-					new_inode=(*curnode);
+				else
+				{
+					new_inode = (*curnode);
 				}
 
 			} //End NNode checking section- NNodes are now in new Genome
 
 			//Add the Gene
-			newgenes.push_back(new Gene(chosengene,newtraits[traitnum],new_inode,new_onode));
+			newgenes.push_back(new Gene(chosengene, newtraits[traitnum], new_inode, new_onode));
 
 		}  //End of if (!skip)
 
-		skip=false;
+		skip = false;
 
 	}
 
@@ -2914,15 +3144,16 @@ Genome *Genome::mate_singlepoint(Genome *g,int genomeid) {
 	delete avgene;  //Clean up used object
 
 	//Return the baby Genome
-	return (new Genome(genomeid,newtraits,newnodes,newgenes));
+	return (new Genome(genomeid, newtraits, newnodes, newgenes));
 
 }
 
-double Genome::compatibility(Genome *g) {
+double Genome::compatibility(Genome *g)
+{
 
 	//iterators for moving through the two potential parents' Genes
 	std::vector<Gene*>::iterator p1gene;
-	std::vector<Gene*>::iterator p2gene;  
+	std::vector<Gene*>::iterator p2gene;
 
 	//Innovation numbers
 	double p1innov;
@@ -2932,148 +3163,166 @@ double Genome::compatibility(Genome *g) {
 	double mut_diff;
 
 	//Set up the counters
-	double num_disjoint=0.0;
-	double num_excess=0.0;
-	double mut_diff_total=0.0;
-	double num_matching=0.0;  //Used to normalize mutation_num differences
+	double num_disjoint = 0.0;
+	double num_excess = 0.0;
+	double mut_diff_total = 0.0;
+	double num_matching = 0.0;  //Used to normalize mutation_num differences
 
 	double max_genome_size; //Size of larger Genome
 
 	//Get the length of the longest Genome for percentage computations
-	if (genes.size()<(g->genes).size()) 
-		max_genome_size=(g->genes).size();
-	else max_genome_size=genes.size();
+	if (genes.size() < (g->genes).size())
+		max_genome_size = (g->genes).size();
+	else max_genome_size = genes.size();
 
 	//Now move through the Genes of each potential parent 
 	//until both Genomes end
-	p1gene=genes.begin();
-	p2gene=(g->genes).begin();
-	while(!((p1gene==genes.end())&&
-		(p2gene==(g->genes).end()))) {
+	p1gene = genes.begin();
+	p2gene = (g->genes).begin();
+	while (!((p1gene == genes.end()) &&
+		(p2gene == (g->genes).end())))
+	{
 
-			if (p1gene==genes.end()) {
-				++p2gene;
-				num_excess+=1.0;
-			}
-			else if (p2gene==(g->genes).end()) {
+		if (p1gene == genes.end())
+		{
+			++p2gene;
+			num_excess += 1.0;
+		}
+		else if (p2gene == (g->genes).end())
+		{
+			++p1gene;
+			num_excess += 1.0;
+		}
+		else
+		{
+			//Extract current innovation numbers
+			p1innov = (*p1gene)->innovation_num;
+			p2innov = (*p2gene)->innovation_num;
+
+			if (p1innov == p2innov)
+			{
+				num_matching += 1.0;
+				mut_diff = ((*p1gene)->mutation_num) - ((*p2gene)->mutation_num);
+				if (mut_diff < 0.0) mut_diff = 0.0 - mut_diff;
+				//mut_diff+=trait_compare((*p1gene)->lnk->linktrait,(*p2gene)->lnk->linktrait); //CONSIDER TRAIT DIFFERENCES
+				mut_diff_total += mut_diff;
+
 				++p1gene;
-				num_excess+=1.0;
+				++p2gene;
 			}
-			else {
-				//Extract current innovation numbers
-				p1innov=(*p1gene)->innovation_num;
-				p2innov=(*p2gene)->innovation_num;
-
-				if (p1innov==p2innov) {
-					num_matching+=1.0;
-					mut_diff=((*p1gene)->mutation_num)-((*p2gene)->mutation_num);
-					if (mut_diff<0.0) mut_diff=0.0-mut_diff;
-					//mut_diff+=trait_compare((*p1gene)->lnk->linktrait,(*p2gene)->lnk->linktrait); //CONSIDER TRAIT DIFFERENCES
-					mut_diff_total+=mut_diff;
-
-					++p1gene;
-					++p2gene;
-				}
-				else if (p1innov<p2innov) {
-					++p1gene;
-					num_disjoint+=1.0;
-				}
-				else if (p2innov<p1innov) {
-					++p2gene;
-					num_disjoint+=1.0;
-				}
+			else if (p1innov < p2innov)
+			{
+				++p1gene;
+				num_disjoint += 1.0;
 			}
-		} //End while
+			else if (p2innov < p1innov)
+			{
+				++p2gene;
+				num_disjoint += 1.0;
+			}
+		}
+	} //End while
 
-		//Return the compatibility number using compatibility formula
-		//Note that mut_diff_total/num_matching gives the AVERAGE
-		//difference between mutation_nums for any two matching Genes
-		//in the Genome
+	//Return the compatibility number using compatibility formula
+	//Note that mut_diff_total/num_matching gives the AVERAGE
+	//difference between mutation_nums for any two matching Genes
+	//in the Genome
 
-		//Normalizing for genome size
-		//return (disjoint_coeff*(num_disjoint/max_genome_size)+
-		//  excess_coeff*(num_excess/max_genome_size)+
-		//  mutdiff_coeff*(mut_diff_total/num_matching));
+	//Normalizing for genome size
+	//return (disjoint_coeff*(num_disjoint/max_genome_size)+
+	//  excess_coeff*(num_excess/max_genome_size)+
+	//  mutdiff_coeff*(mut_diff_total/num_matching));
 
 
-		//Look at disjointedness and excess in the absolute (ignoring size)
+	//Look at disjointedness and excess in the absolute (ignoring size)
 
-		//cout<<"COMPAT: size = "<<max_genome_size<<" disjoint = "<<num_disjoint<<" excess = "<<num_excess<<" diff = "<<mut_diff_total<<"  TOTAL = "<<(disjoint_coeff*(num_disjoint/1.0)+excess_coeff*(num_excess/1.0)+mutdiff_coeff*(mut_diff_total/num_matching))<<std::endl;
+	//cout<<"COMPAT: size = "<<max_genome_size<<" disjoint = "<<num_disjoint<<" excess = "<<num_excess<<" diff = "<<mut_diff_total<<"  TOTAL = "<<(disjoint_coeff*(num_disjoint/1.0)+excess_coeff*(num_excess/1.0)+mutdiff_coeff*(mut_diff_total/num_matching))<<std::endl;
 
-		return (NEAT::disjoint_coeff*(num_disjoint/1.0)+
-			NEAT::excess_coeff*(num_excess/1.0)+
-			NEAT::mutdiff_coeff*(mut_diff_total/num_matching));
+	return (NEAT::disjoint_coeff * (num_disjoint / 1.0) +
+		NEAT::excess_coeff * (num_excess / 1.0) +
+		NEAT::mutdiff_coeff * (mut_diff_total / num_matching));
 }
 
-double Genome::trait_compare(Trait *t1,Trait *t2) {
+double Genome::trait_compare(Trait *t1, Trait *t2)
+{
 
-	int id1=t1->trait_id;
-	int id2=t2->trait_id;
+	int id1 = t1->trait_id;
+	int id2 = t2->trait_id;
 	int count;
-	double params_diff=0.0; //Measures parameter difference
+	double params_diff = 0.0; //Measures parameter difference
 
 	//See if traits represent different fundamental types of connections
-	if ((id1==1)&&(id2>=2)) {
+	if ((id1 == 1) && (id2 >= 2))
+	{
 		return 0.5;
 	}
-	else if ((id2==1)&&(id1>=2)) {
+	else if ((id2 == 1) && (id1 >= 2))
+	{
 		return 0.5;
 	}
 	//Otherwise, when types are same, compare the actual parameters
-	else {
-		if (id1>=2) {
-			for (count=0;count<=2;count++) {
-				params_diff += fabs(t1->params[count]-t2->params[count]);
+	else
+	{
+		if (id1 >= 2)
+		{
+			for (count = 0; count <= 2; count++)
+			{
+				params_diff += fabs(t1->params[count] - t2->params[count]);
 			}
-			return params_diff/4.0;
+			return params_diff / 4.0;
 		}
 		else return 0.0; //For type 1, params are not applicable
 	}
 
 }
 
-int Genome::extrons() {
+int Genome::extrons()
+{
 	std::vector<Gene*>::iterator curgene;
-	int total=0;
+	int total = 0;
 
-	for(curgene=genes.begin();curgene!=genes.end();curgene++) {
+	for (curgene = genes.begin(); curgene != genes.end(); curgene++)
+	{
 		if ((*curgene)->enable) ++total;
 	}
 
 	return total;
 }
 
-void Genome::randomize_traits() {
+void Genome::randomize_traits()
+{
 
-	int numtraits=traits.size();
+	int numtraits = traits.size();
 	int traitnum; //number of selected random trait
 	std::vector<NNode*>::iterator curnode;
 	std::vector<Gene*>::iterator curgene;
 	std::vector<Trait*>::iterator curtrait;
 
 	//Go through all nodes and randomize their trait pointers
-	for(curnode=nodes.begin();curnode!=nodes.end();++curnode) {
-		traitnum=randint(1,numtraits); //randomize trait
-		(*curnode)->trait_id=traitnum;
+	for (curnode = nodes.begin(); curnode != nodes.end(); ++curnode)
+	{
+		traitnum = randint(1, numtraits); //randomize trait
+		(*curnode)->trait_id = traitnum;
 
-		curtrait=traits.begin();
-		while(((*curtrait)->trait_id)!=traitnum)
+		curtrait = traits.begin();
+		while (((*curtrait)->trait_id) != traitnum)
 			++curtrait;
-		(*curnode)->nodetrait=(*curtrait);
+		(*curnode)->nodetrait = (*curtrait);
 
 		//if ((*curtrait)==0) cout<<"ERROR: Random trait empty"<<std::endl;
 
 	}
 
 	//Go through all connections and randomize their trait pointers
-	for(curgene=genes.begin();curgene!=genes.end();++curgene) {
-		traitnum=randint(1,numtraits); //randomize trait
-		(*curgene)->lnk->trait_id=traitnum;
+	for (curgene = genes.begin(); curgene != genes.end(); ++curgene)
+	{
+		traitnum = randint(1, numtraits); //randomize trait
+		(*curgene)->lnk->trait_id = traitnum;
 
-		curtrait=traits.begin();
-		while(((*curtrait)->trait_id)!=traitnum)
+		curtrait = traits.begin();
+		while (((*curtrait)->trait_id) != traitnum)
 			++curtrait;
-		(*curgene)->lnk->linktrait=(*curtrait);
+		(*curgene)->lnk->linktrait = (*curtrait);
 
 		//if ((*curtrait)==0) cout<<"ERROR: Random trait empty"<<std::endl;
 	}
@@ -3086,8 +3335,9 @@ void Genome::randomize_traits() {
 //2 - Fully connected with a hidden layer 
 //num_hidden is only used in type 2
 //Saves to filename argument
-Genome* NEAT::new_Genome_auto(int num_in,int num_out,int num_hidden,int type, const char *filename) {
-	Genome *g=new Genome(num_in,num_out,num_hidden,type);
+Genome* NEAT::new_Genome_auto(int num_in, int num_out, int num_hidden, int type, const char *filename)
+{
+	Genome *g = new Genome(num_in, num_out, num_hidden, type);
 
 	//print_Genome_tofile(g,"auto_genome");
 	print_Genome_tofile(g, filename);
@@ -3096,21 +3346,22 @@ Genome* NEAT::new_Genome_auto(int num_in,int num_out,int num_hidden,int type, co
 }
 
 
-void NEAT::print_Genome_tofile(Genome *g,const char *filename) {
+void NEAT::print_Genome_tofile(Genome *g, const char *filename)
+{
 
 	//ofstream oFile(filename,ios::out);
 
-    std::string file = "nero/data/neat/";
-    file += filename;
-    //strcpyl(file, 100, "nero/data/neat/", filename, 0);
+	std::string file = "nero/data/neat/";
+	file += filename;
+	//strcpyl(file, 100, "nero/data/neat/", filename, 0);
 	std::ofstream oFile(file.c_str());
-//	oFile.open(file, std::ostream::Write);
+	//	oFile.open(file, std::ostream::Write);
 
-	//Make sure	it worked
-	//if (!oFile)	{
-	//	cerr<<"Can't open "<<filename<<" for output"<<std::endl;
-	//	return 0;
-	//}
+		//Make sure	it worked
+		//if (!oFile)	{
+		//	cerr<<"Can't open "<<filename<<" for output"<<std::endl;
+		//	return 0;
+		//}
 	g->print_to_file(oFile);
 
 	oFile.close();

@@ -23,147 +23,146 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/CartFE.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeFE::CartridgeFE(const uint8_t* image)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 8192; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeFE::~CartridgeFE()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeFE::CartridgeFE(const uint8_t* image)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 8192; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* CartridgeFE::name() const
-{
-  return "CartridgeFE";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeFE::~CartridgeFE()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFE::reset()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* CartridgeFE::name() const
+        {
+            return "CartridgeFE";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFE::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFE::reset()
+        {}
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert((0x1000 & mask) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFE::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Map all of the accesses to call peek and poke
-  System::PageAccess access;
-  for(uint32_t i = 0x1000; i < 0x2000; i += (1 << shift))
-  {
-    access.directPeekBase = 0;
-    access.directPokeBase = 0;
-    access.device = this;
-    mySystem->setPageAccess(i >> shift, access);
-  }
-}
+            // Make sure the system we're being installed in has a page size that'll work
+            assert((0x1000 & mask) == 0);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t CartridgeFE::peek(uint16_t address)
-{
-  // The bank is determined by A13 of the processor
-  return myImage[(address & 0x0FFF) + (((address & 0x2000) == 0) ? 4096 : 0)];
-}
+            // Map all of the accesses to call peek and poke
+            System::PageAccess access;
+            for (uint32_t i = 0x1000; i < 0x2000; i += (1 << shift))
+            {
+                access.directPeekBase = 0;
+                access.directPokeBase = 0;
+                access.device = this;
+                mySystem->setPageAccess(i >> shift, access);
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFE::poke(uint16_t, uint8_t)
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t CartridgeFE::peek(uint16_t address)
+        {
+            // The bank is determined by A13 of the processor
+            return myImage[(address & 0x0FFF) + (((address & 0x2000) == 0) ? 4096 : 0)];
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFE::save(Serializer& out)
-{
-  std::string cart = name();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFE::poke(uint16_t, uint8_t)
+        {}
 
-  try
-  {
-    out.putString(cart);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFE::save(Serializer& out)
+        {
+            std::string cart = name();
 
-  return true;
-}
+            try
+            {
+                out.putString(cart);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFE::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFE::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-  return true;
-}
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFE::bank(uint16_t b)
-{
-  // Doesn't support bankswitching in the normal sense
-}
+            return true;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeFE::bank()
-{
-  // Doesn't support bankswitching in the normal sense
-  return 0;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFE::bank(uint16_t b)
+        {
+            // Doesn't support bankswitching in the normal sense
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeFE::bankCount()
-{
-  return 1;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeFE::bank()
+        {
+            // Doesn't support bankswitching in the normal sense
+            return 0;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFE::patch(uint16_t address, uint8_t value)
-{
-  myImage[(address & 0x0FFF) + (((address & 0x2000) == 0) ? 4096 : 0)] = value;
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeFE::bankCount()
+        {
+            return 1;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* CartridgeFE::getImage(int& size)
-{
-  size = 8192;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFE::patch(uint16_t address, uint8_t value)
+        {
+            myImage[(address & 0x0FFF) + (((address & 0x2000) == 0) ? 4096 : 0)] = value;
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* CartridgeFE::getImage(int& size)
+        {
+            size = 8192;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

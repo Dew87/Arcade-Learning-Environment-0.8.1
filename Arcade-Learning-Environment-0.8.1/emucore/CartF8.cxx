@@ -23,219 +23,220 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/CartF8.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeF8::CartridgeF8(const uint8_t* image, bool swapbanks)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 8192; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
+    namespace stella
+    {
 
-  // Normally bank 1 is the reset bank, unless we're dealing with ROMs
-  // that have been incorrectly created with banks in the opposite order
-  myResetBank = swapbanks ? 0 : 1;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeF8::CartridgeF8(const uint8_t* image, bool swapbanks)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 8192; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeF8::~CartridgeF8()
-{
-}
+            // Normally bank 1 is the reset bank, unless we're dealing with ROMs
+            // that have been incorrectly created with banks in the opposite order
+            myResetBank = swapbanks ? 0 : 1;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* CartridgeF8::name() const
-{
-  return "CartridgeF8";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeF8::~CartridgeF8()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeF8::reset()
-{
-  // Upon reset we switch to the reset bank
-  bank(myResetBank);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* CartridgeF8::name() const
+        {
+            return "CartridgeF8";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeF8::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeF8::reset()
+        {
+            // Upon reset we switch to the reset bank
+            bank(myResetBank);
+        }
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert((0x1000 & mask) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeF8::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Set the page accessing methods for the hot spots
-  System::PageAccess access;
-  for(uint32_t i = (0x1FF8 & ~mask); i < 0x2000; i += (1 << shift))
-  {
-    access.directPeekBase = 0;
-    access.directPokeBase = 0;
-    access.device = this;
-    mySystem->setPageAccess(i >> shift, access);
-  }
+            // Make sure the system we're being installed in has a page size that'll work
+            assert((0x1000 & mask) == 0);
 
-  // Install pages for bank 1
-  bank(1);
-}
+            // Set the page accessing methods for the hot spots
+            System::PageAccess access;
+            for (uint32_t i = (0x1FF8 & ~mask); i < 0x2000; i += (1 << shift))
+            {
+                access.directPeekBase = 0;
+                access.directPokeBase = 0;
+                access.device = this;
+                mySystem->setPageAccess(i >> shift, access);
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t CartridgeF8::peek(uint16_t address)
-{
-  address = address & 0x0FFF;
+            // Install pages for bank 1
+            bank(1);
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0FF8:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t CartridgeF8::peek(uint16_t address)
+        {
+            address = address & 0x0FFF;
 
-    case 0x0FF9:
-      // Set the current bank to the upper 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0FF8:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    default:
-      break;
-  }
+            case 0x0FF9:
+                // Set the current bank to the upper 4k bank
+                bank(1);
+                break;
 
-  return myImage[myCurrentBank * 4096 + address];
-}
+            default:
+                break;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeF8::poke(uint16_t address, uint8_t)
-{
-  address = address & 0x0FFF;
+            return myImage[myCurrentBank * 4096 + address];
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0FF8:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeF8::poke(uint16_t address, uint8_t)
+        {
+            address = address & 0x0FFF;
 
-    case 0x0FF9:
-      // Set the current bank to the upper 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0FF8:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    default:
-      break;
-  }
-}
+            case 0x0FF9:
+                // Set the current bank to the upper 4k bank
+                bank(1);
+                break;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeF8::save(Serializer& out)
-{
-  std::string cart = name();
+            default:
+                break;
+            }
+        }
 
-  try
-  {
-    out.putString(cart);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeF8::save(Serializer& out)
+        {
+            std::string cart = name();
 
-    out.putInt(myCurrentBank);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                out.putString(cart);
 
-  return true;
-}
+                out.putInt(myCurrentBank);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeF8::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeF8::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-    myCurrentBank = (uint16_t) in.getInt();
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
 
-  // Remember what bank we were in
-  bank(myCurrentBank);
+                myCurrentBank = (uint16_t)in.getInt();
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-  return true;
-}
+            // Remember what bank we were in
+            bank(myCurrentBank);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeF8::bank(uint16_t bank)
-{
-  if(bankLocked) return;
+            return true;
+        }
 
-  // Remember what bank we're in
-  myCurrentBank = bank;
-  uint16_t offset = myCurrentBank * 4096;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeF8::bank(uint16_t bank)
+        {
+            if (bankLocked) return;
 
-  // Setup the page access methods for the current bank
-  System::PageAccess access;
-  access.device = this;
-  access.directPokeBase = 0;
+            // Remember what bank we're in
+            myCurrentBank = bank;
+            uint16_t offset = myCurrentBank * 4096;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Map ROM image into the system
-  for(uint32_t address = 0x1000; address < (0x1FF8U & ~mask);
-      address += (1 << shift))
-  {
-    access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
-    mySystem->setPageAccess(address >> shift, access);
-  }
-}
+            // Setup the page access methods for the current bank
+            System::PageAccess access;
+            access.device = this;
+            access.directPokeBase = 0;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeF8::bank()
-{
-  return myCurrentBank;
-}
+            // Map ROM image into the system
+            for (uint32_t address = 0x1000; address < (0x1FF8U & ~mask);
+                address += (1 << shift))
+            {
+                access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
+                mySystem->setPageAccess(address >> shift, access);
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeF8::bankCount()
-{
-  return 2;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeF8::bank()
+        {
+            return myCurrentBank;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeF8::patch(uint16_t address, uint8_t value)
-{
-  address &= 0xfff;
-  myImage[myCurrentBank * 4096 + address] = value;
-  bank(myCurrentBank);
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeF8::bankCount()
+        {
+            return 2;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* CartridgeF8::getImage(int& size)
-{
-  size = 8192;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeF8::patch(uint16_t address, uint8_t value)
+        {
+            address &= 0xfff;
+            myImage[myCurrentBank * 4096 + address] = value;
+            bank(myCurrentBank);
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* CartridgeF8::getImage(int& size)
+        {
+            size = 8192;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

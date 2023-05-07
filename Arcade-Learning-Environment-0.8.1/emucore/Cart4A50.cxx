@@ -23,87 +23,83 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/Cart4A50.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge4A50::Cartridge4A50(const uint8_t* image)
+namespace ale
 {
-}
+	namespace stella
+	{
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge4A50::~Cartridge4A50()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Cartridge4A50::Cartridge4A50(const uint8_t* image)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* Cartridge4A50::name() const
-{
-  return "Cartridge4A50";
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Cartridge4A50::~Cartridge4A50()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4A50::reset()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		const char* Cartridge4A50::name() const
+		{
+			return "Cartridge4A50";
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4A50::install(System& system)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge4A50::reset()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t Cartridge4A50::peek(uint16_t address)
-{
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge4A50::install(System& system)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4A50::poke(uint16_t, uint8_t)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		uint8_t Cartridge4A50::peek(uint16_t address)
+		{
+			return 0;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4A50::save(Serializer& out)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge4A50::poke(uint16_t, uint8_t)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4A50::load(Deserializer& in)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge4A50::save(Serializer& out)
+		{
+			return false;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4A50::bank(uint16_t b)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge4A50::load(Deserializer& in)
+		{
+			return false;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge4A50::bank()
-{
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge4A50::bank(uint16_t b)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge4A50::bankCount()
-{
-  return 1;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		int Cartridge4A50::bank()
+		{
+			return 0;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4A50::patch(uint16_t address, uint8_t value)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		int Cartridge4A50::bankCount()
+		{
+			return 1;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* Cartridge4A50::getImage(int& size)
-{
-  size = 0;
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge4A50::patch(uint16_t address, uint8_t value)
+		{
+			return false;
+		}
 
-}  // namespace stella
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		uint8_t* Cartridge4A50::getImage(int& size)
+		{
+			size = 0;
+			return 0;
+		}
+
+	}  // namespace stella
 }  // namespace ale

@@ -20,100 +20,104 @@
 #define MEDIASOURCE_HXX
 
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class MediaSource;
-class Sound;
+        class MediaSource;
+        class Sound;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include <cstdint>
 
-namespace ale {
-namespace stella {
-
-/**
-  This class provides an interface for accessing graphics and audio data.
-
-  @author  Bradford W. Mott
-  @version $Id: MediaSrc.hxx,v 1.17 2007/01/01 18:04:49 stephena Exp $
-*/
-class MediaSource
+namespace ale
 {
-  public:
-    /**
-      Create a new media source
-    */
-    MediaSource();
+    namespace stella
+    {
 
-    /**
-      Destructor
-    */
-    virtual ~MediaSource();
+        /**
+          This class provides an interface for accessing graphics and audio data.
 
-  public:
-    /**
-      This method should be called at an interval corresponding to the
-      desired frame rate to update the media source.  Invoking this method
-      will update the graphics buffer and generate the corresponding audio
-      samples.
-    */
-    virtual void update() = 0;
+          @author  Bradford W. Mott
+          @version $Id: MediaSrc.hxx,v 1.17 2007/01/01 18:04:49 stephena Exp $
+        */
+        class MediaSource
+        {
+        public:
+            /**
+              Create a new media source
+            */
+            MediaSource();
 
-    /**
-      Answers the current frame buffer
+            /**
+              Destructor
+            */
+            virtual ~MediaSource();
 
-      @return Pointer to the current frame buffer
-    */
-    virtual uint8_t* currentFrameBuffer() const = 0;
+        public:
+            /**
+              This method should be called at an interval corresponding to the
+              desired frame rate to update the media source.  Invoking this method
+              will update the graphics buffer and generate the corresponding audio
+              samples.
+            */
+            virtual void update() = 0;
 
-    /**
-      Answers the previous frame buffer
+            /**
+              Answers the current frame buffer
 
-      @return Pointer to the previous frame buffer
-    */
-    virtual uint8_t* previousFrameBuffer() const = 0;
+              @return Pointer to the current frame buffer
+            */
+            virtual uint8_t* currentFrameBuffer() const = 0;
 
-  public:
-    /**
-      Answers the height of the frame buffer
+            /**
+              Answers the previous frame buffer
 
-      @return The frame's height
-    */
-    virtual uint32_t height() const = 0;
+              @return Pointer to the previous frame buffer
+            */
+            virtual uint8_t* previousFrameBuffer() const = 0;
 
-    /**
-      Answers the width of the frame buffer
+        public:
+            /**
+              Answers the height of the frame buffer
 
-      @return The frame's width
-    */
-    virtual uint32_t width() const = 0;
+              @return The frame's height
+            */
+            virtual uint32_t height() const = 0;
 
-  public:
-    /**
-      Answers the total number of scanlines the media source generated
-      in producing the current frame buffer.
+            /**
+              Answers the width of the frame buffer
 
-      @return The total number of scanlines generated
-    */
-    virtual uint32_t scanlines() const = 0;
+              @return The frame's width
+            */
+            virtual uint32_t width() const = 0;
 
-    /**
-      Sets the sound device for the TIA.
-    */
-    virtual void setSound(Sound& sound) = 0;
+        public:
+            /**
+              Answers the total number of scanlines the media source generated
+              in producing the current frame buffer.
 
-  private:
-    // Copy constructor isn't supported by this class so make it private
-    MediaSource(const MediaSource&);
+              @return The total number of scanlines generated
+            */
+            virtual uint32_t scanlines() const = 0;
 
-    // Assignment operator isn't supported by this class so make it private
-    MediaSource& operator = (const MediaSource&);
-};
+            /**
+              Sets the sound device for the TIA.
+            */
+            virtual void setSound(Sound& sound) = 0;
 
-}  // namespace stella
+        private:
+            // Copy constructor isn't supported by this class so make it private
+            MediaSource(const MediaSource&);
+
+            // Assignment operator isn't supported by this class so make it private
+            MediaSource& operator = (const MediaSource&);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

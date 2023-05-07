@@ -19,199 +19,203 @@
 #ifndef CARTRIDGE_HXX
 #define CARTRIDGE_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class Cartridge;
-class System;
-class Properties;
-class Settings;
+        class Cartridge;
+        class System;
+        class Properties;
+        class Settings;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include <fstream>
 #include "emucore/Device.hxx"
 #include "common/Log.hpp"
 
-namespace ale {
-namespace stella {
-
-/**
-  A cartridge is a device which contains the machine code for a
-  game and handles any bankswitching performed by the cartridge.
-
-  @author  Bradford W. Mott
-  @version $Id: Cart.hxx,v 1.19 2007/06/14 13:47:50 stephena Exp $
-*/
-class Cartridge : public Device
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge object allocated on the heap.  The
-      type of cartridge created depends on the properties object.
+    namespace stella
+    {
 
-      @param image    A pointer to the ROM image
-      @param size     The size of the ROM image
-      @param props    The properties associated with the game
-      @param settings The settings associated with the system
-      @return   Pointer to the new cartridge object allocated on the heap
-    */
-    static Cartridge* create(const uint8_t* image, uint32_t size,
-        const Properties& props, const Settings& settings);
+        /**
+          A cartridge is a device which contains the machine code for a
+          game and handles any bankswitching performed by the cartridge.
 
-    /**
-      Create a new cartridge
-    */
-    Cartridge();
+          @author  Bradford W. Mott
+          @version $Id: Cart.hxx,v 1.19 2007/06/14 13:47:50 stephena Exp $
+        */
+        class Cartridge : public Device
+        {
+        public:
+            /**
+              Create a new cartridge object allocated on the heap.  The
+              type of cartridge created depends on the properties object.
 
-    /**
-      Destructor
-    */
-    virtual ~Cartridge();
+              @param image    A pointer to the ROM image
+              @param size     The size of the ROM image
+              @param props    The properties associated with the game
+              @param settings The settings associated with the system
+              @return   Pointer to the new cartridge object allocated on the heap
+            */
+            static Cartridge* create(const uint8_t* image, uint32_t size,
+                const Properties& props, const Settings& settings);
 
-    /**
-      Query some information about this cartridge.
-    */
-    const std::string& about() const { return myAboutString; }
+            /**
+              Create a new cartridge
+            */
+            Cartridge();
 
-    /**
-      Save the internal (patched) ROM image.
+            /**
+              Destructor
+            */
+            virtual ~Cartridge();
 
-      @param out  The output file stream to save the image
-    */
-    bool save(std::ofstream& out);
+            /**
+              Query some information about this cartridge.
+            */
+            const std::string& about() const { return myAboutString; }
 
-    /** MGB: Added to drop warning on overloaded save() method. */
-    virtual bool save(Serializer& out) = 0;
+            /**
+              Save the internal (patched) ROM image.
 
-    /**
-      Lock/unlock bankswitching capability.
-    */
-    void lockBank()   { bankLocked = true;  }
-    void unlockBank() { bankLocked = false; }
+              @param out  The output file stream to save the image
+            */
+            bool save(std::ofstream& out);
 
-  public:
-    //////////////////////////////////////////////////////////////////////
-    // The following methods are cart-specific and must be implemented
-    // in derived classes.
-    //////////////////////////////////////////////////////////////////////
-    /**
-      Set the specified bank.
-    */
-    virtual void bank(uint16_t bank) = 0;
+            /** MGB: Added to drop warning on overloaded save() method. */
+            virtual bool save(Serializer& out) = 0;
 
-    /**
-      Get the current bank.
+            /**
+              Lock/unlock bankswitching capability.
+            */
+            void lockBank() { bankLocked = true; }
+            void unlockBank() { bankLocked = false; }
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank() = 0;
+        public:
+            //////////////////////////////////////////////////////////////////////
+            // The following methods are cart-specific and must be implemented
+            // in derived classes.
+            //////////////////////////////////////////////////////////////////////
+            /**
+              Set the specified bank.
+            */
+            virtual void bank(uint16_t bank) = 0;
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount() = 0;
+            /**
+              Get the current bank.
 
-    /**
-      Patch the cartridge ROM.
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank() = 0;
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value) = 0;
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount() = 0;
 
-    /**
-      Access the internal ROM image for this cartridge.
+            /**
+              Patch the cartridge ROM.
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size) = 0;
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value) = 0;
 
-  protected:
-    // If bankLocked is true, ignore attempts at bankswitching. This is used
-    // by the debugger, when disassembling/dumping ROM.
-    bool bankLocked;
+            /**
+              Access the internal ROM image for this cartridge.
 
-    // Info about this cartridge in string format
-    std::string myAboutString;
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size) = 0;
 
-  private:
-    /**
-      Try to auto-detect the bankswitching type of the cartridge
+        protected:
+            // If bankLocked is true, ignore attempts at bankswitching. This is used
+            // by the debugger, when disassembling/dumping ROM.
+            bool bankLocked;
 
-      @param image  A pointer to the ROM image
-      @param size   The size of the ROM image
-      @return The "best guess" for the cartridge type
-    */
-    static std::string autodetectType(const uint8_t* image, uint32_t size);
+            // Info about this cartridge in string format
+            std::string myAboutString;
 
-    /**
-      Search the image for the specified byte signature
+        private:
+            /**
+              Try to auto-detect the bankswitching type of the cartridge
 
-      @param image      A pointer to the ROM image
-      @param imagesize  The size of the ROM image
-      @param signature  The byte sequence to search for
-      @param sigsize    The number of bytes in the signature
-      @param minhits    The minimum number of times a signature is to be found
+              @param image  A pointer to the ROM image
+              @param size   The size of the ROM image
+              @return The "best guess" for the cartridge type
+            */
+            static std::string autodetectType(const uint8_t* image, uint32_t size);
 
-      @return  True if the signature was found at least 'minhits' time, else false
-    */
-    static bool searchForBytes(const uint8_t* image, uint32_t imagesize,
-                               const uint8_t* signature, uint32_t sigsize,
-                               uint32_t minhits);
+            /**
+              Search the image for the specified byte signature
 
-    /**
-      Returns true if the image is probably a SuperChip (256 bytes RAM)
-    */
-    static bool isProbablySC(const uint8_t* image, uint32_t size);
+              @param image      A pointer to the ROM image
+              @param imagesize  The size of the ROM image
+              @param signature  The byte sequence to search for
+              @param sigsize    The number of bytes in the signature
+              @param minhits    The minimum number of times a signature is to be found
 
-    /**
-      Returns true if the image is probably a 3F bankswitching cartridge
-    */
-    static bool isProbably3F(const uint8_t* image, uint32_t size);
+              @return  True if the signature was found at least 'minhits' time, else false
+            */
+            static bool searchForBytes(const uint8_t* image, uint32_t imagesize,
+                const uint8_t* signature, uint32_t sigsize,
+                uint32_t minhits);
 
-    /**
-      Returns true if the image is probably a 3E bankswitching cartridge
-    */
-    static bool isProbably3E(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a SuperChip (256 bytes RAM)
+            */
+            static bool isProbablySC(const uint8_t* image, uint32_t size);
 
-    /**
-      Returns true if the image is probably a E0 bankswitching cartridge
-    */
-    static bool isProbablyE0(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a 3F bankswitching cartridge
+            */
+            static bool isProbably3F(const uint8_t* image, uint32_t size);
 
-    /**
-      Returns true if the image is probably a E7 bankswitching cartridge
-    */
-    static bool isProbablyE7(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a 3E bankswitching cartridge
+            */
+            static bool isProbably3E(const uint8_t* image, uint32_t size);
 
-    /**
-      Returns true if the image is probably a UA bankswitching cartridge
-    */
-    static bool isProbablyUA(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a E0 bankswitching cartridge
+            */
+            static bool isProbablyE0(const uint8_t* image, uint32_t size);
 
-    /**
-      Returns true if the image is probably a CV bankswitching cartridge
-    */
-    static bool isProbablyCV(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a E7 bankswitching cartridge
+            */
+            static bool isProbablyE7(const uint8_t* image, uint32_t size);
 
-    /**
-      Returns true if the image is probably an FE bankswitching cartridge
-    */
-    static bool isProbablyFE(const uint8_t* image, uint32_t size);
+            /**
+              Returns true if the image is probably a UA bankswitching cartridge
+            */
+            static bool isProbablyUA(const uint8_t* image, uint32_t size);
 
-  private:
-    // Copy constructor isn't supported by cartridges so make it private
-    Cartridge(const Cartridge&);
+            /**
+              Returns true if the image is probably a CV bankswitching cartridge
+            */
+            static bool isProbablyCV(const uint8_t* image, uint32_t size);
 
-    // Assignment operator isn't supported by cartridges so make it private
-    Cartridge& operator = (const Cartridge&);
-};
+            /**
+              Returns true if the image is probably an FE bankswitching cartridge
+            */
+            static bool isProbablyFE(const uint8_t* image, uint32_t size);
 
-}  // namespace stella
+        private:
+            // Copy constructor isn't supported by cartridges so make it private
+            Cartridge(const Cartridge&);
+
+            // Assignment operator isn't supported by cartridges so make it private
+            Cartridge& operator = (const Cartridge&);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

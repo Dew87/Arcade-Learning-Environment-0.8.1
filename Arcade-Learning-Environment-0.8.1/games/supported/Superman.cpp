@@ -27,84 +27,93 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-SupermanSettings::SupermanSettings() { reset(); }
+    SupermanSettings::SupermanSettings() { reset(); }
 
-RomSettings* SupermanSettings::clone() const {
-  return new SupermanSettings(*this);
-}
+    RomSettings* SupermanSettings::clone() const
+    {
+        return new SupermanSettings(*this);
+    }
 
-void SupermanSettings::step(const System& system) {
-  int seconds = getDecimalScore(0xe2, &system);
-  int minutes = getDecimalScore(0xe3, &system);
-  m_time_in_seconds = minutes * 60 + seconds;
+    void SupermanSettings::step(const System& system)
+    {
+        int seconds = getDecimalScore(0xe2, &system);
+        int minutes = getDecimalScore(0xe3, &system);
+        m_time_in_seconds = minutes * 60 + seconds;
 
-  int room_address = readRam(&system, 0x80) + (readRam(&system, 0x81) << 8);
-  int is_clark_kent = readRam(&system, 0x9f) & 0x40;
-  // Game ends when player enters the Daily Bugle room as Clark Kent.
-  m_terminal = is_clark_kent && room_address == 0xf2ac;
+        int room_address = readRam(&system, 0x80) + (readRam(&system, 0x81) << 8);
+        int is_clark_kent = readRam(&system, 0x9f) & 0x40;
+        // Game ends when player enters the Daily Bugle room as Clark Kent.
+        m_terminal = is_clark_kent && room_address == 0xf2ac;
 
-  // Note that the in-game time will just wrap after 100 minutes.
-  const int max_time_in_seconds = 99 * 60 + 59;
-  // Reward is proportional to the speed at which the game is completed.
-  m_reward = m_terminal ? max_time_in_seconds - m_time_in_seconds : 0;
-}
+        // Note that the in-game time will just wrap after 100 minutes.
+        const int max_time_in_seconds = 99 * 60 + 59;
+        // Reward is proportional to the speed at which the game is completed.
+        m_reward = m_terminal ? max_time_in_seconds - m_time_in_seconds : 0;
+    }
 
-bool SupermanSettings::isTerminal() const { return m_terminal; }
+    bool SupermanSettings::isTerminal() const { return m_terminal; }
 
-reward_t SupermanSettings::getReward() const { return m_reward; }
+    reward_t SupermanSettings::getReward() const { return m_reward; }
 
-bool SupermanSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPRIGHT:
-    case PLAYER_A_UPLEFT:
-    case PLAYER_A_DOWNRIGHT:
-    case PLAYER_A_DOWNLEFT:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-    case PLAYER_A_DOWNFIRE:
-    case PLAYER_A_UPRIGHTFIRE:
-    case PLAYER_A_UPLEFTFIRE:
-    case PLAYER_A_DOWNRIGHTFIRE:
-    case PLAYER_A_DOWNLEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
+    bool SupermanSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPRIGHT:
+        case PLAYER_A_UPLEFT:
+        case PLAYER_A_DOWNRIGHT:
+        case PLAYER_A_DOWNLEFT:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+        case PLAYER_A_DOWNFIRE:
+        case PLAYER_A_UPRIGHTFIRE:
+        case PLAYER_A_UPLEFTFIRE:
+        case PLAYER_A_DOWNRIGHTFIRE:
+        case PLAYER_A_DOWNLEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-void SupermanSettings::reset() {
-  m_reward = 0;
-  m_time_in_seconds = 0;
-  m_terminal = false;
-}
+    void SupermanSettings::reset()
+    {
+        m_reward = 0;
+        m_time_in_seconds = 0;
+        m_terminal = false;
+    }
 
-void SupermanSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_time_in_seconds);
-  ser.putBool(m_terminal);
-}
+    void SupermanSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_time_in_seconds);
+        ser.putBool(m_terminal);
+    }
 
-void SupermanSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_time_in_seconds = ser.getInt();
-  m_terminal = ser.getBool();
-}
+    void SupermanSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_time_in_seconds = ser.getInt();
+        m_terminal = ser.getBool();
+    }
 
-// According to https://atariage.com/manual_html_page.php?SoftwareLabelID=941
-// the right difficulty switch increases the speed of certain enemies and the
-// left difficulty switch alters how easy it is to recover after being zapped.
-DifficultyVect SupermanSettings::getAvailableDifficulties() {
-  return {0, 1, 2, 3};
-}
+    // According to https://atariage.com/manual_html_page.php?SoftwareLabelID=941
+    // the right difficulty switch increases the speed of certain enemies and the
+    // left difficulty switch alters how easy it is to recover after being zapped.
+    DifficultyVect SupermanSettings::getAvailableDifficulties()
+    {
+        return { 0, 1, 2, 3 };
+    }
 
 }  // namespace ale

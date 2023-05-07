@@ -30,45 +30,47 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class VideoCheckersSettings : public RomSettings {
- public:
-  VideoCheckersSettings();
+    class VideoCheckersSettings : public RomSettings
+    {
+    public:
+        VideoCheckersSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const  override { return "video_checkers"; }
+        const char* rom() const  override { return "video_checkers"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "539d26b6e9df0da8e7465f0f5ad863b7"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "539d26b6e9df0da8e7465f0f5ad863b7"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  int lives() override { return isTerminal() ? 0 : 1; }
+        int lives() override { return isTerminal() ? 0 : 1; }
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  bool m_reverse_checkers;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        bool m_reverse_checkers;
+    };
 
 }  // namespace ale
 

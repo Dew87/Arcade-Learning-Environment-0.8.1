@@ -25,108 +25,114 @@
 #include <random>
 #include <sstream>
 
-namespace ale {
-namespace stella {
-
-// Implementation of Random's random number generator wrapper.
-class Random::Impl {
-
-  typedef std::mt19937 randgen_t;
-
-  public:
-
-    Impl();
-
-    // Implementations of the methods defined in Random.hpp.
-    void seed(uint32_t value);
-    uint32_t next();
-    double nextDouble();
-
-  private:
-
-    friend class Random;
-
-    // Seed to use for creating new random number generators
-    uint32_t m_seed;
-
-    // Random number generator
-    randgen_t m_randgen;
-};
-
-Random::Impl::Impl()
+namespace ale
 {
-    // Initialize seed to time
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Random::Impl::seed(uint32_t value)
-{
-  m_seed = value;
-  m_randgen.seed(m_seed);
-}
+        // Implementation of Random's random number generator wrapper.
+        class Random::Impl
+        {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint32_t Random::Impl::next()
-{
-  return m_randgen();
-}
+            typedef std::mt19937 randgen_t;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-double Random::Impl::nextDouble()
-{
-  return m_randgen() / double(m_randgen.max() + 1.0);
-}
+        public:
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Random::Random() :
-    m_pimpl(new Random::Impl())
-{
-}
+            Impl();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Random::~Random() {
-  if (m_pimpl != NULL) {
-    delete m_pimpl;
-    m_pimpl = NULL;
-  }
-}
+            // Implementations of the methods defined in Random.hpp.
+            void seed(uint32_t value);
+            uint32_t next();
+            double nextDouble();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Random::seed(uint32_t value)
-{
-  m_pimpl->seed(value);
-}
+        private:
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint32_t Random::next()
-{
-  return m_pimpl->next();
-}
+            friend class Random;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-double Random::nextDouble()
-{
-  return m_pimpl->nextDouble();
-}
+            // Seed to use for creating new random number generators
+            uint32_t m_seed;
 
-bool Random::saveState(Serializer& ser) {
-  // The mt19937 object's serialization of choice is into a string.
-  std::ostringstream oss;
-  oss << m_pimpl->m_randgen;
+            // Random number generator
+            randgen_t m_randgen;
+        };
 
-  ser.putString(oss.str());
+        Random::Impl::Impl()
+        {
+            // Initialize seed to time
+        }
 
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Random::Impl::seed(uint32_t value)
+        {
+            m_seed = value;
+            m_randgen.seed(m_seed);
+        }
 
-bool Random::loadState(Deserializer& deser) {
-  // Deserialize into a string.
-  std::istringstream iss(deser.getString());
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint32_t Random::Impl::next()
+        {
+            return m_randgen();
+        }
 
-  iss >> m_pimpl->m_randgen;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        double Random::Impl::nextDouble()
+        {
+            return m_randgen() / double(m_randgen.max() + 1.0);
+        }
 
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Random::Random() :
+            m_pimpl(new Random::Impl())
+        {}
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Random::~Random()
+        {
+            if (m_pimpl != NULL)
+            {
+                delete m_pimpl;
+                m_pimpl = NULL;
+            }
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Random::seed(uint32_t value)
+        {
+            m_pimpl->seed(value);
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint32_t Random::next()
+        {
+            return m_pimpl->next();
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        double Random::nextDouble()
+        {
+            return m_pimpl->nextDouble();
+        }
+
+        bool Random::saveState(Serializer& ser)
+        {
+            // The mt19937 object's serialization of choice is into a string.
+            std::ostringstream oss;
+            oss << m_pimpl->m_randgen;
+
+            ser.putString(oss.str());
+
+            return true;
+        }
+
+        bool Random::loadState(Deserializer& deser)
+        {
+            // Deserialize into a string.
+            std::istringstream iss(deser.getString());
+
+            iss >> m_pimpl->m_randgen;
+
+            return true;
+        }
+
+    }  // namespace stella
 }  // namespace ale

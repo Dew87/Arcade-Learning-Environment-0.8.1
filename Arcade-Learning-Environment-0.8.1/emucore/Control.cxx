@@ -19,49 +19,49 @@
 #include <cassert>
 #include "emucore/Control.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Controller::Controller(Jack jack, const Event& event, Type type)
-  : myJack(jack),
-    myEvent(event),
-    myType(type)
+namespace ale
 {
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Controller::~Controller()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Controller::Controller(Jack jack, const Event& event, Type type)
+            : myJack(jack),
+            myEvent(event),
+            myType(type)
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Controller::Type Controller::type()
-{
-  return myType;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Controller::~Controller()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const int Controller::maximumResistance = 0x7FFFFFFF;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Controller::Type Controller::type()
+        {
+            return myType;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const int Controller::minimumResistance = 0x00000000;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const int Controller::maximumResistance = 0x7FFFFFFF;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Controller::Controller(const Controller& c)
-  : myJack(c.myJack),
-    myEvent(c.myEvent),
-    myType(c.myType)
-{
-  assert(false);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const int Controller::minimumResistance = 0x00000000;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Controller& Controller::operator = (const Controller&)
-{
-  assert(false);
-  return *this;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Controller::Controller(const Controller& c)
+            : myJack(c.myJack),
+            myEvent(c.myEvent),
+            myType(c.myType)
+        {
+            assert(false);
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Controller& Controller::operator = (const Controller&)
+        {
+            assert(false);
+            return *this;
+        }
+
+    }  // namespace stella
 }  // namespace ale

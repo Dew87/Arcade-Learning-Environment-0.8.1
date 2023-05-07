@@ -19,112 +19,116 @@
 #ifndef M6502LOW_HXX
 #define M6502LOW_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class M6502Low;
-class Serializer;
-class Deserializer;
+        class M6502Low;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/M6502.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  This class provides a low compatibility 6502 microprocessor emulator.
-  The memory accesses and cycle updates of this emulator are not 100%
-  accurate as shown below:
-
-    1. Only memory accesses which are actually needed are done
-       (i.e. no "false" reads and writes are performed)
-
-    2. Cycle counts are updated at the beginning of the instruction
-       execution and not valid at the sub-instruction level
-
-  If speed is the most important issue then use this class, however, if
-  better compatibility is neccessary use one of the other 6502 classes.
-
-  @author  Bradford W. Mott
-  @version $Id: M6502Low.hxx,v 1.7 2007/01/01 18:04:51 stephena Exp $
-*/
-class M6502Low : public M6502
+namespace ale
 {
-  public:
-    /**
-      Create a new low compatibility 6502 microprocessor with the specified
-      cycle multiplier.
+    namespace stella
+    {
 
-      @param systemCyclesPerProcessorCycle The cycle multiplier
-    */
-    M6502Low(uint32_t systemCyclesPerProcessorCycle);
+        /**
+          This class provides a low compatibility 6502 microprocessor emulator.
+          The memory accesses and cycle updates of this emulator are not 100%
+          accurate as shown below:
 
-    /**
-      Destructor
-    */
-    virtual ~M6502Low();
+            1. Only memory accesses which are actually needed are done
+               (i.e. no "false" reads and writes are performed)
 
-  public:
-    /**
-      Execute instructions until the specified number of instructions
-      is executed, someone stops execution, or an error occurs.  Answers
-      true iff execution stops normally.
+            2. Cycle counts are updated at the beginning of the instruction
+               execution and not valid at the sub-instruction level
 
-      @param number Indicates the number of instructions to execute
-      @return true iff execution stops normally
-    */
-    virtual bool execute(uint32_t number);
+          If speed is the most important issue then use this class, however, if
+          better compatibility is neccessary use one of the other 6502 classes.
 
-    /**
-      Saves the current state of this device to the given Serializer.
+          @author  Bradford W. Mott
+          @version $Id: M6502Low.hxx,v 1.7 2007/01/01 18:04:51 stephena Exp $
+        */
+        class M6502Low : public M6502
+        {
+        public:
+            /**
+              Create a new low compatibility 6502 microprocessor with the specified
+              cycle multiplier.
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+              @param systemCyclesPerProcessorCycle The cycle multiplier
+            */
+            M6502Low(uint32_t systemCyclesPerProcessorCycle);
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Destructor
+            */
+            virtual ~M6502Low();
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+        public:
+            /**
+              Execute instructions until the specified number of instructions
+              is executed, someone stops execution, or an error occurs.  Answers
+              true iff execution stops normally.
 
-    /**
-      Get a null terminated string which is the processors's name (i.e. "M6532")
+              @param number Indicates the number of instructions to execute
+              @return true iff execution stops normally
+            */
+            virtual bool execute(uint32_t number);
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+            /**
+              Saves the current state of this device to the given Serializer.
 
-  protected:
-    /**
-      Called after an interrupt has be requested using irq() or nmi()
-    */
-    void interruptHandler();
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-  protected:
-    /*
-      Get the byte at the specified address
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return The byte at the specified address
-    */
-    inline uint8_t peek(uint16_t address);
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Change the byte at the specified address to the given value
+            /**
+              Get a null terminated string which is the processors's name (i.e. "M6532")
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    inline void poke(uint16_t address, uint8_t value);
-};
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-}  // namespace stella
+        protected:
+            /**
+              Called after an interrupt has be requested using irq() or nmi()
+            */
+            void interruptHandler();
+
+        protected:
+            /*
+              Get the byte at the specified address
+
+              @return The byte at the specified address
+            */
+            inline uint8_t peek(uint16_t address);
+
+            /**
+              Change the byte at the specified address to the given value
+
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            inline void poke(uint16_t address, uint8_t value);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

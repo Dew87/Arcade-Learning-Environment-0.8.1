@@ -32,72 +32,83 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-Atlantis2Settings::Atlantis2Settings() { reset(); }
+    Atlantis2Settings::Atlantis2Settings() { reset(); }
 
-/* create a new instance of the rom */
-RomSettings* Atlantis2Settings::clone() const {
-  return new Atlantis2Settings(*this);
-}
+    /* create a new instance of the rom */
+    RomSettings* Atlantis2Settings::clone() const
+    {
+        return new Atlantis2Settings(*this);
+    }
 
-/* process the latest information from ALE */
-void Atlantis2Settings::step(const System& system) {
-  // update the reward
+    /* process the latest information from ALE */
+    void Atlantis2Settings::step(const System& system)
+    {
+        // update the reward
 
-  // update terminal status
-  m_lives = readRam(&system, 0xF1);
-  m_terminal = (m_lives == 0xFF);
+        // update terminal status
+        m_lives = readRam(&system, 0xF1);
+        m_terminal = (m_lives == 0xFF);
 
-  // ignore terminal score.
-  if (m_terminal) {
-    m_reward = 0;
-  } else {
-    reward_t score = getDecimalScore(0xA1, 0xA2, 0xA3, &system);
-    m_reward = score - m_score;
-    m_score = score;
-  }
-}
+        // ignore terminal score.
+        if (m_terminal)
+        {
+            m_reward = 0;
+        }
+        else
+        {
+            reward_t score = getDecimalScore(0xA1, 0xA2, 0xA3, &system);
+            m_reward = score - m_score;
+            m_score = score;
+        }
+    }
 
-/* is end of game */
-bool Atlantis2Settings::isTerminal() const { return m_terminal; }
+    /* is end of game */
+    bool Atlantis2Settings::isTerminal() const { return m_terminal; }
 
-/* get the most recently observed reward */
-reward_t Atlantis2Settings::getReward() const { return m_reward; }
+    /* get the most recently observed reward */
+    reward_t Atlantis2Settings::getReward() const { return m_reward; }
 
-/* is an action part of the minimal set? */
-bool Atlantis2Settings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
+    /* is an action part of the minimal set? */
+    bool Atlantis2Settings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-/* reset the state of the game */
-void Atlantis2Settings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_terminal = false;
-}
+    /* reset the state of the game */
+    void Atlantis2Settings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_terminal = false;
+    }
 
-/* saves the state of the rom settings */
-void Atlantis2Settings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-}
+    /* saves the state of the rom settings */
+    void Atlantis2Settings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+    }
 
-// loads the state of the rom settings
-void Atlantis2Settings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-}
+    // loads the state of the rom settings
+    void Atlantis2Settings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+    }
 
 }  // namespace ale

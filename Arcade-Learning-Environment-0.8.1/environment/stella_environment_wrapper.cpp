@@ -2,26 +2,31 @@
 
 #include "environment/stella_environment.hpp"
 
-namespace ale {
-using namespace stella;   // Random
+namespace ale
+{
+    using namespace stella;   // Random
 
-StellaEnvironmentWrapper::StellaEnvironmentWrapper(
-    StellaEnvironment& environment)
-    : m_environment(environment) {}
+    StellaEnvironmentWrapper::StellaEnvironmentWrapper(
+        StellaEnvironment& environment)
+        : m_environment(environment)
+    {}
 
-reward_t StellaEnvironmentWrapper::act(Action player_a_action,
-                                       Action player_b_action) {
-  return m_environment.act(player_a_action, player_b_action);
-}
+    reward_t StellaEnvironmentWrapper::act(Action player_a_action,
+        Action player_b_action)
+    {
+        return m_environment.act(player_a_action, player_b_action);
+    }
 
-void StellaEnvironmentWrapper::softReset() { m_environment.softReset(); }
+    void StellaEnvironmentWrapper::softReset() { m_environment.softReset(); }
 
-void StellaEnvironmentWrapper::pressSelect(size_t num_steps) {
-  m_environment.pressSelect(num_steps);
-}
+    void StellaEnvironmentWrapper::pressSelect(size_t num_steps)
+    {
+        m_environment.pressSelect(num_steps);
+    }
 
-Random& StellaEnvironmentWrapper::getEnvironmentRNG() {
-  return m_environment.getEnvironmentRNG();
-}
+    Random& StellaEnvironmentWrapper::getEnvironmentRNG()
+    {
+        return m_environment.getEnvironmentRNG();
+    }
 
 }  // namespace ale

@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +20,8 @@
 #include "organism.h"
 #include "population.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
 	class Organism;
 	class Population;
@@ -32,7 +33,8 @@ namespace NEAT {
 	//   single species, so that compatible organisms
 	//   can mate.                                      
 	// ---------------------------------------------  
-	class Species {
+	class Species
+	{
 
 	public:
 
@@ -61,7 +63,7 @@ namespace NEAT {
 		//and then divide it by the size of the species so that the organisms in the species "share" the fitness
 		void adjust_fitness();
 
-		double compute_average_fitness(); 
+		double compute_average_fitness();
 
 		double compute_max_fitness();
 
@@ -70,21 +72,23 @@ namespace NEAT {
 		double count_offspring(double skim);
 
 		//Compute generations since last improvement
-		int last_improved() {
-			return age-age_of_last_improvement;
+		int last_improved()
+		{
+			return age - age_of_last_improvement;
 		}
 
 		//Remove an organism from Species
 		bool remove_org(Organism *org);
 
-		double size() {
+		double size()
+		{
 			return organisms.size();
 		}
 
 		Organism *get_champ();
 
 		//Perform mating and mutation to form next generation
-		bool reproduce(int generation, Population *pop,std::vector<Species*> &sorted_species);
+		bool reproduce(int generation, Population *pop, std::vector<Species*> &sorted_species);
 
 		// *** Real-time methods *** 
 
@@ -95,7 +99,7 @@ namespace NEAT {
 
 		//Allows the creation of a Species that won't age (a novel one)
 		//This protects new Species from aging inside their first generation
-		Species(int i,bool n);
+		Species(int i, bool n);
 
 		~Species();
 

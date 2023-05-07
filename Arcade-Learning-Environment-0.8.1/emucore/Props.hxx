@@ -22,166 +22,169 @@
 #include <string>
 #include <iostream>
 
-namespace ale {
-namespace stella {
-
-enum PropertyType {
-  Cartridge_MD5,
-  Cartridge_Manufacturer,
-  Cartridge_ModelNo,
-  Cartridge_Name,
-  Cartridge_Note,
-  Cartridge_Rarity,
-  Cartridge_Sound,
-  Cartridge_Type,
-  Console_LeftDifficulty,
-  Console_RightDifficulty,
-  Console_TelevisionType,
-  Console_SwapPorts,
-  Controller_Left,
-  Controller_Right,
-  Controller_SwapPaddles,
-  Display_Format,
-  Display_YStart,
-  Display_Height,
-  Display_Phosphor,
-  Display_PPBlend,
-  Emulation_HmoveBlanks,
-  LastPropType
-};
-
-/**
-  This class represents objects which maintain a collection of
-  properties.  A property is a key and its corresponding value.
-
-  A properties object can contain a reference to another properties
-  object as its "defaults"; this second properties object is searched
-  if the property key is not found in the original property list.
-
-  @author  Bradford W. Mott
-  @version $Id: Props.hxx,v 1.15 2007/02/06 23:34:33 stephena Exp $
-*/
-class Properties
+namespace ale
 {
-  friend class PropertiesSet;
+    namespace stella
+    {
 
-  public:
-    /**
-      Creates an empty properties object with the specified defaults.  The
-      new properties object does not claim ownership of the defaults.
-    */
-    Properties();
+        enum PropertyType
+        {
+            Cartridge_MD5,
+            Cartridge_Manufacturer,
+            Cartridge_ModelNo,
+            Cartridge_Name,
+            Cartridge_Note,
+            Cartridge_Rarity,
+            Cartridge_Sound,
+            Cartridge_Type,
+            Console_LeftDifficulty,
+            Console_RightDifficulty,
+            Console_TelevisionType,
+            Console_SwapPorts,
+            Controller_Left,
+            Controller_Right,
+            Controller_SwapPaddles,
+            Display_Format,
+            Display_YStart,
+            Display_Height,
+            Display_Phosphor,
+            Display_PPBlend,
+            Emulation_HmoveBlanks,
+            LastPropType
+        };
 
-    /**
-      Creates a properties list by copying another one
+        /**
+          This class represents objects which maintain a collection of
+          properties.  A property is a key and its corresponding value.
 
-      @param properties The properties to copy
-    */
-    Properties(const Properties& properties);
+          A properties object can contain a reference to another properties
+          object as its "defaults"; this second properties object is searched
+          if the property key is not found in the original property list.
 
-    /**
-      Destructor
-    */
-    virtual ~Properties();
+          @author  Bradford W. Mott
+          @version $Id: Props.hxx,v 1.15 2007/02/06 23:34:33 stephena Exp $
+        */
+        class Properties
+        {
+            friend class PropertiesSet;
 
-  public:
-    /**
-      Get the value assigned to the specified key.  If the key does
-      not exist then the empty string is returned.
+        public:
+            /**
+              Creates an empty properties object with the specified defaults.  The
+              new properties object does not claim ownership of the defaults.
+            */
+            Properties();
 
-      @param key  The key of the property to lookup
-      @return     The value of the property
-    */
-    const std::string& get(PropertyType key) const;
+            /**
+              Creates a properties list by copying another one
 
-    /**
-      Set the value associated with key to the given value.
+              @param properties The properties to copy
+            */
+            Properties(const Properties& properties);
 
-      @param key      The key of the property to set
-      @param value    The value to assign to the property
-    */
-    void set(PropertyType key, const std::string& value);
+            /**
+              Destructor
+            */
+            virtual ~Properties();
 
-    /**
-      Load properties from the specified input stream
+        public:
+            /**
+              Get the value assigned to the specified key.  If the key does
+              not exist then the empty string is returned.
 
-      @param in The input stream to use
-    */
-    void load(std::istream& in);
+              @param key  The key of the property to lookup
+              @return     The value of the property
+            */
+            const std::string& get(PropertyType key) const;
 
-    /**
-      Save properties to the specified output stream
+            /**
+              Set the value associated with key to the given value.
 
-      @param out The output stream to use
-    */
-    void save(std::ostream& out) const;
+              @param key      The key of the property to set
+              @param value    The value to assign to the property
+            */
+            void set(PropertyType key, const std::string& value);
 
-    /**
-      Print the attributes of this properties object
-    */
-    void print() const;
+            /**
+              Load properties from the specified input stream
 
-    /**
-      Resets all properties to their defaults
-    */
-    void setDefaults();
+              @param in The input stream to use
+            */
+            void load(std::istream& in);
 
-  public:
-    /**
-      Overloaded assignment operator
+            /**
+              Save properties to the specified output stream
 
-      @param properties The properties object to set myself equal to
-      @return Myself after assignment has taken place
-    */
-    Properties& operator = (const Properties& properties);
+              @param out The output stream to use
+            */
+            void save(std::ostream& out) const;
 
-  private:
-    /**
-      Helper function to perform a deep copy of the specified
-      properties.  Assumes that old properties have already been
-      freed.
+            /**
+              Print the attributes of this properties object
+            */
+            void print() const;
 
-      @param properties The properties object to copy myself from
-    */
-    void copy(const Properties& properties);
+            /**
+              Resets all properties to their defaults
+            */
+            void setDefaults();
 
-    /**
-      Read the next quoted string from the specified input stream
-      and returns it.
+        public:
+            /**
+              Overloaded assignment operator
 
-      @param in The input stream to use
-      @return The string inside the quotes
-    */
-    static std::string readQuotedString(std::istream& in);
+              @param properties The properties object to set myself equal to
+              @return Myself after assignment has taken place
+            */
+            Properties& operator = (const Properties& properties);
 
-    /**
-      Write the specified string to the given output stream as a
-      quoted string.
+        private:
+            /**
+              Helper function to perform a deep copy of the specified
+              properties.  Assumes that old properties have already been
+              freed.
 
-      @param out The output stream to use
-      @param s The string to output
-    */
-    static void writeQuotedString(std::ostream& out, const std::string& s);
+              @param properties The properties object to copy myself from
+            */
+            void copy(const Properties& properties);
 
-    /**
-      Get the property type associated with the named property
+            /**
+              Read the next quoted string from the specified input stream
+              and returns it.
 
-      @param name  The PropertyType key associated with the given string
-    */
-    static PropertyType getPropertyType(const std::string& name);
+              @param in The input stream to use
+              @return The string inside the quotes
+            */
+            static std::string readQuotedString(std::istream& in);
 
-  private:
-    // The array of properties
-    std::string myProperties[LastPropType];
+            /**
+              Write the specified string to the given output stream as a
+              quoted string.
 
-    // List of default properties to use when none have been provided
-    static const char* ourDefaultProperties[LastPropType];
+              @param out The output stream to use
+              @param s The string to output
+            */
+            static void writeQuotedString(std::ostream& out, const std::string& s);
 
-    // The text strings associated with each property type
-    static const char* ourPropertyNames[LastPropType];
-};
+            /**
+              Get the property type associated with the named property
 
-}  // namespace stella
+              @param name  The PropertyType key associated with the given string
+            */
+            static PropertyType getPropertyType(const std::string& name);
+
+        private:
+            // The array of properties
+            std::string myProperties[LastPropType];
+
+            // List of default properties to use when none have been provided
+            static const char* ourDefaultProperties[LastPropType];
+
+            // The text strings associated with each property type
+            static const char* ourPropertyNames[LastPropType];
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

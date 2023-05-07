@@ -28,44 +28,46 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class DarkChambersSettings final : public RomSettings {
+	class DarkChambersSettings final : public RomSettings
+	{
 
-public:
-  DarkChambersSettings();
+	public:
+		DarkChambersSettings();
 
-  void reset() override;
+		void reset() override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "darkchambers"; }
+		const char* rom() const override { return "darkchambers"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "106855474c69d08c8ffa308d47337269"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "106855474c69d08c8ffa308d47337269"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
-  ModeVect getAvailableModes() override;
+		ModeVect getAvailableModes() override;
 
-  ActionVect getStartingActions() override;
-private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_level;
-  int m_score;
-  int m_health;
-};
+		ActionVect getStartingActions() override;
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		int m_level;
+		int m_score;
+		int m_health;
+	};
 
 } // namespace ale
 

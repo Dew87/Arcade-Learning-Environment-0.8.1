@@ -20,67 +20,85 @@
 
 #include <algorithm>
 
-namespace ale {
-using namespace stella;   // System
+namespace ale
+{
+    using namespace stella;   // System
 
-RomSettings::RomSettings() {}
+    RomSettings::RomSettings() {}
 
-bool RomSettings::isLegal(const Action& a) const {
-  return true;
-}
-
-ActionVect RomSettings::getMinimalActionSet() {
-  ActionVect actions;
-  for (int a = 0; a < PLAYER_B_NOOP; a++) {
-    if (isMinimal((Action)a) && isLegal((Action)a)) {
-      actions.push_back((Action)a);
+    bool RomSettings::isLegal(const Action& a) const
+    {
+        return true;
     }
-  }
-  return actions;
-}
 
-ActionVect RomSettings::getAllActions() {
-  ActionVect actions;
-  for (int a = 0; a < PLAYER_B_NOOP; a++) {
-    if (isLegal((Action)a)) {
-      actions.push_back((Action)a);
+    ActionVect RomSettings::getMinimalActionSet()
+    {
+        ActionVect actions;
+        for (int a = 0; a < PLAYER_B_NOOP; a++)
+        {
+            if (isMinimal((Action)a) && isLegal((Action)a))
+            {
+                actions.push_back((Action)a);
+            }
+        }
+        return actions;
     }
-  }
-  return actions;
-}
 
-ActionVect RomSettings::getStartingActions() {
-  return ActionVect();
-}
+    ActionVect RomSettings::getAllActions()
+    {
+        ActionVect actions;
+        for (int a = 0; a < PLAYER_B_NOOP; a++)
+        {
+            if (isLegal((Action)a))
+            {
+                actions.push_back((Action)a);
+            }
+        }
+        return actions;
+    }
 
-ModeVect RomSettings::getAvailableModes() {
-  return ModeVect(1, 0);
-}
+    ActionVect RomSettings::getStartingActions()
+    {
+        return ActionVect();
+    }
 
-void RomSettings::setMode(game_mode_t m, System&, std::unique_ptr<StellaEnvironmentWrapper>) {
-  // By default, 0 is the only available mode
-  if (m != 0) {
-    throw std::runtime_error("This mode is not currently available for this game");
-  }
-}
+    ModeVect RomSettings::getAvailableModes()
+    {
+        return ModeVect(1, 0);
+    }
 
-game_mode_t RomSettings::getDefaultMode() {
-  // By default, return the first available mode, or 0 if none are listed
-  ModeVect available_modes = getAvailableModes();
-  if (available_modes.empty()) {
-    return 0;
-  } else {
-    return available_modes[0];
-  }
-}
+    void RomSettings::setMode(game_mode_t m, System&, std::unique_ptr<StellaEnvironmentWrapper>)
+    {
+        // By default, 0 is the only available mode
+        if (m != 0)
+        {
+            throw std::runtime_error("This mode is not currently available for this game");
+        }
+    }
 
-DifficultyVect RomSettings::getAvailableDifficulties() {
-  return DifficultyVect(1, 0);
-}
+    game_mode_t RomSettings::getDefaultMode()
+    {
+        // By default, return the first available mode, or 0 if none are listed
+        ModeVect available_modes = getAvailableModes();
+        if (available_modes.empty())
+        {
+            return 0;
+        }
+        else
+        {
+            return available_modes[0];
+        }
+    }
 
-bool RomSettings::isModeSupported(game_mode_t m) {
-  auto modes = getAvailableModes();
-  return std::find(modes.begin(), modes.end(), m) != modes.end();
-}
+    DifficultyVect RomSettings::getAvailableDifficulties()
+    {
+        return DifficultyVect(1, 0);
+    }
+
+    bool RomSettings::isModeSupported(game_mode_t m)
+    {
+        auto modes = getAvailableModes();
+        return std::find(modes.begin(), modes.end(), m) != modes.end();
+    }
 
 }  // namespace ale

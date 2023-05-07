@@ -19,151 +19,153 @@
 #ifndef SOUND_HXX
 #define SOUND_HXX
 
-namespace ale {
-namespace stella {
-
-class Settings;
-class Serializer;
-class Deserializer;
-
-
-/**
-  This class is an abstract base class for the various sound objects.
-  It has no functionality whatsoever.
-
-  @author Stephen Anthony
-  @version $Id: Sound.hxx,v 1.23 2007/01/01 18:04:50 stephena Exp $
-*/
-class Sound
+namespace ale
 {
-  public:
-    /**
-      Create a new sound object.  The init method must be invoked before
-      using the object.
-    */
-    Sound(Settings* settings) { mySettings = settings; }
+    namespace stella
+    {
 
-    /**
-      Destructor
-    */
-    virtual ~Sound() { };
+        class Settings;
+        class Serializer;
+        class Deserializer;
 
-  public:
-    /**
-      Enables/disables the sound subsystem.
 
-      @param enable  Either true or false, to enable or disable the sound system
-    */
-    virtual void setEnabled(bool enable) = 0;
+        /**
+          This class is an abstract base class for the various sound objects.
+          It has no functionality whatsoever.
 
-    /**
-      The system cycle counter is being adjusting by the specified amount.  Any
-      members using the system cycle counter should be adjusted as needed.
+          @author Stephen Anthony
+          @version $Id: Sound.hxx,v 1.23 2007/01/01 18:04:50 stephena Exp $
+        */
+        class Sound
+        {
+        public:
+            /**
+              Create a new sound object.  The init method must be invoked before
+              using the object.
+            */
+            Sound(Settings* settings) { mySettings = settings; }
 
-      @param amount The amount the cycle counter is being adjusted by
-    */
-    virtual void adjustCycleCounter(int amount) = 0;
+            /**
+              Destructor
+            */
+            virtual ~Sound() {};
 
-    /**
-      Sets the number of channels (mono or stereo sound).
+        public:
+            /**
+              Enables/disables the sound subsystem.
 
-      @param channels The number of channels
-    */
-    virtual void setChannels(uint32_t channels) = 0;
+              @param enable  Either true or false, to enable or disable the sound system
+            */
+            virtual void setEnabled(bool enable) = 0;
 
-    /**
-      Sets the display framerate.  Sound generation for NTSC and PAL games
-      depends on the framerate, so we need to set it here.
+            /**
+              The system cycle counter is being adjusting by the specified amount.  Any
+              members using the system cycle counter should be adjusted as needed.
 
-      @param framerate The base framerate depending on NTSC or PAL ROM
-    */
-    virtual void setFrameRate(uint32_t framerate) = 0;
+              @param amount The amount the cycle counter is being adjusted by
+            */
+            virtual void adjustCycleCounter(int amount) = 0;
 
-    /**
-      Initializes the sound device.  This must be called before any
-      calls are made to derived methods.
-    */
-    virtual void initialize() = 0;
+            /**
+              Sets the number of channels (mono or stereo sound).
 
-    /**
-      Should be called to close the sound device.  Once called the sound
-      device can be started again using the initialize method.
-    */
-    virtual void close() = 0;
+              @param channels The number of channels
+            */
+            virtual void setChannels(uint32_t channels) = 0;
 
-    /**
-      Return true iff the sound device was successfully initialized.
+            /**
+              Sets the display framerate.  Sound generation for NTSC and PAL games
+              depends on the framerate, so we need to set it here.
 
-      @return true iff the sound device was successfully initialized.
-    */
-    virtual bool isSuccessfullyInitialized() const = 0;
+              @param framerate The base framerate depending on NTSC or PAL ROM
+            */
+            virtual void setFrameRate(uint32_t framerate) = 0;
 
-    /**
-      Set the mute state of the sound object.  While muted no sound is played.
+            /**
+              Initializes the sound device.  This must be called before any
+              calls are made to derived methods.
+            */
+            virtual void initialize() = 0;
 
-      @param state Mutes sound if true, unmute if false
-    */
-    virtual void mute(bool state) = 0;
+            /**
+              Should be called to close the sound device.  Once called the sound
+              device can be started again using the initialize method.
+            */
+            virtual void close() = 0;
 
-    /**
-      Reset the sound device.
-    */
-    virtual void reset() = 0;
+            /**
+              Return true iff the sound device was successfully initialized.
 
-    /**
-      Sets the sound register to a given value.
+              @return true iff the sound device was successfully initialized.
+            */
+            virtual bool isSuccessfullyInitialized() const = 0;
 
-      @param addr  The register address
-      @param value The value to save into the register
-      @param cycle The system cycle at which the register is being updated
-    */
-    virtual void set(uint16_t addr, uint8_t value, int cycle) = 0;
+            /**
+              Set the mute state of the sound object.  While muted no sound is played.
 
-    /**
-      Sets the volume of the sound device to the specified level.  The
-      volume is given as a percentage from 0 to 100.  Values outside
-      this range indicate that the volume shouldn't be changed at all.
+              @param state Mutes sound if true, unmute if false
+            */
+            virtual void mute(bool state) = 0;
 
-      @param percent The new volume percentage level for the sound device
-    */
-    virtual void setVolume(int percent) = 0;
+            /**
+              Reset the sound device.
+            */
+            virtual void reset() = 0;
 
-    /**
-      Adjusts the volume of the sound device based on the given direction.
+            /**
+              Sets the sound register to a given value.
 
-      @param direction  Increase or decrease the current volume by a predefined
-                        amount based on the direction (1 = increase, -1 =decrease)
-    */
-    virtual void adjustVolume(int8_t direction) = 0;
+              @param addr  The register address
+              @param value The value to save into the register
+              @param cycle The system cycle at which the register is being updated
+            */
+            virtual void set(uint16_t addr, uint8_t value, int cycle) = 0;
 
-    /**
-      * Tells the sound engine to record one frame's worth of sound.
-      */
-    virtual void recordNextFrame() = 0;
+            /**
+              Sets the volume of the sound device to the specified level.  The
+              volume is given as a percentage from 0 to 100.  Values outside
+              this range indicate that the volume shouldn't be changed at all.
 
-public:
-    /**
-      Loads the current state of this device from the given Deserializer.
+              @param percent The new volume percentage level for the sound device
+            */
+            virtual void setVolume(int percent) = 0;
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in) = 0;
+            /**
+              Adjusts the volume of the sound device based on the given direction.
 
-    /**
-      Saves the current state of this device to the given Serializer.
+              @param direction  Increase or decrease the current volume by a predefined
+                                amount based on the direction (1 = increase, -1 =decrease)
+            */
+            virtual void adjustVolume(int8_t direction) = 0;
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out) = 0;
+            /**
+              * Tells the sound engine to record one frame's worth of sound.
+              */
+            virtual void recordNextFrame() = 0;
 
-  protected:
-    // The emulator Settings
-    Settings* mySettings;
-};
+        public:
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-}  // namespace stella
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in) = 0;
+
+            /**
+              Saves the current state of this device to the given Serializer.
+
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out) = 0;
+
+        protected:
+            // The emulator Settings
+            Settings* mySettings;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

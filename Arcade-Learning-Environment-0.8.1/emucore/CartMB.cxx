@@ -23,199 +23,200 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/CartMB.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeMB::CartridgeMB(const uint8_t* image)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 65536; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeMB::~CartridgeMB()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeMB::CartridgeMB(const uint8_t* image)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 65536; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* CartridgeMB::name() const
-{
-  return "CartridgeMB";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeMB::~CartridgeMB()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeMB::reset()
-{
-  // Upon reset we switch to bank 1
-  myCurrentBank = 0;
-  incbank();
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* CartridgeMB::name() const
+        {
+            return "CartridgeMB";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeMB::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeMB::reset()
+        {
+            // Upon reset we switch to bank 1
+            myCurrentBank = 0;
+            incbank();
+        }
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert((0x1000 & mask) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeMB::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Set the page accessing methods for the hot spots
-  System::PageAccess access;
-  for(uint32_t i = (0x1FF0 & ~mask); i < 0x2000; i += (1 << shift))
-  {
-    access.directPeekBase = 0;
-    access.directPokeBase = 0;
-    access.device = this;
-    mySystem->setPageAccess(i >> shift, access);
-  }
+            // Make sure the system we're being installed in has a page size that'll work
+            assert((0x1000 & mask) == 0);
 
-  // Install pages for bank 1
-  myCurrentBank = 0;
-  incbank();
-}
+            // Set the page accessing methods for the hot spots
+            System::PageAccess access;
+            for (uint32_t i = (0x1FF0 & ~mask); i < 0x2000; i += (1 << shift))
+            {
+                access.directPeekBase = 0;
+                access.directPokeBase = 0;
+                access.device = this;
+                mySystem->setPageAccess(i >> shift, access);
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t CartridgeMB::peek(uint16_t address)
-{
-  address = address & 0x0FFF;
+            // Install pages for bank 1
+            myCurrentBank = 0;
+            incbank();
+        }
 
-  // Switch to next bank
-  if(address == 0x0FF0) incbank();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t CartridgeMB::peek(uint16_t address)
+        {
+            address = address & 0x0FFF;
 
-  return myImage[myCurrentBank * 4096 + address];
-}
+            // Switch to next bank
+            if (address == 0x0FF0) incbank();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeMB::poke(uint16_t address, uint8_t)
-{
-  address = address & 0x0FFF;
+            return myImage[myCurrentBank * 4096 + address];
+        }
 
-  // Switch to next bank
-  if(address == 0x0FF0) incbank();
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeMB::poke(uint16_t address, uint8_t)
+        {
+            address = address & 0x0FFF;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeMB::incbank()
-{
-  if(bankLocked) return;
+            // Switch to next bank
+            if (address == 0x0FF0) incbank();
+        }
 
-  // Remember what bank we're in
-  myCurrentBank ++;
-  myCurrentBank &= 0x0F;
-  uint16_t offset = myCurrentBank * 4096;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeMB::incbank()
+        {
+            if (bankLocked) return;
 
-  // Setup the page access methods for the current bank
-  System::PageAccess access;
-  access.device = this;
-  access.directPokeBase = 0;
+            // Remember what bank we're in
+            myCurrentBank++;
+            myCurrentBank &= 0x0F;
+            uint16_t offset = myCurrentBank * 4096;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Map ROM image into the system
-  for(uint32_t address = 0x1000; address < (0x1FF0U & ~mask);
-      address += (1 << shift))
-  {
-    access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
-    mySystem->setPageAccess(address >> shift, access);
-  }
-}
+            // Setup the page access methods for the current bank
+            System::PageAccess access;
+            access.device = this;
+            access.directPokeBase = 0;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeMB::save(Serializer& out)
-{
-  std::string cart = name();
+            // Map ROM image into the system
+            for (uint32_t address = 0x1000; address < (0x1FF0U & ~mask);
+                address += (1 << shift))
+            {
+                access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
+                mySystem->setPageAccess(address >> shift, access);
+            }
+        }
 
-  try
-  {
-    out.putString(cart);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeMB::save(Serializer& out)
+        {
+            std::string cart = name();
 
-    out.putInt(myCurrentBank);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                out.putString(cart);
 
-  return true;
-}
+                out.putInt(myCurrentBank);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeMB::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeMB::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-    myCurrentBank = (uint16_t) in.getInt();
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
 
-  // Remember what bank we were in
-  --myCurrentBank;
-  incbank();
+                myCurrentBank = (uint16_t)in.getInt();
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-  return true;
-}
+            // Remember what bank we were in
+            --myCurrentBank;
+            incbank();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeMB::bank(uint16_t bank)
-{
-  if(bankLocked) return;
+            return true;
+        }
 
-  myCurrentBank = (bank - 1);
-  incbank();
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeMB::bank(uint16_t bank)
+        {
+            if (bankLocked) return;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeMB::bank()
-{
-  return myCurrentBank;
-}
+            myCurrentBank = (bank - 1);
+            incbank();
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeMB::bankCount()
-{
-  return 16;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeMB::bank()
+        {
+            return myCurrentBank;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeMB::patch(uint16_t address, uint8_t value)
-{
-  address = address & 0x0FFF;
-  myImage[myCurrentBank * 4096 + address] = value;
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeMB::bankCount()
+        {
+            return 16;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* CartridgeMB::getImage(int& size)
-{
-  size = 65536;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeMB::patch(uint16_t address, uint8_t value)
+        {
+            address = address & 0x0FFF;
+            myImage[myCurrentBank * 4096 + address] = value;
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* CartridgeMB::getImage(int& size)
+        {
+            size = 65536;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

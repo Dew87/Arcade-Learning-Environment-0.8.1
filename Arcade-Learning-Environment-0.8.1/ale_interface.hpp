@@ -45,174 +45,176 @@
 
 namespace fs = std::filesystem;
 
-namespace ale {
+namespace ale
+{
 
-/**
-   This class interfaces ALE with external code for controlling agents.
- */
-class ALEInterface {
- public:
-  ALEInterface();
-  ~ALEInterface();
-  // Legacy constructor
-  ALEInterface(bool display_screen);
+    /**
+       This class interfaces ALE with external code for controlling agents.
+     */
+    class ALEInterface
+    {
+    public:
+        ALEInterface();
+        ~ALEInterface();
+        // Legacy constructor
+        ALEInterface(bool display_screen);
 
-  // Get the value of a setting.
-  std::string getString(const std::string& key) const;
-  int getInt(const std::string& key) const;
-  bool getBool(const std::string& key) const;
-  float getFloat(const std::string& key) const;
+        // Get the value of a setting.
+        std::string getString(const std::string& key) const;
+        int getInt(const std::string& key) const;
+        bool getBool(const std::string& key) const;
+        float getFloat(const std::string& key) const;
 
-  // getStringInplace is a version of getString that returns a reference to the
-  // actual, stored settings string object, without making a copy. The reference
-  // is only valid until the next call of any of the setter functions below, so
-  // this function must be used with care.
-  const std::string& getStringInplace(const std::string& key) const;
+        // getStringInplace is a version of getString that returns a reference to the
+        // actual, stored settings string object, without making a copy. The reference
+        // is only valid until the next call of any of the setter functions below, so
+        // this function must be used with care.
+        const std::string& getStringInplace(const std::string& key) const;
 
-  // Set the value of a setting. loadRom() must be called before the
-  // setting will take effect.
-  void setString(const std::string& key, const std::string& value);
-  void setInt(const std::string& key, const int value);
-  void setBool(const std::string& key, const bool value);
-  void setFloat(const std::string& key, const float value);
+        // Set the value of a setting. loadRom() must be called before the
+        // setting will take effect.
+        void setString(const std::string& key, const std::string& value);
+        void setInt(const std::string& key, const int value);
+        void setBool(const std::string& key, const bool value);
+        void setFloat(const std::string& key, const float value);
 
-  // Resets the Atari and loads a game. After this call the game
-  // should be ready to play. This is necessary after changing a
-  // setting for the setting to take effect. Optionally specify
-  // a new ROM to load.
-  void loadROM(fs::path rom_file = {});
+        // Resets the Atari and loads a game. After this call the game
+        // should be ready to play. This is necessary after changing a
+        // setting for the setting to take effect. Optionally specify
+        // a new ROM to load.
+        void loadROM(fs::path rom_file = {});
 
-  // Applies an action to the game and returns the reward. It is the
-  // user's responsibility to check if the game has ended and reset
-  // when necessary - this method will keep pressing buttons on the
-  // game over screen.
-  reward_t act(Action action);
+        // Applies an action to the game and returns the reward. It is the
+        // user's responsibility to check if the game has ended and reset
+        // when necessary - this method will keep pressing buttons on the
+        // game over screen.
+        reward_t act(Action action);
 
-  // Indicates if the game has ended.
-  bool game_over(bool with_truncation = true) const;
+        // Indicates if the game has ended.
+        bool game_over(bool with_truncation = true) const;
 
-  // Indicates if the episode has been truncated.
-  bool game_truncated() const;
+        // Indicates if the episode has been truncated.
+        bool game_truncated() const;
 
-  // Resets the game, but not the full system.
-  void reset_game();
+        // Resets the game, but not the full system.
+        void reset_game();
 
-  // Returns the vector of modes available for the current game.
-  // This should be called only after the rom is loaded.
-  ModeVect getAvailableModes() const;
+        // Returns the vector of modes available for the current game.
+        // This should be called only after the rom is loaded.
+        ModeVect getAvailableModes() const;
 
-  // Sets the mode of the game.
-  // The mode must be an available mode (otherwise it throws an exception).
-  // This should be called only after the rom is loaded.
-  void setMode(game_mode_t m);
+        // Sets the mode of the game.
+        // The mode must be an available mode (otherwise it throws an exception).
+        // This should be called only after the rom is loaded.
+        void setMode(game_mode_t m);
 
-  // Returns the game mode value last specified to the environment.
-  // This may not be the exact game mode that the ROM is currently running as
-  // game mode changes only take effect when the environment is reset.
-  game_mode_t getMode() const { return environment->getMode(); }
+        // Returns the game mode value last specified to the environment.
+        // This may not be the exact game mode that the ROM is currently running as
+        // game mode changes only take effect when the environment is reset.
+        game_mode_t getMode() const { return environment->getMode(); }
 
-  //Returns the vector of difficulties available for the current game.
-  //This should be called only after the rom is loaded. Notice
-  // that there are 2 levers, the right and left switches. They
-  // are not tied to any specific player. In Venture, for example,
-  // we have the following interpretation for the difficulties:
-  // Skill          Switch
-  // Level          Setting
-  //   1         left B/right B
-  //   2         left B/right A
-  //   3         left A/right B
-  //   4         left A/right A
-  DifficultyVect getAvailableDifficulties() const;
+        //Returns the vector of difficulties available for the current game.
+        //This should be called only after the rom is loaded. Notice
+        // that there are 2 levers, the right and left switches. They
+        // are not tied to any specific player. In Venture, for example,
+        // we have the following interpretation for the difficulties:
+        // Skill          Switch
+        // Level          Setting
+        //   1         left B/right B
+        //   2         left B/right A
+        //   3         left A/right B
+        //   4         left A/right A
+        DifficultyVect getAvailableDifficulties() const;
 
-  // Sets the difficulty of the game.
-  // The difficulty must be an available mode (otherwise it throws an exception).
-  // This should be called only after the rom is loaded.
-  void setDifficulty(difficulty_t m);
+        // Sets the difficulty of the game.
+        // The difficulty must be an available mode (otherwise it throws an exception).
+        // This should be called only after the rom is loaded.
+        void setDifficulty(difficulty_t m);
 
-  // Returns the current difficulty switch setting in use by the environment.
-  difficulty_t getDifficulty() const { return environment->getDifficulty(); }
+        // Returns the current difficulty switch setting in use by the environment.
+        difficulty_t getDifficulty() const { return environment->getDifficulty(); }
 
-  // Returns the vector of legal actions. This should be called only
-  // after the rom is loaded.
-  ActionVect getLegalActionSet() const;
+        // Returns the vector of legal actions. This should be called only
+        // after the rom is loaded.
+        ActionVect getLegalActionSet() const;
 
-  // Returns the vector of the minimal set of actions needed to play
-  // the game.
-  ActionVect getMinimalActionSet() const;
+        // Returns the vector of the minimal set of actions needed to play
+        // the game.
+        ActionVect getMinimalActionSet() const;
 
-  // Returns the frame number since the loading of the ROM
-  int getFrameNumber() const;
+        // Returns the frame number since the loading of the ROM
+        int getFrameNumber() const;
 
-  // The remaining number of lives.
-  int lives();
+        // The remaining number of lives.
+        int lives();
 
-  // Returns the frame number since the start of the current episode
-  int getEpisodeFrameNumber() const;
+        // Returns the frame number since the start of the current episode
+        int getEpisodeFrameNumber() const;
 
-  // Returns the current game screen
-  const ALEScreen& getScreen() const;
+        // Returns the current game screen
+        const ALEScreen& getScreen() const;
 
-  //This method should receive an empty vector to fill it with
-  //the grayscale colours
-  void getScreenGrayscale(std::vector<unsigned char>& grayscale_output_buffer) const;
+        //This method should receive an empty vector to fill it with
+        //the grayscale colours
+        void getScreenGrayscale(std::vector<unsigned char>& grayscale_output_buffer) const;
 
-  //This method should receive a vector to fill it with
-  //the RGB colours. The first positions contain the red colours,
-  //followed by the green colours and then the blue colours
-  void getScreenRGB(std::vector<unsigned char>& output_rgb_buffer) const;
+        //This method should receive a vector to fill it with
+        //the RGB colours. The first positions contain the red colours,
+        //followed by the green colours and then the blue colours
+        void getScreenRGB(std::vector<unsigned char>& output_rgb_buffer) const;
 
-  // Returns the current RAM content
-  const ALERAM& getRAM() const;
+        // Returns the current RAM content
+        const ALERAM& getRAM() const;
 
-  // Set byte at memory address. This can be useful to change the environment
-  // for example if you were trying to learn a causal model of RAM locations.
-  void setRAM(size_t memory_index, byte_t value);
+        // Set byte at memory address. This can be useful to change the environment
+        // for example if you were trying to learn a causal model of RAM locations.
+        void setRAM(size_t memory_index, byte_t value);
 
-  // This makes a copy of the environment state. By defualt this copy does *not* include pseudorandomness
-  // making it suitable for planning purposes. If `include_prng` is set to true, then the
-  // pseudorandom number generator is also serialized.
-  ALEState cloneState(bool include_rng = false);
+        // This makes a copy of the environment state. By defualt this copy does *not* include pseudorandomness
+        // making it suitable for planning purposes. If `include_prng` is set to true, then the
+        // pseudorandom number generator is also serialized.
+        ALEState cloneState(bool include_rng = false);
 
-  // Reverse operation of cloneState(). This will restore the ALEState, if it was
-  // cloned including the RNG then the RNG will be restored. Otherwise the current
-  // state of the RNG will be kept as is.
-  void restoreState(const ALEState& state);
+        // Reverse operation of cloneState(). This will restore the ALEState, if it was
+        // cloned including the RNG then the RNG will be restored. Otherwise the current
+        // state of the RNG will be kept as is.
+        void restoreState(const ALEState& state);
 
-  // This makes a copy of the system & environment state, suitable for serialization. This includes
-  // pseudorandomness and so is *not* suitable for planning purposes.
-  // This is equivalent to calling cloneState(true) but is maintained for backwards compatibility.
-  ALEState cloneSystemState();
+        // This makes a copy of the system & environment state, suitable for serialization. This includes
+        // pseudorandomness and so is *not* suitable for planning purposes.
+        // This is equivalent to calling cloneState(true) but is maintained for backwards compatibility.
+        ALEState cloneSystemState();
 
-  // Reverse operation of cloneSystemState.
-  // This is maintained for backwards compatability and is equivalent to calling restoreState(state).
-  void restoreSystemState(const ALEState& state);
+        // Reverse operation of cloneSystemState.
+        // This is maintained for backwards compatability and is equivalent to calling restoreState(state).
+        void restoreSystemState(const ALEState& state);
 
-  // Save the current screen as a png file
-  void saveScreenPNG(const std::string& filename);
+        // Save the current screen as a png file
+        void saveScreenPNG(const std::string& filename);
 
-  // Creates a ScreenExporter object which can be used to save a sequence of frames. Ownership
-  // said object is passed to the caller. Frames are saved in the directory 'path', which needs
-  // to exists.
-  ScreenExporter* createScreenExporter(const std::string& path) const;
+        // Creates a ScreenExporter object which can be used to save a sequence of frames. Ownership
+        // said object is passed to the caller. Frames are saved in the directory 'path', which needs
+        // to exists.
+        ScreenExporter* createScreenExporter(const std::string& path) const;
 
- public:
-  std::unique_ptr<stella::OSystem> theOSystem;
-  std::unique_ptr<stella::Settings> theSettings;
-  std::unique_ptr<RomSettings> romSettings;
-  std::unique_ptr<StellaEnvironment> environment;
-  int max_num_frames; // Maximum number of frames for each episode
+    public:
+        std::unique_ptr<stella::OSystem> theOSystem;
+        std::unique_ptr<stella::Settings> theSettings;
+        std::unique_ptr<RomSettings> romSettings;
+        std::unique_ptr<StellaEnvironment> environment;
+        int max_num_frames; // Maximum number of frames for each episode
 
- public:
-  // Check if the rom with filename matches a supported MD5
-  static std::optional<std::string> isSupportedROM(const fs::path& rom_file);
-  // Display ALE welcome message
-  static std::string welcomeMessage();
-  static void disableBufferedIO();
-  static void createOSystem(std::unique_ptr<stella::OSystem>& theOSystem,
-                            std::unique_ptr<stella::Settings>& theSettings);
-  static void loadSettings(const fs::path& romfile,
-                           std::unique_ptr<stella::OSystem>& theOSystem);
-};
+    public:
+        // Check if the rom with filename matches a supported MD5
+        static std::optional<std::string> isSupportedROM(const fs::path& rom_file);
+        // Display ALE welcome message
+        static std::string welcomeMessage();
+        static void disableBufferedIO();
+        static void createOSystem(std::unique_ptr<stella::OSystem>& theOSystem,
+            std::unique_ptr<stella::Settings>& theSettings);
+        static void loadSettings(const fs::path& romfile,
+            std::unique_ptr<stella::OSystem>& theOSystem);
+    };
 
 }  // namespace ale
 

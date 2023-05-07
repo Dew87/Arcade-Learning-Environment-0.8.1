@@ -21,67 +21,71 @@
 
 #include <sstream>
 
-namespace ale {
-namespace stella {
-
-/**
- This class implements a Deserializer device, whereby data is
- deserialized from an input binary file in a system-independent
- way.
-
- All ints should be cast to their appropriate data type upon method
- return.
-
- @author  Stephen Anthony
- @version $Id: Deserializer.hxx,v 1.11 2007/01/01 18:04:47 stephena Exp $
-
- Revised for ALE on Sep 20, 2009
- The new version uses a stringstream (not a file stream)
-
- TODO: don't copy the whole streams.
- */
-class Deserializer {
-    public:
-        /**
-         Creates a new Deserializer device.
-         */
-        Deserializer(const std::string stream_str);
-
-        void close(void);
+namespace ale
+{
+    namespace stella
+    {
 
         /**
-         Reads an int value from the current input stream.
+         This class implements a Deserializer device, whereby data is
+         deserialized from an input binary file in a system-independent
+         way.
 
-         @result The int value which has been read from the stream.
+         All ints should be cast to their appropriate data type upon method
+         return.
+
+         @author  Stephen Anthony
+         @version $Id: Deserializer.hxx,v 1.11 2007/01/01 18:04:47 stephena Exp $
+
+         Revised for ALE on Sep 20, 2009
+         The new version uses a stringstream (not a file stream)
+
+         TODO: don't copy the whole streams.
          */
-        int getInt(void);
+        class Deserializer
+        {
+        public:
+            /**
+             Creates a new Deserializer device.
+             */
+            Deserializer(const std::string stream_str);
 
-        /**
-         Reads a string from the current input stream.
+            void close(void);
 
-         @result The string which has been read from the stream.
-         */
-        std::string getString(void);
+            /**
+             Reads an int value from the current input stream.
 
-        /**
-         Reads a boolean value from the current input stream.
+             @result The int value which has been read from the stream.
+             */
+            int getInt(void);
 
-         @result The boolean value which has been read from the stream.
-         */
-        bool getBool(void);
+            /**
+             Reads a string from the current input stream.
 
-        bool isOpen(void) {return true;}
-    private:
-        // The stream to get the deserialized data from.
-        std::stringstream myStream;
+             @result The string which has been read from the stream.
+             */
+            std::string getString(void);
 
-        enum {
-            TruePattern  = 0xfab1fab2,
-            FalsePattern = 0xbad1bad2
+            /**
+             Reads a boolean value from the current input stream.
+
+             @result The boolean value which has been read from the stream.
+             */
+            bool getBool(void);
+
+            bool isOpen(void) { return true; }
+        private:
+            // The stream to get the deserialized data from.
+            std::stringstream myStream;
+
+            enum
+            {
+                TruePattern = 0xfab1fab2,
+                FalsePattern = 0xbad1bad2
+            };
         };
-    };
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #endif

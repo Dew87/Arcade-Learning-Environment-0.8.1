@@ -19,150 +19,154 @@
 #ifndef CARTRIDGEFE_HXX
 #define CARTRIDGEFE_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Cart.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  Bankswitching method used by Activison's Robot Tank and Decathlon.
-
-  Kevin Horton describes FE as follows:
-
-    Used only on two carts (Robot Tank and Decathlon).  These
-    carts are very weird.  It does not use accesses to the stack
-    like was previously thought.  Instead, if you watch the called
-    addresses very carefully, you can see that they are either Dxxx
-    or Fxxx.  This determines the bank to use.  Just monitor A13 of
-    the processor and use it to determine your bank! :-)  Of course
-    the 6507 in the 2600 does not have an A13, so the cart must have
-    an extra bit in the ROM matrix to tell when to switch banks.
-    There is *no* way to determine which bank you want to be in from
-    monitoring the bus.
-
-  @author  Bradford W. Mott
-  @version $Id: CartFE.hxx,v 1.8 2007/01/14 16:17:54 stephena Exp $
-*/
-class CartridgeFE : public Cartridge
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge using the specified image
+    namespace stella
+    {
 
-      @param image Pointer to the ROM image
-    */
-    CartridgeFE(const uint8_t* image);
+        /**
+          Bankswitching method used by Activison's Robot Tank and Decathlon.
 
-    /**
-      Destructor
-    */
-    virtual ~CartridgeFE();
+          Kevin Horton describes FE as follows:
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+            Used only on two carts (Robot Tank and Decathlon).  These
+            carts are very weird.  It does not use accesses to the stack
+            like was previously thought.  Instead, if you watch the called
+            addresses very carefully, you can see that they are either Dxxx
+            or Fxxx.  This determines the bank to use.  Just monitor A13 of
+            the processor and use it to determine your bank! :-)  Of course
+            the 6507 in the 2600 does not have an A13, so the cart must have
+            an extra bit in the ROM matrix to tell when to switch banks.
+            There is *no* way to determine which bank you want to be in from
+            monitoring the bus.
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+          @author  Bradford W. Mott
+          @version $Id: CartFE.hxx,v 1.8 2007/01/14 16:17:54 stephena Exp $
+        */
+        class CartridgeFE : public Cartridge
+        {
+        public:
+            /**
+              Create a new cartridge using the specified image
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset();
+              @param image Pointer to the ROM image
+            */
+            CartridgeFE(const uint8_t* image);
 
-    /**
-      Install cartridge in the specified system.  Invoked by the system
-      when the cartridge is attached to it.
+            /**
+              Destructor
+            */
+            virtual ~CartridgeFE();
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Saves the current state of this device to the given Serializer.
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset();
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Install cartridge in the specified system.  Invoked by the system
+              when the cartridge is attached to it.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-    /**
-      Install pages for the specified bank in the system.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param bank The bank that should be installed in the system
-    */
-    virtual void bank(uint16_t bank);
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-    /**
-      Get the current bank.
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank();
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount();
+            /**
+              Install pages for the specified bank in the system.
 
-    /**
-      Patch the cartridge ROM.
+              @param bank The bank that should be installed in the system
+            */
+            virtual void bank(uint16_t bank);
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value);
+            /**
+              Get the current bank.
 
-    /**
-      Access the internal ROM image for this cartridge.
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank();
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size);
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount();
 
-  public:
-    /**
-      Get the byte at the specified address.
+            /**
+              Patch the cartridge ROM.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value);
 
-    /**
-      Change the byte at the specified address to the given value
+            /**
+              Access the internal ROM image for this cartridge.
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size);
 
-  private:
-    // The 8K ROM image of the cartridge
-    uint8_t myImage[8192];
-};
+        public:
+            /**
+              Get the byte at the specified address.
 
-}  // namespace stella
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
+
+            /**
+              Change the byte at the specified address to the given value
+
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
+
+        private:
+            // The 8K ROM image of the cartridge
+            uint8_t myImage[8192];
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

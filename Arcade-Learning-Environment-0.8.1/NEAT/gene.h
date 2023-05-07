@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,9 +21,11 @@
 #include "link.h"
 #include "network.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
-	class Gene {
+	class Gene
+	{
 	public:
 
 		Link *lnk;
@@ -33,13 +35,13 @@ namespace NEAT {
 		bool frozen;  //When frozen, the linkweight cannot be mutated
 
 		//Construct a gene with no trait
-		Gene(double w,NNode *inode,NNode *onode,bool recur,double innov,double mnum);
+		Gene(double w, NNode *inode, NNode *onode, bool recur, double innov, double mnum);
 
 		//Construct a gene with a trait
-		Gene(Trait *tp,double w,NNode *inode,NNode *onode,bool recur,double innov,double mnum);
+		Gene(Trait *tp, double w, NNode *inode, NNode *onode, bool recur, double innov, double mnum);
 
 		//Construct a gene off of another gene as a duplicate
-		Gene(Gene *g,Trait *tp,NNode *inode,NNode *onode);
+		Gene(Gene *g, Trait *tp, NNode *inode, NNode *onode);
 
 		//Construct a gene from a file spec given traits and nodes
 		Gene(const char *argline, std::vector<Trait*> &traits, std::vector<NNode*> &nodes);
@@ -50,8 +52,8 @@ namespace NEAT {
 		~Gene();
 
 		//Print gene to a file- called from Genome
-        void print_to_file(std::ostream &outFile);
-	void print_to_file(std::ofstream &outFile);
+		void print_to_file(std::ostream &outFile);
+		void print_to_file(std::ofstream &outFile);
 	};
 
 } // namespace NEAT

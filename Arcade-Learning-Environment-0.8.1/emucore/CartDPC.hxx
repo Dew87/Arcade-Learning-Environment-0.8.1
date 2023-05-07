@@ -19,191 +19,195 @@
 #ifndef CARTRIDGEDCP_HXX
 #define CARTRIDGEDCP_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Cart.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  Cartridge class used for Pitfall II.  There are two 4K program banks, a
-  2K display bank, and the DPC chip.  For complete details on the DPC chip
-  see David P. Crane's United States Patent Number 4,644,495.
-
-  @author  Bradford W. Mott
-  @version $Id: CartDPC.hxx,v 1.10 2007/01/14 16:17:53 stephena Exp $
-*/
-class CartridgeDPC : public Cartridge
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge using the specified image
+    namespace stella
+    {
 
-      @param image Pointer to the ROM image
-    */
-    CartridgeDPC(const uint8_t* image, uint32_t size);
+        /**
+          Cartridge class used for Pitfall II.  There are two 4K program banks, a
+          2K display bank, and the DPC chip.  For complete details on the DPC chip
+          see David P. Crane's United States Patent Number 4,644,495.
 
-    /**
-      Destructor
-    */
-    virtual ~CartridgeDPC();
+          @author  Bradford W. Mott
+          @version $Id: CartDPC.hxx,v 1.10 2007/01/14 16:17:53 stephena Exp $
+        */
+        class CartridgeDPC : public Cartridge
+        {
+        public:
+            /**
+              Create a new cartridge using the specified image
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+              @param image Pointer to the ROM image
+            */
+            CartridgeDPC(const uint8_t* image, uint32_t size);
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+            /**
+              Destructor
+            */
+            virtual ~CartridgeDPC();
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset();
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Notification method invoked by the system right before the
-      system resets its cycle counter to zero.  It may be necessary
-      to override this method for devices that remember cycle counts.
-    */
-    virtual void systemCyclesReset();
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-    /**
-      Install cartridge in the specified system.  Invoked by the system
-      when the cartridge is attached to it.
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset();
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+            /**
+              Notification method invoked by the system right before the
+              system resets its cycle counter to zero.  It may be necessary
+              to override this method for devices that remember cycle counts.
+            */
+            virtual void systemCyclesReset();
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Install cartridge in the specified system.  Invoked by the system
+              when the cartridge is attached to it.
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-    /**
-      Install pages for the specified bank in the system.
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @param bank The bank that should be installed in the system
-    */
-    virtual void bank(uint16_t bank);
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Get the current bank.
+            /**
+              Install pages for the specified bank in the system.
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank();
+              @param bank The bank that should be installed in the system
+            */
+            virtual void bank(uint16_t bank);
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount();
+            /**
+              Get the current bank.
 
-    /**
-      Patch the cartridge ROM.
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank();
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value);
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount();
 
-    /**
-      Access the internal ROM image for this cartridge.
+            /**
+              Patch the cartridge ROM.
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size);
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value);
 
-  public:
-    /**
-      Get the byte at the specified address.
+            /**
+              Access the internal ROM image for this cartridge.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size);
 
-    /**
-      Change the byte at the specified address to the given value
+        public:
+            /**
+              Get the byte at the specified address.
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
 
-  private:
-    /**
-      Clocks the random number generator to move it to its next state
-    */
-    void clockRandomNumberGenerator();
+            /**
+              Change the byte at the specified address to the given value
 
-    /**
-      Updates any data fetchers in music mode based on the number of
-      CPU cycles which have passed since the last update.
-    */
-    void updateMusicModeDataFetchers();
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
 
-  private:
-    // Indicates which bank is currently active
-    uint16_t myCurrentBank;
+        private:
+            /**
+              Clocks the random number generator to move it to its next state
+            */
+            void clockRandomNumberGenerator();
 
-    // The 8K program ROM image of the cartridge
-    uint8_t myProgramImage[8192];
+            /**
+              Updates any data fetchers in music mode based on the number of
+              CPU cycles which have passed since the last update.
+            */
+            void updateMusicModeDataFetchers();
 
-    // The 2K display ROM image of the cartridge
-    uint8_t myDisplayImage[2048];
+        private:
+            // Indicates which bank is currently active
+            uint16_t myCurrentBank;
 
-    // Copy of the raw image, for use by getImage()
-    uint8_t myImageCopy[8192 + 2048 + 255];
+            // The 8K program ROM image of the cartridge
+            uint8_t myProgramImage[8192];
 
-    // The top registers for the data fetchers
-    uint8_t myTops[8];
+            // The 2K display ROM image of the cartridge
+            uint8_t myDisplayImage[2048];
 
-    // The bottom registers for the data fetchers
-    uint8_t myBottoms[8];
+            // Copy of the raw image, for use by getImage()
+            uint8_t myImageCopy[8192 + 2048 + 255];
 
-    // The counter registers for the data fetchers
-    uint16_t myCounters[8];
+            // The top registers for the data fetchers
+            uint8_t myTops[8];
 
-    // The flag registers for the data fetchers
-    uint8_t myFlags[8];
+            // The bottom registers for the data fetchers
+            uint8_t myBottoms[8];
 
-    // The music mode DF5, DF6, & DF7 enabled flags
-    bool myMusicMode[3];
+            // The counter registers for the data fetchers
+            uint16_t myCounters[8];
 
-    // The random number generator register
-    uint8_t myRandomNumber;
+            // The flag registers for the data fetchers
+            uint8_t myFlags[8];
 
-    // System cycle count when the last update to music data fetchers occurred
-    int mySystemCycles;
+            // The music mode DF5, DF6, & DF7 enabled flags
+            bool myMusicMode[3];
 
-    // Fractional DPC music OSC clocks unused during the last update
-    double myFractionalClocks;
-};
+            // The random number generator register
+            uint8_t myRandomNumber;
 
-}  // namespace stella
+            // System cycle count when the last update to music data fetchers occurred
+            int mySystemCycles;
+
+            // Fractional DPC music OSC clocks unused during the last update
+            double myFractionalClocks;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

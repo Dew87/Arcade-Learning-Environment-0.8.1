@@ -19,12 +19,14 @@
 #ifndef OSYSTEM_HXX
 #define OSYSTEM_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class PropertiesSet;
+        class PropertiesSet;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include <filesystem>
@@ -40,181 +42,183 @@ class PropertiesSet;
 
 namespace fs = std::filesystem;
 
-namespace ale {
-namespace stella {
-
-/**
-  This class provides an interface for accessing operating system specific
-  functions.  It also comprises an overall parent object, to which all the
-  other objects belong.
-
-  @author  Stephen Anthony
-  @version $Id: OSystem.hxx,v 1.55 2007/08/12 23:05:12 stephena Exp $
-*/
-class OSystem
+namespace ale
 {
-  public:
-    /**
-      Create a new OSystem abstract class
-    */
-    OSystem();
+    namespace stella
+    {
 
-    /**
-      Destructor
-    */
-    ~OSystem();
+        /**
+          This class provides an interface for accessing operating system specific
+          functions.  It also comprises an overall parent object, to which all the
+          other objects belong.
 
-    /**
-      Create all child objects which belong to this OSystem
-    */
-    bool create();
+          @author  Stephen Anthony
+          @version $Id: OSystem.hxx,v 1.55 2007/08/12 23:05:12 stephena Exp $
+        */
+        class OSystem
+        {
+        public:
+            /**
+              Create a new OSystem abstract class
+            */
+            OSystem();
 
-  public:
-    /**
-      Adds the specified settings object to the system.
+            /**
+              Destructor
+            */
+            ~OSystem();
 
-      @param settings The settings object to add
-    */
-    void attach(Settings* settings) { mySettings = settings; }
+            /**
+              Create all child objects which belong to this OSystem
+            */
+            bool create();
 
-    /**  //ALE
-      Get the event object of the system
+        public:
+            /**
+              Adds the specified settings object to the system.
 
-      @return The event object
-    */
-    inline Event* event() const { return myEvent; }
+              @param settings The settings object to add
+            */
+            void attach(Settings* settings) { mySettings = settings; }
 
-    /**
-      Get the sound object of the system
+            /**  //ALE
+              Get the event object of the system
 
-      @return The sound object
-    */
-    inline Sound& sound() const { return *mySound; }
+              @return The event object
+            */
+            inline Event* event() const { return myEvent; }
 
-    /**
-      Get the screen object of the system
+            /**
+              Get the sound object of the system
 
-      @return The screen object
-    */
-    inline Screen& screen() const { return *myScreen; }
+              @return The sound object
+            */
+            inline Sound& sound() const { return *mySound; }
 
-    /**
-      Get the settings object of the system
+            /**
+              Get the screen object of the system
 
-      @return The settings object
-    */
-    inline Settings& settings() const { return *mySettings; }
+              @return The screen object
+            */
+            inline Screen& screen() const { return *myScreen; }
 
-    /**
-      Get the console of the system.
+            /**
+              Get the settings object of the system
 
-      @return The console object
-    */
-    inline Console& console(void) const { return *myConsole; }
+              @return The settings object
+            */
+            inline Settings& settings() const { return *mySettings; }
 
-    /**
-      Set the framerate for the video system.  It's placed in this class since
-      the mainLoop() method is defined here.
+            /**
+              Get the console of the system.
 
-      @param framerate  The video framerate to use
-    */
-    void setFramerate(uint32_t framerate);
+              @return The console object
+            */
+            inline Console& console(void) const { return *myConsole; }
 
-    /**
-      Get the current framerate for the video system.
+            /**
+              Set the framerate for the video system.  It's placed in this class since
+              the mainLoop() method is defined here.
 
-      @return  The video framerate currently in use
-    */
-    inline uint32_t frameRate() const { return myDisplayFrameRate; }
+              @param framerate  The video framerate to use
+            */
+            void setFramerate(uint32_t framerate);
 
-    /**
-      This method should be called to get the full path of the currently
-      loaded ROM.
+            /**
+              Get the current framerate for the video system.
 
-      @return String representing the full path of the ROM file.
-    */
-    const std::string& romFile() const { return myRomFile; }
+              @return  The video framerate currently in use
+            */
+            inline uint32_t frameRate() const { return myDisplayFrameRate; }
 
-    /**
-      Creates a new game console from the specified romfile.
+            /**
+              This method should be called to get the full path of the currently
+              loaded ROM.
 
-      @param romfile  The full pathname of the ROM to use
-      @return  True on successful creation, otherwise false
-    */
-    bool createConsole(const fs::path& romfile = "");
+              @return String representing the full path of the ROM file.
+            */
+            const std::string& romFile() const { return myRomFile; }
 
-    /**
-      Deletes the currently defined console, if it exists.
-      Also prints some statistics (fps, total frames, etc).
-    */
-    void deleteConsole();
+            /**
+              Creates a new game console from the specified romfile.
 
-    /**
-      Open the given ROM and return an array containing its contents.
+              @param romfile  The full pathname of the ROM to use
+              @return  True on successful creation, otherwise false
+            */
+            bool createConsole(const fs::path& romfile = "");
 
-      @param rom    The absolute pathname of the ROM file
-      @param md5    The md5 calculated from the ROM file
-      @param image  A pointer to store the ROM data
-                    Note, the calling method is responsible for deleting this
-      @param size   The amount of data read into the image array
-      @return  False on any errors, else true
-    */
-    bool openROM(const fs::path& rom, std::string& md5, uint8_t** image, int* size);
+            /**
+              Deletes the currently defined console, if it exists.
+              Also prints some statistics (fps, total frames, etc).
+            */
+            void deleteConsole();
 
-  protected:
-    // Global Event object  //ALE
-    Event* myEvent;
+            /**
+              Open the given ROM and return an array containing its contents.
 
-    // Pointer to the Sound object
-    Sound* mySound;
+              @param rom    The absolute pathname of the ROM file
+              @param md5    The md5 calculated from the ROM file
+              @param image  A pointer to store the ROM data
+                            Note, the calling method is responsible for deleting this
+              @param size   The amount of data read into the image array
+              @return  False on any errors, else true
+            */
+            bool openROM(const fs::path& rom, std::string& md5, uint8_t** image, int* size);
 
-    // Pointer to the Screen object
-    Screen* myScreen;
+        protected:
+            // Global Event object  //ALE
+            Event* myEvent;
 
-    // Pointer to the Settings object
-    Settings* mySettings;
+            // Pointer to the Sound object
+            Sound* mySound;
 
-    // Pointer to the PropertiesSet object
-    PropertiesSet* myPropSet;
+            // Pointer to the Screen object
+            Screen* myScreen;
 
-    // Pointer to the (currently defined) Console object
-    Console* myConsole;
+            // Pointer to the Settings object
+            Settings* mySettings;
 
-    // Number of times per second to iterate through the main loop
-    uint32_t myDisplayFrameRate;
+            // Pointer to the PropertiesSet object
+            PropertiesSet* myPropSet;
 
-  private:
-    std::string myRomFile;
+            // Pointer to the (currently defined) Console object
+            Console* myConsole;
 
-  public: //ALE
-    ale::ColourPalette &colourPalette() { return m_colour_palette; }
+            // Number of times per second to iterate through the main loop
+            uint32_t myDisplayFrameRate;
 
-  private:
+        private:
+            std::string myRomFile;
 
-    ale::ColourPalette m_colour_palette;
+        public: //ALE
+            ale::ColourPalette &colourPalette() { return m_colour_palette; }
 
-    /**
-      Creates the various sound devices available in this system
-      (for now, that means either 'SDL' or 'Null').
-    */
-    void createSound();
+        private:
 
-    /**
-      Query valid info for creating a valid console.
+            ale::ColourPalette m_colour_palette;
 
-      @return Success or failure for a valid console
-    */
-    bool queryConsoleInfo(const uint8_t* image, uint32_t size, const std::string& md5,
-                          Cartridge** cart, Properties& props);
+            /**
+              Creates the various sound devices available in this system
+              (for now, that means either 'SDL' or 'Null').
+            */
+            void createSound();
 
-    // Copy constructor isn't supported by this class so make it private
-    OSystem(const OSystem&);
+            /**
+              Query valid info for creating a valid console.
 
-    // Assignment operator isn't supported by this class so make it private
-    OSystem& operator = (const OSystem&);
-};
+              @return Success or failure for a valid console
+            */
+            bool queryConsoleInfo(const uint8_t* image, uint32_t size, const std::string& md5,
+                Cartridge** cart, Properties& props);
 
-}  // namespace stella
+            // Copy constructor isn't supported by this class so make it private
+            OSystem(const OSystem&);
+
+            // Assignment operator isn't supported by this class so make it private
+            OSystem& operator = (const OSystem&);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

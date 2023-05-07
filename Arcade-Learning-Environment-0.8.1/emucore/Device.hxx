@@ -19,107 +19,111 @@
 #ifndef DEVICE_HXX
 #define DEVICE_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include <cstdint>
 
-namespace ale {
-namespace stella {
-
-/**
-  Abstract base class for devices which can be attached to a 6502
-  based system.
-
-  @author  Bradford W. Mott
-  @version $Id: Device.hxx,v 1.6 2007/01/14 16:17:57 stephena Exp $
-*/
-class Device
+namespace ale
 {
-  public:
-    /**
-      Create a new device
-    */
-    Device();
+    namespace stella
+    {
 
-    /**
-      Destructor
-    */
-    virtual ~Device();
+        /**
+          Abstract base class for devices which can be attached to a 6502
+          based system.
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+          @author  Bradford W. Mott
+          @version $Id: Device.hxx,v 1.6 2007/01/14 16:17:57 stephena Exp $
+        */
+        class Device
+        {
+        public:
+            /**
+              Create a new device
+            */
+            Device();
 
-      @return The name of the device
-    */
-    virtual const char* name() const = 0;
+            /**
+              Destructor
+            */
+            virtual ~Device();
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset() = 0;
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Notification method invoked by the system right before the
-      system resets its cycle counter to zero.  It may be necessary
-      to override this method for devices that remember cycle counts.
-    */
-    virtual void systemCyclesReset();
+              @return The name of the device
+            */
+            virtual const char* name() const = 0;
 
-    /**
-      Install device in the specified system.  Invoked by the system
-      when the device is attached to it.
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset() = 0;
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system) = 0;
+            /**
+              Notification method invoked by the system right before the
+              system resets its cycle counter to zero.  It may be necessary
+              to override this method for devices that remember cycle counts.
+            */
+            virtual void systemCyclesReset();
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Install device in the specified system.  Invoked by the system
+              when the device is attached to it.
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out) = 0;
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system) = 0;
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in) = 0;
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out) = 0;
 
-  public:
-    /**
-      Get the byte at the specified address
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address) = 0;
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in) = 0;
 
-    /**
-      Change the byte at the specified address to the given value
+        public:
+            /**
+              Get the byte at the specified address
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value) = 0;
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address) = 0;
 
-  protected:
-    /// Pointer to the system the device is installed in or the null pointer
-    System* mySystem;
-};
+            /**
+              Change the byte at the specified address to the given value
 
-}  // namespace stella
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value) = 0;
+
+        protected:
+            /// Pointer to the system the device is installed in or the null pointer
+            System* mySystem;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

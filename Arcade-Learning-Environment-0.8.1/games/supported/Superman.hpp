@@ -28,40 +28,42 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class SupermanSettings : public RomSettings {
- public:
-  SupermanSettings();
+	class SupermanSettings : public RomSettings
+	{
+	public:
+		SupermanSettings();
 
-  void reset() override;
+		void reset() override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "superman"; }
+		const char* rom() const override { return "superman"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "a9531c763077464307086ec9a1fd057d"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "a9531c763077464307086ec9a1fd057d"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+		DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_time_in_seconds;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		int m_time_in_seconds;
+	};
 
 }  // namespace ale
 

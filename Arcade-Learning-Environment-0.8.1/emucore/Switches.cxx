@@ -20,97 +20,98 @@
 #include "emucore/Props.hxx"
 #include "emucore/Switches.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Switches::Switches(const Event& event, const Properties& properties)
-    : myEvent(event),
-      mySwitches(0xFF)
+namespace ale
 {
-  if(properties.get(Console_RightDifficulty) == "B")
-  {
-    mySwitches &= ~0x80;
-  }
-  else
-  {
-    mySwitches |= 0x80;
-  }
+    namespace stella
+    {
 
-  if(properties.get(Console_LeftDifficulty) == "B")
-  {
-    mySwitches &= ~0x40;
-  }
-  else
-  {
-    mySwitches |= 0x40;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Switches::Switches(const Event& event, const Properties& properties)
+            : myEvent(event),
+            mySwitches(0xFF)
+        {
+            if (properties.get(Console_RightDifficulty) == "B")
+            {
+                mySwitches &= ~0x80;
+            }
+            else
+            {
+                mySwitches |= 0x80;
+            }
 
-  if(properties.get(Console_TelevisionType) == "COLOR")
-  {
-    mySwitches |= 0x08;
-  }
-  else
-  {
-    mySwitches &= ~0x08;
-  }
-}
+            if (properties.get(Console_LeftDifficulty) == "B")
+            {
+                mySwitches &= ~0x40;
+            }
+            else
+            {
+                mySwitches |= 0x40;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Switches::~Switches()
-{
-}
+            if (properties.get(Console_TelevisionType) == "COLOR")
+            {
+                mySwitches |= 0x08;
+            }
+            else
+            {
+                mySwitches &= ~0x08;
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t Switches::read()
-{
-  if(myEvent.get(Event::ConsoleColor) != 0)
-  {
-    mySwitches |= 0x08;
-  }
-  else if(myEvent.get(Event::ConsoleBlackWhite) != 0)
-  {
-    mySwitches &= ~0x08;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Switches::~Switches()
+        {}
 
-  if(myEvent.get(Event::ConsoleRightDifficultyA) != 0)
-  {
-    mySwitches |= 0x80;
-  }
-  else if(myEvent.get(Event::ConsoleRightDifficultyB) != 0)
-  {
-    mySwitches &= ~0x80;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t Switches::read()
+        {
+            if (myEvent.get(Event::ConsoleColor) != 0)
+            {
+                mySwitches |= 0x08;
+            }
+            else if (myEvent.get(Event::ConsoleBlackWhite) != 0)
+            {
+                mySwitches &= ~0x08;
+            }
 
-  if(myEvent.get(Event::ConsoleLeftDifficultyA) != 0)
-  {
-    mySwitches |= 0x40;
-  }
-  else if(myEvent.get(Event::ConsoleLeftDifficultyB) != 0)
-  {
-    mySwitches &= ~0x40;
-  }
+            if (myEvent.get(Event::ConsoleRightDifficultyA) != 0)
+            {
+                mySwitches |= 0x80;
+            }
+            else if (myEvent.get(Event::ConsoleRightDifficultyB) != 0)
+            {
+                mySwitches &= ~0x80;
+            }
 
-  if(myEvent.get(Event::ConsoleSelect) != 0)
-  {
-    mySwitches &= ~0x02;
-  }
-  else
-  {
-    mySwitches |= 0x02;
-  }
+            if (myEvent.get(Event::ConsoleLeftDifficultyA) != 0)
+            {
+                mySwitches |= 0x40;
+            }
+            else if (myEvent.get(Event::ConsoleLeftDifficultyB) != 0)
+            {
+                mySwitches &= ~0x40;
+            }
 
-  if(myEvent.get(Event::ConsoleReset) != 0)
-  {
-    mySwitches &= ~0x01;
-  }
-  else
-  {
-    mySwitches |= 0x01;
-  }
+            if (myEvent.get(Event::ConsoleSelect) != 0)
+            {
+                mySwitches &= ~0x02;
+            }
+            else
+            {
+                mySwitches |= 0x02;
+            }
 
-  return mySwitches;
-}
+            if (myEvent.get(Event::ConsoleReset) != 0)
+            {
+                mySwitches &= ~0x01;
+            }
+            else
+            {
+                mySwitches |= 0x01;
+            }
 
-}  // namespace stella
+            return mySwitches;
+        }
+
+    }  // namespace stella
 }  // namespace ale

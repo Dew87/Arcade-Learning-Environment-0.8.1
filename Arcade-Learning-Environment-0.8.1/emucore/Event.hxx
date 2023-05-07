@@ -19,83 +19,85 @@
 #ifndef EVENT_HXX
 #define EVENT_HXX
 
-namespace ale {
-namespace stella {
-
-class Event;
-
-/**
-  @author  Bradford W. Mott
-  @version $Id: Event.hxx,v 1.28 2007/01/30 17:13:07 stephena Exp $
-*/
-class Event
+namespace ale
 {
-  public:
-    /**
-      Enumeration of all possible events in Stella, including both
-      console and controller event types as well as events that aren't
-      technically part of the emulation core
-    */
-    enum Type
+    namespace stella
     {
-      ConsoleColor, ConsoleBlackWhite,
-      ConsoleLeftDifficultyA, ConsoleLeftDifficultyB,
-      ConsoleRightDifficultyA, ConsoleRightDifficultyB,
-      ConsoleSelect, ConsoleReset,
 
-      JoystickZeroUp, JoystickZeroDown, JoystickZeroLeft,
-      JoystickZeroRight, JoystickZeroFire,
-      JoystickOneUp, JoystickOneDown, JoystickOneLeft,
-      JoystickOneRight, JoystickOneFire,
+        class Event;
 
-      PaddleZeroResistance, PaddleZeroFire,
-        PaddleZeroDecrease, PaddleZeroIncrease, PaddleZeroAnalog,
-      PaddleOneResistance, PaddleOneFire,
-        PaddleOneDecrease, PaddleOneIncrease, PaddleOneAnalog,
-      PaddleTwoResistance, PaddleTwoFire,
-        PaddleTwoDecrease, PaddleTwoIncrease, PaddleTwoAnalog,
-      PaddleThreeResistance, PaddleThreeFire,
-        PaddleThreeDecrease, PaddleThreeIncrease, PaddleThreeAnalog,
+        /**
+          @author  Bradford W. Mott
+          @version $Id: Event.hxx,v 1.28 2007/01/30 17:13:07 stephena Exp $
+        */
+        class Event
+        {
+        public:
+            /**
+              Enumeration of all possible events in Stella, including both
+              console and controller event types as well as events that aren't
+              technically part of the emulation core
+            */
+            enum Type
+            {
+                ConsoleColor, ConsoleBlackWhite,
+                ConsoleLeftDifficultyA, ConsoleLeftDifficultyB,
+                ConsoleRightDifficultyA, ConsoleRightDifficultyB,
+                ConsoleSelect, ConsoleReset,
 
-      LastType
-    };
+                JoystickZeroUp, JoystickZeroDown, JoystickZeroLeft,
+                JoystickZeroRight, JoystickZeroFire,
+                JoystickOneUp, JoystickOneDown, JoystickOneLeft,
+                JoystickOneRight, JoystickOneFire,
 
-  public:
-    /**
-      Create a new event object and use the given eventstreamer
-    */
-    Event();
+                PaddleZeroResistance, PaddleZeroFire,
+                PaddleZeroDecrease, PaddleZeroIncrease, PaddleZeroAnalog,
+                PaddleOneResistance, PaddleOneFire,
+                PaddleOneDecrease, PaddleOneIncrease, PaddleOneAnalog,
+                PaddleTwoResistance, PaddleTwoFire,
+                PaddleTwoDecrease, PaddleTwoIncrease, PaddleTwoAnalog,
+                PaddleThreeResistance, PaddleThreeFire,
+                PaddleThreeDecrease, PaddleThreeIncrease, PaddleThreeAnalog,
 
-    /**
-      Destructor
-    */
-    virtual ~Event();
+                LastType
+            };
 
-  public:
-    /**
-      Get the value associated with the event of the specified type
-    */
-    virtual int get(Type type) const;
+        public:
+            /**
+              Create a new event object and use the given eventstreamer
+            */
+            Event();
 
-    /**
-      Set the value associated with the event of the specified type
-    */
-    virtual void set(Type type, int value);
+            /**
+              Destructor
+            */
+            virtual ~Event();
 
-    /**
-      Clears the event array (resets to initial state)
-    */
-    virtual void clear();
+        public:
+            /**
+              Get the value associated with the event of the specified type
+            */
+            virtual int get(Type type) const;
 
-  protected:
-    // Number of event types there are
-    const int myNumberOfTypes;
+            /**
+              Set the value associated with the event of the specified type
+            */
+            virtual void set(Type type, int value);
 
-    // Array of values associated with each event type
-    int myValues[LastType];
-};
+            /**
+              Clears the event array (resets to initial state)
+            */
+            virtual void clear();
 
-}  // namespace stella
+        protected:
+            // Number of event types there are
+            const int myNumberOfTypes;
+
+            // Array of values associated with each event type
+            int myValues[LastType];
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

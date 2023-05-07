@@ -19,177 +19,181 @@
 #ifndef CARTRIDGEE7_HXX
 #define CARTRIDGEE7_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Cart.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  This is the cartridge class for M-Network bankswitched games.
-  In this bankswitching scheme the 2600's 4K cartridge address
-  space is broken into two 2K segments.
-
-  Kevin Horton describes E7 as follows:
-
-    Only M-Network used this scheme. This has to be the
-    most complex method used in any cart! :-)  It allows
-    for the capability of 2K of RAM; although it doesn't
-    have to be used (in fact, only one cart used it).
-    There are now 8 2K banks, instead of 4.  The last 2K
-    in the cart always points to the last 2K of the ROM
-    image, while the first 2K is selectable.  You access
-    1FE0 to 1FE6 to select which 2K bank. Note that you
-    cannot select the last 2K of the ROM image into the
-    lower 2K of the cart!  Accessing 1FE7 selects 1K of
-    RAM at 1000-17FF instead of ROM!  The 2K of RAM is
-    broken up into two 1K sections.  One 1K section is
-    mapped in at 1000-17FF if 1FE7 has been accessed.
-    1000-13FF is the write port, while 1400-17FF is the
-    read port.  The second 1K of RAM appears at 1800-19FF.
-    1800-18FF is the write port while 1900-19FF is the
-    read port.  You select which 256 byte block appears
-    here by accessing 1FF8 to 1FFB.
-
-  @author  Bradford W. Mott
-  @version $Id: CartE7.hxx,v 1.10 2007/01/14 16:17:53 stephena Exp $
-*/
-class CartridgeE7 : public Cartridge
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge using the specified image
+    namespace stella
+    {
 
-      @param image Pointer to the ROM image
-    */
-    CartridgeE7(const uint8_t* image);
+        /**
+          This is the cartridge class for M-Network bankswitched games.
+          In this bankswitching scheme the 2600's 4K cartridge address
+          space is broken into two 2K segments.
 
-    /**
-      Destructor
-    */
-    virtual ~CartridgeE7();
+          Kevin Horton describes E7 as follows:
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+            Only M-Network used this scheme. This has to be the
+            most complex method used in any cart! :-)  It allows
+            for the capability of 2K of RAM; although it doesn't
+            have to be used (in fact, only one cart used it).
+            There are now 8 2K banks, instead of 4.  The last 2K
+            in the cart always points to the last 2K of the ROM
+            image, while the first 2K is selectable.  You access
+            1FE0 to 1FE6 to select which 2K bank. Note that you
+            cannot select the last 2K of the ROM image into the
+            lower 2K of the cart!  Accessing 1FE7 selects 1K of
+            RAM at 1000-17FF instead of ROM!  The 2K of RAM is
+            broken up into two 1K sections.  One 1K section is
+            mapped in at 1000-17FF if 1FE7 has been accessed.
+            1000-13FF is the write port, while 1400-17FF is the
+            read port.  The second 1K of RAM appears at 1800-19FF.
+            1800-18FF is the write port while 1900-19FF is the
+            read port.  You select which 256 byte block appears
+            here by accessing 1FF8 to 1FFB.
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+          @author  Bradford W. Mott
+          @version $Id: CartE7.hxx,v 1.10 2007/01/14 16:17:53 stephena Exp $
+        */
+        class CartridgeE7 : public Cartridge
+        {
+        public:
+            /**
+              Create a new cartridge using the specified image
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset();
+              @param image Pointer to the ROM image
+            */
+            CartridgeE7(const uint8_t* image);
 
-    /**
-      Install cartridge in the specified system.  Invoked by the system
-      when the cartridge is attached to it.
+            /**
+              Destructor
+            */
+            virtual ~CartridgeE7();
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Saves the current state of this device to the given Serializer.
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset();
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Install cartridge in the specified system.  Invoked by the system
+              when the cartridge is attached to it.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-    /**
-      Install pages for the specified bank in the system.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param bank The bank that should be installed in the system
-    */
-    virtual void bank(uint16_t bank);
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-    /**
-      Get the current bank.
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank();
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount();
+            /**
+              Install pages for the specified bank in the system.
 
-    /**
-      Patch the cartridge ROM.
+              @param bank The bank that should be installed in the system
+            */
+            virtual void bank(uint16_t bank);
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value);
+            /**
+              Get the current bank.
 
-    /**
-      Access the internal ROM image for this cartridge.
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank();
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size);
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount();
 
-  public:
-    /**
-      Get the byte at the specified address.
+            /**
+              Patch the cartridge ROM.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value);
 
-    /**
-      Change the byte at the specified address to the given value
+            /**
+              Access the internal ROM image for this cartridge.
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size);
 
-  private:
-    /**
-      Install pages for the specified 256 byte bank of RAM
+        public:
+            /**
+              Get the byte at the specified address.
 
-      @param bank The bank that should be installed in the system
-    */
-    void bankRAM(uint16_t bank);
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
 
-  private:
-    // Indicates which slice is in the segment
-    uint16_t myCurrentSlice[2];
+            /**
+              Change the byte at the specified address to the given value
 
-    // Indicates which 256 byte bank of RAM is being used
-    uint16_t myCurrentRAM;
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
 
-    // The 16K ROM image of the cartridge
-    uint8_t myImage[16384];
+        private:
+            /**
+              Install pages for the specified 256 byte bank of RAM
 
-    // The 2048 bytes of RAM
-    uint8_t myRAM[2048];
-};
+              @param bank The bank that should be installed in the system
+            */
+            void bankRAM(uint16_t bank);
 
-}  // namespace stella
+        private:
+            // Indicates which slice is in the segment
+            uint16_t myCurrentSlice[2];
+
+            // Indicates which 256 byte bank of RAM is being used
+            uint16_t myCurrentRAM;
+
+            // The 16K ROM image of the cartridge
+            uint8_t myImage[16384];
+
+            // The 2048 bytes of RAM
+            uint8_t myRAM[2048];
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

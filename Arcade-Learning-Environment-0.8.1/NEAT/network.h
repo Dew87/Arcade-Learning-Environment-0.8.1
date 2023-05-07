@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,19 +21,21 @@
 #include "neat.h"
 #include "nnode.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
-    class Genome;
+	class Genome;
 
 	// ----------------------------------------------------------------------- 
 	// A NETWORK is a LIST of input NODEs and a LIST of output NODEs           
 	//   The point of the network is to define a single entity which can evolve
 	//   or learn on its own, even though it may be part of a larger framework 
-	class Network {
+	class Network
+	{
 
 		friend class Genome;
 
-	//protected:
+		//protected:
 	public:
 
 		int numnodes; // The number of nodes in the net (-1 means not yet counted)
@@ -44,10 +46,10 @@ namespace NEAT {
 		std::vector<NNode*>::iterator input_iter;  // For GUILE network inputting  
 
 		void destroy();  // Kills all nodes and links within
-		void destroy_helper(NNode *curnode,std::vector<NNode*> &seenlist); // helper for above
+		void destroy_helper(NNode *curnode, std::vector<NNode*> &seenlist); // helper for above
 
-		void nodecounthelper(NNode *curnode,int &counter,std::vector<NNode*> &seenlist);
-		void linkcounthelper(NNode *curnode,int &counter,std::vector<NNode*> &seenlist);
+		void nodecounthelper(NNode *curnode, int &counter, std::vector<NNode*> &seenlist);
+		void linkcounthelper(NNode *curnode, int &counter, std::vector<NNode*> &seenlist);
 
 	public:
 
@@ -65,10 +67,10 @@ namespace NEAT {
 
 		// This constructor allows the input and output lists to be supplied
 		// Defaults to not using adaptation
-		Network(std::vector<NNode*> in,std::vector<NNode*> out,std::vector<NNode*> all,int netid);
+		Network(std::vector<NNode*> in, std::vector<NNode*> out, std::vector<NNode*> all, int netid);
 
 		//Same as previous constructor except the adaptibility can be set true or false with adaptval
-		Network(std::vector<NNode*> in,std::vector<NNode*> out,std::vector<NNode*> all,int netid, bool adaptval);
+		Network(std::vector<NNode*> in, std::vector<NNode*> out, std::vector<NNode*> all, int netid, bool adaptval);
 
 		// This constructs a net with empty input and output lists
 		Network(int netid);
@@ -83,7 +85,7 @@ namespace NEAT {
 
 		// Puts the network back into an inactive state
 		void flush();
-		
+
 		// Verify flushedness for debugging
 		void flush_check();
 
@@ -121,7 +123,7 @@ namespace NEAT {
 		// This checks a POTENTIAL link between a potential in_node
 		// and potential out_node to see if it must be recurrent 
 		// Use count and thresh to jump out in the case of an infinite loop 
-		bool is_recur(NNode *potin_node,NNode *potout_node,int &count,int thresh); 
+		bool is_recur(NNode *potin_node, NNode *potout_node, int &count, int thresh);
 
 		// Some functions to help GUILE input into Networks   
 		int input_start();

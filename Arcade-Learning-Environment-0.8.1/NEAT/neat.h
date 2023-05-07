@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,8 @@
 #include <cstdlib>
 #include <cstring>
 
-namespace NEAT {
+namespace NEAT
+{
 
 	const int num_trait_params = 8;
 
@@ -57,7 +58,7 @@ namespace NEAT {
 	extern double mutate_add_node_prob;
 	extern double mutate_add_link_prob;
 	extern double interspecies_mate_rate;    // Prob. of a mate being outside species 
-	extern double mate_multipoint_prob;     
+	extern double mate_multipoint_prob;
 	extern double mate_multipoint_avg_prob;
 	extern double mate_singlepoint_prob;
 	extern double mate_only_prob;            // Prob. of mating without mutation 
@@ -77,20 +78,23 @@ namespace NEAT {
 	int getUnitCount(const char *string, const char *set);
 
 	// Inline Random Functions 
-	extern inline int randposneg() {
-        if (rand()%2) 
-            return 1; 
-        else 
-            return -1;
-    }
-    
-	extern inline int randint(int x,int y) {
-        return rand()%(y-x+1)+x;
-    }
+	extern inline int randposneg()
+	{
+		if (rand() % 2)
+			return 1;
+		else
+			return -1;
+	}
 
-    extern inline double randfloat() {
-        return rand() / (double) RAND_MAX;        
-    }
+	extern inline int randint(int x, int y)
+	{
+		return rand() % (y - x + 1) + x;
+	}
+
+	extern inline double randfloat()
+	{
+		return rand() / (double)RAND_MAX;
+	}
 
 
 	// SIGMOID FUNCTION ********************************
@@ -108,7 +112,7 @@ namespace NEAT {
 	// the old output and some other node. 
 	// When not right-shifted, the steepened slope is closest to a linear
 	// ascent as possible between -0.5 and 0.5
-	extern double fsigmoid(double,double,double);
+	extern double fsigmoid(double, double, double);
 
 	// Hebbian Adaptation Function
 	// Based on equations in Floreano & Urzelai 2000

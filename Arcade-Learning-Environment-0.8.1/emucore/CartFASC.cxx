@@ -23,262 +23,263 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/CartFASC.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeFASC::CartridgeFASC(const uint8_t* image)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 12288; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeFASC::~CartridgeFASC()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeFASC::CartridgeFASC(const uint8_t* image)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 12288; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* CartridgeFASC::name() const
-{
-  return "CartridgeFASC";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeFASC::~CartridgeFASC()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFASC::reset()
-{
-  // Initialize RAM with random values
-  for(uint32_t i = 0; i < 256; ++i)
-    myRAM[i] = mySystem->rng().next();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* CartridgeFASC::name() const
+        {
+            return "CartridgeFASC";
+        }
 
-  // Upon reset we switch to bank 2
-  bank(2);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFASC::reset()
+        {
+            // Initialize RAM with random values
+            for (uint32_t i = 0; i < 256; ++i)
+                myRAM[i] = mySystem->rng().next();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFASC::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+            // Upon reset we switch to bank 2
+            bank(2);
+        }
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert(((0x1100 & mask) == 0) && ((0x1200 & mask) == 0));
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFASC::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Set the page accessing methods for the hot spots
-  System::PageAccess access;
-  for(uint32_t i = (0x1FF8 & ~mask); i < 0x2000; i += (1 << shift))
-  {
-    access.directPeekBase = 0;
-    access.directPokeBase = 0;
-    access.device = this;
-    mySystem->setPageAccess(i >> shift, access);
-  }
+            // Make sure the system we're being installed in has a page size that'll work
+            assert(((0x1100 & mask) == 0) && ((0x1200 & mask) == 0));
 
-  // Set the page accessing method for the RAM writing pages
-  for(uint32_t j = 0x1000; j < 0x1100; j += (1 << shift))
-  {
-    access.device = this;
-    access.directPeekBase = 0;
-    access.directPokeBase = &myRAM[j & 0x00FF];
-    mySystem->setPageAccess(j >> shift, access);
-  }
+            // Set the page accessing methods for the hot spots
+            System::PageAccess access;
+            for (uint32_t i = (0x1FF8 & ~mask); i < 0x2000; i += (1 << shift))
+            {
+                access.directPeekBase = 0;
+                access.directPokeBase = 0;
+                access.device = this;
+                mySystem->setPageAccess(i >> shift, access);
+            }
 
-  // Set the page accessing method for the RAM reading pages
-  for(uint32_t k = 0x1100; k < 0x1200; k += (1 << shift))
-  {
-    access.device = this;
-    access.directPeekBase = &myRAM[k & 0x00FF];
-    access.directPokeBase = 0;
-    mySystem->setPageAccess(k >> shift, access);
-  }
+            // Set the page accessing method for the RAM writing pages
+            for (uint32_t j = 0x1000; j < 0x1100; j += (1 << shift))
+            {
+                access.device = this;
+                access.directPeekBase = 0;
+                access.directPokeBase = &myRAM[j & 0x00FF];
+                mySystem->setPageAccess(j >> shift, access);
+            }
 
-  // Install pages for bank 2
-  bank(2);
-}
+            // Set the page accessing method for the RAM reading pages
+            for (uint32_t k = 0x1100; k < 0x1200; k += (1 << shift))
+            {
+                access.device = this;
+                access.directPeekBase = &myRAM[k & 0x00FF];
+                access.directPokeBase = 0;
+                mySystem->setPageAccess(k >> shift, access);
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t CartridgeFASC::peek(uint16_t address)
-{
-  address = address & 0x0FFF;
+            // Install pages for bank 2
+            bank(2);
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0FF8:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t CartridgeFASC::peek(uint16_t address)
+        {
+            address = address & 0x0FFF;
 
-    case 0x0FF9:
-      // Set the current bank to the middle 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0FF8:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    case 0x0FFA:
-      // Set the current bank to the upper 4k bank
-      bank(2);
-      break;
+            case 0x0FF9:
+                // Set the current bank to the middle 4k bank
+                bank(1);
+                break;
 
-    default:
-      break;
-  }
+            case 0x0FFA:
+                // Set the current bank to the upper 4k bank
+                bank(2);
+                break;
 
-  // NOTE: This does not handle accessing RAM, however, this function
-  // should never be called for RAM because of the way page accessing
-  // has been setup
-  return myImage[myCurrentBank * 4096 + address];
-}
+            default:
+                break;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFASC::poke(uint16_t address, uint8_t)
-{
-  address = address & 0x0FFF;
+            // NOTE: This does not handle accessing RAM, however, this function
+            // should never be called for RAM because of the way page accessing
+            // has been setup
+            return myImage[myCurrentBank * 4096 + address];
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0FF8:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFASC::poke(uint16_t address, uint8_t)
+        {
+            address = address & 0x0FFF;
 
-    case 0x0FF9:
-      // Set the current bank to the middle 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0FF8:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    case 0x0FFA:
-      // Set the current bank to the upper 4k bank
-      bank(2);
-      break;
+            case 0x0FF9:
+                // Set the current bank to the middle 4k bank
+                bank(1);
+                break;
 
-    default:
-      break;
-  }
+            case 0x0FFA:
+                // Set the current bank to the upper 4k bank
+                bank(2);
+                break;
 
-  // NOTE: This does not handle accessing RAM, however, this function
-  // should never be called for RAM because of the way page accessing
-  // has been setup
-}
+            default:
+                break;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFASC::save(Serializer& out)
-{
-  std::string cart = name();
+            // NOTE: This does not handle accessing RAM, however, this function
+            // should never be called for RAM because of the way page accessing
+            // has been setup
+        }
 
-  try
-  {
-    out.putString(cart);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFASC::save(Serializer& out)
+        {
+            std::string cart = name();
 
-    out.putInt(myCurrentBank);
+            try
+            {
+                out.putString(cart);
 
-    // The 256 bytes of RAM
-    out.putInt(256);
-    for(uint32_t i = 0; i < 256; ++i)
-      out.putInt(myRAM[i]);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+                out.putInt(myCurrentBank);
 
-  return true;
-}
+                // The 256 bytes of RAM
+                out.putInt(256);
+                for (uint32_t i = 0; i < 256; ++i)
+                    out.putInt(myRAM[i]);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFASC::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFASC::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-    myCurrentBank = (uint16_t) in.getInt();
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
 
-    uint32_t limit = (uint32_t) in.getInt();
-    for(uint32_t i = 0; i < limit; ++i)
-      myRAM[i] = (uint8_t) in.getInt();
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+                myCurrentBank = (uint16_t)in.getInt();
 
-  // Remember what bank we were in
-  bank(myCurrentBank);
+                uint32_t limit = (uint32_t)in.getInt();
+                for (uint32_t i = 0; i < limit; ++i)
+                    myRAM[i] = (uint8_t)in.getInt();
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-  return true;
-}
+            // Remember what bank we were in
+            bank(myCurrentBank);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeFASC::bank(uint16_t bank)
-{
-  if(bankLocked) return;
+            return true;
+        }
 
-  // Remember what bank we're in
-  myCurrentBank = bank;
-  uint16_t offset = myCurrentBank * 4096;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeFASC::bank(uint16_t bank)
+        {
+            if (bankLocked) return;
 
-  // Setup the page access methods for the current bank
-  System::PageAccess access;
-  access.device = this;
-  access.directPokeBase = 0;
+            // Remember what bank we're in
+            myCurrentBank = bank;
+            uint16_t offset = myCurrentBank * 4096;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Map ROM image into the system
-  for(uint32_t address = 0x1200; address < (0x1FF8U & ~mask);
-      address += (1 << shift))
-  {
-    access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
-    mySystem->setPageAccess(address >> shift, access);
-  }
-}
+            // Setup the page access methods for the current bank
+            System::PageAccess access;
+            access.device = this;
+            access.directPokeBase = 0;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeFASC::bank()
-{
-  return myCurrentBank;
-}
+            // Map ROM image into the system
+            for (uint32_t address = 0x1200; address < (0x1FF8U & ~mask);
+                address += (1 << shift))
+            {
+                access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
+                mySystem->setPageAccess(address >> shift, access);
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeFASC::bankCount()
-{
-  return 3;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeFASC::bank()
+        {
+            return myCurrentBank;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeFASC::patch(uint16_t address, uint8_t value)
-{
-  address = address & 0x0FFF;
-  myImage[myCurrentBank * 4096 + address] = value;
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeFASC::bankCount()
+        {
+            return 3;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* CartridgeFASC::getImage(int& size)
-{
-  size = 12288;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeFASC::patch(uint16_t address, uint8_t value)
+        {
+            address = address & 0x0FFF;
+            myImage[myCurrentBank * 4096 + address] = value;
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* CartridgeFASC::getImage(int& size)
+        {
+            size = 12288;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

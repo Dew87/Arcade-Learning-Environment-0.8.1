@@ -23,58 +23,57 @@
 #include "emucore/Settings.hxx"
 #include "common/SoundNull.hxx"
 
-namespace ale {
-using namespace stella;   // Settings, Serializer, Deserializer
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SoundNull::SoundNull(Settings* settings)
-    : Sound(settings)
+namespace ale
 {
-}
+    using namespace stella;   // Settings, Serializer, Deserializer
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SoundNull::~SoundNull()
-{
-}
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    SoundNull::SoundNull(Settings* settings)
+        : Sound(settings)
+    {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool SoundNull::load(Deserializer& in)
-{
-  std::string soundDevice = "TIASound";
-  if(in.getString() != soundDevice)
-    return false;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    SoundNull::~SoundNull()
+    {}
 
-  uint8_t reg;
-  reg = (uint8_t) in.getInt();
-  reg = (uint8_t) in.getInt();
-  reg = (uint8_t) in.getInt();
-  reg = (uint8_t) in.getInt();
-  reg = (uint8_t) in.getInt();
-  reg = (uint8_t) in.getInt();
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    bool SoundNull::load(Deserializer& in)
+    {
+        std::string soundDevice = "TIASound";
+        if (in.getString() != soundDevice)
+            return false;
 
-  // myLastRegisterSetCycle
-  in.getInt();
+        uint8_t reg;
+        reg = (uint8_t)in.getInt();
+        reg = (uint8_t)in.getInt();
+        reg = (uint8_t)in.getInt();
+        reg = (uint8_t)in.getInt();
+        reg = (uint8_t)in.getInt();
+        reg = (uint8_t)in.getInt();
 
-  return true;
-}
+        // myLastRegisterSetCycle
+        in.getInt();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool SoundNull::save(Serializer& out)
-{
-  out.putString("TIASound");
+        return true;
+    }
 
-  uint8_t reg = 0;
-  out.putInt(reg);
-  out.putInt(reg);
-  out.putInt(reg);
-  out.putInt(reg);
-  out.putInt(reg);
-  out.putInt(reg);
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    bool SoundNull::save(Serializer& out)
+    {
+        out.putString("TIASound");
 
-  // myLastRegisterSetCycle
-  out.putInt(0);
+        uint8_t reg = 0;
+        out.putInt(reg);
+        out.putInt(reg);
+        out.putInt(reg);
+        out.putInt(reg);
+        out.putInt(reg);
+        out.putInt(reg);
 
-  return true;
-}
+        // myLastRegisterSetCycle
+        out.putInt(0);
+
+        return true;
+    }
 
 }  // namespace ale

@@ -19,165 +19,167 @@
 #ifndef CONTROLLER_HXX
 #define CONTROLLER_HXX
 
-namespace ale {
-namespace stella {
-
-class Controller;
-class Event;
-class System;
-
-
-/**
-  A controller is a device that plugs into either the left or right
-  controller jack of the Video Computer System (VCS).  The pins of
-  the controller jacks are mapped as follows:
-
-                           -------------
-                           \ 1 2 3 4 5 /
-                            \ 6 7 8 9 /
-                             ---------
-
-            Left Controller             Right Controller
-
-    pin 1   D4  PIA SWCHA               D0  PIA SWCHA
-    pin 2   D5  PIA SWCHA               D1  PIA SWCHA
-    pin 3   D6  PIA SWCHA               D2  PIA SWCHA
-    pin 4   D7  PIA SWCHA               D3  PIA SWCHA
-    pin 5   D7  TIA INPT1 (Dumped)      D7  TIA INPT3 (Dumped)
-    pin 6   D7  TIA INPT4 (Latched)     D7  TIA INPT5 (Latched)
-    pin 7   +5                          +5
-    pin 8   GND                         GND
-    pin 9   D7  TIA INPT0 (Dumped)      D7  TIA INPT2 (Dumped)
-
-  Each of the pins connected to the PIA can be configured as an
-  input or output pin.  The "dumped" TIA pins are used to charge
-  a capacitor.  A potentiometer is sometimes connected to these
-  pins for analog input.
-
-  This is a base class for all controllers.  It provides a view
-  of the controller from the perspective of the controller's jack.
-
-  @author  Bradford W. Mott
-  @version $Id: Control.hxx,v 1.9 2007/02/22 02:15:46 stephena Exp $
-*/
-class Controller
+namespace ale
 {
-  public:
-    /**
-      Enumeration of the controller jacks
-    */
-    enum Jack
+    namespace stella
     {
-      Left, Right
-    };
 
-    /**
-      Enumeration of the controller types
-    */
-    enum Type
-    {
-      Paddles, Joystick
-    };
+        class Controller;
+        class Event;
+        class System;
 
-  public:
-    /**
-      Create a new controller plugged into the specified jack
 
-      @param jack  The jack the controller is plugged into
-      @param event The event object to use for events
-      @param type  The type for this controller
-    */
-    Controller(Jack jack, const Event& event, Type type);
+        /**
+          A controller is a device that plugs into either the left or right
+          controller jack of the Video Computer System (VCS).  The pins of
+          the controller jacks are mapped as follows:
 
-    /**
-      Destructor
-    */
-    virtual ~Controller();
+                                   -------------
+                                   \ 1 2 3 4 5 /
+                                    \ 6 7 8 9 /
+                                     ---------
 
-    /**
-      Returns the type of this controller.
-    */
-    Type type();
+                    Left Controller             Right Controller
 
-    /**
-      Inform this controller about the current System.
-    */
-    void setSystem(System* system) { mySystem = system; }
+            pin 1   D4  PIA SWCHA               D0  PIA SWCHA
+            pin 2   D5  PIA SWCHA               D1  PIA SWCHA
+            pin 3   D6  PIA SWCHA               D2  PIA SWCHA
+            pin 4   D7  PIA SWCHA               D3  PIA SWCHA
+            pin 5   D7  TIA INPT1 (Dumped)      D7  TIA INPT3 (Dumped)
+            pin 6   D7  TIA INPT4 (Latched)     D7  TIA INPT5 (Latched)
+            pin 7   +5                          +5
+            pin 8   GND                         GND
+            pin 9   D7  TIA INPT0 (Dumped)      D7  TIA INPT2 (Dumped)
 
-  public:
-    /**
-      Enumeration of the digital pins of a controller port
-    */
-    enum DigitalPin
-    {
-      One, Two, Three, Four, Six
-    };
+          Each of the pins connected to the PIA can be configured as an
+          input or output pin.  The "dumped" TIA pins are used to charge
+          a capacitor.  A potentiometer is sometimes connected to these
+          pins for analog input.
 
-    /**
-      Enumeration of the analog pins of a controller port
-    */
-    enum AnalogPin
-    {
-      Five, Nine
-    };
+          This is a base class for all controllers.  It provides a view
+          of the controller from the perspective of the controller's jack.
 
-  public:
-    /**
-      Read the value of the specified digital pin for this controller.
+          @author  Bradford W. Mott
+          @version $Id: Control.hxx,v 1.9 2007/02/22 02:15:46 stephena Exp $
+        */
+        class Controller
+        {
+        public:
+            /**
+              Enumeration of the controller jacks
+            */
+            enum Jack
+            {
+                Left, Right
+            };
 
-      @param pin The pin of the controller jack to read
-      @return The state of the pin
-    */
-    virtual bool read(DigitalPin pin) = 0;
+            /**
+              Enumeration of the controller types
+            */
+            enum Type
+            {
+                Paddles, Joystick
+            };
 
-    /**
-      Read the resistance at the specified analog pin for this controller.
-      The returned value is the resistance measured in ohms.
+        public:
+            /**
+              Create a new controller plugged into the specified jack
 
-      @param pin The pin of the controller jack to read
-      @return The resistance at the specified pin
-    */
-    virtual int read(AnalogPin pin) = 0;
+              @param jack  The jack the controller is plugged into
+              @param event The event object to use for events
+              @param type  The type for this controller
+            */
+            Controller(Jack jack, const Event& event, Type type);
 
-    /**
-      Write the given value to the specified digital pin for this
-      controller.  Writing is only allowed to the pins associated
-      with the PIA.  Therefore you cannot write to pin six.
+            /**
+              Destructor
+            */
+            virtual ~Controller();
 
-      @param pin The pin of the controller jack to write to
-      @param value The value to write to the pin
-    */
-    virtual void write(DigitalPin pin, bool value) = 0;
+            /**
+              Returns the type of this controller.
+            */
+            Type type();
 
-  public:
-    /// Constant which represents maximum resistance for analog pins
-    static const int maximumResistance;
+            /**
+              Inform this controller about the current System.
+            */
+            void setSystem(System* system) { mySystem = system; }
 
-    /// Constant which represents minimum resistance for analog pins
-    static const int minimumResistance;
+        public:
+            /**
+              Enumeration of the digital pins of a controller port
+            */
+            enum DigitalPin
+            {
+                One, Two, Three, Four, Six
+            };
 
-  protected:
-    /// Specifies which jack the controller is plugged in
-    const Jack myJack;
+            /**
+              Enumeration of the analog pins of a controller port
+            */
+            enum AnalogPin
+            {
+                Five, Nine
+            };
 
-    /// Reference to the event object this controller uses
-    const Event& myEvent;
+        public:
+            /**
+              Read the value of the specified digital pin for this controller.
 
-    /// Specifies which type of controller this is (defined by child classes)
-    const Type myType;
+              @param pin The pin of the controller jack to read
+              @return The state of the pin
+            */
+            virtual bool read(DigitalPin pin) = 0;
 
-    /// Pointer to the System object (used for timing purposes)
-    System* mySystem;
+            /**
+              Read the resistance at the specified analog pin for this controller.
+              The returned value is the resistance measured in ohms.
 
-  protected:
-    // Copy constructor isn't supported by controllers so make it private
-    Controller(const Controller&);
+              @param pin The pin of the controller jack to read
+              @return The resistance at the specified pin
+            */
+            virtual int read(AnalogPin pin) = 0;
 
-    // Assignment operator isn't supported by controllers so make it private
-    Controller& operator = (const Controller&);
-};
+            /**
+              Write the given value to the specified digital pin for this
+              controller.  Writing is only allowed to the pins associated
+              with the PIA.  Therefore you cannot write to pin six.
 
-}  // namespace stella
+              @param pin The pin of the controller jack to write to
+              @param value The value to write to the pin
+            */
+            virtual void write(DigitalPin pin, bool value) = 0;
+
+        public:
+            /// Constant which represents maximum resistance for analog pins
+            static const int maximumResistance;
+
+            /// Constant which represents minimum resistance for analog pins
+            static const int minimumResistance;
+
+        protected:
+            /// Specifies which jack the controller is plugged in
+            const Jack myJack;
+
+            /// Reference to the event object this controller uses
+            const Event& myEvent;
+
+            /// Specifies which type of controller this is (defined by child classes)
+            const Type myType;
+
+            /// Pointer to the System object (used for timing purposes)
+            System* mySystem;
+
+        protected:
+            // Copy constructor isn't supported by controllers so make it private
+            Controller(const Controller&);
+
+            // Assignment operator isn't supported by controllers so make it private
+            Controller& operator = (const Controller&);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

@@ -18,25 +18,25 @@
 
 #include "emucore/Device.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Device::Device()
-    : mySystem(0)
+namespace ale
 {
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Device::~Device()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Device::Device()
+            : mySystem(0)
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Device::systemCyclesReset()
-{
-  // By default I do nothing when my system resets its cycle counter
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Device::~Device()
+        {}
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Device::systemCyclesReset()
+        {
+            // By default I do nothing when my system resets its cycle counter
+        }
+
+    }  // namespace stella
 }  // namespace ale

@@ -23,87 +23,83 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/Cart0840.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge0840::Cartridge0840(const uint8_t* image)
+namespace ale
 {
-}
+	namespace stella
+	{
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge0840::~Cartridge0840()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Cartridge0840::Cartridge0840(const uint8_t* image)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* Cartridge0840::name() const
-{
-  return "Cartridge0840";
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Cartridge0840::~Cartridge0840()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge0840::reset()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		const char* Cartridge0840::name() const
+		{
+			return "Cartridge0840";
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge0840::install(System& system)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge0840::reset()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t Cartridge0840::peek(uint16_t address)
-{
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge0840::install(System& system)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge0840::poke(uint16_t address, uint8_t value)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		uint8_t Cartridge0840::peek(uint16_t address)
+		{
+			return 0;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge0840::save(Serializer& out)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge0840::poke(uint16_t address, uint8_t value)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge0840::load(Deserializer& in)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge0840::save(Serializer& out)
+		{
+			return false;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge0840::bank(uint16_t bank)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge0840::load(Deserializer& in)
+		{
+			return false;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge0840::bank()
-{
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void Cartridge0840::bank(uint16_t bank)
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge0840::bankCount()
-{
-  return 1;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		int Cartridge0840::bank()
+		{
+			return 0;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge0840::patch(uint16_t address, uint8_t value)
-{
-  return false;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		int Cartridge0840::bankCount()
+		{
+			return 1;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* Cartridge0840::getImage(int& size)
-{
-  size = 0;
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool Cartridge0840::patch(uint16_t address, uint8_t value)
+		{
+			return false;
+		}
 
-}  // namespace stella
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		uint8_t* Cartridge0840::getImage(int& size)
+		{
+			size = 0;
+			return 0;
+		}
+
+	}  // namespace stella
 }  // namespace ale

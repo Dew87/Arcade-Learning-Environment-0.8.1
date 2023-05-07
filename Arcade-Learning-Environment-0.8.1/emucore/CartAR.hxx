@@ -19,201 +19,205 @@
 #ifndef CARTRIDGEAR_HXX
 #define CARTRIDGEAR_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class M6502High;
-class System;
-class Serializer;
-class Deserializer;
+        class M6502High;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Cart.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  This is the cartridge class for Arcadia (aka Starpath) Supercharger
-  games.  Christopher Salomon provided most of the technical details
-  used in creating this class.  A good description of the Supercharger
-  is provided in the Cuttle Cart's manual.
-
-  The Supercharger has four 2K banks.  There are three banks of RAM
-  and one bank of ROM.  All 6K of the RAM can be read and written.
-
-  @author  Bradford W. Mott
-  @version $Id: CartAR.hxx,v 1.12 2007/01/14 16:17:53 stephena Exp $
-*/
-class CartridgeAR : public Cartridge
+namespace ale
 {
-  public:
-    /**
-      Create a new cartridge using the specified image and size
+    namespace stella
+    {
 
-      @param image     Pointer to the ROM image
-      @param size      The size of the ROM image
-      @param fastbios  Whether or not to quickly execute the BIOS code
-    */
-    CartridgeAR(const uint8_t* image, uint32_t size, bool fastbios);
+        /**
+          This is the cartridge class for Arcadia (aka Starpath) Supercharger
+          games.  Christopher Salomon provided most of the technical details
+          used in creating this class.  A good description of the Supercharger
+          is provided in the Cuttle Cart's manual.
 
-    /**
-      Destructor
-    */
-    virtual ~CartridgeAR();
+          The Supercharger has four 2K banks.  There are three banks of RAM
+          and one bank of ROM.  All 6K of the RAM can be read and written.
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+          @author  Bradford W. Mott
+          @version $Id: CartAR.hxx,v 1.12 2007/01/14 16:17:53 stephena Exp $
+        */
+        class CartridgeAR : public Cartridge
+        {
+        public:
+            /**
+              Create a new cartridge using the specified image and size
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+              @param image     Pointer to the ROM image
+              @param size      The size of the ROM image
+              @param fastbios  Whether or not to quickly execute the BIOS code
+            */
+            CartridgeAR(const uint8_t* image, uint32_t size, bool fastbios);
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset();
+            /**
+              Destructor
+            */
+            virtual ~CartridgeAR();
 
-    /**
-      Notification method invoked by the system right before the
-      system resets its cycle counter to zero.  It may be necessary
-      to override this method for devices that remember cycle counts.
-    */
-    virtual void systemCyclesReset();
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Install cartridge in the specified system.  Invoked by the system
-      when the cartridge is attached to it.
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset();
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Notification method invoked by the system right before the
+              system resets its cycle counter to zero.  It may be necessary
+              to override this method for devices that remember cycle counts.
+            */
+            virtual void systemCyclesReset();
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+            /**
+              Install cartridge in the specified system.  Invoked by the system
+              when the cartridge is attached to it.
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+            /**
+              Saves the current state of this device to the given Serializer.
 
-    /**
-      Install pages for the specified bank in the system.
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-      @param bank The bank that should be installed in the system
-    */
-    virtual void bank(uint16_t bank);
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-    /**
-      Get the current bank.
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-      @return  The current bank, or -1 if bankswitching not supported
-    */
-    virtual int bank();
+            /**
+              Install pages for the specified bank in the system.
 
-    /**
-      Query the number of banks supported by the cartridge.
-    */
-    virtual int bankCount();
+              @param bank The bank that should be installed in the system
+            */
+            virtual void bank(uint16_t bank);
 
-    /**
-      Patch the cartridge ROM.
+            /**
+              Get the current bank.
 
-      @param address  The ROM address to patch
-      @param value    The value to place into the address
-      @return    Success or failure of the patch operation
-    */
-    virtual bool patch(uint16_t address, uint8_t value);
+              @return  The current bank, or -1 if bankswitching not supported
+            */
+            virtual int bank();
 
-    /**
-      Access the internal ROM image for this cartridge.
+            /**
+              Query the number of banks supported by the cartridge.
+            */
+            virtual int bankCount();
 
-      @param size  Set to the size of the internal ROM image data
-      @return  A pointer to the internal ROM image data
-    */
-    virtual uint8_t* getImage(int& size);
+            /**
+              Patch the cartridge ROM.
 
-  public:
-    /**
-      Get the byte at the specified address
+              @param address  The ROM address to patch
+              @param value    The value to place into the address
+              @return    Success or failure of the patch operation
+            */
+            virtual bool patch(uint16_t address, uint8_t value);
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+            /**
+              Access the internal ROM image for this cartridge.
 
-    /**
-      Change the byte at the specified address to the given value
+              @param size  Set to the size of the internal ROM image data
+              @return  A pointer to the internal ROM image data
+            */
+            virtual uint8_t* getImage(int& size);
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+        public:
+            /**
+              Get the byte at the specified address
 
-  private:
-    // Handle a change to the bank configuration
-    void bankConfiguration(uint8_t configuration);
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
 
-    // Compute the sum of the array of bytes
-    uint8_t checksum(uint8_t* s, uint16_t length);
+            /**
+              Change the byte at the specified address to the given value
 
-    // Load the specified load into SC RAM
-    void loadIntoRAM(uint8_t load);
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
 
-    // Sets up a "dummy" BIOS ROM in the ROM bank of the cartridge
-    void initializeROM(bool fastbios);
+        private:
+            // Handle a change to the bank configuration
+            void bankConfiguration(uint8_t configuration);
 
-  private:
-    // Pointer to the 6502 processor in the system
-    M6502High* my6502;
+            // Compute the sum of the array of bytes
+            uint8_t checksum(uint8_t* s, uint16_t length);
 
-    // Indicates the offest within the image for the corresponding bank
-    uint32_t myImageOffset[2];
+            // Load the specified load into SC RAM
+            void loadIntoRAM(uint8_t load);
 
-    // The 6K of RAM and 2K of ROM contained in the Supercharger
-    uint8_t myImage[8192];
+            // Sets up a "dummy" BIOS ROM in the ROM bank of the cartridge
+            void initializeROM(bool fastbios);
 
-    // The 256 byte header for the current 8448 byte load
-    uint8_t myHeader[256];
+        private:
+            // Pointer to the 6502 processor in the system
+            M6502High* my6502;
 
-    // All of the 8448 byte loads associated with the game
-    uint8_t* myLoadImages;
+            // Indicates the offest within the image for the corresponding bank
+            uint32_t myImageOffset[2];
 
-    // Indicates how many 8448 loads there are
-    uint8_t myNumberOfLoadImages;
+            // The 6K of RAM and 2K of ROM contained in the Supercharger
+            uint8_t myImage[8192];
 
-    // Indicates if the RAM is write enabled
-    bool myWriteEnabled;
+            // The 256 byte header for the current 8448 byte load
+            uint8_t myHeader[256];
 
-    // Indicates if the ROM's power is on or off
-    bool myPower;
+            // All of the 8448 byte loads associated with the game
+            uint8_t* myLoadImages;
 
-    // Indicates when the power was last turned on
-    int myPowerRomCycle;
+            // Indicates how many 8448 loads there are
+            uint8_t myNumberOfLoadImages;
 
-    // Data hold register used for writing
-    uint8_t myDataHoldRegister;
+            // Indicates if the RAM is write enabled
+            bool myWriteEnabled;
 
-    // Indicates number of distinct accesses when data hold register was set
-    uint32_t myNumberOfDistinctAccesses;
+            // Indicates if the ROM's power is on or off
+            bool myPower;
 
-    // Indicates if a write is pending or not
-    bool myWritePending;
+            // Indicates when the power was last turned on
+            int myPowerRomCycle;
 
-    uint16_t myCurrentBank;
-};
+            // Data hold register used for writing
+            uint8_t myDataHoldRegister;
 
-}  // namespace stella
+            // Indicates number of distinct accesses when data hold register was set
+            uint32_t myNumberOfDistinctAccesses;
+
+            // Indicates if a write is pending or not
+            bool myWritePending;
+
+            uint16_t myCurrentBank;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

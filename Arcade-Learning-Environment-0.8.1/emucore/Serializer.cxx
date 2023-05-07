@@ -19,57 +19,60 @@
 #include "emucore/Serializer.hxx"
 
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Serializer::Serializer(void) {
-    myStream.clear();
-
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Serializer::~Serializer(void)
+namespace ale
 {
-    close();
-}
+    namespace stella
+    {
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Serializer::Serializer(void)
+        {
+            myStream.clear();
+
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Serializer::~Serializer(void)
+        {
+            close();
+        }
 
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Serializer::close(void)
-{
-    myStream.clear();
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Serializer::close(void)
+        {
+            myStream.clear();
+        }
 
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Serializer::putInt(int value)
-{
-    unsigned char buf[4];
-    for(int i = 0; i < 4; ++i)
-        buf[i] = (value >> (i<<3)) & 0xff;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Serializer::putInt(int value)
+        {
+            unsigned char buf[4];
+            for (int i = 0; i < 4; ++i)
+                buf[i] = (value >> (i << 3)) & 0xff;
 
-    myStream.write((char*)buf, 4);
-    if(myStream.bad())
-        throw "Serializer: file write failed";
-}
+            myStream.write((char*)buf, 4);
+            if (myStream.bad())
+                throw "Serializer: file write failed";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Serializer::putString(const std::string& str)
-{
-    int len = str.length();
-    putInt(len);
-    myStream.write(str.data(), (std::streamsize)len);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Serializer::putString(const std::string& str)
+        {
+            int len = str.length();
+            putInt(len);
+            myStream.write(str.data(), (std::streamsize)len);
 
-    if(myStream.bad())
-        throw "Serializer: file write failed";
-}
+            if (myStream.bad())
+                throw "Serializer: file write failed";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Serializer::putBool(bool b)
-{
-    putInt(b ? TruePattern: FalsePattern);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Serializer::putBool(bool b)
+        {
+            putInt(b ? TruePattern : FalsePattern);
+        }
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale

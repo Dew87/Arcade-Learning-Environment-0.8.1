@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,7 +41,7 @@ double NEAT::mutate_gene_reenable_prob = 0;
 double NEAT::mutate_add_node_prob = 0;
 double NEAT::mutate_add_link_prob = 0;
 double NEAT::interspecies_mate_rate = 0; // Prob. of a mate being outside species 
-double NEAT::mate_multipoint_prob = 0;     
+double NEAT::mate_multipoint_prob = 0;
 double NEAT::mate_multipoint_avg_prob = 0;
 double NEAT::mate_singlepoint_prob = 0;
 double NEAT::mate_only_prob = 0; // Prob. of mating without mutation 
@@ -111,30 +111,32 @@ int NEAT::getUnitCount(const char *string, const char *set)
 {
 	int count = 0;
 	short last = 0;
-	while(*string)
+	while (*string)
 	{
 		last = *string++;
 
-		for(int i =0; set[i]; i++)
+		for (int i = 0; set[i]; i++)
 		{
-			if(last == set[i])
+			if (last == set[i])
 			{
 				count++;
 				last = 0;
 				break;
-			}   
+			}
 		}
 	}
-	if(last)
+	if (last)
 		count++;
 	return count;
-}   
+}
 
-bool NEAT::load_neat_params(const char *filename, bool output) {
+bool NEAT::load_neat_params(const char *filename, bool output)
+{
 
-    std::ifstream paramFile(filename);
+	std::ifstream paramFile(filename);
 
-	if(!paramFile) {
+	if (!paramFile)
+	{
 		return false;
 	}
 	char curword[128];
@@ -146,272 +148,273 @@ bool NEAT::load_neat_params(const char *filename, bool output) {
 	//paramFile.read(sizeof(filestring), filestring);
 
 	// **********LOAD IN PARAMETERS*************** //
-    if(output)
-	    printf("NEAT READING IN %s", filename);
+	if (output)
+		printf("NEAT READING IN %s", filename);
 
-	paramFile>>curword;
-	paramFile>>NEAT::trait_param_mut_prob;
+	paramFile >> curword;
+	paramFile >> NEAT::trait_param_mut_prob;
 
 	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::trait_param_mut_prob = atof(curword);
 	//curwordnum += 2;
 
-	paramFile>>curword;
-	paramFile>>NEAT::trait_mutation_power;
+	paramFile >> curword;
+	paramFile >> NEAT::trait_mutation_power;
 
 	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::trait_mutation_power = atof(curword);
 	//curwordnum += 2;
 
-	paramFile>>curword;
-	paramFile>>NEAT::linktrait_mut_sig;
+	paramFile >> curword;
+	paramFile >> NEAT::linktrait_mut_sig;
 
 	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::linktrait_mut_sig = atof(curword);
 	//curwordnum += 2;
 
-	paramFile>>curword;
-	paramFile>>NEAT::nodetrait_mut_sig;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+	paramFile >> curword;
+	paramFile >> NEAT::nodetrait_mut_sig;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::nodetrait_mut_sig = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::weight_mut_power;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::weight_mut_power;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::weight_mut_power = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::recur_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::recur_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::recur_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::disjoint_coeff;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::disjoint_coeff;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::disjoint_coeff = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::excess_coeff;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::excess_coeff;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::excess_coeff = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutdiff_coeff;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutdiff_coeff;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutdiff_coeff = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::compat_threshold;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::compat_threshold;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::compat_threshold = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::age_significance;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::age_significance;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::age_significance = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::survival_thresh;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::survival_thresh;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::survival_thresh = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_only_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_only_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_only_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_random_trait_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_random_trait_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_random_trait_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_link_trait_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_link_trait_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_link_trait_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_node_trait_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_node_trait_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_node_trait_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_link_weights_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_link_weights_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_link_weights_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_toggle_enable_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_toggle_enable_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_toggle_enable_prob = atof(curword);
 	//curwordnum += 2;
 
-	paramFile>>curword;
-	paramFile>>NEAT::mutate_gene_reenable_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_gene_reenable_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_gene_reenable_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_add_node_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_add_node_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_add_node_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mutate_add_link_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_add_link_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_add_link_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::interspecies_mate_rate;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::interspecies_mate_rate;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::interspecies_mate_rate = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mate_multipoint_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mate_multipoint_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mate_multipoint_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mate_multipoint_avg_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mate_multipoint_avg_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mate_multipoint_avg_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mate_singlepoint_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mate_singlepoint_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mate_singlepoint_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::mate_only_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::mate_only_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mate_only_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::recur_only_prob;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::recur_only_prob;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::recur_only_prob = atof(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::pop_size;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::pop_size;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::pop_size = atoi(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::dropoff_age;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::dropoff_age;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::dropoff_age = atoi(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::newlink_tries;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::newlink_tries;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::newlink_tries = atoi(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::print_every;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::print_every;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::print_every = atoi(curword);
 	//curwordnum += 2;
-	
-    paramFile>>curword;
-	paramFile>>NEAT::babies_stolen;
-	
-    //strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+
+	paramFile >> curword;
+	paramFile >> NEAT::babies_stolen;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::babies_stolen = atoi(curword);
 	//curwordnum += 2;
 
-    paramFile>>curword;
-	paramFile>>NEAT::num_runs;
-	
+	paramFile >> curword;
+	paramFile >> NEAT::num_runs;
 
-    if(output) {
-	    printf("trait_param_mut_prob=%f\n",trait_param_mut_prob);
-	    printf("trait_mutation_power=%f\n",trait_mutation_power);
-	    printf("linktrait_mut_sig=%f\n",linktrait_mut_sig);
-	    printf("nodetrait_mut_sig=%f\n",nodetrait_mut_sig);
-	    printf("weight_mut_power=%f\n",weight_mut_power);
-	    printf("recur_prob=%f\n",recur_prob);
-	    printf("disjoint_coeff=%f\n",disjoint_coeff);
-	    printf("excess_coeff=%f\n",excess_coeff);
-	    printf("mutdiff_coeff=%f\n",mutdiff_coeff);
-	    printf("compat_threshold=%f\n",compat_threshold);
-	    printf("age_significance=%f\n",age_significance);
-	    printf("survival_thresh=%f\n",survival_thresh);
-	    printf("mutate_only_prob=%f\n",mutate_only_prob);
-	    printf("mutate_random_trait_prob=%f\n",mutate_random_trait_prob);
-	    printf("mutate_link_trait_prob=%f\n",mutate_link_trait_prob);
-	    printf("mutate_node_trait_prob=%f\n",mutate_node_trait_prob);
-	    printf("mutate_link_weights_prob=%f\n",mutate_link_weights_prob);
-	    printf("mutate_toggle_enable_prob=%f\n",mutate_toggle_enable_prob);
-	    printf("mutate_gene_reenable_prob=%f\n",mutate_gene_reenable_prob);
-	    printf("mutate_add_node_prob=%f\n",mutate_add_node_prob);
-	    printf("mutate_add_link_prob=%f\n",mutate_add_link_prob);
-	    printf("interspecies_mate_rate=%f\n",interspecies_mate_rate);
-	    printf("mate_multipoint_prob=%f\n",mate_multipoint_prob);
-	    printf("mate_multipoint_avg_prob=%f\n",mate_multipoint_avg_prob);
-	    printf("mate_singlepoint_prob=%f\n",mate_singlepoint_prob);
-	    printf("mate_only_prob=%f\n",mate_only_prob);
-	    printf("recur_only_prob=%f\n",recur_only_prob);
-	    printf("pop_size=%d\n",pop_size);
-	    printf("dropoff_age=%d\n",dropoff_age);
-	    printf("newlink_tries=%d\n",newlink_tries);
-	    printf("print_every=%d\n",print_every);
-	    printf("babies_stolen=%d\n",babies_stolen);
-	    printf("num_runs=%d\n",num_runs);
-    }
+
+	if (output)
+	{
+		printf("trait_param_mut_prob=%f\n", trait_param_mut_prob);
+		printf("trait_mutation_power=%f\n", trait_mutation_power);
+		printf("linktrait_mut_sig=%f\n", linktrait_mut_sig);
+		printf("nodetrait_mut_sig=%f\n", nodetrait_mut_sig);
+		printf("weight_mut_power=%f\n", weight_mut_power);
+		printf("recur_prob=%f\n", recur_prob);
+		printf("disjoint_coeff=%f\n", disjoint_coeff);
+		printf("excess_coeff=%f\n", excess_coeff);
+		printf("mutdiff_coeff=%f\n", mutdiff_coeff);
+		printf("compat_threshold=%f\n", compat_threshold);
+		printf("age_significance=%f\n", age_significance);
+		printf("survival_thresh=%f\n", survival_thresh);
+		printf("mutate_only_prob=%f\n", mutate_only_prob);
+		printf("mutate_random_trait_prob=%f\n", mutate_random_trait_prob);
+		printf("mutate_link_trait_prob=%f\n", mutate_link_trait_prob);
+		printf("mutate_node_trait_prob=%f\n", mutate_node_trait_prob);
+		printf("mutate_link_weights_prob=%f\n", mutate_link_weights_prob);
+		printf("mutate_toggle_enable_prob=%f\n", mutate_toggle_enable_prob);
+		printf("mutate_gene_reenable_prob=%f\n", mutate_gene_reenable_prob);
+		printf("mutate_add_node_prob=%f\n", mutate_add_node_prob);
+		printf("mutate_add_link_prob=%f\n", mutate_add_link_prob);
+		printf("interspecies_mate_rate=%f\n", interspecies_mate_rate);
+		printf("mate_multipoint_prob=%f\n", mate_multipoint_prob);
+		printf("mate_multipoint_avg_prob=%f\n", mate_multipoint_avg_prob);
+		printf("mate_singlepoint_prob=%f\n", mate_singlepoint_prob);
+		printf("mate_only_prob=%f\n", mate_only_prob);
+		printf("recur_only_prob=%f\n", recur_only_prob);
+		printf("pop_size=%d\n", pop_size);
+		printf("dropoff_age=%d\n", dropoff_age);
+		printf("newlink_tries=%d\n", newlink_tries);
+		printf("print_every=%d\n", print_every);
+		printf("babies_stolen=%d\n", babies_stolen);
+		printf("num_runs=%d\n", num_runs);
+	}
 
 	paramFile.close();
 	return true;
@@ -419,9 +422,9 @@ bool NEAT::load_neat_params(const char *filename, bool output) {
 
 /* Inline Functions in Header file
 int NEAT::randposneg() {
-	if (NEAT::NEATRandGen.randI()%2) 
-		return 1; 
-	else 
+	if (NEAT::NEATRandGen.randI()%2)
+		return 1;
+	else
 		return -1;
 }
 
@@ -434,29 +437,34 @@ double NEAT::randfloat() {
 }
 */
 
-double NEAT::gaussrand() {
-	static int iset=0;
+double NEAT::gaussrand()
+{
+	static int iset = 0;
 	static double gset;
-	double fac,rsq,v1,v2;
+	double fac, rsq, v1, v2;
 
-	if (iset==0) {
-		do {
-			v1=2.0*(randfloat())-1.0;
-			v2=2.0*(randfloat())-1.0;
-			rsq=v1*v1+v2*v2;
-		} while (rsq>=1.0 || rsq==0.0);
-		fac=sqrt(-2.0*log(rsq)/rsq);
-		gset=v1*fac;
-		iset=1;
-		return v2*fac;
+	if (iset == 0)
+	{
+		do
+		{
+			v1 = 2.0 * (randfloat()) - 1.0;
+			v2 = 2.0 * (randfloat()) - 1.0;
+			rsq = v1 * v1 + v2 * v2;
+		} while (rsq >= 1.0 || rsq == 0.0);
+		fac = sqrt(-2.0 * log(rsq) / rsq);
+		gset = v1 * fac;
+		iset = 1;
+		return v2 * fac;
 	}
-	else {
-		iset=0;
+	else
+	{
+		iset = 0;
 		return gset;
 	}
 }
 
-double NEAT::fsigmoid(double activesum,double slope,double constant) {
+double NEAT::fsigmoid(double activesum, double slope, double constant)
+{
 	//RIGHT SHIFTED ---------------------------------------------------------
 	//return (1/(1+(exp(-(slope*activesum-constant))))); //ave 3213 clean on 40 runs of p2m and 3468 on another 40 
 	//41394 with 1 failure on 8 runs
@@ -471,25 +479,27 @@ double NEAT::fsigmoid(double activesum,double slope,double constant) {
 	//return (1/(1+(exp(-activesum-constant)))); //simple left shifted
 
 	//NON-SHIFTED STEEPENED
-	return (1/(1+(exp(-(slope*activesum))))); //Compressed
+	return (1 / (1 + (exp(-(slope * activesum))))); //Compressed
 }
 
-double NEAT::oldhebbian(double weight, double maxweight, double active_in, double active_out, double hebb_rate, double pre_rate, double post_rate) {
+double NEAT::oldhebbian(double weight, double maxweight, double active_in, double active_out, double hebb_rate, double pre_rate, double post_rate)
+{
 
-	bool neg=false;
+	bool neg = false;
 	double delta;
 
 	//double weight_mag;
 
-	if (maxweight<5.0) maxweight=5.0;
+	if (maxweight < 5.0) maxweight = 5.0;
 
-	if (weight>maxweight) weight=maxweight;
+	if (weight > maxweight) weight = maxweight;
 
-	if (weight<-maxweight) weight=-maxweight;
+	if (weight < -maxweight) weight = -maxweight;
 
-	if (weight<0) {
-		neg=true;
-		weight=-weight;
+	if (weight < 0)
+	{
+		neg = true;
+		weight = -weight;
 	}
 
 	//if (weight<0) {
@@ -497,12 +507,13 @@ double NEAT::oldhebbian(double weight, double maxweight, double active_in, doubl
 	//}
 	//else weight_mag=weight;
 
-	if (!(neg)) {
+	if (!(neg))
+	{
 		//if (true) {
-		delta=
-			hebb_rate*(maxweight-weight)*active_in*active_out+
-			pre_rate*(weight)*active_in*(active_out-1.0)+
-			post_rate*(weight)*(active_in-1.0)*active_out;
+		delta =
+			hebb_rate * (maxweight - weight) * active_in * active_out +
+			pre_rate * (weight)*active_in * (active_out - 1.0) +
+			post_rate * (weight) * (active_in - 1.0) * active_out;
 
 		//delta=delta-hebb_rate/2; //decay
 
@@ -510,20 +521,21 @@ double NEAT::oldhebbian(double weight, double maxweight, double active_in, doubl
 
 		//cout<<"delta: "<<delta<<endl;
 
-		if (weight+delta>0)
-			return weight+delta;
+		if (weight + delta > 0)
+			return weight + delta;
 		//else return 0.01;
 
 		//return weight+delta;
 
 	}
-	else {
+	else
+	{
 		//In the inhibatory case, we strengthen the synapse when output is low and
 		//input is high
-		delta=
-			hebb_rate*(maxweight-weight)*active_in*(1.0-active_out)+ //"unhebb"
+		delta =
+			hebb_rate * (maxweight - weight) * active_in * (1.0 - active_out) + //"unhebb"
 			//hebb_rate*(maxweight-weight)*(1.0-active_in)*(active_out)+
-			-5*hebb_rate*(weight)*active_in*active_out+ //anti-hebbian
+			-5 * hebb_rate * (weight)*active_in * active_out + //anti-hebbian
 			//hebb_rate*(maxweight-weight)*active_in*active_out+
 			//pre_rate*weight*active_in*(active_out-1.0)+
 			//post_rate*weight*(active_in-1.0)*active_out;
@@ -533,11 +545,11 @@ double NEAT::oldhebbian(double weight, double maxweight, double active_in, doubl
 
 		//delta=delta+randposneg()*randfloat()*0.01; //noise
 
-		if (-(weight+delta)<0)
-			return -(weight+delta);
+		if (-(weight + delta) < 0)
+			return -(weight + delta);
 		else return -0.01;
 
-		return -(weight+delta);
+		return -(weight + delta);
 
 	}
 
@@ -545,24 +557,26 @@ double NEAT::oldhebbian(double weight, double maxweight, double active_in, doubl
 
 }
 
-double NEAT::hebbian(double weight, double maxweight, double active_in, double active_out, double hebb_rate, double pre_rate, double post_rate) {
+double NEAT::hebbian(double weight, double maxweight, double active_in, double active_out, double hebb_rate, double pre_rate, double post_rate)
+{
 
-	bool neg=false;
+	bool neg = false;
 	double delta;
 
 	//double weight_mag;
 
 	double topweight;
 
-	if (maxweight<5.0) maxweight=5.0;
+	if (maxweight < 5.0) maxweight = 5.0;
 
-	if (weight>maxweight) weight=maxweight;
+	if (weight > maxweight) weight = maxweight;
 
-	if (weight<-maxweight) weight=-maxweight;
+	if (weight < -maxweight) weight = -maxweight;
 
-	if (weight<0) {
-		neg=true;
-		weight=-weight;
+	if (weight < 0)
+	{
+		neg = true;
+		weight = -weight;
 	}
 
 
@@ -572,14 +586,15 @@ double NEAT::hebbian(double weight, double maxweight, double active_in, double a
 	//else weight_mag=weight;
 
 
-	topweight=weight+2.0;
-	if (topweight>maxweight) topweight=maxweight;
+	topweight = weight + 2.0;
+	if (topweight > maxweight) topweight = maxweight;
 
-	if (!(neg)) {
+	if (!(neg))
+	{
 		//if (true) {
-		delta=
-			hebb_rate*(maxweight-weight)*active_in*active_out+
-			pre_rate*(topweight)*active_in*(active_out-1.0);
+		delta =
+			hebb_rate * (maxweight - weight) * active_in * active_out +
+			pre_rate * (topweight)*active_in * (active_out - 1.0);
 		//post_rate*(weight+1.0)*(active_in-1.0)*active_out;
 
 		//delta=delta-hebb_rate/2; //decay
@@ -592,16 +607,17 @@ double NEAT::hebbian(double weight, double maxweight, double active_in, double a
 		//  return weight+delta;
 		//else return 0.01;
 
-		return weight+delta;
+		return weight + delta;
 
 	}
-	else {
+	else
+	{
 		//In the inhibatory case, we strengthen the synapse when output is low and
 		//input is high
-		delta=
-			pre_rate*(maxweight-weight)*active_in*(1.0-active_out)+ //"unhebb"
+		delta =
+			pre_rate * (maxweight - weight) * active_in * (1.0 - active_out) + //"unhebb"
 			//hebb_rate*(maxweight-weight)*(1.0-active_in)*(active_out)+
-			-hebb_rate*(topweight+2.0)*active_in*active_out+ //anti-hebbian
+			-hebb_rate * (topweight + 2.0) * active_in * active_out + //anti-hebbian
 			//hebb_rate*(maxweight-weight)*active_in*active_out+
 			//pre_rate*weight*active_in*(active_out-1.0)+
 			//post_rate*weight*(active_in-1.0)*active_out;
@@ -615,7 +631,7 @@ double NEAT::hebbian(double weight, double maxweight, double active_in, double a
 		//  return -(weight+delta);
 		//  else return -0.01;
 
-		return -(weight+delta);
+		return -(weight + delta);
 
 	}
 

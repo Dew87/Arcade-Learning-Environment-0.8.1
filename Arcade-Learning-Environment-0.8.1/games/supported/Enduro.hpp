@@ -30,52 +30,54 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-/* RL wrapper for Enduro settings */
-class EnduroSettings : public RomSettings {
- public:
-  EnduroSettings();
+	/* RL wrapper for Enduro settings */
+	class EnduroSettings : public RomSettings
+	{
+	public:
+		EnduroSettings();
 
-  // reset
-  void reset() override;
+		// reset
+		void reset() override;
 
-  // is end of game
-  bool isTerminal() const override;
+		// is end of game
+		bool isTerminal() const override;
 
-  // get the most recently observed reward
-  reward_t getReward() const override;
+		// get the most recently observed reward
+		reward_t getReward() const override;
 
-  // the rom-name
-  const char* rom() const override { return "enduro"; }
+		// the rom-name
+		const char* rom() const override { return "enduro"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "94b92a882f6dbaa6993a46e2dcc58402"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "94b92a882f6dbaa6993a46e2dcc58402"; }
 
-  // create a new instance of the rom
-  RomSettings* clone() const override;
+		// create a new instance of the rom
+		RomSettings* clone() const override;
 
-  // is an action part of the minimal set?
-  bool isMinimal(const Action& a) const override;
+		// is an action part of the minimal set?
+		bool isMinimal(const Action& a) const override;
 
-  // process the latest information from ALE
-  void step(const stella::System& system) override;
+		// process the latest information from ALE
+		void step(const stella::System& system) override;
 
-  // saves the state of the rom settings
-  void saveState(stella::Serializer& ser) override;
+		// saves the state of the rom settings
+		void saveState(stella::Serializer& ser) override;
 
-  // loads the state of the rom settings
-  void loadState(stella::Deserializer& ser) override;
+		// loads the state of the rom settings
+		void loadState(stella::Deserializer& ser) override;
 
-  ActionVect getStartingActions() override;
+		ActionVect getStartingActions() override;
 
-  int lives() override { return 0; }
+		int lives() override { return 0; }
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  reward_t m_score;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		reward_t m_score;
+	};
 
 }  // namespace ale
 

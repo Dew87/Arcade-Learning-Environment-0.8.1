@@ -28,48 +28,50 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class MiniatureGolfSettings final : public RomSettings {
- public:
-  MiniatureGolfSettings();
+	class MiniatureGolfSettings final : public RomSettings
+	{
+	public:
+		MiniatureGolfSettings();
 
-  void reset() override;
+		void reset() override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "miniature_golf"; }
+		const char* rom() const override { return "miniature_golf"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "df62a658496ac98a3aa4a6ee5719c251"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "df62a658496ac98a3aa4a6ee5719c251"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+		DifficultyVect getAvailableDifficulties() override;
 
- private:
-  void updateRewardWhenLevelFinishes(int levelNumber);
+	private:
+		void updateRewardWhenLevelFinishes(int levelNumber);
 
-  int m_levelNumber;
-  int m_levelPar;
-  int m_hits;
-  int m_leftStatus;
-  int m_hitsAtStartOfLevel;
-  bool m_terminal;
-  reward_t m_reward;
+		int m_levelNumber;
+		int m_levelPar;
+		int m_hits;
+		int m_leftStatus;
+		int m_hitsAtStartOfLevel;
+		bool m_terminal;
+		reward_t m_reward;
 
-  static constexpr int kNumberOfLevels = 9;
-};
+		static constexpr int kNumberOfLevels = 9;
+	};
 
 }  // namespace "ale"
 

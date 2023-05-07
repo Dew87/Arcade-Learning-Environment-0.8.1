@@ -26,44 +26,48 @@
 #include <vector>
 
 
-namespace ale {
-namespace sound {
+namespace ale
+{
+	namespace sound
+	{
 
-template <typename T> void write(std::ofstream& stream, const T& t) {
-  stream.write((const char*)&t, sizeof(T));
-}
+		template <typename T> void write(std::ofstream& stream, const T& t)
+		{
+			stream.write((const char*)&t, sizeof(T));
+		}
 
-class SoundExporter {
- public:
-  static constexpr int SamplesPerFrame = 512;
+		class SoundExporter
+		{
+		public:
+			static constexpr int SamplesPerFrame = 512;
 
-  using SampleType = uint8_t;
+			using SampleType = uint8_t;
 
-  /** Create a new sound exporter which, on program termination, will write out a wav file. */
-  SoundExporter(const std::string& filename, int channels);
-  ~SoundExporter();
+			/** Create a new sound exporter which, on program termination, will write out a wav file. */
+			SoundExporter(const std::string& filename, int channels);
+			~SoundExporter();
 
-  /** Adds a buffer of samples. */
-  void addSamples(SampleType* s, int len);
+			/** Adds a buffer of samples. */
+			void addSamples(SampleType* s, int len);
 
- private:
-  /** Writes the data to disk. */
-  void writeWAVData();
+		private:
+			/** Writes the data to disk. */
+			void writeWAVData();
 
-  /** The file to save our audio to. */
-  std::string m_filename;
+			/** The file to save our audio to. */
+			std::string m_filename;
 
-  /** Number of channels. */
-  int m_channels;
+			/** Number of channels. */
+			int m_channels;
 
-  /** The sound data. */
-  std::vector<SampleType> m_data;
+			/** The sound data. */
+			std::vector<SampleType> m_data;
 
-  /** Keep track of how many samples have been written since the last write to disk */
-  size_t m_samples_since_write;
-};
+			/** Keep track of how many samples have been written since the last write to disk */
+			size_t m_samples_since_write;
+		};
 
-}  // namespace sound
+	}  // namespace sound
 }  // namespace ale
 
 #endif  // __SOUND_EXPORTER_HPP__

@@ -27,289 +27,292 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/Settings.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-System::System(Settings& settings)
-  : myNumberOfDevices(0),
-    myM6502(0),
-    myTIA(0),
-    myCycles(0),
-    myDataBusState(0)
+namespace ale
 {
-  // Seed RNG with fixed seed to enable full determinism
-  int32_t emulatorSeed = settings.getInt("system_random_seed");
-  myRandom.seed(emulatorSeed);
+    namespace stella
+    {
 
-  // Allocate page table
-  myPageAccessTable = new PageAccess[myNumberOfPages];
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        System::System(Settings& settings)
+            : myNumberOfDevices(0),
+            myM6502(0),
+            myTIA(0),
+            myCycles(0),
+            myDataBusState(0)
+        {
+            // Seed RNG with fixed seed to enable full determinism
+            int32_t emulatorSeed = settings.getInt("system_random_seed");
+            myRandom.seed(emulatorSeed);
 
-  // Initialize page access table
-  PageAccess access;
-  access.directPeekBase = 0;
-  access.directPokeBase = 0;
-  access.device = &myNullDevice;
-  for(int page = 0; page < myNumberOfPages; ++page)
-  {
-    setPageAccess(page, access);
-  }
+            // Allocate page table
+            myPageAccessTable = new PageAccess[myNumberOfPages];
 
-  // Bus starts out unlocked (in other words, peek() changes myDataBusState)
-  myDataBusLocked = false;
-}
+            // Initialize page access table
+            PageAccess access;
+            access.directPeekBase = 0;
+            access.directPokeBase = 0;
+            access.device = &myNullDevice;
+            for (int page = 0; page < myNumberOfPages; ++page)
+            {
+                setPageAccess(page, access);
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-System::~System()
-{
-  // Free the devices attached to me, since I own them
-  for(uint32_t i = 0; i < myNumberOfDevices; ++i)
-  {
-    delete myDevices[i];
-  }
+            // Bus starts out unlocked (in other words, peek() changes myDataBusState)
+            myDataBusLocked = false;
+        }
 
-  // Free the M6502 that I own
-  delete myM6502;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        System::~System()
+        {
+            // Free the devices attached to me, since I own them
+            for (uint32_t i = 0; i < myNumberOfDevices; ++i)
+            {
+                delete myDevices[i];
+            }
 
-  // Free my page access table
-  delete[] myPageAccessTable;
-}
+            // Free the M6502 that I own
+            delete myM6502;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::reset()
-{
-  // Reset system cycle counter
-  resetCycles();
+            // Free my page access table
+            delete[] myPageAccessTable;
+        }
 
-  // First we reset the devices attached to myself
-  for(uint32_t i = 0; i < myNumberOfDevices; ++i)
-  {
-    myDevices[i]->reset();
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::reset()
+        {
+            // Reset system cycle counter
+            resetCycles();
 
-  // Now we reset the processor if it exists
-  if(myM6502 != 0)
-  {
-    myM6502->reset();
-  }
-}
+            // First we reset the devices attached to myself
+            for (uint32_t i = 0; i < myNumberOfDevices; ++i)
+            {
+                myDevices[i]->reset();
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::attach(Device* device)
-{
-  assert(myNumberOfDevices < 100);
+            // Now we reset the processor if it exists
+            if (myM6502 != 0)
+            {
+                myM6502->reset();
+            }
+        }
 
-  // Add device to my collection of devices
-  myDevices[myNumberOfDevices++] = device;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::attach(Device* device)
+        {
+            assert(myNumberOfDevices < 100);
 
-  // Ask the device to install itself
-  device->install(*this);
-}
+            // Add device to my collection of devices
+            myDevices[myNumberOfDevices++] = device;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::attach(M6502* m6502)
-{
-  // Remember the processor
-  myM6502 = m6502;
+            // Ask the device to install itself
+            device->install(*this);
+        }
 
-  // Ask the processor to install itself
-  myM6502->install(*this);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::attach(M6502* m6502)
+        {
+            // Remember the processor
+            myM6502 = m6502;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::attach(TIA* tia)
-{
-  myTIA = tia;
-  attach((Device*) tia);
-}
+            // Ask the processor to install itself
+            myM6502->install(*this);
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool System::save(Serializer& out)
-{
-  try
-  {
-    out.putString("System");
-    out.putInt(myCycles);
-    myRandom.saveState(out);
-  }
-  catch(char *msg)
-  {
-    std::cerr << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    std::cerr << "Unknown error in save state for \'System\'" << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::attach(TIA* tia)
+        {
+            myTIA = tia;
+            attach((Device*)tia);
+        }
 
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool System::save(Serializer& out)
+        {
+            try
+            {
+                out.putString("System");
+                out.putInt(myCycles);
+                myRandom.saveState(out);
+            }
+            catch (char *msg)
+            {
+                std::cerr << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                std::cerr << "Unknown error in save state for \'System\'" << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool System::load(Deserializer& in)
-{
-  try
-  {
-    if(in.getString() != "System")
-      return false;
+            return true;
+        }
 
-    myCycles = (uint32_t) in.getInt();
-    myRandom.loadState(in);
-  }
-  catch(char *msg)
-  {
-    std::cerr << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    std::cerr << "Unknown error in load state for \'System\'" << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool System::load(Deserializer& in)
+        {
+            try
+            {
+                if (in.getString() != "System")
+                    return false;
 
-  return true;
-}
+                myCycles = (uint32_t)in.getInt();
+                myRandom.loadState(in);
+            }
+            catch (char *msg)
+            {
+                std::cerr << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                std::cerr << "Unknown error in load state for \'System\'" << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::resetCycles()
-{
-  // First we let all of the device attached to me know about the reset
-  for(uint32_t i = 0; i < myNumberOfDevices; ++i)
-  {
-    myDevices[i]->systemCyclesReset();
-  }
+            return true;
+        }
 
-  // Now, we reset cycle count to zero
-  myCycles = 0;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::resetCycles()
+        {
+            // First we let all of the device attached to me know about the reset
+            for (uint32_t i = 0; i < myNumberOfDevices; ++i)
+            {
+                myDevices[i]->systemCyclesReset();
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::setPageAccess(uint16_t page, const PageAccess& access)
-{
-  // Make sure the page is within range
-  assert(page <= myNumberOfPages);
+            // Now, we reset cycle count to zero
+            myCycles = 0;
+        }
 
-  // Make sure the access methods make sense
-  assert(access.device != 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::setPageAccess(uint16_t page, const PageAccess& access)
+        {
+            // Make sure the page is within range
+            assert(page <= myNumberOfPages);
 
-  myPageAccessTable[page] = access;
-}
+            // Make sure the access methods make sense
+            assert(access.device != 0);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const System::PageAccess& System::getPageAccess(uint16_t page)
-{
-  // Make sure the page is within range
-  assert(page <= myNumberOfPages);
+            myPageAccessTable[page] = access;
+        }
 
-  return myPageAccessTable[page];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const System::PageAccess& System::getPageAccess(uint16_t page)
+        {
+            // Make sure the page is within range
+            assert(page <= myNumberOfPages);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool System::saveState(const std::string& md5sum, Serializer& out)
-{
-  // Open the file as a new Serializer
-  if(!out.isOpen())
-    return false;
+            return myPageAccessTable[page];
+        }
 
-  try
-  {
-    // Prepend the state file with the md5sum of this cartridge
-    // This is the first defensive check for an invalid state file
-    out.putString(md5sum);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool System::saveState(const std::string& md5sum, Serializer& out)
+        {
+            // Open the file as a new Serializer
+            if (!out.isOpen())
+                return false;
 
-    // First save state for this system
-    if(!save(out))
-      return false;
+            try
+            {
+                // Prepend the state file with the md5sum of this cartridge
+                // This is the first defensive check for an invalid state file
+                out.putString(md5sum);
 
-    // Next, save state for the CPU
-    if(!myM6502->save(out))
-      return false;
+                // First save state for this system
+                if (!save(out))
+                    return false;
 
-    // Now save the state of each device
-    for(uint32_t i = 0; i < myNumberOfDevices; ++i)
-      if(!myDevices[i]->save(out))
-        return false;
-  }
-  catch(char *msg)
-  {
-    std::cerr << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    std::cerr << "Unknown error in save state for \'System\'" << std::endl;
-    return false;
-  }
+                // Next, save state for the CPU
+                if (!myM6502->save(out))
+                    return false;
 
-  return true;  // success
-}
+                // Now save the state of each device
+                for (uint32_t i = 0; i < myNumberOfDevices; ++i)
+                    if (!myDevices[i]->save(out))
+                        return false;
+            }
+            catch (char *msg)
+            {
+                std::cerr << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                std::cerr << "Unknown error in save state for \'System\'" << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool System::loadState(const std::string& md5sum, Deserializer& in)
-{
-  // Open the file as a new Deserializer
-  if(!in.isOpen())
-    return false;
+            return true;  // success
+        }
 
-  try
-  {
-    // Look at the beginning of the state file.  It should contain the md5sum
-    // of the current cartridge.  If it doesn't, this state file is invalid.
-    if(in.getString() != md5sum)
-      return false;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool System::loadState(const std::string& md5sum, Deserializer& in)
+        {
+            // Open the file as a new Deserializer
+            if (!in.isOpen())
+                return false;
 
-    // First load state for this system
-    if(!load(in))
-      return false;
+            try
+            {
+                // Look at the beginning of the state file.  It should contain the md5sum
+                // of the current cartridge.  If it doesn't, this state file is invalid.
+                if (in.getString() != md5sum)
+                    return false;
 
-    // Next, load state for the CPU
-    if(!myM6502->load(in))
-      return false;
+                // First load state for this system
+                if (!load(in))
+                    return false;
 
-    // Now load the state of each device
-    for(uint32_t i = 0; i < myNumberOfDevices; ++i)
-      if(!myDevices[i]->load(in))
-        return false;
-  }
-  catch(char *msg)
-  {
-    std::cerr << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    std::cerr << "Unknown error in load state for \'System\'" << std::endl;
-    return false;
-  }
+                // Next, load state for the CPU
+                if (!myM6502->load(in))
+                    return false;
 
-  return true;  // success
-}
+                // Now load the state of each device
+                for (uint32_t i = 0; i < myNumberOfDevices; ++i)
+                    if (!myDevices[i]->load(in))
+                        return false;
+            }
+            catch (char *msg)
+            {
+                std::cerr << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                std::cerr << "Unknown error in load state for \'System\'" << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-System::System(const System& s) {
-  assert(false);
-}
+            return true;  // success
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-System& System::operator = (const System&)
-{
-  assert(false);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        System::System(const System& s)
+        {
+            assert(false);
+        }
 
-  return *this;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        System& System::operator = (const System&)
+        {
+            assert(false);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::lockDataBus()
-{
-  myDataBusLocked = true;
-}
+            return *this;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void System::unlockDataBus()
-{
-  myDataBusLocked = false;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::lockDataBus()
+        {
+            myDataBusLocked = true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void System::unlockDataBus()
+        {
+            myDataBusLocked = false;
+        }
+
+    }  // namespace stella
 }  // namespace ale

@@ -29,83 +29,93 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-UpNDownSettings::UpNDownSettings() { reset(); }
+    UpNDownSettings::UpNDownSettings() { reset(); }
 
-/* create a new instance of the rom */
-RomSettings* UpNDownSettings::clone() const {
-  return new UpNDownSettings(*this);
-}
+    /* create a new instance of the rom */
+    RomSettings* UpNDownSettings::clone() const
+    {
+        return new UpNDownSettings(*this);
+    }
 
-/* process the latest information from ALE */
-void UpNDownSettings::step(const System& system) {
-  // update the reward
-  int score = getDecimalScore(0x82, 0x81, 0x80, &system);
-  int reward = score - m_score;
-  m_reward = reward;
-  m_score = score;
+    /* process the latest information from ALE */
+    void UpNDownSettings::step(const System& system)
+    {
+        // update the reward
+        int score = getDecimalScore(0x82, 0x81, 0x80, &system);
+        int reward = score - m_score;
+        m_reward = reward;
+        m_score = score;
 
-  // update terminal status
-  int lives_byte = readRam(&system, 0x86) & 0xF;
-  int death_timer = readRam(&system, 0x94);
-  m_terminal = death_timer > 0x40 && lives_byte == 0;
+        // update terminal status
+        int lives_byte = readRam(&system, 0x86) & 0xF;
+        int death_timer = readRam(&system, 0x94);
+        m_terminal = death_timer > 0x40 && lives_byte == 0;
 
-  m_lives = lives_byte + 1;
-}
+        m_lives = lives_byte + 1;
+    }
 
-/* is end of game */
-bool UpNDownSettings::isTerminal() const { return m_terminal; };
+    /* is end of game */
+    bool UpNDownSettings::isTerminal() const { return m_terminal; };
 
-/* get the most recently observed reward */
-reward_t UpNDownSettings::getReward() const { return m_reward; }
+    /* get the most recently observed reward */
+    reward_t UpNDownSettings::getReward() const { return m_reward; }
 
-/* is an action part of the minimal set? */
-bool UpNDownSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_DOWNFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
+    /* is an action part of the minimal set? */
+    bool UpNDownSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_DOWNFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-/* reset the state of the game */
-void UpNDownSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_terminal = false;
-  m_lives = 5;
-}
+    /* reset the state of the game */
+    void UpNDownSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_terminal = false;
+        m_lives = 5;
+    }
 
-/* saves the state of the rom settings */
-void UpNDownSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-  ser.putInt(m_lives);
-}
+    /* saves the state of the rom settings */
+    void UpNDownSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+        ser.putInt(m_lives);
+    }
 
-// loads the state of the rom settings
-void UpNDownSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-  m_lives = ser.getInt();
-}
+    // loads the state of the rom settings
+    void UpNDownSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+        m_lives = ser.getInt();
+    }
 
-ActionVect UpNDownSettings::getStartingActions() {
-  return {PLAYER_A_FIRE};
-}
+    ActionVect UpNDownSettings::getStartingActions()
+    {
+        return { PLAYER_A_FIRE };
+    }
 
-DifficultyVect UpNDownSettings::getAvailableDifficulties() {
-  return {0, 1, 2, 3};
-}
+    DifficultyVect UpNDownSettings::getAvailableDifficulties()
+    {
+        return { 0, 1, 2, 3 };
+    }
 
 }  // namespace ale

@@ -30,51 +30,53 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-/* RL wrapper for Road Runner */
-class RoadRunnerSettings : public RomSettings {
- public:
-  RoadRunnerSettings();
+	/* RL wrapper for Road Runner */
+	class RoadRunnerSettings : public RomSettings
+	{
+	public:
+		RoadRunnerSettings();
 
-  // reset
-  void reset() override;
+		// reset
+		void reset() override;
 
-  // is end of game
-  bool isTerminal() const override;
+		// is end of game
+		bool isTerminal() const override;
 
-  // get the most recently observed reward
-  reward_t getReward() const override;
+		// get the most recently observed reward
+		reward_t getReward() const override;
 
-  // the rom-name
-  const char* rom() const override { return "road_runner"; }
+		// the rom-name
+		const char* rom() const override { return "road_runner"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "ce5cc62608be2cd3ed8abd844efb8919"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "ce5cc62608be2cd3ed8abd844efb8919"; }
 
-  // create a new instance of the rom
-  RomSettings* clone() const override;
+		// create a new instance of the rom
+		RomSettings* clone() const override;
 
-  // is an action part of the minimal set?
-  bool isMinimal(const Action& a) const override;
+		// is an action part of the minimal set?
+		bool isMinimal(const Action& a) const override;
 
-  // process the latest information from ALE
-  void step(const stella::System& system) override;
+		// process the latest information from ALE
+		void step(const stella::System& system) override;
 
-  // saves the state of the rom settings
-  void saveState(stella::Serializer& ser) override;
+		// saves the state of the rom settings
+		void saveState(stella::Serializer& ser) override;
 
-  // loads the state of the rom settings
-  void loadState(stella::Deserializer& ser) override;
+		// loads the state of the rom settings
+		void loadState(stella::Deserializer& ser) override;
 
-  int lives() override { return isTerminal() ? 0 : m_lives; }
+		int lives() override { return isTerminal() ? 0 : m_lives; }
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  reward_t m_score;
-  int m_lives;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		reward_t m_score;
+		int m_lives;
+	};
 
 }  // namespace ale
 

@@ -23,226 +23,227 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/CartUA.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeUA::CartridgeUA(const uint8_t* image)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 8192; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CartridgeUA::~CartridgeUA()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeUA::CartridgeUA(const uint8_t* image)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 8192; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* CartridgeUA::name() const
-{
-  return "CartridgeUA";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        CartridgeUA::~CartridgeUA()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeUA::reset()
-{
-  // Upon reset we switch to bank 0
-  bank(0);
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* CartridgeUA::name() const
+        {
+            return "CartridgeUA";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeUA::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeUA::reset()
+        {
+            // Upon reset we switch to bank 0
+            bank(0);
+        }
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert((0x1000 & mask) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeUA::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  // Get the page accessing methods for the hot spots since they overlap
-  // areas within the TIA we'll need to forward requests to the TIA
-  myHotSpotPageAccess = mySystem->getPageAccess(0x0220 >> shift);
+            // Make sure the system we're being installed in has a page size that'll work
+            assert((0x1000 & mask) == 0);
 
-  // Set the page accessing methods for the hot spots
-  System::PageAccess access;
-  access.directPeekBase = 0;
-  access.directPokeBase = 0;
-  access.device = this;
-  mySystem->setPageAccess(0x0220 >> shift, access);
-  mySystem->setPageAccess(0x0240 >> shift, access);
+            // Get the page accessing methods for the hot spots since they overlap
+            // areas within the TIA we'll need to forward requests to the TIA
+            myHotSpotPageAccess = mySystem->getPageAccess(0x0220 >> shift);
 
-  // Install pages for bank 0
-  bank(0);
-}
+            // Set the page accessing methods for the hot spots
+            System::PageAccess access;
+            access.directPeekBase = 0;
+            access.directPokeBase = 0;
+            access.device = this;
+            mySystem->setPageAccess(0x0220 >> shift, access);
+            mySystem->setPageAccess(0x0240 >> shift, access);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t CartridgeUA::peek(uint16_t address)
-{
-  address = address & 0x1FFF;
+            // Install pages for bank 0
+            bank(0);
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0220:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t CartridgeUA::peek(uint16_t address)
+        {
+            address = address & 0x1FFF;
 
-    case 0x0240:
-      // Set the current bank to the upper 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0220:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    default:
-      break;
-  }
+            case 0x0240:
+                // Set the current bank to the upper 4k bank
+                bank(1);
+                break;
 
-  if(!(address & 0x1000))
-  {
-    return myHotSpotPageAccess.device->peek(address);
-  }
-  else
-  {
-    return 0;
-  }
-}
+            default:
+                break;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeUA::poke(uint16_t address, uint8_t value)
-{
-  address = address & 0x1FFF;
+            if (!(address & 0x1000))
+            {
+                return myHotSpotPageAccess.device->peek(address);
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-  // Switch banks if necessary
-  switch(address)
-  {
-    case 0x0220:
-      // Set the current bank to the lower 4k bank
-      bank(0);
-      break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeUA::poke(uint16_t address, uint8_t value)
+        {
+            address = address & 0x1FFF;
 
-    case 0x0240:
-      // Set the current bank to the upper 4k bank
-      bank(1);
-      break;
+            // Switch banks if necessary
+            switch (address)
+            {
+            case 0x0220:
+                // Set the current bank to the lower 4k bank
+                bank(0);
+                break;
 
-    default:
-      break;
-  }
+            case 0x0240:
+                // Set the current bank to the upper 4k bank
+                bank(1);
+                break;
 
-  if(!(address & 0x1000))
-  {
-    myHotSpotPageAccess.device->poke(address, value);
-  }
-}
+            default:
+                break;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeUA::save(Serializer& out)
-{
-  std::string cart = name();
+            if (!(address & 0x1000))
+            {
+                myHotSpotPageAccess.device->poke(address, value);
+            }
+        }
 
-  try
-  {
-    out.putString(cart);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeUA::save(Serializer& out)
+        {
+            std::string cart = name();
 
-    out.putInt(myCurrentBank);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                out.putString(cart);
 
-  return true;
-}
+                out.putInt(myCurrentBank);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeUA::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeUA::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-    myCurrentBank = (uint16_t)in.getInt();
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
 
-  // Remember what bank we were in
-  bank(myCurrentBank);
+                myCurrentBank = (uint16_t)in.getInt();
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-  return true;
-}
+            // Remember what bank we were in
+            bank(myCurrentBank);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void CartridgeUA::bank(uint16_t bank)
-{
-  if(bankLocked) return;
+            return true;
+        }
 
-  // Remember what bank we're in
-  myCurrentBank = bank;
-  uint16_t offset = myCurrentBank * 4096;
-  uint16_t shift = mySystem->pageShift();
-//  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void CartridgeUA::bank(uint16_t bank)
+        {
+            if (bankLocked) return;
 
-  // Setup the page access methods for the current bank
-  System::PageAccess access;
-  access.device = this;
-  access.directPokeBase = 0;
+            // Remember what bank we're in
+            myCurrentBank = bank;
+            uint16_t offset = myCurrentBank * 4096;
+            uint16_t shift = mySystem->pageShift();
+            //  uint16_t mask = mySystem->pageMask();
 
-  // Map ROM image into the system
-  for(uint32_t address = 0x1000; address < 0x2000; address += (1 << shift))
-  {
-    access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
-    mySystem->setPageAccess(address >> shift, access);
-  }
-}
+              // Setup the page access methods for the current bank
+            System::PageAccess access;
+            access.device = this;
+            access.directPokeBase = 0;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeUA::bank()
-{
-  return myCurrentBank;
-}
+            // Map ROM image into the system
+            for (uint32_t address = 0x1000; address < 0x2000; address += (1 << shift))
+            {
+                access.directPeekBase = &myImage[offset + (address & 0x0FFF)];
+                mySystem->setPageAccess(address >> shift, access);
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int CartridgeUA::bankCount()
-{
-  return 2;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeUA::bank()
+        {
+            return myCurrentBank;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool CartridgeUA::patch(uint16_t address, uint8_t value)
-{
-  myImage[(myCurrentBank << 12) + (address & 0x0fff)] = value;
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int CartridgeUA::bankCount()
+        {
+            return 2;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* CartridgeUA::getImage(int& size)
-{
-  size = 8192;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool CartridgeUA::patch(uint16_t address, uint8_t value)
+        {
+            myImage[(myCurrentBank << 12) + (address & 0x0fff)] = value;
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* CartridgeUA::getImage(int& size)
+        {
+            size = 8192;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

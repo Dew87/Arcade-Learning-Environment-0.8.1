@@ -20,10 +20,11 @@
 
 namespace fs = std::filesystem;
 
-namespace ale {
+namespace ale
+{
 
-// looks for the RL wrapper corresponding to a particular rom title
-RomSettings* buildRomRLWrapper(const fs::path& rom, const std::string md5);
+	// looks for the RL wrapper corresponding to a particular rom title
+	RomSettings* buildRomRLWrapper(const fs::path& rom, const std::string md5);
 
 }  // namespace ale
 

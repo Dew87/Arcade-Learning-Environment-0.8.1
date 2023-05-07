@@ -28,47 +28,49 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class CasinoSettings : public RomSettings {
- public:
-  CasinoSettings();
+    class CasinoSettings : public RomSettings
+    {
+    public:
+        CasinoSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "casino"; }
+        const char* rom() const override { return "casino"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "b816296311019ab69a21cb9e9e235d12"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "b816296311019ab69a21cb9e9e235d12"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t m, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+        DifficultyVect getAvailableDifficulties() override;
 
-  ActionVect getStartingActions() override;
+        ActionVect getStartingActions() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_score;
+    };
 
 }  // namespace ale
 

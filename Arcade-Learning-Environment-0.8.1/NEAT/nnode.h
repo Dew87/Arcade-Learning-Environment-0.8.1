@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,26 +22,30 @@
 #include "trait.h"
 #include "link.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
-	enum nodetype {
+	enum nodetype
+	{
 		NEURON = 0,
 		SENSOR = 1
 	};
 
-	enum nodeplace {
+	enum nodeplace
+	{
 		HIDDEN = 0,
 		INPUT = 1,
 		OUTPUT = 2,
 		BIAS = 3
 	};
 
-	enum functype {
+	enum functype
+	{
 		SIGMOID = 0
 	};
 
 	class Link;
-	
+
 	class Network;
 
 	// ----------------------------------------------------------------------- 
@@ -49,7 +53,8 @@ namespace NEAT {
 	//   - If it's a sensor, it can be loaded with a value for output
 	//   - If it's a neuron, it has a list of its incoming input signals (List<Link> is used) 
 	// Use an activation count to avoid flushing
-	class NNode {
+	class NNode
+	{
 
 		friend class Network;
 		friend class Genome;
@@ -111,18 +116,18 @@ namespace NEAT {
 
 		nodeplace gen_node_label;  // Used for genetic marking of nodes
 
-		NNode(nodetype ntype,int nodeid);
+		NNode(nodetype ntype, int nodeid);
 
-		NNode(nodetype ntype,int nodeid, nodeplace placement);
+		NNode(nodetype ntype, int nodeid, nodeplace placement);
 
 		// Construct a NNode off another NNode for genome purposes
-		NNode(NNode *n,Trait *t);
+		NNode(NNode *n, Trait *t);
 
 		// Construct the node out of a file specification using given list of traits
-		NNode (const char *argline, std::vector<Trait*> &traits);
+		NNode(const char *argline, std::vector<Trait*> &traits);
 
 		// Copy Constructor
-		NNode (const NNode& nnode);
+		NNode(const NNode& nnode);
 
 		~NNode();
 
@@ -142,10 +147,10 @@ namespace NEAT {
 		bool sensor_load(double);
 
 		// Adds a NONRECURRENT Link to a new NNode in the incoming List
-		void add_incoming(NNode*,double);
+		void add_incoming(NNode*, double);
 
 		// Adds a Link to a new NNode in the incoming List
-		void add_incoming(NNode*,double,bool);
+		void add_incoming(NNode*, double, bool);
 
 		// Recursively deactivate backwards through the network
 		void flushback();
@@ -154,8 +159,8 @@ namespace NEAT {
 		void flushback_check(std::vector<NNode*> &seenlist);
 
 		// Print the node to a file
-        void  print_to_file(std::ostream &outFile);
-	void print_to_file(std::ofstream &outFile);
+		void  print_to_file(std::ostream &outFile);
+		void print_to_file(std::ofstream &outFile);
 
 		// Have NNode gain its properties from the trait
 		void derive_trait(Trait *curtrait);
@@ -170,14 +175,14 @@ namespace NEAT {
 		bool overridden();
 
 		// Set activation to the override value and turn off override
-		void activate_override();  
+		void activate_override();
 
 		// Writes back changes weight values into the genome
 		// (Lamarckian trasnfer of characteristics)
 		void Lamarck();
 
 		//Find the greatest depth starting from this neuron at depth d
-		int depth(int d,Network *mynet); 
+		int depth(int d, Network *mynet);
 
 	};
 

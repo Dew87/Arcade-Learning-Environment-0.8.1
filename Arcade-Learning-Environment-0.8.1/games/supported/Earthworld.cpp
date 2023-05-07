@@ -27,73 +27,81 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-EarthworldSettings::EarthworldSettings() { reset(); }
+    EarthworldSettings::EarthworldSettings() { reset(); }
 
-RomSettings* EarthworldSettings::clone() const {
-  return new EarthworldSettings(*this);
-}
+    RomSettings* EarthworldSettings::clone() const
+    {
+        return new EarthworldSettings(*this);
+    }
 
-void EarthworldSettings::step(const System& system) {
-  // Address 0xa7 contains the clue number which we're using a proxy for score.
-  int score = getDecimalScore(0xa7, &system);
-  m_reward = score - m_score;
-  m_score = score;
-  // Game terminates when the player finds the 10th clue.
-  m_terminal = score == 10;
-}
+    void EarthworldSettings::step(const System& system)
+    {
+        // Address 0xa7 contains the clue number which we're using a proxy for score.
+        int score = getDecimalScore(0xa7, &system);
+        m_reward = score - m_score;
+        m_score = score;
+        // Game terminates when the player finds the 10th clue.
+        m_terminal = score == 10;
+    }
 
-bool EarthworldSettings::isTerminal() const { return m_terminal; }
+    bool EarthworldSettings::isTerminal() const { return m_terminal; }
 
-reward_t EarthworldSettings::getReward() const { return m_reward; }
+    reward_t EarthworldSettings::getReward() const { return m_reward; }
 
-bool EarthworldSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPRIGHT:
-    case PLAYER_A_UPLEFT:
-    case PLAYER_A_DOWNRIGHT:
-    case PLAYER_A_DOWNLEFT:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-    case PLAYER_A_DOWNFIRE:
-    case PLAYER_A_UPRIGHTFIRE:
-    case PLAYER_A_UPLEFTFIRE:
-    case PLAYER_A_DOWNRIGHTFIRE:
-    case PLAYER_A_DOWNLEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
+    bool EarthworldSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPRIGHT:
+        case PLAYER_A_UPLEFT:
+        case PLAYER_A_DOWNRIGHT:
+        case PLAYER_A_DOWNLEFT:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+        case PLAYER_A_DOWNFIRE:
+        case PLAYER_A_UPRIGHTFIRE:
+        case PLAYER_A_UPLEFTFIRE:
+        case PLAYER_A_DOWNRIGHTFIRE:
+        case PLAYER_A_DOWNLEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-void EarthworldSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_terminal = false;
-}
+    void EarthworldSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_terminal = false;
+    }
 
-void EarthworldSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-}
+    void EarthworldSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+    }
 
-void EarthworldSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-}
+    void EarthworldSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+    }
 
-// According to https://atariage.com/manual_html_page.php?SoftwareLabelID=541
-// the difficulty switches are not used and there is only a single game mode.
+    // According to https://atariage.com/manual_html_page.php?SoftwareLabelID=541
+    // the difficulty switches are not used and there is only a single game mode.
 
 }  // namespace ale

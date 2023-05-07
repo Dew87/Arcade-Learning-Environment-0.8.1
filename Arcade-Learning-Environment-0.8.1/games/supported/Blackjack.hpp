@@ -28,42 +28,44 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class BlackjackSettings : public RomSettings {
- public:
-  BlackjackSettings();
+	class BlackjackSettings : public RomSettings
+	{
+	public:
+		BlackjackSettings();
 
-  void reset() override;
+		void reset() override;
 
-  void modifyEnvironmentSettings(stella::Settings& settings) override;
+		void modifyEnvironmentSettings(stella::Settings& settings) override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "blackjack"; }
+		const char* rom() const override { return "blackjack"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "0a981c03204ac2b278ba392674682560"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "0a981c03204ac2b278ba392674682560"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+		DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		int m_score;
+	};
 
 }  // namespace ale
 

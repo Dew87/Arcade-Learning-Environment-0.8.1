@@ -22,67 +22,69 @@
 #include "emucore/Control.hxx"
 #include "emucore/Event.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  The standard Atari 2600 pair of paddle controllers.
-
-  @author  Bradford W. Mott
-  @version $Id: Paddles.hxx,v 1.7 2007/01/01 18:04:49 stephena Exp $
-*/
-class Paddles : public Controller
+namespace ale
 {
-  public:
-    /**
-      Create a new pair of paddle controllers plugged into the specified jack
+    namespace stella
+    {
 
-      @param jack  The jack the controller is plugged into
-      @param event The event object to use for events
-      @param swap  Whether to swap the paddles plugged into this jack
-    */
-    Paddles(Jack jack, const Event& event, bool swap);
+        /**
+          The standard Atari 2600 pair of paddle controllers.
 
-    /**
-      Destructor
-    */
-    virtual ~Paddles();
+          @author  Bradford W. Mott
+          @version $Id: Paddles.hxx,v 1.7 2007/01/01 18:04:49 stephena Exp $
+        */
+        class Paddles : public Controller
+        {
+        public:
+            /**
+              Create a new pair of paddle controllers plugged into the specified jack
 
-  public:
-    /**
-      Read the value of the specified digital pin for this controller.
+              @param jack  The jack the controller is plugged into
+              @param event The event object to use for events
+              @param swap  Whether to swap the paddles plugged into this jack
+            */
+            Paddles(Jack jack, const Event& event, bool swap);
 
-      @param pin The pin of the controller jack to read
-      @return The state of the pin
-    */
-    virtual bool read(DigitalPin pin);
+            /**
+              Destructor
+            */
+            virtual ~Paddles();
 
-    /**
-      Read the resistance at the specified analog pin for this controller.
-      The returned value is the resistance measured in ohms.
+        public:
+            /**
+              Read the value of the specified digital pin for this controller.
 
-      @param pin The pin of the controller jack to read
-      @return The resistance at the specified pin
-    */
-    virtual int read(AnalogPin pin);
+              @param pin The pin of the controller jack to read
+              @return The state of the pin
+            */
+            virtual bool read(DigitalPin pin);
 
-    /**
-      Write the given value to the specified digital pin for this
-      controller.  Writing is only allowed to the pins associated
-      with the PIA.  Therefore you cannot write to pin six.
+            /**
+              Read the resistance at the specified analog pin for this controller.
+              The returned value is the resistance measured in ohms.
 
-      @param pin The pin of the controller jack to write to
-      @param value The value to write to the pin
-    */
-    virtual void write(DigitalPin pin, bool value);
+              @param pin The pin of the controller jack to read
+              @return The resistance at the specified pin
+            */
+            virtual int read(AnalogPin pin);
 
-  private:
-    // Used to implement paddle swapping efficiently, and eliminate
-    // testing at runtime
-    Event::Type myPinEvents[4][2];
-};
+            /**
+              Write the given value to the specified digital pin for this
+              controller.  Writing is only allowed to the pins associated
+              with the PIA.  Therefore you cannot write to pin six.
 
-}  // namespace stella
+              @param pin The pin of the controller jack to write to
+              @param value The value to write to the pin
+            */
+            virtual void write(DigitalPin pin, bool value);
+
+        private:
+            // Used to implement paddle swapping efficiently, and eliminate
+            // testing at runtime
+            Event::Type myPinEvents[4][2];
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

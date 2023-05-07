@@ -26,46 +26,48 @@
 #include "emucore/MediaSrc.hxx"
 #include "common/SDL2.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class ScreenSDL : public stella::Screen {
-public:
-    ScreenSDL(stella::OSystem* osystem);
-    virtual ~ScreenSDL();
+    class ScreenSDL : public stella::Screen
+    {
+    public:
+        ScreenSDL(stella::OSystem* osystem);
+        virtual ~ScreenSDL();
 
-    // Displays the current frame buffer from the mediasource.
-    void render();
-private:
-    // Poll for SDL events.
-    void poll();
+        // Displays the current frame buffer from the mediasource.
+        void render();
+    private:
+        // Poll for SDL events.
+        void poll();
 
-    // Handle the SDL_Event.
-    void handleSDLEvent(const SDL_Event& event);
+        // Handle the SDL_Event.
+        void handleSDLEvent(const SDL_Event& event);
 
-    // Get scaling factor from screen resolution
-    int getScaleFactor();
-private:
-    // 4:3 Aspect ratio default 2600 screen
-    static const uint32_t windowHeight = 321;
-    static const uint32_t windowWidth = 428;
-    uint32_t screenWidth, screenHeight;
+        // Get scaling factor from screen resolution
+        int getScaleFactor();
+    private:
+        // 4:3 Aspect ratio default 2600 screen
+        static const uint32_t windowHeight = 321;
+        static const uint32_t windowWidth = 428;
+        uint32_t screenWidth, screenHeight;
 
-    // ALE primitives
-    stella::MediaSource* mediaSource;
-    stella::Sound* sound;
-    ColourPalette* colourPalette;
+        // ALE primitives
+        stella::MediaSource* mediaSource;
+        stella::Sound* sound;
+        ColourPalette* colourPalette;
 
-    // SDL Primitives
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    SDL_Texture* texture;
-    SDL_Surface* surface;
-    SDL_PixelFormat* pixelFormat;
+        // SDL Primitives
+        SDL_Window* window;
+        SDL_Renderer* renderer;
+        SDL_Texture* texture;
+        SDL_Surface* surface;
+        SDL_PixelFormat* pixelFormat;
 
-    // Used to calibrate delay between frames
-    uint32_t lastRender;
-    uint32_t FPS, maxFPS;
-};
+        // Used to calibrate delay between frames
+        uint32_t lastRender;
+        uint32_t FPS, maxFPS;
+    };
 
 } // namespace ale
 

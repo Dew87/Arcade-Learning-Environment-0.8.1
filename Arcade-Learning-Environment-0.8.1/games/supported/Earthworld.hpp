@@ -28,38 +28,40 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class EarthworldSettings : public RomSettings {
- public:
-  EarthworldSettings();
+	class EarthworldSettings : public RomSettings
+	{
+	public:
+		EarthworldSettings();
 
-  void reset() override;
+		void reset() override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "earthworld"; }
+		const char* rom() const override { return "earthworld"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "5aea9974b975a6a844e6df10d2b861c4"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "5aea9974b975a6a844e6df10d2b861c4"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		int m_score;
+	};
 
 }  // namespace ale
 

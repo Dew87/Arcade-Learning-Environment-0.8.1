@@ -21,44 +21,49 @@
 #include <cstddef>
 #include <cstring>
 
-namespace ale {
+namespace ale
+{
 
-using byte_t = unsigned char;
+    using byte_t = unsigned char;
 
-/** A simple wrapper around the Atari RAM. */
-class ALERAM {
-  static constexpr std::size_t kRamSize = 128;
+    /** A simple wrapper around the Atari RAM. */
+    class ALERAM
+    {
+        static constexpr std::size_t kRamSize = 128;
 
- public:
-  /** Byte accessors: x is wrapped to [0, 128). */
-  byte_t get(unsigned int x) const;
-  byte_t* byte(unsigned int x);
+    public:
+        /** Byte accessors: x is wrapped to [0, 128). */
+        byte_t get(unsigned int x) const;
+        byte_t* byte(unsigned int x);
 
-  /** Returns a pointer to the first element of the entire
-      array (equivalent to &byte[0]). */
-  const byte_t* array() const { return m_ram; }
+        /** Returns a pointer to the first element of the entire
+            array (equivalent to &byte[0]). */
+        const byte_t* array() const { return m_ram; }
 
-  std::size_t size() const { return sizeof(m_ram); }
+        std::size_t size() const { return sizeof(m_ram); }
 
-  /** Returns whether two copies of the RAM are equal */
-  bool equals(const ALERAM& rhs) const {
-    return std::memcmp(m_ram, rhs.m_ram, size()) == 0;
-  }
+        /** Returns whether two copies of the RAM are equal */
+        bool equals(const ALERAM& rhs) const
+        {
+            return std::memcmp(m_ram, rhs.m_ram, size()) == 0;
+        }
 
- protected:
-  byte_t m_ram[kRamSize];
-};
+    protected:
+        byte_t m_ram[kRamSize];
+    };
 
-// Byte accessors
-inline byte_t ALERAM::get(unsigned int x) const {
-  // Wrap RAM around the first 128 bytes
-  return m_ram[x & 0x7F];
-}
+    // Byte accessors
+    inline byte_t ALERAM::get(unsigned int x) const
+    {
+        // Wrap RAM around the first 128 bytes
+        return m_ram[x & 0x7F];
+    }
 
-inline byte_t* ALERAM::byte(unsigned int x) {
-  // Wrap RAM around the first 128 bytes
-  return &m_ram[x & 0x7F];
-}
+    inline byte_t* ALERAM::byte(unsigned int x)
+    {
+        // Wrap RAM around the first 128 bytes
+        return &m_ram[x & 0x7F];
+    }
 
 }  // namespace ale
 

@@ -20,29 +20,31 @@
 #include "emucore/OSystem.hxx"
 #include "environment/ale_screen.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class PhosphorBlend {
- public:
-  PhosphorBlend(stella::OSystem*);
+	class PhosphorBlend
+	{
+	public:
+		PhosphorBlend(stella::OSystem*);
 
-  void process(ALEScreen& screen);
+		void process(ALEScreen& screen);
 
- private:
-  void makeAveragePalette();
-  uint8_t getPhosphor(uint8_t v1, uint8_t v2);
-  uint32_t makeRGB(uint8_t r, uint8_t g, uint8_t b);
-  /** Converts a RGB value to an 8-bit format */
-  uint8_t rgbToNTSC(uint32_t rgb);
+	private:
+		void makeAveragePalette();
+		uint8_t getPhosphor(uint8_t v1, uint8_t v2);
+		uint32_t makeRGB(uint8_t r, uint8_t g, uint8_t b);
+		/** Converts a RGB value to an 8-bit format */
+		uint8_t rgbToNTSC(uint32_t rgb);
 
- private:
-  stella::OSystem* m_osystem;
+	private:
+		stella::OSystem* m_osystem;
 
-  uint8_t m_rgb_ntsc[64][64][64];
+		uint8_t m_rgb_ntsc[64][64][64];
 
-  uint32_t m_avg_palette[256][256];
-  uint8_t m_phosphor_blend_ratio;
-};
+		uint32_t m_avg_palette[256][256];
+		uint8_t m_phosphor_blend_ratio;
+	};
 
 }  // namespace ale
 

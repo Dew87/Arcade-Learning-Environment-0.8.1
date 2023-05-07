@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,11 @@
 #include "gene.h"
 #include "innovation.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
-	enum mutator {
+	enum mutator
+	{
 		GAUSSIAN = 0,
 		COLDGAUSSIAN = 1
 	};
@@ -41,7 +43,8 @@ namespace NEAT {
 	//    list of Genes provide an evolutionary history of innovation and     
 	//    link-building.
 
-	class Genome {
+	class Genome
+	{
 
 	public:
 		int genome_id;
@@ -68,7 +71,7 @@ namespace NEAT {
 
 		//Special constructor which spawns off an input file
 		//This constructor assumes that some routine has already read in GENOMESTART
-        Genome(int id, std::ifstream &iFile);
+		Genome(int id, std::ifstream &iFile);
 
 		// This special constructor creates a Genome
 		// with i inputs, o outputs, n out of nmax hidden units, and random
@@ -76,14 +79,14 @@ namespace NEAT {
 		// be included. 
 		// The last input is a bias
 		// Linkprob is the probability of a link  
-		Genome(int new_id,int i, int o, int n,int nmax, bool r, double linkprob);
+		Genome(int new_id, int i, int o, int n, int nmax, bool r, double linkprob);
 
 		//Special constructor that creates a Genome of 3 possible types:
 		//0 - Fully linked, no hidden nodes
 		//1 - Fully linked, one hidden node splitting each link
 		//2 - Fully connected with a hidden layer, recurrent 
 		//num_hidden is only used in type 2
-		Genome(int num_in,int num_out,int num_hidden,int type);
+		Genome(int num_in, int num_out, int num_hidden, int type);
 
 		// Loads a new Genome from a file (doesn't require knowledge of Genome's id)
 		static Genome *new_Genome_load(char *filename);
@@ -122,7 +125,7 @@ namespace NEAT {
 		void mutate_node_trait(int times);
 
 		// Add Gaussian noise to linkweights either GAUSSIAN or COLDGAUSSIAN (from zero)
-		void mutate_link_weights(double power,double rate,mutator mut_type);
+		void mutate_link_weights(double power, double rate, mutator mut_type);
 
 		// toggle genes on or off 
 		void mutate_toggle_enable(int times);
@@ -136,10 +139,10 @@ namespace NEAT {
 		//   Generally, if they fail, they can be called again if desired. 
 
 		// Mutate genome by adding a node respresentation 
-		bool mutate_add_node(std::vector<Innovation*> &innovs,int &curnode_id,double &curinnov);
+		bool mutate_add_node(std::vector<Innovation*> &innovs, int &curnode_id, double &curinnov);
 
 		// Mutate the genome by adding a new link between 2 random NNodes 
-		bool mutate_add_link(std::vector<Innovation*> &innovs,double &curinnov,int tries); 
+		bool mutate_add_link(std::vector<Innovation*> &innovs, double &curinnov, int tries);
 
 		void mutate_add_sensor(std::vector<Innovation*> &innovs, double &curinnov);
 
@@ -152,18 +155,18 @@ namespace NEAT {
 		//   the other, the baby will inherit the innovation 
 		//   Interspecies mating leads to all genes being inherited.
 		//   Otherwise, excess genes come from most fit parent.
-		Genome *mate_multipoint(Genome *g,int genomeid,double fitness1, double fitness2, bool interspec_flag);
+		Genome *mate_multipoint(Genome *g, int genomeid, double fitness1, double fitness2, bool interspec_flag);
 
 		//This method mates like multipoint but instead of selecting one
 		//   or the other when the innovation numbers match, it averages their
 		//   weights 
-		Genome *mate_multipoint_avg(Genome *g,int genomeid,double fitness1,double fitness2, bool interspec_flag);
+		Genome *mate_multipoint_avg(Genome *g, int genomeid, double fitness1, double fitness2, bool interspec_flag);
 
 		// This method is similar to a standard single point CROSSOVER
 		//   operator.  Traits are averaged as in the previous 2 mating
 		//   methods.  A point is chosen in the smaller Genome for crossing
 		//   with the bigger one.  
-		Genome *mate_singlepoint(Genome *g,int genomeid);
+		Genome *mate_singlepoint(Genome *g, int genomeid);
 
 
 		// ******** COMPATIBILITY CHECKING METHODS ********
@@ -178,7 +181,7 @@ namespace NEAT {
 		//   The 3 coefficients are global system parameters 
 		double compatibility(Genome *g);
 
-		double trait_compare(Trait *t1,Trait *t2);
+		double trait_compare(Trait *t1, Trait *t2);
 
 		// Return number of non-disabled genes 
 		int extrons();
@@ -192,7 +195,7 @@ namespace NEAT {
 
 		//Adds a new gene that has been created through a mutation in the
 		//*correct order* into the list of genes in the genome
-		void add_gene(std::vector<Gene*> &glist,Gene *g);
+		void add_gene(std::vector<Gene*> &glist, Gene *g);
 
 	};
 
@@ -202,9 +205,9 @@ namespace NEAT {
 	//2 - Fully connected with a hidden layer 
 	//num_hidden is only used in type 2
 	//Saves to file "auto_genome"
-	Genome *new_Genome_auto(int num_in,int num_out,int num_hidden,int type, const char *filename);
+	Genome *new_Genome_auto(int num_in, int num_out, int num_hidden, int type, const char *filename);
 
-	void print_Genome_tofile(Genome *g,const char *filename);
+	void print_Genome_tofile(Genome *g, const char *filename);
 
 } // namespace NEAT
 

@@ -30,57 +30,59 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-/* RL wrapper for Journey Escape */
-class JourneyEscapeSettings : public RomSettings {
- public:
-  JourneyEscapeSettings();
+	/* RL wrapper for Journey Escape */
+	class JourneyEscapeSettings : public RomSettings
+	{
+	public:
+		JourneyEscapeSettings();
 
-  // reset
-  void reset() override;
+		// reset
+		void reset() override;
 
-  // is end of game
-  bool isTerminal() const override;
+		// is end of game
+		bool isTerminal() const override;
 
-  // get the most recently observed reward
-  reward_t getReward() const override;
+		// get the most recently observed reward
+		reward_t getReward() const override;
 
-  // the rom-name
-  const char* rom() const override { return "journey_escape"; }
+		// the rom-name
+		const char* rom() const override { return "journey_escape"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "718ae62c70af4e5fd8e932fee216948a"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "718ae62c70af4e5fd8e932fee216948a"; }
 
-  // create a new instance of the rom
-  RomSettings* clone() const override;
+		// create a new instance of the rom
+		RomSettings* clone() const override;
 
-  // is an action part of the minimal set?
-  bool isMinimal(const Action& a) const override;
+		// is an action part of the minimal set?
+		bool isMinimal(const Action& a) const override;
 
-  // process the latest information from ALE
-  void step(const stella::System& system) override;
+		// process the latest information from ALE
+		void step(const stella::System& system) override;
 
-  // saves the state of the rom settings
-  void saveState(stella::Serializer& ser) override;
+		// saves the state of the rom settings
+		void saveState(stella::Serializer& ser) override;
 
-  // loads the state of the rom settings
-  void loadState(stella::Deserializer& ser) override;
+		// loads the state of the rom settings
+		void loadState(stella::Deserializer& ser) override;
 
-  // Journey Escape requires the fire action to start the game
-  ActionVect getStartingActions() override;
+		// Journey Escape requires the fire action to start the game
+		ActionVect getStartingActions() override;
 
-  int lives() override { return 0; }
+		int lives() override { return 0; }
 
-  // returns a list of difficulties that the game can be played in
-  // in this game, there are 2 available difficulties
-  DifficultyVect getAvailableDifficulties() override;
+		// returns a list of difficulties that the game can be played in
+		// in this game, there are 2 available difficulties
+		DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  reward_t m_score;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		reward_t m_score;
+	};
 
 }  // namespace ale
 

@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,8 @@
 #include "genome.h"
 #include "species.h"
 
-namespace NEAT {
+namespace NEAT
+{
 
 	class Species;
 	class Population;
@@ -30,7 +31,8 @@ namespace NEAT {
 	//   information 
 	//   i.e. The genotype and phenotype together
 	// ---------------------------------------------  
-	class Organism {
+	class Organism
+	{
 
 	public:
 		double fitness;  //A measure of fitness for the Organism
@@ -62,7 +64,7 @@ namespace NEAT {
 		void update_phenotype();
 
 		// Print the Organism's genome to a file preceded by a comment detailing the organism's species, number, and fitness 
-		bool print_to_file(char *filename);   
+		bool print_to_file(char *filename);
 		bool write_to_file(std::ostream &outFile);
 
 		Organism(double fit, Genome *g, int gen, const char* md = 0);

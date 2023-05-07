@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,35 +17,39 @@
 
 using namespace NEAT;
 
-Organism::Organism(double fit, Genome *g,int gen, const char* md) {
-	fitness=fit;
-	orig_fitness=fitness;
-	gnome=g;
-	net=gnome->genesis(gnome->genome_id);
-	species=0;  //Start it in no Species
-	expected_offspring=0;
-	generation=gen;
-	eliminate=false;
-	error=0;
-	winner=false;
-	champion=false;
-	super_champ_offspring=0;
+Organism::Organism(double fit, Genome *g, int gen, const char* md)
+{
+	fitness = fit;
+	orig_fitness = fitness;
+	gnome = g;
+	net = gnome->genesis(gnome->genome_id);
+	species = 0;  //Start it in no Species
+	expected_offspring = 0;
+	generation = gen;
+	eliminate = false;
+	error = 0;
+	winner = false;
+	champion = false;
+	super_champ_offspring = 0;
 
 	// If md is null, then we don't have metadata, otherwise we do have metadata so copy it over
-	if(md == 0) {
+	if (md == 0)
+	{
 		strcpy(metadata, "");
-	} else {
+	}
+	else
+	{
 		strncpy(metadata, md, 128);
 	}
 
-	time_alive=0;
+	time_alive = 0;
 
 	//DEBUG vars
-	pop_champ=false;
-	pop_champ_child=false;
-	high_fit=0;
-	mut_struct_baby=0;
-	mate_baby=0;
+	pop_champ = false;
+	pop_champ_child = false;
+	high_fit = 0;
+	mut_struct_baby = 0;
+	mate_baby = 0;
 
 	modified = true;
 }
@@ -79,35 +83,42 @@ Organism::Organism(const Organism& org)
 	modified = false;
 }
 
-Organism::~Organism() {
+Organism::~Organism()
+{
 	delete net;
 	delete gnome;
 }
 
-void Organism::update_phenotype() {
+void Organism::update_phenotype()
+{
 
 	//First, delete the old phenotype (net)
 	delete net;
 
 	//Now, recreate the phenotype off the new genotype
-	net=gnome->genesis(gnome->genome_id);
+	net = gnome->genesis(gnome->genome_id);
 
 	modified = true;
 }
 
-bool Organism::print_to_file(char *filename) {
-	
+bool Organism::print_to_file(char *filename)
+{
+
 	std::ofstream oFile(filename);
 
 	return write_to_file(oFile);
 }
 
-bool Organism::write_to_file(std::ostream &outFile) {
-	
+bool Organism::write_to_file(std::ostream &outFile)
+{
+
 	char tempbuf2[1024];
-	if(modified == true) {
+	if (modified == true)
+	{
 		sprintf(tempbuf2, "/* Organism #%d Fitness: %f Time: %d */\n", (gnome)->genome_id, fitness, time_alive);
-	} else {
+	}
+	else
+	{
 		sprintf(tempbuf2, "/* %s */\n", metadata);
 	}
 	outFile << tempbuf2;
@@ -137,10 +148,12 @@ bool Organism::write_to_file(std::ostream &outFile) {
 //return 1;
 //}
 
-bool NEAT::order_orgs(Organism *x, Organism *y) {
+bool NEAT::order_orgs(Organism *x, Organism *y)
+{
 	return (x)->fitness > (y)->fitness;
 }
 
-bool NEAT::order_orgs_by_adjusted_fit(Organism *x, Organism *y) {
-	return (x)->fitness / (x->species)->organisms.size()  > (y)->fitness / (y->species)->organisms.size();
+bool NEAT::order_orgs_by_adjusted_fit(Organism *x, Organism *y)
+{
+	return (x)->fitness / (x->species)->organisms.size() > (y)->fitness / (y->species)->organisms.size();
 }

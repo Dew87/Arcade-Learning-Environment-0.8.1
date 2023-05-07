@@ -20,75 +20,79 @@
 #define RANDOM_HXX
 
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class Serializer;
-class Deserializer;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include <cstdint>
 
-namespace ale {
-namespace stella {
-
-/**
-  This Random class uses a Mersenne Twister to provide pseudorandom numbers.
-  The class itself is derived from the original 'Random' class by Bradford W. Mott.
-*/
-class Random
+namespace ale
 {
-  public:
+    namespace stella
+    {
 
-    /**
-      Class method which allows you to set the seed that'll be used
-      for created new instances of this class
+        /**
+          This Random class uses a Mersenne Twister to provide pseudorandom numbers.
+          The class itself is derived from the original 'Random' class by Bradford W. Mott.
+        */
+        class Random
+        {
+        public:
 
-      @param value The value to seed the random number generator with
-    */
-    void seed(uint32_t value);
+            /**
+              Class method which allows you to set the seed that'll be used
+              for created new instances of this class
 
-    /**
-      Create a new random number generator
-    */
-    Random();
+              @param value The value to seed the random number generator with
+            */
+            void seed(uint32_t value);
 
-    ~Random();
+            /**
+              Create a new random number generator
+            */
+            Random();
 
-    /**
-      Answer the next random number from the random number generator
+            ~Random();
 
-      @return A random number
-    */
-    uint32_t next();
+            /**
+              Answer the next random number from the random number generator
 
-    /**
-      Answer the next random number between 0 and 1 from the random number generator
+              @return A random number
+            */
+            uint32_t next();
 
-      @return A random number between 0 and 1
-    */
-    double nextDouble();
+            /**
+              Answer the next random number between 0 and 1 from the random number generator
 
-    /**
-      Serializes the RNG state.
-    */
-    bool saveState(Serializer& out);
+              @return A random number between 0 and 1
+            */
+            double nextDouble();
 
-    /**
-      Deserializes the RNG state.
-    */
-    bool loadState(Deserializer& in);
+            /**
+              Serializes the RNG state.
+            */
+            bool saveState(Serializer& out);
 
-    private:
+            /**
+              Deserializes the RNG state.
+            */
+            bool loadState(Deserializer& in);
 
-    // Actual rng (implementation hidden away from the header to avoid depending on rng libraries).
-    class Impl;
-    Impl *m_pimpl;
-};
+        private:
 
-}  // namespace stella
+            // Actual rng (implementation hidden away from the header to avoid depending on rng libraries).
+            class Impl;
+            Impl *m_pimpl;
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

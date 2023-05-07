@@ -28,43 +28,45 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class SpaceWarSettings : public RomSettings {
- public:
-  SpaceWarSettings();
+    class SpaceWarSettings : public RomSettings
+    {
+    public:
+        SpaceWarSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "space_war"; }
+        const char* rom() const override { return "space_war"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "b702641d698c60bcdc922dbd8c9dd49c"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "b702641d698c60bcdc922dbd8c9dd49c"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t m, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_score;
+    };
 
 }  // namespace ale
 

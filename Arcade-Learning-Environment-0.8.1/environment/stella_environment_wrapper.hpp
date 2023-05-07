@@ -20,23 +20,25 @@
 #include "common/Constants.h"
 #include "emucore/Random.hxx"
 
-namespace ale {
+namespace ale
+{
 
-class StellaEnvironment;
+	class StellaEnvironment;
 
-class StellaEnvironmentWrapper {
-  // A wrapper for actions within the StellaEnvironment.
-  // Allows us to call environment methods without requiring to #include
-  // stella_environment.hpp.
- public:
-  StellaEnvironmentWrapper(StellaEnvironment& environment);
-  reward_t act(Action player_a_action, Action player_b_action);
-  void softReset();
-  void pressSelect(size_t num_steps = 1);
-  stella::Random& getEnvironmentRNG();
+	class StellaEnvironmentWrapper
+	{
+		// A wrapper for actions within the StellaEnvironment.
+		// Allows us to call environment methods without requiring to #include
+		// stella_environment.hpp.
+	public:
+		StellaEnvironmentWrapper(StellaEnvironment& environment);
+		reward_t act(Action player_a_action, Action player_b_action);
+		void softReset();
+		void pressSelect(size_t num_steps = 1);
+		stella::Random& getEnvironmentRNG();
 
-  StellaEnvironment& m_environment;
-};
+		StellaEnvironment& m_environment;
+	};
 
 }  // namespace ale
 

@@ -23,148 +23,148 @@
 #include "emucore/Deserializer.hxx"
 #include "emucore/Cart4K.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge4K::Cartridge4K(const uint8_t* image)
+namespace ale
 {
-  // Copy the ROM image into my buffer
-  for(uint32_t addr = 0; addr < 4096; ++addr)
-  {
-    myImage[addr] = image[addr];
-  }
-}
+    namespace stella
+    {
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Cartridge4K::~Cartridge4K()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Cartridge4K::Cartridge4K(const uint8_t* image)
+        {
+            // Copy the ROM image into my buffer
+            for (uint32_t addr = 0; addr < 4096; ++addr)
+            {
+                myImage[addr] = image[addr];
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* Cartridge4K::name() const
-{
-  return "Cartridge4K";
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Cartridge4K::~Cartridge4K()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4K::reset()
-{
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        const char* Cartridge4K::name() const
+        {
+            return "Cartridge4K";
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4K::install(System& system)
-{
-  mySystem = &system;
-  uint16_t shift = mySystem->pageShift();
-  uint16_t mask = mySystem->pageMask();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Cartridge4K::reset()
+        {}
 
-  // Make sure the system we're being installed in has a page size that'll work
-  assert((0x1000 & mask) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Cartridge4K::install(System& system)
+        {
+            mySystem = &system;
+            uint16_t shift = mySystem->pageShift();
+            uint16_t mask = mySystem->pageMask();
 
-  System::PageAccess access;
-  access.directPokeBase = 0;
-  access.device = this;
+            // Make sure the system we're being installed in has a page size that'll work
+            assert((0x1000 & mask) == 0);
 
-  // Map ROM image into the system
-  for(uint32_t address = 0x1000; address < 0x2000; address += (1 << shift))
-  {
-    access.directPeekBase = &myImage[address & 0x0FFF];
-    mySystem->setPageAccess(address >> mySystem->pageShift(), access);
-  }
-}
+            System::PageAccess access;
+            access.directPokeBase = 0;
+            access.device = this;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t Cartridge4K::peek(uint16_t address)
-{
-  return myImage[address & 0x0FFF];
-}
+            // Map ROM image into the system
+            for (uint32_t address = 0x1000; address < 0x2000; address += (1 << shift))
+            {
+                access.directPeekBase = &myImage[address & 0x0FFF];
+                mySystem->setPageAccess(address >> mySystem->pageShift(), access);
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4K::poke(uint16_t, uint8_t)
-{
-  // This is ROM so poking has no effect :-)
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t Cartridge4K::peek(uint16_t address)
+        {
+            return myImage[address & 0x0FFF];
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4K::save(Serializer& out)
-{
-  std::string cart = name();
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Cartridge4K::poke(uint16_t, uint8_t)
+        {
+            // This is ROM so poking has no effect :-)
+        }
 
-  try
-  {
-    out.putString(cart);
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool Cartridge4K::save(Serializer& out)
+        {
+            std::string cart = name();
 
-  return true;
-}
+            try
+            {
+                out.putString(cart);
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in save state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4K::load(Deserializer& in)
-{
-  std::string cart = name();
+            return true;
+        }
 
-  try
-  {
-    if(in.getString() != cart)
-      return false;
-  }
-  catch(const char* msg)
-  {
-    ale::Logger::Error << msg << std::endl;
-    return false;
-  }
-  catch(...)
-  {
-    ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
-    return false;
-  }
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool Cartridge4K::load(Deserializer& in)
+        {
+            std::string cart = name();
 
-  return true;
-}
+            try
+            {
+                if (in.getString() != cart)
+                    return false;
+            }
+            catch (const char* msg)
+            {
+                ale::Logger::Error << msg << std::endl;
+                return false;
+            }
+            catch (...)
+            {
+                ale::Logger::Error << "Unknown error in load state for " << cart << std::endl;
+                return false;
+            }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Cartridge4K::bank(uint16_t bank)
-{
-  // Doesn't support bankswitching
-}
+            return true;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge4K::bank()
-{
-  // Doesn't support bankswitching
-  return 0;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Cartridge4K::bank(uint16_t bank)
+        {
+            // Doesn't support bankswitching
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Cartridge4K::bankCount()
-{
-  return 1;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int Cartridge4K::bank()
+        {
+            // Doesn't support bankswitching
+            return 0;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Cartridge4K::patch(uint16_t address, uint8_t value)
-{
-  myImage[address & 0x0FFF] = value;
-  return true;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int Cartridge4K::bankCount()
+        {
+            return 1;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t* Cartridge4K::getImage(int& size)
-{
-  size = 4096;
-  return &myImage[0];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool Cartridge4K::patch(uint16_t address, uint8_t value)
+        {
+            myImage[address & 0x0FFF] = value;
+            return true;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        uint8_t* Cartridge4K::getImage(int& size)
+        {
+            size = 4096;
+            return &myImage[0];
+        }
+
+    }  // namespace stella
 }  // namespace ale

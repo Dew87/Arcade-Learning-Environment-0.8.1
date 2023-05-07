@@ -29,60 +29,62 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-/* RL wrapper for Adventure settings */
-class AdventureSettings : public RomSettings {
- public:
-  AdventureSettings();
+    /* RL wrapper for Adventure settings */
+    class AdventureSettings : public RomSettings
+    {
+    public:
+        AdventureSettings();
 
-  // reset
-  void reset() override;
+        // reset
+        void reset() override;
 
-  // is end of game
-  bool isTerminal() const override;
+        // is end of game
+        bool isTerminal() const override;
 
-  // get the most recently observed reward
-  reward_t getReward() const override;
+        // get the most recently observed reward
+        reward_t getReward() const override;
 
-  // the rom-name
-  const char* rom() const override { return "adventure"; }
+        // the rom-name
+        const char* rom() const override { return "adventure"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "4b27f5397c442d25f0c418ccdacf1926"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "4b27f5397c442d25f0c418ccdacf1926"; }
 
-  // create a new instance of the rom
-  RomSettings* clone() const override;
+        // create a new instance of the rom
+        RomSettings* clone() const override;
 
-  // is an action part of the minimal set?
-  bool isMinimal(const Action& a) const override;
+        // is an action part of the minimal set?
+        bool isMinimal(const Action& a) const override;
 
-  // process the latest information from ALE
-  void step(const stella::System& system) override;
+        // process the latest information from ALE
+        void step(const stella::System& system) override;
 
-  // saves the state of the rom settings
-  void saveState(stella::Serializer& ser) override;
+        // saves the state of the rom settings
+        void saveState(stella::Serializer& ser) override;
 
-  // loads the state of the rom settings
-  void loadState(stella::Deserializer& ser) override;
+        // loads the state of the rom settings
+        void loadState(stella::Deserializer& ser) override;
 
-  int lives() override { return 1; }
+        int lives() override { return 1; }
 
-  // Return the supported game modes.
-  ModeVect getAvailableModes() override;
+        // Return the supported game modes.
+        ModeVect getAvailableModes() override;
 
-  // Set the game mode.
-  // The given mode must be one returned by the previous function.
-  void setMode(game_mode_t, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        // Set the game mode.
+        // The given mode must be one returned by the previous function.
+        void setMode(game_mode_t, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  // Return the supported difficulty settings for the game.
-  DifficultyVect getAvailableDifficulties() override;
+        // Return the supported difficulty settings for the game.
+        DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+    };
 
 }  // namespace ale
 

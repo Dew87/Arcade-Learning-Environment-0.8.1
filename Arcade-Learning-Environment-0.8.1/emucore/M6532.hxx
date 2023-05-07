@@ -19,141 +19,145 @@
 #ifndef M6532_HXX
 #define M6532_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class Console;
-class System;
-class Serializer;
-class Deserializer;
+        class Console;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Device.hxx"
 #include "emucore/Random.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  RIOT
-
-  @author  Bradford W. Mott
-  @version $Id: M6532.hxx,v 1.5 2007/01/01 18:04:48 stephena Exp $
-*/
-class M6532 : public Device
+namespace ale
 {
-  public:
-    /**
-      Create a new 6532 for the specified console
+    namespace stella
+    {
 
-      @param console The console the 6532 is associated with
-    */
-    M6532(const Console& console);
+        /**
+          RIOT
 
-    /**
-      Destructor
-    */
-    virtual ~M6532();
+          @author  Bradford W. Mott
+          @version $Id: M6532.hxx,v 1.5 2007/01/01 18:04:48 stephena Exp $
+        */
+        class M6532 : public Device
+        {
+        public:
+            /**
+              Create a new 6532 for the specified console
 
-   public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+              @param console The console the 6532 is associated with
+            */
+            M6532(const Console& console);
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+            /**
+              Destructor
+            */
+            virtual ~M6532();
 
-    /**
-      Reset cartridge to its power-on state
-    */
-    virtual void reset();
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Notification method invoked by the system right before the
-      system resets its cycle counter to zero.  It may be necessary
-      to override this method for devices that remember cycle counts.
-    */
-    virtual void systemCyclesReset();
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-    /**
-      Install 6532 in the specified system.  Invoked by the system
-      when the 6532 is attached to it.
+            /**
+              Reset cartridge to its power-on state
+            */
+            virtual void reset();
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+            /**
+              Notification method invoked by the system right before the
+              system resets its cycle counter to zero.  It may be necessary
+              to override this method for devices that remember cycle counts.
+            */
+            virtual void systemCyclesReset();
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Install 6532 in the specified system.  Invoked by the system
+              when the 6532 is attached to it.
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-   public:
-    /**
-      Get the byte at the specified address
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Change the byte at the specified address to the given value
+        public:
+            /**
+              Get the byte at the specified address
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
 
-  private:
-    // Reference to the console
-    const Console& myConsole;
+            /**
+              Change the byte at the specified address to the given value
 
-    // An amazing 128 bytes of RAM
-    uint8_t myRAM[128];
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
 
-    // Current value of my Timer
-    uint32_t myTimer;
+        private:
+            // Reference to the console
+            const Console& myConsole;
 
-    // Log base 2 of the number of cycles in a timer interval
-    uint32_t myIntervalShift;
+            // An amazing 128 bytes of RAM
+            uint8_t myRAM[128];
 
-    // Indicates the number of cycles when the timer was last set
-    int myCyclesWhenTimerSet;
+            // Current value of my Timer
+            uint32_t myTimer;
 
-    // Indicates when the timer was read after timer interrupt occured
-    int myCyclesWhenInterruptReset;
+            // Log base 2 of the number of cycles in a timer interval
+            uint32_t myIntervalShift;
 
-    // Indicates if a read from timer has taken place after interrupt occured
-    bool myTimerReadAfterInterrupt;
+            // Indicates the number of cycles when the timer was last set
+            int myCyclesWhenTimerSet;
 
-    // Data Direction Register for Port A
-    uint8_t myDDRA;
+            // Indicates when the timer was read after timer interrupt occured
+            int myCyclesWhenInterruptReset;
 
-    // Data Direction Register for Port B
-    uint8_t myDDRB;
+            // Indicates if a read from timer has taken place after interrupt occured
+            bool myTimerReadAfterInterrupt;
 
-  private:
-    // Copy constructor isn't supported by this class so make it private
-    M6532(const M6532&);
+            // Data Direction Register for Port A
+            uint8_t myDDRA;
 
-    // Assignment operator isn't supported by this class so make it private
-    M6532& operator = (const M6532&);
-};
+            // Data Direction Register for Port B
+            uint8_t myDDRB;
 
-}  // namespace stella
+        private:
+            // Copy constructor isn't supported by this class so make it private
+            M6532(const M6532&);
+
+            // Assignment operator isn't supported by this class so make it private
+            M6532& operator = (const M6532&);
+        };
+
+    }  // namespace stella
 }  // namespace ale
 
 #endif

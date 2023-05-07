@@ -28,48 +28,50 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class EtSettings : public RomSettings {
- public:
-  EtSettings();
+    class EtSettings : public RomSettings
+    {
+    public:
+        EtSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "et"; }
+        const char* rom() const override { return "et"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "615a3bf251a38eb6638cdc7ffbde5480"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "615a3bf251a38eb6638cdc7ffbde5480"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  int lives() override { return isTerminal() ? 0 : m_lives; }
+        int lives() override { return isTerminal() ? 0 : m_lives; }
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t m, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+        DifficultyVect getAvailableDifficulties() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-  char m_lives;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_score;
+        char m_lives;
+    };
 
 }  // namespace ale
 

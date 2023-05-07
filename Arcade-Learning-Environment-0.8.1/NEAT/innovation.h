@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,11 @@
 #ifndef _INNOVATION_H_
 #define _INNOVATION_H_
 
-namespace NEAT {
+namespace NEAT
+{
 
-	enum innovtype {
+	enum innovtype
+	{
 		NEWNODE = 0,
 		NEWLINK = 1
 	};
@@ -29,15 +31,17 @@ namespace NEAT {
 	//   compared with other innovations in the same epoch, and if they
 	//   are the same innovation, they can both be assigned the same
 	//   innovation number.
-    //
+	//
 	//  This class can encode innovations that represent a new link
 	//  forming, or a new node being added.  In each case, two 
 	//  nodes fully specify the innovation and where it must have
 	//  occured.  (Between them)                                     
 	// ------------------------------------------------------------ 
-	class Innovation {
+	class Innovation
+	{
 	private:
-		enum innovtype {
+		enum innovtype
+		{
 			NEWNODE = 0,
 			NEWLINK = 1
 		};
@@ -65,13 +69,13 @@ namespace NEAT {
 		bool recur_flag;
 
 		//Constructor for the new node case
-		Innovation(int nin,int nout,double num1,double num2,int newid,double oldinnov);
+		Innovation(int nin, int nout, double num1, double num2, int newid, double oldinnov);
 
 		//Constructor for new link case
-		Innovation(int nin,int nout,double num1,double w,int t);
+		Innovation(int nin, int nout, double num1, double w, int t);
 
 		//Constructor for a recur link
-		Innovation(int nin,int nout,double num1,double w,int t,bool recur);
+		Innovation(int nin, int nout, double num1, double w, int t, bool recur);
 
 	};
 

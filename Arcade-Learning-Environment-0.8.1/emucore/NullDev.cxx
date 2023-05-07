@@ -22,60 +22,59 @@
 
 #include <iostream>
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-NullDevice::NullDevice()
+namespace ale
 {
-}
+	namespace stella
+	{
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-NullDevice::~NullDevice()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		NullDevice::NullDevice()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-const char* NullDevice::name() const
-{
-  return "NULL";
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		NullDevice::~NullDevice()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void NullDevice::reset()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		const char* NullDevice::name() const
+		{
+			return "NULL";
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void NullDevice::install(System& system)
-{
-  mySystem = &system;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void NullDevice::reset()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-uint8_t NullDevice::peek(uint16_t address)
-{
-  std::cerr << std::hex << "NullDevice: peek(" << address << ")" << std::endl;
-  return 0;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void NullDevice::install(System& system)
+		{
+			mySystem = &system;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void NullDevice::poke(uint16_t address, uint8_t value)
-{
-  std::cerr << std::hex << "NullDevice: poke(" << address << "," << value << ")" << std::endl;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		uint8_t NullDevice::peek(uint16_t address)
+		{
+			std::cerr << std::hex << "NullDevice: peek(" << address << ")" << std::endl;
+			return 0;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool NullDevice::save(Serializer& out)
-{
-  return true;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		void NullDevice::poke(uint16_t address, uint8_t value)
+		{
+			std::cerr << std::hex << "NullDevice: poke(" << address << "," << value << ")" << std::endl;
+		}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool NullDevice::load(Deserializer& in)
-{
-  return true;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool NullDevice::save(Serializer& out)
+		{
+			return true;
+		}
 
-}  // namespace stella
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		bool NullDevice::load(Deserializer& in)
+		{
+			return true;
+		}
+
+	}  // namespace stella
 }  // namespace ale

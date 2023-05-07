@@ -19,31 +19,30 @@
 #include <cassert>
 #include "emucore/MediaSrc.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MediaSource::MediaSource()
+namespace ale
 {
-}
+	namespace stella
+	{
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MediaSource::~MediaSource()
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		MediaSource::MediaSource()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MediaSource::MediaSource(const MediaSource&)
-{
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		MediaSource::~MediaSource()
+		{}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MediaSource& MediaSource::operator = (const MediaSource&)
-{
-  assert(false);
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		MediaSource::MediaSource(const MediaSource&)
+		{}
 
-  return *this;
-}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		MediaSource& MediaSource::operator = (const MediaSource&)
+		{
+			assert(false);
 
-}  // namespace stella
+			return *this;
+		}
+
+	}  // namespace stella
 }  // namespace ale

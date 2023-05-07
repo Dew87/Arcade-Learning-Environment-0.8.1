@@ -19,99 +19,100 @@
 #include "emucore/Event.hxx"
 #include "emucore/Paddles.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Paddles::Paddles(Jack jack, const Event& event, bool swap)
-  : Controller(jack, event, Controller::Paddles)
+namespace ale
 {
-  // Swap the paddle events, from paddle 0 <=> 1 and paddle 2 <=> 3
-  if(!swap)
-  {
-    // Pin Three
-    myPinEvents[0][0] = Event::PaddleOneFire;
-    myPinEvents[0][1] = Event::PaddleThreeFire;
+    namespace stella
+    {
 
-    // Pin Four
-    myPinEvents[1][0] = Event::PaddleZeroFire;
-    myPinEvents[1][1] = Event::PaddleTwoFire;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Paddles::Paddles(Jack jack, const Event& event, bool swap)
+            : Controller(jack, event, Controller::Paddles)
+        {
+            // Swap the paddle events, from paddle 0 <=> 1 and paddle 2 <=> 3
+            if (!swap)
+            {
+                // Pin Three
+                myPinEvents[0][0] = Event::PaddleOneFire;
+                myPinEvents[0][1] = Event::PaddleThreeFire;
 
-    // Pin Five
-    myPinEvents[2][0] = Event::PaddleOneResistance;
-    myPinEvents[2][1] = Event::PaddleThreeResistance;
+                // Pin Four
+                myPinEvents[1][0] = Event::PaddleZeroFire;
+                myPinEvents[1][1] = Event::PaddleTwoFire;
 
-    // Pin Nine
-    myPinEvents[3][0] = Event::PaddleZeroResistance;
-    myPinEvents[3][1] = Event::PaddleTwoResistance;
-  }
-  else
-  {
-    // Pin Three (swapped)
-    myPinEvents[0][0] = Event::PaddleZeroFire;
-    myPinEvents[0][1] = Event::PaddleTwoFire;
+                // Pin Five
+                myPinEvents[2][0] = Event::PaddleOneResistance;
+                myPinEvents[2][1] = Event::PaddleThreeResistance;
 
-    // Pin Four (swapped)
-    myPinEvents[1][0] = Event::PaddleOneFire;
-    myPinEvents[1][1] = Event::PaddleThreeFire;
+                // Pin Nine
+                myPinEvents[3][0] = Event::PaddleZeroResistance;
+                myPinEvents[3][1] = Event::PaddleTwoResistance;
+            }
+            else
+            {
+                // Pin Three (swapped)
+                myPinEvents[0][0] = Event::PaddleZeroFire;
+                myPinEvents[0][1] = Event::PaddleTwoFire;
 
-    // Pin Five (swapped)
-    myPinEvents[2][0] = Event::PaddleZeroResistance;
-    myPinEvents[2][1] = Event::PaddleTwoResistance;
+                // Pin Four (swapped)
+                myPinEvents[1][0] = Event::PaddleOneFire;
+                myPinEvents[1][1] = Event::PaddleThreeFire;
 
-    // Pin Nine (swapped)
-    myPinEvents[3][0] = Event::PaddleOneResistance;
-    myPinEvents[3][1] = Event::PaddleThreeResistance;
-  }
-}
+                // Pin Five (swapped)
+                myPinEvents[2][0] = Event::PaddleZeroResistance;
+                myPinEvents[2][1] = Event::PaddleTwoResistance;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Paddles::~Paddles()
-{
-}
+                // Pin Nine (swapped)
+                myPinEvents[3][0] = Event::PaddleOneResistance;
+                myPinEvents[3][1] = Event::PaddleThreeResistance;
+            }
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Paddles::read(DigitalPin pin)
-{
-  switch(pin)
-  {
-    case Three:
-      return (myJack == Left) ? (myEvent.get(myPinEvents[0][0]) == 0) :
-          (myEvent.get(myPinEvents[0][1]) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Paddles::~Paddles()
+        {}
 
-    case Four:
-      return (myJack == Left) ? (myEvent.get(myPinEvents[1][0]) == 0) :
-          (myEvent.get(myPinEvents[1][1]) == 0);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool Paddles::read(DigitalPin pin)
+        {
+            switch (pin)
+            {
+            case Three:
+                return (myJack == Left) ? (myEvent.get(myPinEvents[0][0]) == 0) :
+                    (myEvent.get(myPinEvents[0][1]) == 0);
 
-    default:
-      // Other pins are not connected (floating high)
-      return true;
-  }
-}
+            case Four:
+                return (myJack == Left) ? (myEvent.get(myPinEvents[1][0]) == 0) :
+                    (myEvent.get(myPinEvents[1][1]) == 0);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Paddles::read(AnalogPin pin)
-{
-  switch(pin)
-  {
-    case Five:
-      return (myJack == Left) ? myEvent.get(myPinEvents[2][0]) :
-          myEvent.get(myPinEvents[2][1]);
+            default:
+                // Other pins are not connected (floating high)
+                return true;
+            }
+        }
 
-    case Nine:
-      return (myJack == Left) ? myEvent.get(myPinEvents[3][0]) :
-          myEvent.get(myPinEvents[3][1]);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int Paddles::read(AnalogPin pin)
+        {
+            switch (pin)
+            {
+            case Five:
+                return (myJack == Left) ? myEvent.get(myPinEvents[2][0]) :
+                    myEvent.get(myPinEvents[2][1]);
 
-    default:
-      return maximumResistance;
-  }
-}
+            case Nine:
+                return (myJack == Left) ? myEvent.get(myPinEvents[3][0]) :
+                    myEvent.get(myPinEvents[3][1]);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Paddles::write(DigitalPin, bool)
-{
-  // Writing doesn't do anything to the paddles...
-}
+            default:
+                return maximumResistance;
+            }
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Paddles::write(DigitalPin, bool)
+        {
+            // Writing doesn't do anything to the paddles...
+        }
+
+    }  // namespace stella
 }  // namespace ale

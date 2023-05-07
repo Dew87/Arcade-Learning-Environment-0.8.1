@@ -19,70 +19,73 @@
 #include "emucore/Deserializer.hxx"
 #include <sstream>
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Deserializer::Deserializer(const std::string stream_str):
-myStream(stream_str) {
-
-}
-
-
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Deserializer::close(void)
+namespace ale
 {
-  myStream.clear();
-}
+    namespace stella
+    {
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Deserializer::Deserializer(const std::string stream_str) :
+            myStream(stream_str)
+        {
+
+        }
 
 
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Deserializer::getInt(void)
-{
-  if(myStream.eof())
-    throw "Deserializer: end of file";
 
-  int val = 0;
-  unsigned char buf[4];
-  myStream.read((char*)buf, 4);
-  for(int i = 0; i < 4; ++i)
-    val += (int)(buf[i]) << (i<<3);
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Deserializer::close(void)
+        {
+            myStream.clear();
+        }
 
-  return val;
-}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-std::string Deserializer::getString(void)
-{
-  int len = getInt();
-  std::string str;
-  str.resize((std::string::size_type)len);
-  myStream.read(&str[0], (std::streamsize)len);
 
-  if(myStream.bad())
-    throw "Deserializer: file read failed";
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int Deserializer::getInt(void)
+        {
+            if (myStream.eof())
+                throw "Deserializer: end of file";
 
-  return str;
-}
+            int val = 0;
+            unsigned char buf[4];
+            myStream.read((char*)buf, 4);
+            for (int i = 0; i < 4; ++i)
+                val += (int)(buf[i]) << (i << 3);
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bool Deserializer::getBool(void)
-{
-  bool result = false;
+            return val;
+        }
 
-  int b = getInt();
-  if(b == (int)TruePattern)
-    result = true;
-  else if(b == (int)FalsePattern)
-    result = false;
-  else
-    throw "Deserializer: data corruption";
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        std::string Deserializer::getString(void)
+        {
+            int len = getInt();
+            std::string str;
+            str.resize((std::string::size_type)len);
+            myStream.read(&str[0], (std::streamsize)len);
 
-  return result;
-}
+            if (myStream.bad())
+                throw "Deserializer: file read failed";
 
-}  // namespace stella
+            return str;
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        bool Deserializer::getBool(void)
+        {
+            bool result = false;
+
+            int b = getInt();
+            if (b == (int)TruePattern)
+                result = true;
+            else if (b == (int)FalsePattern)
+                result = false;
+            else
+                throw "Deserializer: data corruption";
+
+            return result;
+        }
+
+    }  // namespace stella
 }  // namespace ale

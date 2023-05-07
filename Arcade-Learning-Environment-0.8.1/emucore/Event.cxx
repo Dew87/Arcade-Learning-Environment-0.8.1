@@ -18,51 +18,52 @@
 
 #include "emucore/Event.hxx"
 
-namespace ale {
-namespace stella {
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Event::Event()
-  : myNumberOfTypes(Event::LastType)
+namespace ale
 {
-  // Set all of the events to 0 / false to start with,
-  // including analog paddle events.  Doing it this way
-  // is a bit of a hack ...
-  clear();
+    namespace stella
+    {
 
-  myValues[PaddleZeroResistance]  =
-  myValues[PaddleOneResistance]   =
-  myValues[PaddleTwoResistance]   =
-  myValues[PaddleThreeResistance] = 0;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Event::Event()
+            : myNumberOfTypes(Event::LastType)
+        {
+            // Set all of the events to 0 / false to start with,
+            // including analog paddle events.  Doing it this way
+            // is a bit of a hack ...
+            clear();
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Event::~Event()
-{
-}
+            myValues[PaddleZeroResistance] =
+                myValues[PaddleOneResistance] =
+                myValues[PaddleTwoResistance] =
+                myValues[PaddleThreeResistance] = 0;
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int Event::get(Type type) const
-{
-  return myValues[type];
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        Event::~Event()
+        {}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Event::set(Type type, int value)
-{
-  myValues[type] = value;
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        int Event::get(Type type) const
+        {
+            return myValues[type];
+        }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void Event::clear()
-{
-  for(int i = 0; i < myNumberOfTypes; ++i)
-  {
-    if(i != PaddleZeroResistance && i != PaddleOneResistance &&
-       i != PaddleTwoResistance  && i != PaddleThreeResistance)
-      myValues[i] = 0;
-  }
-}
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Event::set(Type type, int value)
+        {
+            myValues[type] = value;
+        }
 
-}  // namespace stella
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        void Event::clear()
+        {
+            for (int i = 0; i < myNumberOfTypes; ++i)
+            {
+                if (i != PaddleZeroResistance && i != PaddleOneResistance &&
+                    i != PaddleTwoResistance && i != PaddleThreeResistance)
+                    myValues[i] = 0;
+            }
+        }
+
+    }  // namespace stella
 }  // namespace ale

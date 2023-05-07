@@ -23,35 +23,37 @@
 #include "common/ColourPalette.hpp"
 #include "environment/ale_screen.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class ScreenExporter {
- public:
-  /** Creates a new ScreenExporter which can be used to save screens using save(filename). */
-  ScreenExporter(ColourPalette& palette);
+	class ScreenExporter
+	{
+	public:
+		/** Creates a new ScreenExporter which can be used to save screens using save(filename). */
+		ScreenExporter(ColourPalette& palette);
 
-  /** Creates a new ScreenExporter which will save frames successively in the directory provided.
-   *  Frames are sequentially named with 6 digits, starting at 000000. */
-  ScreenExporter(ColourPalette& palette, const std::string& path);
+		/** Creates a new ScreenExporter which will save frames successively in the directory provided.
+		 *  Frames are sequentially named with 6 digits, starting at 000000. */
+		ScreenExporter(ColourPalette& palette, const std::string& path);
 
-  /** Save the given screen to the given filename. No paths are created. */
-  void save(const ALEScreen& screen, const std::string& filename) const;
+		/** Save the given screen to the given filename. No paths are created. */
+		void save(const ALEScreen& screen, const std::string& filename) const;
 
-  /** Save the given screen according to our own internal numbering. */
-  void saveNext(const ALEScreen& screen);
+		/** Save the given screen according to our own internal numbering. */
+		void saveNext(const ALEScreen& screen);
 
- private:
-  ColourPalette& m_palette;
+	private:
+		ColourPalette& m_palette;
 
-  /** The next frame number. */
-  int m_frame_number;
+		/** The next frame number. */
+		int m_frame_number;
 
-  /** The width of the frame number when constructing filenames (set to 6). */
-  int m_frame_field_width;
+		/** The width of the frame number when constructing filenames (set to 6). */
+		int m_frame_field_width;
 
-  /** The directory where we save successive frames. */
-  std::string m_path;
-};
+		/** The directory where we save successive frames. */
+		std::string m_path;
+	};
 
 }  // namespace ale
 

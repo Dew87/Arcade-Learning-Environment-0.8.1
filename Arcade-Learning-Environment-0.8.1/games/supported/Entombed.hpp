@@ -28,42 +28,44 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class EntombedSettings : public RomSettings {
- public:
-  EntombedSettings();
+	class EntombedSettings : public RomSettings
+	{
+	public:
+		EntombedSettings();
 
-  void reset() override;
+		void reset() override;
 
-  bool isTerminal() const override;
+		bool isTerminal() const override;
 
-  reward_t getReward() const override;
+		reward_t getReward() const override;
 
-  const char* rom() const override { return "entombed"; }
+		const char* rom() const override { return "entombed"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "6b683be69f92958abe0e2a9945157ad5"; }
+		// The md5 checksum of the ROM that this game supports
+		const char* md5() const override { return "6b683be69f92958abe0e2a9945157ad5"; }
 
-  RomSettings* clone() const override;
+		RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+		bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+		void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+		void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+		void loadState(stella::Deserializer& ser) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+		DifficultyVect getAvailableDifficulties() override;
 
-  ActionVect getStartingActions() override;
+		ActionVect getStartingActions() override;
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
-};
+	private:
+		bool m_terminal;
+		reward_t m_reward;
+		int m_score;
+	};
 
 }  // namespace ale
 

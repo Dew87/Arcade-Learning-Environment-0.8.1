@@ -27,93 +27,107 @@
 
 #include "games/RomUtils.hpp"
 
-namespace ale {
-using namespace stella;
+namespace ale
+{
+    using namespace stella;
 
-FlagCaptureSettings::FlagCaptureSettings() { reset(); }
+    FlagCaptureSettings::FlagCaptureSettings() { reset(); }
 
-RomSettings* FlagCaptureSettings::clone() const {
-  return new FlagCaptureSettings(*this);
-}
-
-void FlagCaptureSettings::step(const System& system) {
-  int score = getDecimalScore(0xea, &system);
-  m_reward = score - m_score;
-  m_score = score;
-  // Game terminates when timer stored at RAM 0xeb expires after 75 seconds.
-  m_terminal = getDecimalScore(0xeb, &system) == 0;
-}
-
-bool FlagCaptureSettings::isTerminal() const { return m_terminal; }
-
-reward_t FlagCaptureSettings::getReward() const { return m_reward; }
-
-bool FlagCaptureSettings::isMinimal(const Action& a) const {
-  switch (a) {
-    case PLAYER_A_NOOP:
-    case PLAYER_A_FIRE:
-    case PLAYER_A_UP:
-    case PLAYER_A_RIGHT:
-    case PLAYER_A_LEFT:
-    case PLAYER_A_DOWN:
-    case PLAYER_A_UPRIGHT:
-    case PLAYER_A_UPLEFT:
-    case PLAYER_A_DOWNRIGHT:
-    case PLAYER_A_DOWNLEFT:
-    case PLAYER_A_UPFIRE:
-    case PLAYER_A_RIGHTFIRE:
-    case PLAYER_A_LEFTFIRE:
-    case PLAYER_A_DOWNFIRE:
-    case PLAYER_A_UPRIGHTFIRE:
-    case PLAYER_A_UPLEFTFIRE:
-    case PLAYER_A_DOWNRIGHTFIRE:
-    case PLAYER_A_DOWNLEFTFIRE:
-      return true;
-    default:
-      return false;
-  }
-}
-
-void FlagCaptureSettings::reset() {
-  m_reward = 0;
-  m_score = 0;
-  m_terminal = false;
-}
-
-void FlagCaptureSettings::saveState(Serializer& ser) {
-  ser.putInt(m_reward);
-  ser.putInt(m_score);
-  ser.putBool(m_terminal);
-}
-
-void FlagCaptureSettings::loadState(Deserializer& ser) {
-  m_reward = ser.getInt();
-  m_score = ser.getInt();
-  m_terminal = ser.getBool();
-}
-
-// According to https://atariage.com/manual_html_page.php?SoftwareID=1022
-// there are 10 game mode variations but only 3 of them are valid for a single
-// player. These determine whether the flag is stationary or moving and are
-// timed against a fixed 75 second clock.
-ModeVect FlagCaptureSettings::getAvailableModes() {
-  return {8, 9, 10};
-}
-
-void FlagCaptureSettings::setMode(
-    game_mode_t m, System& system,
-    std::unique_ptr<StellaEnvironmentWrapper> environment) {
-  if (isModeSupported(m)) {
-    // Press select until the correct mode is reached for single player only.
-    while (readRam(&system, 0xd6) != m) {
-      environment->pressSelect(2);
+    RomSettings* FlagCaptureSettings::clone() const
+    {
+        return new FlagCaptureSettings(*this);
     }
 
-    // Reset the environment to apply changes.
-    environment->softReset();
-  } else {
-    throw std::runtime_error("This game mode is not supported.");
-  }
-}
+    void FlagCaptureSettings::step(const System& system)
+    {
+        int score = getDecimalScore(0xea, &system);
+        m_reward = score - m_score;
+        m_score = score;
+        // Game terminates when timer stored at RAM 0xeb expires after 75 seconds.
+        m_terminal = getDecimalScore(0xeb, &system) == 0;
+    }
+
+    bool FlagCaptureSettings::isTerminal() const { return m_terminal; }
+
+    reward_t FlagCaptureSettings::getReward() const { return m_reward; }
+
+    bool FlagCaptureSettings::isMinimal(const Action& a) const
+    {
+        switch (a)
+        {
+        case PLAYER_A_NOOP:
+        case PLAYER_A_FIRE:
+        case PLAYER_A_UP:
+        case PLAYER_A_RIGHT:
+        case PLAYER_A_LEFT:
+        case PLAYER_A_DOWN:
+        case PLAYER_A_UPRIGHT:
+        case PLAYER_A_UPLEFT:
+        case PLAYER_A_DOWNRIGHT:
+        case PLAYER_A_DOWNLEFT:
+        case PLAYER_A_UPFIRE:
+        case PLAYER_A_RIGHTFIRE:
+        case PLAYER_A_LEFTFIRE:
+        case PLAYER_A_DOWNFIRE:
+        case PLAYER_A_UPRIGHTFIRE:
+        case PLAYER_A_UPLEFTFIRE:
+        case PLAYER_A_DOWNRIGHTFIRE:
+        case PLAYER_A_DOWNLEFTFIRE:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    void FlagCaptureSettings::reset()
+    {
+        m_reward = 0;
+        m_score = 0;
+        m_terminal = false;
+    }
+
+    void FlagCaptureSettings::saveState(Serializer& ser)
+    {
+        ser.putInt(m_reward);
+        ser.putInt(m_score);
+        ser.putBool(m_terminal);
+    }
+
+    void FlagCaptureSettings::loadState(Deserializer& ser)
+    {
+        m_reward = ser.getInt();
+        m_score = ser.getInt();
+        m_terminal = ser.getBool();
+    }
+
+    // According to https://atariage.com/manual_html_page.php?SoftwareID=1022
+    // there are 10 game mode variations but only 3 of them are valid for a single
+    // player. These determine whether the flag is stationary or moving and are
+    // timed against a fixed 75 second clock.
+    ModeVect FlagCaptureSettings::getAvailableModes()
+    {
+        return { 8, 9, 10 };
+    }
+
+    void FlagCaptureSettings::setMode(
+        game_mode_t m, System& system,
+        std::unique_ptr<StellaEnvironmentWrapper> environment)
+    {
+        if (isModeSupported(m))
+        {
+            // Press select until the correct mode is reached for single player only.
+            while (readRam(&system, 0xd6) != m)
+            {
+                environment->pressSelect(2);
+            }
+
+            // Reset the environment to apply changes.
+            environment->softReset();
+        }
+        else
+        {
+            throw std::runtime_error("This game mode is not supported.");
+        }
+    }
 
 }  // namespace ale

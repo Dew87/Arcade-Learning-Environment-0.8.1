@@ -19,96 +19,100 @@
 #ifndef NULLDEVICE_HXX
 #define NULLDEVICE_HXX
 
-namespace ale {
-namespace stella {
+namespace ale
+{
+    namespace stella
+    {
 
-class System;
-class Serializer;
-class Deserializer;
+        class System;
+        class Serializer;
+        class Deserializer;
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale
 
 #include "emucore/Device.hxx"
 
-namespace ale {
-namespace stella {
-
-/**
-  Class that represents a "null" device.  The basic idea is that a
-  null device is installed in a 6502 based system anywhere there are
-  holes in the address space (i.e. no real device attached).
-
-  @author  Bradford W. Mott
-  @version $Id: NullDev.hxx,v 1.5 2007/01/01 18:04:51 stephena Exp $
-*/
-class NullDevice : public Device
+namespace ale
 {
-  public:
-    /**
-      Create a new null device
-    */
-    NullDevice();
+    namespace stella
+    {
 
-    /**
-      Destructor
-    */
-    virtual ~NullDevice();
+        /**
+          Class that represents a "null" device.  The basic idea is that a
+          null device is installed in a 6502 based system anywhere there are
+          holes in the address space (i.e. no real device attached).
 
-  public:
-    /**
-      Get a null terminated string which is the device's name (i.e. "M6532")
+          @author  Bradford W. Mott
+          @version $Id: NullDev.hxx,v 1.5 2007/01/01 18:04:51 stephena Exp $
+        */
+        class NullDevice : public Device
+        {
+        public:
+            /**
+              Create a new null device
+            */
+            NullDevice();
 
-      @return The name of the device
-    */
-    virtual const char* name() const;
+            /**
+              Destructor
+            */
+            virtual ~NullDevice();
 
-    /**
-      Reset device to its power-on state
-    */
-    virtual void reset();
+        public:
+            /**
+              Get a null terminated string which is the device's name (i.e. "M6532")
 
-    /**
-      Install device in the specified system.  Invoked by the system
-      when the device is attached to it.
+              @return The name of the device
+            */
+            virtual const char* name() const;
 
-      @param system The system the device should install itself in
-    */
-    virtual void install(System& system);
+            /**
+              Reset device to its power-on state
+            */
+            virtual void reset();
 
-    /**
-      Saves the current state of this device to the given Serializer.
+            /**
+              Install device in the specified system.  Invoked by the system
+              when the device is attached to it.
 
-      @param out The serializer device to save to.
-      @return The result of the save.  True on success, false on failure.
-    */
-    virtual bool save(Serializer& out);
+              @param system The system the device should install itself in
+            */
+            virtual void install(System& system);
 
-    /**
-      Loads the current state of this device from the given Deserializer.
+            /**
+              Saves the current state of this device to the given Serializer.
 
-      @param in The deserializer device to load from.
-      @return The result of the load.  True on success, false on failure.
-    */
-    virtual bool load(Deserializer& in);
+              @param out The serializer device to save to.
+              @return The result of the save.  True on success, false on failure.
+            */
+            virtual bool save(Serializer& out);
 
-  public:
-    /**
-      Get the byte at the specified address
+            /**
+              Loads the current state of this device from the given Deserializer.
 
-      @return The byte at the specified address
-    */
-    virtual uint8_t peek(uint16_t address);
+              @param in The deserializer device to load from.
+              @return The result of the load.  True on success, false on failure.
+            */
+            virtual bool load(Deserializer& in);
 
-    /**
-      Change the byte at the specified address to the given value
+        public:
+            /**
+              Get the byte at the specified address
 
-      @param address The address where the value should be stored
-      @param value The value to be stored at the address
-    */
-    virtual void poke(uint16_t address, uint8_t value);
-};
+              @return The byte at the specified address
+            */
+            virtual uint8_t peek(uint16_t address);
+
+            /**
+              Change the byte at the specified address to the given value
+
+              @param address The address where the value should be stored
+              @param value The value to be stored at the address
+            */
+            virtual void poke(uint16_t address, uint8_t value);
+        };
 #endif
 
-}  // namespace stella
+    }  // namespace stella
 }  // namespace ale

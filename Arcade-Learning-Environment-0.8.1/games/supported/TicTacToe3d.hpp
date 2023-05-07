@@ -28,49 +28,51 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class TicTacToe3dSettings final : public RomSettings {
+    class TicTacToe3dSettings final : public RomSettings
+    {
 
-public:
-  TicTacToe3dSettings();
+    public:
+        TicTacToe3dSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "tic_tac_toe_3d"; }
+        const char* rom() const override { return "tic_tac_toe_3d"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "0db4f4150fecf77e4ce72ca4d04c052f"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "0db4f4150fecf77e4ce72ca4d04c052f"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  DifficultyVect getAvailableDifficulties() override;
+        DifficultyVect getAvailableDifficulties() override;
 
-  // returns a list of mode that the game can be played in
-  // in this game, there are 9 available modes
-  ModeVect getAvailableModes() override;
+        // returns a list of mode that the game can be played in
+        // in this game, there are 9 available modes
+        ModeVect getAvailableModes() override;
 
-  // set the mode of the game
-  // the given mode must be one returned by the previous function
-  void setMode(game_mode_t, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        // set the mode of the game
+        // the given mode must be one returned by the previous function
+        void setMode(game_mode_t, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-private:
-  bool m_terminal;
-  reward_t m_reward;
-};
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+    };
 
 } // namespace ale
 

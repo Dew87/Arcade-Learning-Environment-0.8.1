@@ -28,48 +28,50 @@
 
 #include "games/RomSettings.hpp"
 
-namespace ale {
+namespace ale
+{
 
-class KlaxSettings : public RomSettings {
- public:
-  KlaxSettings();
+    class KlaxSettings : public RomSettings
+    {
+    public:
+        KlaxSettings();
 
-  void reset() override;
+        void reset() override;
 
-  bool isTerminal() const override;
+        bool isTerminal() const override;
 
-  reward_t getReward() const override;
+        reward_t getReward() const override;
 
-  const char* rom() const override { return "klax"; }
+        const char* rom() const override { return "klax"; }
 
-  // The md5 checksum of the ROM that this game supports
-  const char* md5() const override { return "eed9eaf1a0b6a2b9bc4c8032cb43e3fb"; }
+        // The md5 checksum of the ROM that this game supports
+        const char* md5() const override { return "eed9eaf1a0b6a2b9bc4c8032cb43e3fb"; }
 
-  RomSettings* clone() const override;
+        RomSettings* clone() const override;
 
-  bool isMinimal(const Action& a) const override;
+        bool isMinimal(const Action& a) const override;
 
-  void step(const stella::System& system) override;
+        void step(const stella::System& system) override;
 
-  void saveState(stella::Serializer& ser) override;
+        void saveState(stella::Serializer& ser) override;
 
-  void loadState(stella::Deserializer& ser) override;
+        void loadState(stella::Deserializer& ser) override;
 
-  ModeVect getAvailableModes() override;
+        ModeVect getAvailableModes() override;
 
-  void setMode(game_mode_t m, stella::System& system,
-               std::unique_ptr<StellaEnvironmentWrapper> environment) override;
+        void setMode(game_mode_t m, stella::System& system,
+            std::unique_ptr<StellaEnvironmentWrapper> environment) override;
 
-  ActionVect getStartingActions();
+        ActionVect getStartingActions();
 
- private:
-  bool m_terminal;
-  reward_t m_reward;
-  int m_score;
+    private:
+        bool m_terminal;
+        reward_t m_reward;
+        int m_score;
 
-  int getKlaxScore(int lower_index, int middle_index, int higher_index,
-                   const stella::System* system);
-};
+        int getKlaxScore(int lower_index, int middle_index, int higher_index,
+            const stella::System* system);
+    };
 
 }  // namespace ale
 
