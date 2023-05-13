@@ -9,7 +9,15 @@ MAXIMUM_NUMBER_OF_FRAMES 10800
 PIXELS_X 210
 PIXELS_Y 160
 
-NEAT.ne
+FNN
+elitism 2
+hidden_nodes 10
+pop_size 150
+mate_multipoint_prob 0.6
+mate_multipoint_avg_prob 0.4
+mate_singlepoint_prob 0.0
+mutate_link_weights_prob 0.3
+weight_mut_power 2.5
 
 LOG
 Generation 1: fitness average 0 max 0

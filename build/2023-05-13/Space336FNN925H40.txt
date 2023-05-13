@@ -9,7 +9,7 @@ MAXIMUM_NUMBER_OF_FRAMES 10800
 PIXELS_X 210
 PIXELS_Y 160
 
-FFN
+FNN
 elitism 2
 hidden_nodes 40
 pop_size 150
