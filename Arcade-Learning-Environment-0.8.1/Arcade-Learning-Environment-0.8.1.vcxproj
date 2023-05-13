@@ -197,6 +197,8 @@
     <ClCompile Include="environment\phosphor_blend.cpp" />
     <ClCompile Include="environment\stella_environment.cpp" />
     <ClCompile Include="environment\stella_environment_wrapper.cpp" />
+    <ClCompile Include="FNN\FNN.cpp" />
+    <ClCompile Include="FNN\FNNPopulation.cpp" />
     <ClCompile Include="games\Roms.cpp" />
     <ClCompile Include="games\RomSettings.cpp" />
     <ClCompile Include="games\RomUtils.cpp" />
@@ -387,6 +389,8 @@
     <ClInclude Include="environment\phosphor_blend.hpp" />
     <ClInclude Include="environment\stella_environment.hpp" />
     <ClInclude Include="environment\stella_environment_wrapper.hpp" />
+    <ClInclude Include="FNN\FNN.h" />
+    <ClInclude Include="FNN\FNNPopulation.h" />
     <ClInclude Include="games\Roms.hpp" />
     <ClInclude Include="games\RomSettings.hpp" />
     <ClInclude Include="games\RomUtils.hpp" />

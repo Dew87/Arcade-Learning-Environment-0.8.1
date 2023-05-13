@@ -1,0 +1,642 @@
+CONFIG
+ALE_RANDOM_SEED 0
+ALE_REPEAT_ACTION_PROBABILITY 0.0
+FACTOR_DOWNSCALED_X 10
+FACTOR_DOWNSCALED_Y 10
+FACTOR_DOWNSCALED_MULTIPLE 64
+GENERATIONS 150
+MAXIMUM_NUMBER_OF_FRAMES 10800
+PIXELS_X 210
+PIXELS_Y 160
+
+FFN
+elitism 2
+hidden_nodes 100
+pop_size 150
+mate_multipoint_prob 0.6
+mate_multipoint_avg_prob 0.4
+mate_singlepoint_prob 0.0
+mutate_link_weights_prob 0.3
+weight_mut_power 2.5
+
+LOG
+Generation 1: fitness average 0 max 0
+Generation 2: fitness average 0 max 0
+Generation 3: fitness average 0 max 0
+Generation 4: fitness average 0 max 0
+Generation 5: fitness average 0 max 0
+Generation 6: fitness average 0 max 0
+Generation 7: fitness average 0 max 0
+Generation 8: fitness average 0 max 0
+Generation 9: fitness average 0 max 0
+Generation 10: fitness average 0 max 0
+Generation 11: fitness average 0 max 0
+Generation 12: fitness average 0 max 0
+Generation 13: fitness average 0 max 0
+Generation 14: fitness average 0 max 0
+Generation 15: fitness average 0 max 0
+Generation 16: fitness average 0 max 0
+Generation 17: fitness average 0 max 0
+Generation 18: fitness average 0 max 0
+Generation 19: fitness average 0 max 0
+Generation 20: fitness average 0 max 0
+Generation 21: fitness average 0 max 0
+Generation 22: fitness average 0 max 0
+Generation 23: fitness average 0 max 0
+Generation 24: fitness average 0 max 0
+Generation 25: fitness average 0 max 0
+Generation 26: fitness average 0 max 0
+Generation 27: fitness average 0 max 0
+Generation 28: fitness average 0 max 0
+Generation 29: fitness average 0 max 0
+Generation 30: fitness average 0 max 0
+Generation 31: fitness average 0 max 0
+Generation 32: fitness average 0 max 0
+Generation 33: fitness average 0 max 0
+Generation 34: fitness average 0 max 0
+Generation 35: fitness average 0 max 0
+Generation 36: fitness average 0 max 0
+Generation 37: fitness average 0 max 0
+Generation 38: fitness average 0 max 0
+Generation 39: fitness average 0 max 0
+Generation 40: fitness average 0 max 0
+Generation 41: fitness average 0 max 0
+Generation 42: fitness average 0 max 0
+Generation 43: fitness average 0 max 0
+Generation 44: fitness average 0 max 0
+Generation 45: fitness average 0 max 0
+Generation 46: fitness average 0 max 0
+Generation 47: fitness average 0 max 0
+Generation 48: fitness average 0 max 0
+Generation 49: fitness average 0 max 0
+Generation 50: fitness average 0 max 0
+Generation 51: fitness average 0 max 0
+Generation 52: fitness average 0 max 0
+Generation 53: fitness average 0 max 0
+Generation 54: fitness average 0 max 0
+Generation 55: fitness average 0 max 0
+Generation 56: fitness average 0 max 0
+Generation 57: fitness average 0 max 0
+Generation 58: fitness average 0 max 0
+Generation 59: fitness average 0 max 0
+Generation 60: fitness average 0 max 0
+Generation 61: fitness average 0 max 0
+Generation 62: fitness average 0 max 0
+Generation 63: fitness average 0 max 0
+Generation 64: fitness average 0 max 0
+Generation 65: fitness average 0 max 0
+Generation 66: fitness average 0 max 0
+Generation 67: fitness average 0 max 0
+Generation 68: fitness average 0 max 0
+Generation 69: fitness average 0 max 0
+Generation 70: fitness average 0 max 0
+Generation 71: fitness average 0 max 0
+Generation 72: fitness average 0 max 0
+Generation 73: fitness average 0 max 0
+Generation 74: fitness average 0 max 0
+Generation 75: fitness average 0 max 0
+Generation 76: fitness average 0 max 0
+Generation 77: fitness average 0 max 0
+Generation 78: fitness average 0 max 0
+Generation 79: fitness average 0 max 0
+Generation 80: fitness average 0 max 0
+Generation 81: fitness average 0 max 0
+Generation 82: fitness average 0 max 0
+Generation 83: fitness average 0 max 0
+Generation 84: fitness average 0 max 0
+Generation 85: fitness average 0 max 0
+Generation 86: fitness average 0 max 0
+Generation 87: fitness average 0 max 0
+Generation 88: fitness average 0 max 0
+Generation 89: fitness average 0 max 0
+Generation 90: fitness average 0 max 0
+Generation 91: fitness average 0 max 0
+Generation 92: fitness average 0 max 0
+Generation 93: fitness average 0 max 0
+Generation 94: fitness average 0 max 0
+Generation 95: fitness average 0 max 0
+Generation 96: fitness average 0 max 0
+Generation 97: fitness average 0 max 0
+Generation 98: fitness average 0 max 0
+Generation 99: fitness average 0 max 0
+Generation 100: fitness average 0 max 0
+Generation 101: fitness average 0 max 0
+Generation 102: fitness average 0 max 0
+Generation 103: fitness average 0 max 0
+Generation 104: fitness average 0 max 0
+Generation 105: fitness average 0 max 0
+Generation 106: fitness average 0 max 0
+Generation 107: fitness average 0 max 0
+Generation 108: fitness average 0 max 0
+Generation 109: fitness average 0 max 0
+Generation 110: fitness average 0 max 0
+Generation 111: fitness average 0 max 0
+Generation 112: fitness average 0 max 0
+Generation 113: fitness average 0 max 0
+Generation 114: fitness average 0 max 0
+Generation 115: fitness average 0 max 0
+Generation 116: fitness average 0 max 0
+Generation 117: fitness average 0 max 0
+Generation 118: fitness average 0 max 0
+Generation 119: fitness average 0 max 0
+Generation 120: fitness average 0 max 0
+Generation 121: fitness average 0 max 0
+Generation 122: fitness average 0 max 0
+Generation 123: fitness average 0 max 0
+Generation 124: fitness average 0 max 0
+Generation 125: fitness average 0 max 0
+Generation 126: fitness average 0 max 0
+Generation 127: fitness average 0 max 0
+Generation 128: fitness average 0 max 0
+Generation 129: fitness average 0 max 0
+Generation 130: fitness average 0 max 0
+Generation 131: fitness average 0 max 0
+Generation 132: fitness average 0 max 0
+Generation 133: fitness average 0 max 0
+Generation 134: fitness average 0 max 0
+Generation 135: fitness average 0 max 0
+Generation 136: fitness average 0 max 0
+Generation 137: fitness average 0 max 0
+Generation 138: fitness average 0 max 0
+Generation 139: fitness average 0 max 0
+Generation 140: fitness average 0 max 0
+Generation 141: fitness average 0 max 0
+Generation 142: fitness average 0 max 0
+Generation 143: fitness average 0 max 0
+Generation 144: fitness average 0 max 0
+Generation 145: fitness average 0 max 0
+Generation 146: fitness average 0 max 0
+Generation 147: fitness average 0 max 0
+Generation 148: fitness average 0 max 0
+Generation 149: fitness average 0 max 0
+Generation 150: fitness average 0 max 0
+
+ALE
+Input rom file name: Montezuma's Revenge.bin
+Game console created:
+  ROM file:  Montezuma's Revenge.bin
+  Cart Name: Montezuma's Revenge - Starring Panama Joe (1983) (Parker Bros)
+  Cart MD5:  3347a6dd59049b15a38394aa2dafa585
+  Display Format:  AUTO-DETECT ==> NTSC
+  ROM Size:        8192
+  Bankswitch Type: AUTO-DETECT ==> E0
+
+Running ROM file...
+Random seed is 0
+Number of legal actions: 18
+
+FFN
+Spawning Population of Genome
+Verifying Spawned Pop
+Save agent to file: Montezuma336FFN
+Generation 1
+Generation 1: fitness average 0 max 0
+1 generations since last population fitness record: 0
+Generation 2
+Generation 2: fitness average 0 max 0
+2 generations since last population fitness record: 0
+Generation 3
+Generation 3: fitness average 0 max 0
+3 generations since last population fitness record: 0
+Generation 4
+Generation 4: fitness average 0 max 0
+4 generations since last population fitness record: 0
+Generation 5
+Generation 5: fitness average 0 max 0
+5 generations since last population fitness record: 0
+Generation 6
+Generation 6: fitness average 0 max 0
+6 generations since last population fitness record: 0
+Generation 7
+Generation 7: fitness average 0 max 0
+7 generations since last population fitness record: 0
+Generation 8
+Generation 8: fitness average 0 max 0
+8 generations since last population fitness record: 0
+Generation 9
+Generation 9: fitness average 0 max 0
+9 generations since last population fitness record: 0
+Generation 10
+Generation 10: fitness average 0 max 0
+10 generations since last population fitness record: 0
+Generation 11
+Generation 11: fitness average 0 max 0
+11 generations since last population fitness record: 0
+Generation 12
+Generation 12: fitness average 0 max 0
+12 generations since last population fitness record: 0
+Generation 13
+Generation 13: fitness average 0 max 0
+13 generations since last population fitness record: 0
+Generation 14
+Generation 14: fitness average 0 max 0
+14 generations since last population fitness record: 0
+Generation 15
+Generation 15: fitness average 0 max 0
+15 generations since last population fitness record: 0
+Generation 16
+Generation 16: fitness average 0 max 0
+16 generations since last population fitness record: 0
+Generation 17
+Generation 17: fitness average 0 max 0
+17 generations since last population fitness record: 0
+Generation 18
+Generation 18: fitness average 0 max 0
+18 generations since last population fitness record: 0
+Generation 19
+Generation 19: fitness average 0 max 0
+19 generations since last population fitness record: 0
+Generation 20
+Generation 20: fitness average 0 max 0
+20 generations since last population fitness record: 0
+Generation 21
+Generation 21: fitness average 0 max 0
+21 generations since last population fitness record: 0
+Generation 22
+Generation 22: fitness average 0 max 0
+22 generations since last population fitness record: 0
+Generation 23
+Generation 23: fitness average 0 max 0
+23 generations since last population fitness record: 0
+Generation 24
+Generation 24: fitness average 0 max 0
+24 generations since last population fitness record: 0
+Generation 25
+Generation 25: fitness average 0 max 0
+25 generations since last population fitness record: 0
+Generation 26
+Generation 26: fitness average 0 max 0
+26 generations since last population fitness record: 0
+Generation 27
+Generation 27: fitness average 0 max 0
+27 generations since last population fitness record: 0
+Generation 28
+Generation 28: fitness average 0 max 0
+28 generations since last population fitness record: 0
+Generation 29
+Generation 29: fitness average 0 max 0
+29 generations since last population fitness record: 0
+Generation 30
+Generation 30: fitness average 0 max 0
+30 generations since last population fitness record: 0
+Generation 31
+Generation 31: fitness average 0 max 0
+31 generations since last population fitness record: 0
+Generation 32
+Generation 32: fitness average 0 max 0
+32 generations since last population fitness record: 0
+Generation 33
+Generation 33: fitness average 0 max 0
+33 generations since last population fitness record: 0
+Generation 34
+Generation 34: fitness average 0 max 0
+34 generations since last population fitness record: 0
+Generation 35
+Generation 35: fitness average 0 max 0
+35 generations since last population fitness record: 0
+Generation 36
+Generation 36: fitness average 0 max 0
+36 generations since last population fitness record: 0
+Generation 37
+Generation 37: fitness average 0 max 0
+37 generations since last population fitness record: 0
+Generation 38
+Generation 38: fitness average 0 max 0
+38 generations since last population fitness record: 0
+Generation 39
+Generation 39: fitness average 0 max 0
+39 generations since last population fitness record: 0
+Generation 40
+Generation 40: fitness average 0 max 0
+40 generations since last population fitness record: 0
+Generation 41
+Generation 41: fitness average 0 max 0
+41 generations since last population fitness record: 0
+Generation 42
+Generation 42: fitness average 0 max 0
+42 generations since last population fitness record: 0
+Generation 43
+Generation 43: fitness average 0 max 0
+43 generations since last population fitness record: 0
+Generation 44
+Generation 44: fitness average 0 max 0
+44 generations since last population fitness record: 0
+Generation 45
+Generation 45: fitness average 0 max 0
+45 generations since last population fitness record: 0
+Generation 46
+Generation 46: fitness average 0 max 0
+46 generations since last population fitness record: 0
+Generation 47
+Generation 47: fitness average 0 max 0
+47 generations since last population fitness record: 0
+Generation 48
+Generation 48: fitness average 0 max 0
+48 generations since last population fitness record: 0
+Generation 49
+Generation 49: fitness average 0 max 0
+49 generations since last population fitness record: 0
+Generation 50
+Generation 50: fitness average 0 max 0
+50 generations since last population fitness record: 0
+Generation 51
+Generation 51: fitness average 0 max 0
+51 generations since last population fitness record: 0
+Generation 52
+Generation 52: fitness average 0 max 0
+52 generations since last population fitness record: 0
+Generation 53
+Generation 53: fitness average 0 max 0
+53 generations since last population fitness record: 0
+Generation 54
+Generation 54: fitness average 0 max 0
+54 generations since last population fitness record: 0
+Generation 55
+Generation 55: fitness average 0 max 0
+55 generations since last population fitness record: 0
+Generation 56
+Generation 56: fitness average 0 max 0
+56 generations since last population fitness record: 0
+Generation 57
+Generation 57: fitness average 0 max 0
+57 generations since last population fitness record: 0
+Generation 58
+Generation 58: fitness average 0 max 0
+58 generations since last population fitness record: 0
+Generation 59
+Generation 59: fitness average 0 max 0
+59 generations since last population fitness record: 0
+Generation 60
+Generation 60: fitness average 0 max 0
+60 generations since last population fitness record: 0
+Generation 61
+Generation 61: fitness average 0 max 0
+61 generations since last population fitness record: 0
+Generation 62
+Generation 62: fitness average 0 max 0
+62 generations since last population fitness record: 0
+Generation 63
+Generation 63: fitness average 0 max 0
+63 generations since last population fitness record: 0
+Generation 64
+Generation 64: fitness average 0 max 0
+64 generations since last population fitness record: 0
+Generation 65
+Generation 65: fitness average 0 max 0
+65 generations since last population fitness record: 0
+Generation 66
+Generation 66: fitness average 0 max 0
+66 generations since last population fitness record: 0
+Generation 67
+Generation 67: fitness average 0 max 0
+67 generations since last population fitness record: 0
+Generation 68
+Generation 68: fitness average 0 max 0
+68 generations since last population fitness record: 0
+Generation 69
+Generation 69: fitness average 0 max 0
+69 generations since last population fitness record: 0
+Generation 70
+Generation 70: fitness average 0 max 0
+70 generations since last population fitness record: 0
+Generation 71
+Generation 71: fitness average 0 max 0
+71 generations since last population fitness record: 0
+Generation 72
+Generation 72: fitness average 0 max 0
+72 generations since last population fitness record: 0
+Generation 73
+Generation 73: fitness average 0 max 0
+73 generations since last population fitness record: 0
+Generation 74
+Generation 74: fitness average 0 max 0
+74 generations since last population fitness record: 0
+Generation 75
+Generation 75: fitness average 0 max 0
+75 generations since last population fitness record: 0
+Generation 76
+Generation 76: fitness average 0 max 0
+76 generations since last population fitness record: 0
+Generation 77
+Generation 77: fitness average 0 max 0
+77 generations since last population fitness record: 0
+Generation 78
+Generation 78: fitness average 0 max 0
+78 generations since last population fitness record: 0
+Generation 79
+Generation 79: fitness average 0 max 0
+79 generations since last population fitness record: 0
+Generation 80
+Generation 80: fitness average 0 max 0
+80 generations since last population fitness record: 0
+Generation 81
+Generation 81: fitness average 0 max 0
+81 generations since last population fitness record: 0
+Generation 82
+Generation 82: fitness average 0 max 0
+82 generations since last population fitness record: 0
+Generation 83
+Generation 83: fitness average 0 max 0
+83 generations since last population fitness record: 0
+Generation 84
+Generation 84: fitness average 0 max 0
+84 generations since last population fitness record: 0
+Generation 85
+Generation 85: fitness average 0 max 0
+85 generations since last population fitness record: 0
+Generation 86
+Generation 86: fitness average 0 max 0
+86 generations since last population fitness record: 0
+Generation 87
+Generation 87: fitness average 0 max 0
+87 generations since last population fitness record: 0
+Generation 88
+Generation 88: fitness average 0 max 0
+88 generations since last population fitness record: 0
+Generation 89
+Generation 89: fitness average 0 max 0
+89 generations since last population fitness record: 0
+Generation 90
+Generation 90: fitness average 0 max 0
+90 generations since last population fitness record: 0
+Generation 91
+Generation 91: fitness average 0 max 0
+91 generations since last population fitness record: 0
+Generation 92
+Generation 92: fitness average 0 max 0
+92 generations since last population fitness record: 0
+Generation 93
+Generation 93: fitness average 0 max 0
+93 generations since last population fitness record: 0
+Generation 94
+Generation 94: fitness average 0 max 0
+94 generations since last population fitness record: 0
+Generation 95
+Generation 95: fitness average 0 max 0
+95 generations since last population fitness record: 0
+Generation 96
+Generation 96: fitness average 0 max 0
+96 generations since last population fitness record: 0
+Generation 97
+Generation 97: fitness average 0 max 0
+97 generations since last population fitness record: 0
+Generation 98
+Generation 98: fitness average 0 max 0
+98 generations since last population fitness record: 0
+Generation 99
+Generation 99: fitness average 0 max 0
+99 generations since last population fitness record: 0
+Generation 100
+Generation 100: fitness average 0 max 0
+100 generations since last population fitness record: 0
+Generation 101
+Generation 101: fitness average 0 max 0
+101 generations since last population fitness record: 0
+Generation 102
+Generation 102: fitness average 0 max 0
+102 generations since last population fitness record: 0
+Generation 103
+Generation 103: fitness average 0 max 0
+103 generations since last population fitness record: 0
+Generation 104
+Generation 104: fitness average 0 max 0
+104 generations since last population fitness record: 0
+Generation 105
+Generation 105: fitness average 0 max 0
+105 generations since last population fitness record: 0
+Generation 106
+Generation 106: fitness average 0 max 0
+106 generations since last population fitness record: 0
+Generation 107
+Generation 107: fitness average 0 max 0
+107 generations since last population fitness record: 0
+Generation 108
+Generation 108: fitness average 0 max 0
+108 generations since last population fitness record: 0
+Generation 109
+Generation 109: fitness average 0 max 0
+109 generations since last population fitness record: 0
+Generation 110
+Generation 110: fitness average 0 max 0
+110 generations since last population fitness record: 0
+Generation 111
+Generation 111: fitness average 0 max 0
+111 generations since last population fitness record: 0
+Generation 112
+Generation 112: fitness average 0 max 0
+112 generations since last population fitness record: 0
+Generation 113
+Generation 113: fitness average 0 max 0
+113 generations since last population fitness record: 0
+Generation 114
+Generation 114: fitness average 0 max 0
+114 generations since last population fitness record: 0
+Generation 115
+Generation 115: fitness average 0 max 0
+115 generations since last population fitness record: 0
+Generation 116
+Generation 116: fitness average 0 max 0
+116 generations since last population fitness record: 0
+Generation 117
+Generation 117: fitness average 0 max 0
+117 generations since last population fitness record: 0
+Generation 118
+Generation 118: fitness average 0 max 0
+118 generations since last population fitness record: 0
+Generation 119
+Generation 119: fitness average 0 max 0
+119 generations since last population fitness record: 0
+Generation 120
+Generation 120: fitness average 0 max 0
+120 generations since last population fitness record: 0
+Generation 121
+Generation 121: fitness average 0 max 0
+121 generations since last population fitness record: 0
+Generation 122
+Generation 122: fitness average 0 max 0
+122 generations since last population fitness record: 0
+Generation 123
+Generation 123: fitness average 0 max 0
+123 generations since last population fitness record: 0
+Generation 124
+Generation 124: fitness average 0 max 0
+124 generations since last population fitness record: 0
+Generation 125
+Generation 125: fitness average 0 max 0
+125 generations since last population fitness record: 0
+Generation 126
+Generation 126: fitness average 0 max 0
+126 generations since last population fitness record: 0
+Generation 127
+Generation 127: fitness average 0 max 0
+127 generations since last population fitness record: 0
+Generation 128
+Generation 128: fitness average 0 max 0
+128 generations since last population fitness record: 0
+Generation 129
+Generation 129: fitness average 0 max 0
+129 generations since last population fitness record: 0
+Generation 130
+Generation 130: fitness average 0 max 0
+130 generations since last population fitness record: 0
+Generation 131
+Generation 131: fitness average 0 max 0
+131 generations since last population fitness record: 0
+Generation 132
+Generation 132: fitness average 0 max 0
+132 generations since last population fitness record: 0
+Generation 133
+Generation 133: fitness average 0 max 0
+133 generations since last population fitness record: 0
+Generation 134
+Generation 134: fitness average 0 max 0
+134 generations since last population fitness record: 0
+Generation 135
+Generation 135: fitness average 0 max 0
+135 generations since last population fitness record: 0
+Generation 136
+Generation 136: fitness average 0 max 0
+136 generations since last population fitness record: 0
+Generation 137
+Generation 137: fitness average 0 max 0
+137 generations since last population fitness record: 0
+Generation 138
+Generation 138: fitness average 0 max 0
+138 generations since last population fitness record: 0
+Generation 139
+Generation 139: fitness average 0 max 0
+139 generations since last population fitness record: 0
+Generation 140
+Generation 140: fitness average 0 max 0
+140 generations since last population fitness record: 0
+Generation 141
+Generation 141: fitness average 0 max 0
+141 generations since last population fitness record: 0
+Generation 142
+Generation 142: fitness average 0 max 0
+142 generations since last population fitness record: 0
+Generation 143
+Generation 143: fitness average 0 max 0
+143 generations since last population fitness record: 0
+Generation 144
+Generation 144: fitness average 0 max 0
+144 generations since last population fitness record: 0
+Generation 145
+Generation 145: fitness average 0 max 0
+145 generations since last population fitness record: 0
+Generation 146
+Generation 146: fitness average 0 max 0
+146 generations since last population fitness record: 0
+Generation 147
+Generation 147: fitness average 0 max 0
+147 generations since last population fitness record: 0
+Generation 148
+Generation 148: fitness average 0 max 0
+148 generations since last population fitness record: 0
+Generation 149
+Generation 149: fitness average 0 max 0
+149 generations since last population fitness record: 0
+Generation 150
+Generation 150: fitness average 0 max 0
+150 generations since last population fitness record: 0
+Elapsed time: 156478

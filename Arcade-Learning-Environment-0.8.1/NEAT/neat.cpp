@@ -381,43 +381,48 @@ bool NEAT::load_neat_params(const char *filename, bool output)
 
 	if (output)
 	{
-		printf("trait_param_mut_prob=%f\n", trait_param_mut_prob);
-		printf("trait_mutation_power=%f\n", trait_mutation_power);
-		printf("linktrait_mut_sig=%f\n", linktrait_mut_sig);
-		printf("nodetrait_mut_sig=%f\n", nodetrait_mut_sig);
-		printf("weight_mut_power=%f\n", weight_mut_power);
-		printf("recur_prob=%f\n", recur_prob);
-		printf("disjoint_coeff=%f\n", disjoint_coeff);
-		printf("excess_coeff=%f\n", excess_coeff);
-		printf("mutdiff_coeff=%f\n", mutdiff_coeff);
-		printf("compat_threshold=%f\n", compat_threshold);
-		printf("age_significance=%f\n", age_significance);
-		printf("survival_thresh=%f\n", survival_thresh);
-		printf("mutate_only_prob=%f\n", mutate_only_prob);
-		printf("mutate_random_trait_prob=%f\n", mutate_random_trait_prob);
-		printf("mutate_link_trait_prob=%f\n", mutate_link_trait_prob);
-		printf("mutate_node_trait_prob=%f\n", mutate_node_trait_prob);
-		printf("mutate_link_weights_prob=%f\n", mutate_link_weights_prob);
-		printf("mutate_toggle_enable_prob=%f\n", mutate_toggle_enable_prob);
-		printf("mutate_gene_reenable_prob=%f\n", mutate_gene_reenable_prob);
-		printf("mutate_add_node_prob=%f\n", mutate_add_node_prob);
-		printf("mutate_add_link_prob=%f\n", mutate_add_link_prob);
-		printf("interspecies_mate_rate=%f\n", interspecies_mate_rate);
-		printf("mate_multipoint_prob=%f\n", mate_multipoint_prob);
-		printf("mate_multipoint_avg_prob=%f\n", mate_multipoint_avg_prob);
-		printf("mate_singlepoint_prob=%f\n", mate_singlepoint_prob);
-		printf("mate_only_prob=%f\n", mate_only_prob);
-		printf("recur_only_prob=%f\n", recur_only_prob);
-		printf("pop_size=%d\n", pop_size);
-		printf("dropoff_age=%d\n", dropoff_age);
-		printf("newlink_tries=%d\n", newlink_tries);
-		printf("print_every=%d\n", print_every);
-		printf("babies_stolen=%d\n", babies_stolen);
-		printf("num_runs=%d\n", num_runs);
+		print_neat_params();
 	}
 
 	paramFile.close();
 	return true;
+}
+
+void NEAT::print_neat_params()
+{
+	printf("trait_param_mut_prob = %f\n", trait_param_mut_prob);
+	printf("trait_mutation_power = %f\n", trait_mutation_power);
+	printf("linktrait_mut_sig = %f\n", linktrait_mut_sig);
+	printf("nodetrait_mut_sig = %f\n", nodetrait_mut_sig);
+	printf("weight_mut_power = %f\n", weight_mut_power);
+	printf("recur_prob = %f\n", recur_prob);
+	printf("disjoint_coeff = %f\n", disjoint_coeff);
+	printf("excess_coeff = %f\n", excess_coeff);
+	printf("mutdiff_coeff = %f\n", mutdiff_coeff);
+	printf("compat_threshold = %f\n", compat_threshold);
+	printf("age_significance = %f\n", age_significance);
+	printf("survival_thresh = %f\n", survival_thresh);
+	printf("mutate_only_prob = %f\n", mutate_only_prob);
+	printf("mutate_random_trait_prob = %f\n", mutate_random_trait_prob);
+	printf("mutate_link_trait_prob = %f\n", mutate_link_trait_prob);
+	printf("mutate_node_trait_prob = %f\n", mutate_node_trait_prob);
+	printf("mutate_link_weights_prob = %f\n", mutate_link_weights_prob);
+	printf("mutate_toggle_enable_prob = %f\n", mutate_toggle_enable_prob);
+	printf("mutate_gene_reenable_prob = %f\n", mutate_gene_reenable_prob);
+	printf("mutate_add_node_prob = %f\n", mutate_add_node_prob);
+	printf("mutate_add_link_prob = %f\n", mutate_add_link_prob);
+	printf("interspecies_mate_rate = %f\n", interspecies_mate_rate);
+	printf("mate_multipoint_prob = %f\n", mate_multipoint_prob);
+	printf("mate_multipoint_avg_prob = %f\n", mate_multipoint_avg_prob);
+	printf("mate_singlepoint_prob = %f\n", mate_singlepoint_prob);
+	printf("mate_only_prob = %f\n", mate_only_prob);
+	printf("recur_only_prob = %f\n", recur_only_prob);
+	printf("pop_size = %d\n", pop_size);
+	printf("dropoff_age = %d\n", dropoff_age);
+	printf("newlink_tries = %d\n", newlink_tries);
+	printf("print_every = %d\n", print_every);
+	printf("babies_stolen = %d\n", babies_stolen);
+	printf("num_runs = %d\n", num_runs);
 }
 
 /* Inline Functions in Header file

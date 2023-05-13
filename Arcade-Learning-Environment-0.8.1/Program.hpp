@@ -2,7 +2,7 @@
 #define PROGRAM_HPP
 
 #include <ale_interface.hpp>
-#include "NEAT/population.h"
+#include <NEAT/organism.h>
 
 class Program
 {
@@ -11,23 +11,23 @@ public:
 	void Run();
 
 private:
-	// Meny functions
+	// Menu functions
 	void Config();
-	void Info() const;
 	void LoadAgent();
 	void LoadRom();
 	void LogStart(std::ofstream &log);
 	void Play(size_t games, bool SDL);
+	void Print() const;
 	std::vector<float> ProcessInput(const std::vector<unsigned char> &input) const;
-	void Test();
-	void Train();
+	void TrainFNN();
+	void TrainNEAT();
 
 	// CONFIG
 	unsigned int ALE_RANDOM_SEED;
 	float ALE_REPEAT_ACTION_PROBABILITY;
-	unsigned int FACTOR_DOWNSCALED_X;
-	unsigned int FACTOR_DOWNSCALED_Y;
-	unsigned int FACTOR_DOWNSCALED_MULTIPLE;
+	unsigned int FACTOR_DOWNSCALE_X;
+	unsigned int FACTOR_DOWNSCALE_Y;
+	unsigned int FACTOR_DOWNSCALE_MULTIPLE;
 	unsigned int GENERATIONS;
 	unsigned int MAXIMUM_NUMBER_OF_FRAMES;
 	unsigned int PIXELS_X;

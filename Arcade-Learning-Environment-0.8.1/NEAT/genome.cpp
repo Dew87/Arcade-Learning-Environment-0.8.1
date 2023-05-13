@@ -610,7 +610,54 @@ Genome::Genome(int num_in, int num_out, int num_hidden, int type)
 		}
 
 	}//end type 2
+	//Fully connected none recurrent
+	else if (type == 3)
+	{
+		count = 1; //Start gene counter at 1
 
+		//Connect all inputs to all hidden nodes
+		for (curnode1 = hidden.begin(); curnode1 != hidden.end(); ++curnode1)
+		{
+			//Loop over the inputs
+			for (curnode2 = inputs.begin(); curnode2 != inputs.end(); ++curnode2)
+			{
+				//Connect each input to each hidden
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), false, count, 0);
+
+				//Add the gene to the genome
+				genes.push_back(newgene);
+
+				count++;
+			}
+		}
+
+		//Connect all hidden units to all outputs
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
+			//Loop over the inputs
+			for (curnode2 = hidden.begin(); curnode2 != hidden.end(); ++curnode2)
+			{
+				//Connect each input to each hidden
+				newgene = new Gene(newtrait, 0, (*curnode2), (*curnode1), false, count, 0);
+
+				//Add the gene to the genome
+				genes.push_back(newgene);
+
+				count++;
+			}
+		}
+
+		//Connect the bias to all outputs
+		for (curnode1 = outputs.begin(); curnode1 != outputs.end(); ++curnode1)
+		{
+			newgene = new Gene(newtrait, 0, bias, (*curnode1), false, count, 0);
+
+			//Add the gene to the genome
+			genes.push_back(newgene);
+
+			count++;
+		}
+	}//end type 3
 }
 
 Genome* Genome::new_Genome_load(char *filename)

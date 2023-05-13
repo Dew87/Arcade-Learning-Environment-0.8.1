@@ -145,6 +145,8 @@ namespace NEAT
 
 	bool load_neat_params(const char *filename, bool output = false);
 
+	void print_neat_params();
+
 } // namespace NEAT
 
 #endif

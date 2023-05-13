@@ -49,6 +49,12 @@
     <Filter Include="Source Files\NEAT">
       <UniqueIdentifier>{57569531-8ceb-42c4-860c-02acf7b3067a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FNN">
+      <UniqueIdentifier>{d8a6bd95-63c2-4c53-b912-343094745484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FNN">
+      <UniqueIdentifier>{1ba815e0-ce38-40b9-baae-caaad05729cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -588,14 +594,20 @@
     <ClCompile Include="NEAT\organism.cpp">
       <Filter>Source Files\NEAT</Filter>
     </ClCompile>
+    <ClCompile Include="NEAT\trait.cpp">
+      <Filter>Source Files\NEAT</Filter>
+    </ClCompile>
     <ClCompile Include="NEAT\population.cpp">
       <Filter>Source Files\NEAT</Filter>
     </ClCompile>
     <ClCompile Include="NEAT\species.cpp">
       <Filter>Source Files\NEAT</Filter>
     </ClCompile>
-    <ClCompile Include="NEAT\trait.cpp">
-      <Filter>Source Files\NEAT</Filter>
+    <ClCompile Include="FNN\FNNPopulation.cpp">
+      <Filter>Source Files\FNN</Filter>
+    </ClCompile>
+    <ClCompile Include="FNN\FNN.cpp">
+      <Filter>Source Files\FNN</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1162,6 +1174,12 @@
     </ClInclude>
     <ClInclude Include="NEAT\trait.h">
       <Filter>Header Files\NEAT</Filter>
+    </ClInclude>
+    <ClInclude Include="FNN\FNN.h">
+      <Filter>Header Files\FNN</Filter>
+    </ClInclude>
+    <ClInclude Include="FNN\FNNPopulation.h">
+      <Filter>Header Files\FNN</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

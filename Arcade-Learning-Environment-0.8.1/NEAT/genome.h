@@ -85,6 +85,7 @@ namespace NEAT
 		//0 - Fully linked, no hidden nodes
 		//1 - Fully linked, one hidden node splitting each link
 		//2 - Fully connected with a hidden layer, recurrent 
+		//3 - Fully connected with a hidden layer, none recurrent
 		//num_hidden is only used in type 2
 		Genome(int num_in, int num_out, int num_hidden, int type);
 
