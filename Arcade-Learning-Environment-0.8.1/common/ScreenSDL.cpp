@@ -14,7 +14,7 @@
  *  Supports displaying the screen via SDL.
  **************************************************************************** */
 #ifdef SDL_SUPPORT
-#include "common/SDL2.hpp"
+#include <SDL.h>
 
 #include "common/ScreenSDL.hpp"
 #include "common/Log.hpp"

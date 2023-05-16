@@ -24,7 +24,7 @@
 #include "emucore/Screen.hxx"
 #include "emucore/OSystem.hxx"
 #include "emucore/MediaSrc.hxx"
-#include "common/SDL2.hpp"
+#include <SDL.h>
 
 namespace ale
 {

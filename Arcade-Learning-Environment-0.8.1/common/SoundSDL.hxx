@@ -35,7 +35,7 @@ namespace ale
 #include "emucore/MediaSrc.hxx"
 #include "emucore/TIASnd.hxx"
 
-#include "common/SDL2.hpp"
+#include <SDL.h>
 // If desired, we save sound to disk
 #include "common/SoundExporter.hpp"
 #include <memory>

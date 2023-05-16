@@ -81,9 +81,6 @@
     <ClCompile Include="common\ScreenSDL.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="common\SDL2.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="common\SoundExporter.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
@@ -636,9 +633,6 @@
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="common\ScreenSDL.hpp">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="common\SDL2.hpp">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="common\SoundExporter.hpp">

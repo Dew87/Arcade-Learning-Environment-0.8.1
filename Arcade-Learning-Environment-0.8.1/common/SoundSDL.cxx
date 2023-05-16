@@ -29,7 +29,7 @@
 #include "emucore/Settings.hxx"
 #include "emucore/System.hxx"
 
-#include "common/SDL2.hpp"
+#include <SDL.h>
 #include "common/SoundSDL.hxx"
 #include "common/Log.hpp"
 
