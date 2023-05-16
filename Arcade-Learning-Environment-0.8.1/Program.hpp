@@ -23,6 +23,7 @@ private:
 	void TrainNEAT();
 
 	// CONFIG
+	unsigned int SRAND_SEED;
 	unsigned int ALE_RANDOM_SEED;
 	float ALE_REPEAT_ACTION_PROBABILITY;
 	unsigned int FACTOR_DOWNSCALE_X;

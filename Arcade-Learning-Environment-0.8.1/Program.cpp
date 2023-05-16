@@ -22,6 +22,7 @@ void Program::Config()
 	// CONFIG load
 	string temp;
 	ifstream ifs(CONFIG);
+	ifs >> temp >> SRAND_SEED;
 	ifs >> temp >> ALE_RANDOM_SEED;
 	ifs >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
 	ifs >> temp >> FACTOR_DOWNSCALE_X;
@@ -32,6 +33,9 @@ void Program::Config()
 	ifs >> temp >> PIXELS_X;
 	ifs >> temp >> PIXELS_Y;
 	ifs.close();
+
+	// SRAND
+	srand(SRAND_SEED);
 
 	// Calculations
 	PIXELS_DOWNSCALED_X = PIXELS_X / FACTOR_DOWNSCALE_X;
@@ -167,7 +171,8 @@ void Program::Play(size_t games, bool SDL)
 
 void Program::Print() const
 {
-	cout << "ALE NEAT made by David Erikssen\n";
+	cout << "ALE Agent made by David Erikssen\n";
+	cout << "SRAND_SEED = " << SRAND_SEED << "\n";
 	cout << "ALE_RANDOM_SEED = " << ALE_RANDOM_SEED << "\n";
 	cout << "ALE_REPEAT_ACTION_PROBABILITY = " << ALE_REPEAT_ACTION_PROBABILITY << "\n";
 	cout << "FACTOR_DOWNSCALE_X = " << FACTOR_DOWNSCALE_X << "\n";
