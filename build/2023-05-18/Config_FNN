@@ -1,0 +1,8 @@
+elitism 2
+hidden_nodes 100
+pop_size 150
+mate_multipoint_prob 0.6
+mate_multipoint_avg_prob 0.4
+mate_singlepoint_prob 0.0
+mutate_link_weights_prob 0.1
+weight_mut_power 2.5

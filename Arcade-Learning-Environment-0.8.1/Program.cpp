@@ -1,6 +1,8 @@
 #include <conio.h>
 #include <iostream>
+#include <SDL.h>
 #include "Program.hpp"
+#include "MonochromeScreen.hpp"
 #include "FNN/FNN.h"
 #include "FNN/FNNPopulation.h"
 #include "NEAT/population.h"
@@ -11,10 +13,26 @@ const char* CONFIG = "Config";
 const char* CONFIG_FNN = "Config_FNN";
 const char* CONFIG_NEAT = "Config_NEAT";
 
-
-Program::Program() : mIsRomLoaded(false), mALE(false), mAgent(NULL)
+Program::Program() : mIsRomLoaded(false), mALE(false), mAgent(NULL), mInputScreen(NULL)
 {
+	// SDL init
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
+		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+	}
+
 	Config();
+}
+
+Program::~Program()
+{
+	if (mInputScreen != NULL)
+	{
+		delete mInputScreen;
+		mInputScreen = NULL;
+	}
+
+	SDL_Quit();
 }
 
 void Program::Config()
@@ -23,13 +41,13 @@ void Program::Config()
 	string temp;
 	ifstream ifs(CONFIG);
 	ifs >> temp >> SRAND_SEED;
+	ifs >> temp >> ALE_MAX_NUM_FRAMES_PER_EPISODE;
 	ifs >> temp >> ALE_RANDOM_SEED;
 	ifs >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
 	ifs >> temp >> FACTOR_DOWNSCALE_X;
 	ifs >> temp >> FACTOR_DOWNSCALE_Y;
 	ifs >> temp >> FACTOR_DOWNSCALE_MULTIPLE;
 	ifs >> temp >> GENERATIONS;
-	ifs >> temp >> MAXIMUM_NUMBER_OF_FRAMES;
 	ifs >> temp >> PIXELS_X;
 	ifs >> temp >> PIXELS_Y;
 	ifs.close();
@@ -40,10 +58,12 @@ void Program::Config()
 	// Calculations
 	PIXELS_DOWNSCALED_X = PIXELS_X / FACTOR_DOWNSCALE_X;
 	PIXELS_DOWNSCALED_Y = PIXELS_Y / FACTOR_DOWNSCALE_Y;
-	DOWNSCALE_FACTOR = 1.0f / (float)(FACTOR_DOWNSCALE_X * FACTOR_DOWNSCALE_Y * FACTOR_DOWNSCALE_MULTIPLE);
+	DOWNSCALE_FACTOR = 1.0f / (float)(FACTOR_DOWNSCALE_X * FACTOR_DOWNSCALE_Y);
+	DOWNSCALE_MULTIPLE = 1.0f / (float)(FACTOR_DOWNSCALE_MULTIPLE);
 	SENSOR_INPUTS = PIXELS_DOWNSCALED_X * PIXELS_DOWNSCALED_Y;
 
 	// ALE
+	mALE.setInt("max_num_frames_per_episode", ALE_MAX_NUM_FRAMES_PER_EPISODE);
 	mALE.setInt("random_seed", ALE_RANDOM_SEED);
 	mALE.setFloat("repeat_action_probability", ALE_REPEAT_ACTION_PROBABILITY);
 
@@ -52,6 +72,62 @@ void Program::Config()
 
 	// NEAT
 	NEAT::load_neat_params(CONFIG_NEAT);
+}
+
+vector<float> Program::ConvertOutputBuffer(const vector<unsigned char> &input) const
+{
+	vector<float> output;
+	output.reserve(input.size());
+
+	for (vector<unsigned char>::const_iterator i = input.begin(); i != input.end(); i++)
+	{
+		float value = (float)(*i) * DOWNSCALE_MULTIPLE;
+		output.push_back(value);
+	}
+
+	return output;
+}
+
+vector<unsigned char> Program::DownscaleOutputBuffer(const vector<unsigned char> &input) const
+{
+	vector<unsigned int> sum(SENSOR_INPUTS, 0);
+	vector<unsigned char> output;
+	output.reserve(SENSOR_INPUTS);
+
+	size_t i = 0;
+	size_t j = 0;
+	size_t k = 0;
+	size_t x = 0;
+	size_t y = 0;
+	while (i < input.size())
+	{
+		sum[x + (y * PIXELS_DOWNSCALED_X)] += input[i];
+		i++;
+		j++;
+		if (j == FACTOR_DOWNSCALE_X)
+		{
+			j = 0;
+			x++;
+			if (x == PIXELS_DOWNSCALED_X)
+			{
+				x = 0;
+				k++;
+				if (k == FACTOR_DOWNSCALE_Y)
+				{
+					k = 0;
+					y++;
+				}
+			}
+		}
+	}
+
+	for (vector<unsigned int>::iterator i = sum.begin(); i != sum.end(); i++)
+	{
+		unsigned char value = (unsigned char)((*i) * DOWNSCALE_FACTOR);
+		output.push_back(value);
+	}
+
+	return output;
 }
 
 void Program::LoadAgent()
@@ -110,12 +186,11 @@ void Program::LogStart(ofstream &log)
 	log << "LOG\n";
 }
 
-void Program::Play(size_t games, bool SDL)
+void Program::Play(size_t games, bool screen)
 {
 	// ALE
 	cout << "\nALE\n";
-	mALE.setBool("display_screen", SDL);
-	mALE.setBool("sound", SDL);
+	mALE.setBool("display_screen", screen);
 	while (!mIsRomLoaded) { LoadRom(); }
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
@@ -134,20 +209,33 @@ void Program::Play(size_t games, bool SDL)
 		return;
 	}
 
+	// Create input screen
+	if (screen && mInputScreen == NULL)
+	{
+		mInputScreen = new MonochromeScreen("Input", PIXELS_DOWNSCALED_X, PIXELS_DOWNSCALED_Y);
+	}
+
 	for (size_t i = 1; i <= games; i++)
 	{
 		mALE.reset_game();
 		ale::reward_t totalReward = 0;
-		while (!mALE.game_over() && mALE.getEpisodeFrameNumber() < MAXIMUM_NUMBER_OF_FRAMES)
+		while (!mALE.game_over())
 		{
 			// Get grayscale screen and downsample
 			vector<unsigned char> grayscale_output_buffer;
 			mALE.getScreenGrayscale(grayscale_output_buffer);
-			vector<float> input = ProcessInput(grayscale_output_buffer);
+			vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+			vector<float> input = ConvertOutputBuffer(downscaled_output);
 
 			// Input sensor data and read output
 			network->load_sensors(input);
 			network->activate();
+
+			// Display input
+			if (mInputScreen)
+			{
+				mInputScreen->Render(downscaled_output);
+			}
 
 			size_t highestActivationIndex = 0;
 			double highestActivationValue = -DBL_MAX;
@@ -166,6 +254,7 @@ void Program::Play(size_t games, bool SDL)
 		}
 		cout << "Game " << i << " score: " << totalReward << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 	}
+
 	cout << "\n";
 }
 
@@ -173,18 +262,19 @@ void Program::Print() const
 {
 	cout << "ALE Agent made by David Erikssen\n";
 	cout << "SRAND_SEED = " << SRAND_SEED << "\n";
+	cout << "ALE_MAX_NUM_FRAMES_PER_EPISODE = " << ALE_MAX_NUM_FRAMES_PER_EPISODE << "\n";
 	cout << "ALE_RANDOM_SEED = " << ALE_RANDOM_SEED << "\n";
 	cout << "ALE_REPEAT_ACTION_PROBABILITY = " << ALE_REPEAT_ACTION_PROBABILITY << "\n";
 	cout << "FACTOR_DOWNSCALE_X = " << FACTOR_DOWNSCALE_X << "\n";
 	cout << "FACTOR_DOWNSCALE_Y = " << FACTOR_DOWNSCALE_Y << "\n";
 	cout << "FACTOR_DOWNSCALE_MULTIPLE = " << FACTOR_DOWNSCALE_MULTIPLE << "\n";
 	cout << "GENERATIONS = " << GENERATIONS << "\n";
-	cout << "MAXIMUM_NUMBER_OF_FRAMES = " << MAXIMUM_NUMBER_OF_FRAMES << "\n";
 	cout << "PIXELS_X = " << PIXELS_X << "\n";
 	cout << "PIXELS_Y = " << PIXELS_Y << "\n";
 	cout << "PIXELS_DOWNSCALED_X = " << PIXELS_DOWNSCALED_X << "\n";
 	cout << "PIXELS_DOWNSCALED_Y = " << PIXELS_DOWNSCALED_Y << "\n";
 	cout << "DOWNSCALE_FACTOR = " << DOWNSCALE_FACTOR << "\n";
+	cout << "DOWNSCALE_MULTIPLE = " << DOWNSCALE_MULTIPLE << "\n";
 	cout << "SENSOR_INPUTS = " << SENSOR_INPUTS << "\n";
 
 	cout << "\nFNN\n";
@@ -194,46 +284,6 @@ void Program::Print() const
 	NEAT::print_neat_params();
 
 	cout << "\n";
-}
-
-vector<float> Program::ProcessInput(const vector<unsigned char> &input) const
-{
-	vector<unsigned int> sum(SENSOR_INPUTS, 0);
-	vector<float> output(SENSOR_INPUTS, 0.0f);
-
-	size_t i = 0;
-	size_t j = 0;
-	size_t k = 0;
-	size_t x = 0;
-	size_t y = 0;
-	while (i < input.size())
-	{
-		sum[x + (y * PIXELS_DOWNSCALED_X)] += input[i];
-		i++;
-		j++;
-		if (j == FACTOR_DOWNSCALE_X)
-		{
-			j = 0;
-			x++;
-			if (x == PIXELS_DOWNSCALED_X)
-			{
-				x = 0;
-				k++;
-				if (k == FACTOR_DOWNSCALE_Y)
-				{
-					k = 0;
-					y++;
-				}
-			}
-		}
-	}
-
-	for (i = 0; i < sum.size(); i++)
-	{
-		output[i] = (float)sum[i] * DOWNSCALE_FACTOR;
-	}
-
-	return output;
 }
 
 void Program::Run()
@@ -274,7 +324,6 @@ void Program::TrainFNN()
 	// ALE
 	cout << "\nALE\n";
 	mALE.setBool("display_screen", false);
-	mALE.setBool("sound", false);
 	while (!mIsRomLoaded) { LoadRom(); }
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
@@ -314,12 +363,13 @@ void Program::TrainFNN()
 
 			mALE.reset_game();
 			ale::reward_t totalReward = 0;
-			while (!mALE.game_over() && mALE.getEpisodeFrameNumber() < MAXIMUM_NUMBER_OF_FRAMES)
+			while (!mALE.game_over())
 			{
 				// Get grayscale screen and downsample
 				vector<unsigned char> grayscale_output_buffer;
 				mALE.getScreenGrayscale(grayscale_output_buffer);
-				vector<float> input = ProcessInput(grayscale_output_buffer);
+				vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
 				// Input sensor data and read output
 				network->load_sensors(input);
@@ -387,7 +437,6 @@ void Program::TrainNEAT()
 	// ALE
 	cout << "\nALE\n";
 	mALE.setBool("display_screen", false);
-	mALE.setBool("sound", false);
 	while (!mIsRomLoaded) { LoadRom(); }
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
@@ -428,12 +477,13 @@ void Program::TrainNEAT()
 
 			mALE.reset_game();
 			ale::reward_t totalReward = 0;
-			while (!mALE.game_over() && mALE.getEpisodeFrameNumber() < MAXIMUM_NUMBER_OF_FRAMES)
+			while (!mALE.game_over())
 			{
 				// Get grayscale screen and downsample
 				vector<unsigned char> grayscale_output_buffer;
 				mALE.getScreenGrayscale(grayscale_output_buffer);
-				vector<float> input = ProcessInput(grayscale_output_buffer);
+				vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
 				// Input sensor data and read output
 				network->load_sensors(input);

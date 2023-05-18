@@ -606,6 +606,9 @@
     <ClCompile Include="FNN\FNN.cpp">
       <Filter>Source Files\FNN</Filter>
     </ClCompile>
+    <ClCompile Include="MonochromeScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ale_interface.hpp">
@@ -1174,6 +1177,9 @@
     </ClInclude>
     <ClInclude Include="FNN\FNNPopulation.h">
       <Filter>Header Files\FNN</Filter>
+    </ClInclude>
+    <ClInclude Include="MonochromeScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

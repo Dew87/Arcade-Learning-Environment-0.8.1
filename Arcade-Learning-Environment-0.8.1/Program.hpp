@@ -4,21 +4,25 @@
 #include <ale_interface.hpp>
 #include <NEAT/organism.h>
 
+class MonochromeScreen;
+
 class Program
 {
 public:
 	Program();
+	~Program();
 	void Run();
 
 private:
-	// Menu functions
+	// Functions
 	void Config();
+	std::vector<float> ConvertOutputBuffer(const std::vector<unsigned char> &input) const;
+	std::vector<unsigned char> DownscaleOutputBuffer(const std::vector<unsigned char> &input) const;
 	void LoadAgent();
 	void LoadRom();
 	void LogStart(std::ofstream &log);
-	void Play(size_t games, bool SDL);
+	void Play(size_t games, bool screen);
 	void Print() const;
-	std::vector<float> ProcessInput(const std::vector<unsigned char> &input) const;
 	void TrainFNN();
 	void TrainNEAT();
 
@@ -30,18 +34,20 @@ private:
 	unsigned int FACTOR_DOWNSCALE_Y;
 	unsigned int FACTOR_DOWNSCALE_MULTIPLE;
 	unsigned int GENERATIONS;
-	unsigned int MAXIMUM_NUMBER_OF_FRAMES;
+	unsigned int ALE_MAX_NUM_FRAMES_PER_EPISODE;
 	unsigned int PIXELS_X;
 	unsigned int PIXELS_Y;
 	unsigned int PIXELS_DOWNSCALED_X;
 	unsigned int PIXELS_DOWNSCALED_Y;
 	float DOWNSCALE_FACTOR;
+	float DOWNSCALE_MULTIPLE;
 	unsigned int SENSOR_INPUTS;
 
 	// Variables
 	bool mIsRomLoaded;
 	ale::ALEInterface mALE;
 	NEAT::Organism *mAgent;
+	MonochromeScreen *mInputScreen;
 };
 
 #endif
