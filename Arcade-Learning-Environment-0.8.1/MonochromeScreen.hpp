@@ -10,7 +10,7 @@ class SDL_Window;
 class MonochromeScreen
 {
 public:
-	MonochromeScreen(const char *title, int width, int height);
+	MonochromeScreen(const char *title, int width, int height, int x, int y);
 	~MonochromeScreen();
 	void Render(const std::vector<unsigned char> &input);
 
@@ -19,8 +19,8 @@ private:
 	SDL_Texture *texture;
 	SDL_Window *window;
 
-	int mWidth;
-	int mHeight;
+	int mX;
+	int mY;
 };
 
 #endif

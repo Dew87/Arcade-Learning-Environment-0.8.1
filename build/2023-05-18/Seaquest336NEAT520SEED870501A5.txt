@@ -1,0 +1,3049 @@
+CONFIG
+SRAND_SEED 870501
+ALE_MAX_NUM_FRAMES_PER_EPISODE 10800
+ALE_RANDOM_SEED 0
+ALE_REPEAT_ACTION_PROBABILITY 0.0
+FACTOR_DOWNSCALED_X 10
+FACTOR_DOWNSCALED_Y 10
+FACTOR_DOWNSCALED_MULTIPLE 64
+GENERATIONS 150
+PIXELS_X 160
+PIXELS_Y 210
+
+NEAT
+trait_param_mut_prob 0.5 
+trait_mutation_power 1.0
+linktrait_mut_sig 1.0
+nodetrait_mut_sig 0.5
+weigh_mut_power 2.5
+recur_prob 0.00
+disjoint_coeff 1.0
+excess_coeff 1.0
+mutdiff_coeff 0.4
+compat_thresh 3.0
+age_significance 0.5
+survival_thresh 0.20
+mutate_only_prob 0.25
+mutate_random_trait_prob 0.1
+mutate_link_trait_prob 0.1
+mutate_node_trait_prob 0.1
+mutate_link_weights_prob 0.9
+mutate_toggle_enable_prob 0.00
+mutate_gene_reenable_prob 0.000
+mutate_add_node_prob 0.03
+mutate_add_link_prob 0.05
+interspecies_mate_rate 0.001
+mate_multipoint_prob 0.6
+mate_multipoint_avg_prob 0.4
+mate_singlepoint_prob 0.0
+mate_only_prob 0.2
+recur_only_prob 0.0
+pop_size 150
+dropoff_age 15
+newlink_tries 20
+print_every 30
+babies_stolen 0
+num_runs 100
+
+LOG
+Generation 1 species[1]: fitness average 14.1333 max 240
+Generation 2 species[1]: fitness average 16.1333 max 240
+Generation 3 species[2]: fitness average 23.4667 max 240
+Generation 4 species[2]: fitness average 23.3333 max 240
+Generation 5 species[3]: fitness average 35.2 max 240
+Generation 6 species[3]: fitness average 31.6 max 240
+Generation 7 species[4]: fitness average 45.2 max 240
+Generation 8 species[4]: fitness average 44 max 240
+Generation 9 species[6]: fitness average 39.8667 max 240
+Generation 10 species[6]: fitness average 30.4 max 240
+Generation 11 species[6]: fitness average 43.6 max 300
+Generation 12 species[7]: fitness average 46.5333 max 300
+Generation 13 species[9]: fitness average 48.2667 max 300
+Generation 14 species[9]: fitness average 48.9333 max 360
+Generation 15 species[9]: fitness average 67.8667 max 360
+Generation 16 species[10]: fitness average 71.0667 max 360
+Generation 17 species[14]: fitness average 86 max 360
+Generation 18 species[13]: fitness average 62.1333 max 360
+Generation 19 species[12]: fitness average 72.8 max 360
+Generation 20 species[15]: fitness average 66.4 max 360
+Generation 21 species[15]: fitness average 73.3333 max 360
+Generation 22 species[16]: fitness average 72.6667 max 360
+Generation 23 species[17]: fitness average 86.6667 max 360
+Generation 24 species[16]: fitness average 87.7333 max 360
+Generation 25 species[14]: fitness average 77.0667 max 360
+Generation 26 species[15]: fitness average 87.0667 max 360
+Generation 27 species[14]: fitness average 81.0667 max 360
+Generation 28 species[14]: fitness average 76.1333 max 360
+Generation 29 species[15]: fitness average 75.6 max 360
+Generation 30 species[17]: fitness average 62.9333 max 360
+Generation 31 species[14]: fitness average 79.6 max 360
+Generation 32 species[15]: fitness average 95.3333 max 360
+Generation 33 species[15]: fitness average 82.5333 max 360
+Generation 34 species[17]: fitness average 84.4 max 360
+Generation 35 species[2]: fitness average 96.2667 max 360
+Generation 36 species[11]: fitness average 134.133 max 360
+Generation 37 species[13]: fitness average 99.8667 max 360
+Generation 38 species[13]: fitness average 122.267 max 360
+Generation 39 species[14]: fitness average 111.733 max 360
+Generation 40 species[15]: fitness average 113.867 max 360
+Generation 41 species[16]: fitness average 127.467 max 360
+Generation 42 species[17]: fitness average 120.667 max 360
+Generation 43 species[17]: fitness average 114 max 360
+Generation 44 species[17]: fitness average 121.467 max 360
+Generation 45 species[18]: fitness average 109.867 max 360
+Generation 46 species[19]: fitness average 98.4 max 360
+Generation 47 species[15]: fitness average 118.4 max 360
+Generation 48 species[15]: fitness average 135.067 max 360
+Generation 49 species[14]: fitness average 117.067 max 360
+Generation 50 species[13]: fitness average 136.267 max 360
+Generation 51 species[11]: fitness average 118.133 max 360
+Generation 52 species[8]: fitness average 103.6 max 360
+Generation 53 species[9]: fitness average 110.933 max 360
+Generation 54 species[8]: fitness average 101.067 max 360
+Generation 55 species[2]: fitness average 110.933 max 360
+Generation 56 species[16]: fitness average 137.333 max 360
+Generation 57 species[16]: fitness average 123.867 max 360
+Generation 58 species[17]: fitness average 125.333 max 360
+Generation 59 species[18]: fitness average 141.733 max 360
+Generation 60 species[19]: fitness average 105.6 max 360
+Generation 61 species[18]: fitness average 105.067 max 360
+Generation 62 species[20]: fitness average 107.2 max 360
+Generation 63 species[20]: fitness average 101.2 max 360
+Generation 64 species[19]: fitness average 99.6 max 360
+Generation 65 species[20]: fitness average 111.867 max 360
+Generation 66 species[20]: fitness average 102.8 max 360
+Generation 67 species[20]: fitness average 96.5333 max 360
+Generation 68 species[20]: fitness average 109.733 max 360
+Generation 69 species[19]: fitness average 95.6 max 360
+Generation 70 species[19]: fitness average 109.067 max 360
+Generation 71 species[13]: fitness average 105.067 max 360
+Generation 72 species[14]: fitness average 108.8 max 420
+Generation 73 species[14]: fitness average 116.8 max 420
+Generation 74 species[14]: fitness average 111.467 max 420
+Generation 75 species[14]: fitness average 109.6 max 420
+Generation 76 species[15]: fitness average 102.267 max 420
+Generation 77 species[14]: fitness average 98.5333 max 420
+Generation 78 species[15]: fitness average 105.067 max 420
+Generation 79 species[15]: fitness average 115.733 max 420
+Generation 80 species[15]: fitness average 111.067 max 420
+Generation 81 species[16]: fitness average 124.533 max 420
+Generation 82 species[16]: fitness average 108.4 max 420
+Generation 83 species[15]: fitness average 98.2667 max 420
+Generation 84 species[15]: fitness average 109.067 max 420
+Generation 85 species[16]: fitness average 109.333 max 420
+Generation 86 species[15]: fitness average 100.133 max 420
+Generation 87 species[14]: fitness average 94.8 max 420
+Generation 88 species[12]: fitness average 105.6 max 420
+Generation 89 species[11]: fitness average 96 max 420
+Generation 90 species[11]: fitness average 102.4 max 420
+Generation 91 species[10]: fitness average 94.2667 max 420
+Generation 92 species[10]: fitness average 94.8 max 440
+Generation 93 species[9]: fitness average 106.8 max 440
+Generation 94 species[10]: fitness average 100.8 max 440
+Generation 95 species[9]: fitness average 105.2 max 440
+Generation 96 species[10]: fitness average 108.133 max 440
+Generation 97 species[12]: fitness average 99.4667 max 440
+Generation 98 species[12]: fitness average 108.533 max 440
+Generation 99 species[14]: fitness average 105.2 max 440
+Generation 100 species[16]: fitness average 122 max 440
+Generation 101 species[17]: fitness average 113.333 max 440
+Generation 102 species[18]: fitness average 108.267 max 440
+Generation 103 species[17]: fitness average 110.267 max 440
+Generation 104 species[22]: fitness average 104.267 max 440
+Generation 105 species[22]: fitness average 112 max 440
+Generation 106 species[20]: fitness average 122.533 max 440
+Generation 107 species[19]: fitness average 120.8 max 440
+Generation 108 species[19]: fitness average 105.2 max 440
+Generation 109 species[20]: fitness average 103.867 max 440
+Generation 110 species[20]: fitness average 109.467 max 360
+Generation 111 species[22]: fitness average 105.6 max 380
+Generation 112 species[23]: fitness average 111.467 max 380
+Generation 113 species[2]: fitness average 142.533 max 380
+Generation 114 species[14]: fitness average 177.333 max 380
+Generation 115 species[15]: fitness average 143.467 max 380
+Generation 116 species[17]: fitness average 136.8 max 380
+Generation 117 species[17]: fitness average 135.733 max 460
+Generation 118 species[19]: fitness average 136 max 460
+Generation 119 species[20]: fitness average 134.267 max 460
+Generation 120 species[19]: fitness average 126.533 max 460
+Generation 121 species[18]: fitness average 128.133 max 460
+Generation 122 species[19]: fitness average 132.267 max 460
+Generation 123 species[18]: fitness average 130.4 max 460
+Generation 124 species[19]: fitness average 135.467 max 460
+Generation 125 species[19]: fitness average 116.4 max 460
+Generation 126 species[20]: fitness average 111.2 max 460
+Generation 127 species[18]: fitness average 114.8 max 460
+Generation 128 species[18]: fitness average 106.8 max 460
+Generation 129 species[12]: fitness average 95.4667 max 460
+Generation 130 species[11]: fitness average 94.5333 max 460
+Generation 131 species[10]: fitness average 115.6 max 460
+Generation 132 species[11]: fitness average 86 max 360
+Generation 133 species[10]: fitness average 105.733 max 340
+Generation 134 species[9]: fitness average 93.8667 max 340
+Generation 135 species[9]: fitness average 95.8667 max 340
+Generation 136 species[10]: fitness average 97.7333 max 340
+Generation 137 species[13]: fitness average 89.4667 max 340
+Generation 138 species[2]: fitness average 128.133 max 340
+Generation 139 species[8]: fitness average 128.8 max 340
+Generation 140 species[9]: fitness average 117.733 max 360
+Generation 141 species[11]: fitness average 131.6 max 520
+Generation 142 species[12]: fitness average 117.2 max 520
+Generation 143 species[13]: fitness average 135.6 max 520
+Generation 144 species[13]: fitness average 105.467 max 520
+Generation 145 species[16]: fitness average 109.2 max 520
+Generation 146 species[19]: fitness average 110.933 max 520
+Generation 147 species[19]: fitness average 124.133 max 520
+Generation 148 species[21]: fitness average 113.867 max 520
+Generation 149 species[20]: fitness average 127.333 max 520
+Generation 150 species[18]: fitness average 114.667 max 520
+
+ALE
+Input rom file name: Seaquest.bin
+Game console created:
+  ROM file:  Seaquest.bin
+  Cart Name: Seaquest (1983) (Activision) [!]
+  Cart MD5:  240bfbac5163af4df5ae713985386f92
+  Display Format:  AUTO-DETECT ==> NTSC
+  ROM Size:        4096
+  Bankswitch Type: AUTO-DETECT ==> 4K
+
+Running ROM file...
+Random seed is 0
+Number of legal actions: 18
+
+NEAT
+Spawning Population of Genome
+Verifying Spawned Pop
+Save agent to file: Seaquest336NEAT0SEED870501
+Generation 1
+Number of Species: 1
+compat_thresh: 3
+Generation 1: overall_average = 0.0471111
+orig fitness of Species1(Size 150): 240 last improved 0
+NEW POPULATION RECORD FITNESS: 240
+Generation 2
+Number of Species: 1
+compat_thresh: 3
+Generation 2: overall_average = 0.0537778
+orig fitness of Species1(Size 150): 240 last improved 1
+1 generations since last population fitness record: 240
+Generation 3
+Number of Species: 2
+compat_thresh: 3
+Generation 3: overall_average = 0.409843
+orig fitness of Species1(Size 149): 240 last improved 2
+orig fitness of Species2(Size 1): 100 last improved 0
+2 generations since last population fitness record: 240
+Generation 4
+Number of Species: 2
+compat_thresh: 3
+Generation 4: overall_average = 0.205699
+orig fitness of Species1(Size 28): 240 last improved 3
+orig fitness of Species2(Size 122): 100 last improved 1
+3 generations since last population fitness record: 240
+Generation 5
+Number of Species: 3
+compat_thresh: 3
+Generation 5: overall_average = 0.334012
+orig fitness of Species1(Size 105): 240 last improved 4
+orig fitness of Species2(Size 44): 100 last improved 2
+orig fitness of Species3(Size 1): 40 last improved 0
+4 generations since last population fitness record: 240
+Generation 6
+Number of Species: 3
+compat_thresh: 3
+Generation 6: overall_average = 0.304286
+orig fitness of Species1(Size 63): 240 last improved 5
+orig fitness of Species3(Size 60): 120 last improved 0
+orig fitness of Species2(Size 27): 100 last improved 3
+5 generations since last population fitness record: 240
+Generation 7
+Number of Species: 4
+compat_thresh: 3
+Generation 7: overall_average = 0.659618
+orig fitness of Species1(Size 78): 240 last improved 6
+orig fitness of Species3(Size 27): 120 last improved 1
+orig fitness of Species2(Size 44): 100 last improved 4
+orig fitness of Species4(Size 1): 80 last improved 0
+6 generations since last population fitness record: 240
+Generation 8
+Number of Species: 4
+compat_thresh: 3
+Generation 8: overall_average = 0.55758
+orig fitness of Species1(Size 44): 240 last improved 7
+orig fitness of Species3(Size 21): 120 last improved 2
+orig fitness of Species2(Size 24): 100 last improved 5
+orig fitness of Species4(Size 61): 80 last improved 1
+7 generations since last population fitness record: 240
+Generation 9
+Number of Species: 6
+compat_thresh: 3
+Generation 9: overall_average = 1.30595
+orig fitness of Species1(Size 49): 240 last improved 8
+orig fitness of Species2(Size 21): 180 last improved 0
+orig fitness of Species3(Size 39): 120 last improved 3
+orig fitness of Species5(Size 1): 120 last improved 0
+orig fitness of Species6(Size 1): 120 last improved 0
+orig fitness of Species4(Size 39): 100 last improved 0
+8 generations since last population fitness record: 240
+Generation 10
+Number of Species: 6
+compat_thresh: 3
+Generation 10: overall_average = 0.718473
+orig fitness of Species1(Size 19): 240 last improved 9
+orig fitness of Species2(Size 14): 180 last improved 1
+orig fitness of Species3(Size 12): 120 last improved 4
+orig fitness of Species5(Size 46): 120 last improved 1
+orig fitness of Species6(Size 46): 120 last improved 1
+orig fitness of Species4(Size 13): 100 last improved 1
+9 generations since last population fitness record: 240
+Generation 11
+Number of Species: 6
+compat_thresh: 3
+Generation 11: overall_average = 0.90319
+orig fitness of Species2(Size 31): 300 last improved 0
+orig fitness of Species1(Size 46): 240 last improved 10
+orig fitness of Species3(Size 14): 120 last improved 5
+orig fitness of Species5(Size 12): 120 last improved 2
+orig fitness of Species6(Size 17): 120 last improved 2
+orig fitness of Species4(Size 30): 100 last improved 2
+NEW POPULATION RECORD FITNESS: 300
+Generation 12
+Number of Species: 7
+compat_thresh: 3
+Generation 12: overall_average = 1.2316
+orig fitness of Species2(Size 28): 300 last improved 1
+orig fitness of Species1(Size 54): 240 last improved 11
+orig fitness of Species3(Size 17): 120 last improved 6
+orig fitness of Species5(Size 9): 120 last improved 3
+orig fitness of Species6(Size 7): 120 last improved 3
+orig fitness of Species4(Size 34): 100 last improved 3
+orig fitness of Species7(Size 1): 80 last improved 0
+1 generations since last population fitness record: 300
+Generation 13
+Number of Species: 9
+compat_thresh: 3
+Generation 13: overall_average = 2.24432
+orig fitness of Species2(Size 22): 300 last improved 2
+orig fitness of Species1(Size 38): 240 last improved 12
+orig fitness of Species7(Size 33): 140 last improved 0
+orig fitness of Species9(Size 1): 140 last improved 0
+orig fitness of Species3(Size 6): 120 last improved 7
+orig fitness of Species4(Size 24): 120 last improved 0
+orig fitness of Species5(Size 9): 120 last improved 4
+orig fitness of Species6(Size 16): 120 last improved 4
+orig fitness of Species8(Size 1): 80 last improved 0
+2 generations since last population fitness record: 300
+Generation 14
+Number of Species: 9
+compat_thresh: 3
+Generation 14: overall_average = 1.93011
+orig fitness of Species7(Size 6): 360 last improved 0
+orig fitness of Species2(Size 27): 300 last improved 3
+orig fitness of Species9(Size 32): 260 last improved 0
+orig fitness of Species1(Size 21): 240 last improved 13
+orig fitness of Species3(Size 11): 120 last improved 8
+orig fitness of Species4(Size 13): 120 last improved 1
+orig fitness of Species5(Size 14): 120 last improved 5
+orig fitness of Species6(Size 8): 120 last improved 5
+orig fitness of Species8(Size 18): 80 last improved 1
+NEW POPULATION RECORD FITNESS: 360
+Generation 15
+Number of Species: 9
+compat_thresh: 3
+Generation 15: overall_average = 2.03112
+orig fitness of Species7(Size 30): 360 last improved 1
+orig fitness of Species2(Size 22): 300 last improved 4
+orig fitness of Species9(Size 11): 260 last improved 1
+orig fitness of Species1(Size 35): 240 last improved 14
+orig fitness of Species4(Size 17): 140 last improved 0
+orig fitness of Species3(Size 9): 120 last improved 9
+orig fitness of Species5(Size 6): 120 last improved 6
+orig fitness of Species6(Size 5): 80 last improved 6
+orig fitness of Species8(Size 15): 80 last improved 2
+1 generations since last population fitness record: 360
+Generation 16
+Number of Species: 10
+compat_thresh: 3
+Generation 16: overall_average = 2.51736
+orig fitness of Species7(Size 25): 360 last improved 2
+orig fitness of Species2(Size 41): 300 last improved 5
+orig fitness of Species9(Size 13): 260 last improved 2
+orig fitness of Species4(Size 17): 140 last improved 1
+orig fitness of Species3(Size 24): 120 last improved 10
+orig fitness of Species5(Size 11): 120 last improved 7
+orig fitness of Species6(Size 4): 80 last improved 7
+orig fitness of Species8(Size 13): 80 last improved 3
+orig fitness of Species10(Size 1): 80 last improved 0
+orig fitness of Species11(Size 1): 80 last improved 0
+2 generations since last population fitness record: 360
+Generation 17
+Number of Species: 14
+compat_thresh: 3
+Generation 17: overall_average = 5.35886
+orig fitness of Species7(Size 26): 360 last improved 3
+orig fitness of Species15(Size 1): 340 last improved 0
+orig fitness of Species2(Size 30): 300 last improved 6
+orig fitness of Species9(Size 11): 260 last improved 3
+orig fitness of Species3(Size 12): 160 last improved 0
+orig fitness of Species4(Size 12): 140 last improved 2
+orig fitness of Species12(Size 1): 140 last improved 0
+orig fitness of Species5(Size 7): 120 last improved 8
+orig fitness of Species14(Size 1): 120 last improved 0
+orig fitness of Species13(Size 1): 100 last improved 0
+orig fitness of Species8(Size 13): 80 last improved 4
+orig fitness of Species10(Size 16): 80 last improved 1
+orig fitness of Species11(Size 15): 80 last improved 1
+orig fitness of Species6(Size 4): 0 last improved 8
+3 generations since last population fitness record: 360
+Generation 18
+Number of Species: 13
+compat_thresh: 3
+Generation 18: overall_average = 2.91246
+orig fitness of Species7(Size 16): 360 last improved 4
+orig fitness of Species15(Size 32): 340 last improved 1
+orig fitness of Species2(Size 11): 300 last improved 7
+orig fitness of Species9(Size 8): 260 last improved 4
+orig fitness of Species4(Size 15): 200 last improved 0
+orig fitness of Species12(Size 13): 180 last improved 0
+orig fitness of Species3(Size 20): 160 last improved 1
+orig fitness of Species5(Size 4): 120 last improved 9
+orig fitness of Species14(Size 11): 120 last improved 1
+orig fitness of Species13(Size 10): 100 last improved 1
+orig fitness of Species8(Size 7): 80 last improved 5
+orig fitness of Species10(Size 1): 0 last improved 2
+orig fitness of Species16(Size 2): 0 last improved 1
+4 generations since last population fitness record: 360
+Generation 19
+Number of Species: 12
+compat_thresh: 3
+Generation 19: overall_average = 3.52877
+orig fitness of Species7(Size 17): 360 last improved 5
+orig fitness of Species15(Size 12): 340 last improved 2
+orig fitness of Species2(Size 39): 300 last improved 8
+orig fitness of Species9(Size 8): 260 last improved 5
+orig fitness of Species4(Size 22): 200 last improved 1
+orig fitness of Species12(Size 13): 180 last improved 1
+orig fitness of Species3(Size 16): 160 last improved 2
+orig fitness of Species5(Size 6): 120 last improved 10
+orig fitness of Species13(Size 4): 100 last improved 2
+orig fitness of Species8(Size 10): 80 last improved 6
+orig fitness of Species10(Size 1): 80 last improved 3
+orig fitness of Species14(Size 2): 0 last improved 2
+5 generations since last population fitness record: 360
+Generation 20
+Number of Species: 15
+compat_thresh: 3
+Generation 20: overall_average = 5.08428
+orig fitness of Species7(Size 19): 360 last improved 6
+orig fitness of Species15(Size 16): 340 last improved 3
+orig fitness of Species2(Size 14): 300 last improved 9
+orig fitness of Species17(Size 1): 300 last improved 0
+orig fitness of Species9(Size 11): 260 last improved 6
+orig fitness of Species3(Size 18): 200 last improved 0
+orig fitness of Species4(Size 17): 200 last improved 2
+orig fitness of Species12(Size 9): 180 last improved 2
+orig fitness of Species18(Size 1): 180 last improved 0
+orig fitness of Species5(Size 16): 120 last improved 11
+orig fitness of Species20(Size 1): 120 last improved 0
+orig fitness of Species13(Size 5): 100 last improved 3
+orig fitness of Species8(Size 8): 80 last improved 7
+orig fitness of Species10(Size 12): 80 last improved 4
+orig fitness of Species19(Size 2): 80 last improved 0
+6 generations since last population fitness record: 360
+Generation 21
+Number of Species: 15
+compat_thresh: 3
+Generation 21: overall_average = 4.25372
+orig fitness of Species7(Size 12): 360 last improved 7
+orig fitness of Species15(Size 6): 340 last improved 4
+orig fitness of Species2(Size 9): 300 last improved 10
+orig fitness of Species17(Size 29): 300 last improved 1
+orig fitness of Species9(Size 10): 260 last improved 7
+orig fitness of Species3(Size 12): 200 last improved 1
+orig fitness of Species4(Size 10): 200 last improved 3
+orig fitness of Species18(Size 18): 180 last improved 1
+orig fitness of Species12(Size 4): 140 last improved 3
+orig fitness of Species5(Size 8): 120 last improved 12
+orig fitness of Species20(Size 12): 120 last improved 1
+orig fitness of Species8(Size 4): 80 last improved 8
+orig fitness of Species10(Size 6): 80 last improved 5
+orig fitness of Species19(Size 8): 80 last improved 1
+orig fitness of Species13(Size 2): 0 last improved 4
+7 generations since last population fitness record: 360
+Generation 22
+Number of Species: 16
+compat_thresh: 3
+Generation 22: overall_average = 5.17643
+orig fitness of Species7(Size 14): 360 last improved 8
+orig fitness of Species15(Size 13): 340 last improved 5
+orig fitness of Species2(Size 19): 300 last improved 11
+orig fitness of Species17(Size 10): 300 last improved 2
+orig fitness of Species9(Size 9): 260 last improved 8
+orig fitness of Species18(Size 10): 260 last improved 0
+orig fitness of Species3(Size 14): 200 last improved 2
+orig fitness of Species4(Size 25): 200 last improved 4
+orig fitness of Species12(Size 8): 180 last improved 4
+orig fitness of Species21(Size 1): 160 last improved 0
+orig fitness of Species22(Size 1): 160 last improved 0
+orig fitness of Species5(Size 10): 120 last improved 13
+orig fitness of Species8(Size 2): 80 last improved 9
+orig fitness of Species10(Size 7): 80 last improved 6
+orig fitness of Species19(Size 5): 80 last improved 2
+orig fitness of Species20(Size 2): 0 last improved 2
+8 generations since last population fitness record: 360
+Generation 23
+Number of Species: 17
+compat_thresh: 3
+Generation 23: overall_average = 7.19003
+orig fitness of Species7(Size 23): 360 last improved 9
+orig fitness of Species15(Size 13): 340 last improved 6
+orig fitness of Species2(Size 13): 300 last improved 12
+orig fitness of Species23(Size 1): 300 last improved 0
+orig fitness of Species9(Size 7): 260 last improved 9
+orig fitness of Species18(Size 9): 260 last improved 1
+orig fitness of Species24(Size 1): 260 last improved 0
+orig fitness of Species3(Size 19): 200 last improved 3
+orig fitness of Species4(Size 8): 200 last improved 5
+orig fitness of Species12(Size 7): 180 last improved 5
+orig fitness of Species21(Size 15): 160 last improved 1
+orig fitness of Species22(Size 15): 160 last improved 1
+orig fitness of Species5(Size 4): 120 last improved 14
+orig fitness of Species8(Size 4): 120 last improved 0
+orig fitness of Species10(Size 3): 80 last improved 7
+orig fitness of Species17(Size 4): 80 last improved 3
+orig fitness of Species19(Size 4): 80 last improved 3
+9 generations since last population fitness record: 360
+Generation 24
+Number of Species: 16
+compat_thresh: 3
+Generation 24: overall_average = 5.98227
+orig fitness of Species7(Size 24): 360 last improved 10
+orig fitness of Species15(Size 10): 340 last improved 7
+orig fitness of Species2(Size 10): 300 last improved 13
+orig fitness of Species23(Size 20): 300 last improved 1
+orig fitness of Species9(Size 16): 260 last improved 10
+orig fitness of Species18(Size 7): 260 last improved 2
+orig fitness of Species24(Size 18): 260 last improved 1
+orig fitness of Species3(Size 10): 200 last improved 4
+orig fitness of Species4(Size 13): 200 last improved 6
+orig fitness of Species12(Size 1): 180 last improved 6
+orig fitness of Species8(Size 4): 120 last improved 1
+orig fitness of Species10(Size 6): 80 last improved 8
+orig fitness of Species17(Size 1): 80 last improved 4
+orig fitness of Species19(Size 4): 80 last improved 4
+orig fitness of Species21(Size 3): 0 last improved 2
+orig fitness of Species22(Size 3): 0 last improved 2
+10 generations since last population fitness record: 360
+Generation 25
+Number of Species: 14
+compat_thresh: 3
+Generation 25: overall_average = 4.08099
+orig fitness of Species7(Size 24): 360 last improved 11
+orig fitness of Species15(Size 14): 340 last improved 8
+orig fitness of Species2(Size 18): 300 last improved 14
+orig fitness of Species23(Size 7): 300 last improved 2
+orig fitness of Species9(Size 12): 260 last improved 11
+orig fitness of Species18(Size 7): 260 last improved 3
+orig fitness of Species3(Size 18): 200 last improved 5
+orig fitness of Species4(Size 9): 200 last improved 7
+orig fitness of Species12(Size 15): 180 last improved 7
+orig fitness of Species8(Size 9): 120 last improved 2
+orig fitness of Species10(Size 3): 80 last improved 9
+orig fitness of Species17(Size 6): 80 last improved 5
+orig fitness of Species19(Size 3): 80 last improved 5
+orig fitness of Species24(Size 5): 80 last improved 2
+11 generations since last population fitness record: 360
+Generation 26
+Number of Species: 15
+compat_thresh: 3
+Generation 26: overall_average = 5.65888
+orig fitness of Species7(Size 24): 360 last improved 12
+orig fitness of Species15(Size 16): 340 last improved 9
+orig fitness of Species23(Size 9): 300 last improved 3
+orig fitness of Species9(Size 22): 260 last improved 12
+orig fitness of Species18(Size 7): 260 last improved 4
+orig fitness of Species3(Size 22): 200 last improved 6
+orig fitness of Species4(Size 13): 200 last improved 8
+orig fitness of Species25(Size 1): 200 last improved 0
+orig fitness of Species12(Size 4): 180 last improved 8
+orig fitness of Species19(Size 3): 160 last improved 0
+orig fitness of Species17(Size 6): 140 last improved 6
+orig fitness of Species8(Size 13): 120 last improved 3
+orig fitness of Species10(Size 7): 80 last improved 10
+orig fitness of Species26(Size 1): 80 last improved 0
+orig fitness of Species24(Size 2): 0 last improved 3
+12 generations since last population fitness record: 360
+Generation 27
+Number of Species: 14
+compat_thresh: 3
+Generation 27: overall_average = 5.61334
+orig fitness of Species7(Size 22): 360 last improved 13
+orig fitness of Species15(Size 13): 340 last improved 10
+orig fitness of Species23(Size 7): 300 last improved 4
+orig fitness of Species9(Size 9): 260 last improved 13
+orig fitness of Species18(Size 8): 260 last improved 5
+orig fitness of Species3(Size 17): 200 last improved 7
+orig fitness of Species4(Size 11): 200 last improved 9
+orig fitness of Species25(Size 17): 200 last improved 1
+orig fitness of Species12(Size 4): 180 last improved 9
+orig fitness of Species19(Size 7): 160 last improved 1
+orig fitness of Species17(Size 6): 140 last improved 7
+orig fitness of Species8(Size 9): 120 last improved 4
+orig fitness of Species10(Size 13): 80 last improved 11
+orig fitness of Species26(Size 7): 80 last improved 1
+13 generations since last population fitness record: 360
+Generation 28
+Number of Species: 14
+compat_thresh: 3
+Generation 28: overall_average = 4.19969
+orig fitness of Species7(Size 20): 360 last improved 14
+orig fitness of Species15(Size 12): 340 last improved 11
+orig fitness of Species23(Size 15): 300 last improved 5
+orig fitness of Species9(Size 9): 260 last improved 14
+orig fitness of Species18(Size 9): 260 last improved 6
+orig fitness of Species3(Size 18): 200 last improved 8
+orig fitness of Species4(Size 13): 200 last improved 10
+orig fitness of Species17(Size 8): 200 last improved 8
+orig fitness of Species19(Size 8): 200 last improved 0
+orig fitness of Species8(Size 11): 180 last improved 0
+orig fitness of Species12(Size 8): 180 last improved 10
+orig fitness of Species10(Size 12): 80 last improved 12
+orig fitness of Species26(Size 2): 60 last improved 2
+orig fitness of Species25(Size 5): 20 last improved 2
+14 generations since last population fitness record: 360
+Generation 29
+Number of Species: 15
+compat_thresh: 3
+Generation 29: overall_average = 5.81381
+orig fitness of Species15(Size 22): 360 last improved 0
+orig fitness of Species23(Size 9): 300 last improved 6
+orig fitness of Species29(Size 1): 300 last improved 0
+orig fitness of Species18(Size 8): 260 last improved 7
+orig fitness of Species4(Size 26): 220 last improved 0
+orig fitness of Species3(Size 19): 200 last improved 9
+orig fitness of Species17(Size 8): 200 last improved 9
+orig fitness of Species19(Size 6): 200 last improved 1
+orig fitness of Species8(Size 12): 180 last improved 1
+orig fitness of Species12(Size 22): 180 last improved 11
+orig fitness of Species28(Size 1): 120 last improved 0
+orig fitness of Species10(Size 9): 80 last improved 13
+orig fitness of Species26(Size 3): 80 last improved 3
+orig fitness of Species27(Size 3): 80 last improved 0
+orig fitness of Species25(Size 1): 0 last improved 3
+15 generations since last population fitness record: 360
+Generation 30
+Number of Species: 17
+compat_thresh: 3
+Generation 30: overall_average = 5.48444
+orig fitness of Species15(Size 10): 360 last improved 1
+orig fitness of Species23(Size 12): 300 last improved 7
+orig fitness of Species29(Size 26): 300 last improved 1
+orig fitness of Species18(Size 4): 260 last improved 8
+orig fitness of Species32(Size 1): 260 last improved 0
+orig fitness of Species4(Size 10): 220 last improved 1
+orig fitness of Species8(Size 15): 220 last improved 0
+orig fitness of Species3(Size 16): 200 last improved 10
+orig fitness of Species19(Size 6): 200 last improved 2
+orig fitness of Species30(Size 6): 200 last improved 0
+orig fitness of Species31(Size 1): 200 last improved 0
+orig fitness of Species12(Size 7): 180 last improved 12
+orig fitness of Species28(Size 11): 120 last improved 1
+orig fitness of Species10(Size 13): 100 last improved 0
+orig fitness of Species26(Size 4): 80 last improved 4
+orig fitness of Species27(Size 4): 80 last improved 1
+orig fitness of Species17(Size 4): 0 last improved 10
+16 generations since last population fitness record: 360
+Generation 31
+Number of Species: 14
+compat_thresh: 3
+Generation 31: overall_average = 4.78143
+orig fitness of Species15(Size 16): 360 last improved 2
+orig fitness of Species32(Size 24): 300 last improved 0
+orig fitness of Species18(Size 12): 260 last improved 9
+orig fitness of Species8(Size 19): 220 last improved 1
+orig fitness of Species3(Size 17): 200 last improved 11
+orig fitness of Species19(Size 9): 200 last improved 3
+orig fitness of Species30(Size 5): 200 last improved 1
+orig fitness of Species31(Size 18): 200 last improved 1
+orig fitness of Species12(Size 11): 180 last improved 13
+orig fitness of Species29(Size 4): 140 last improved 2
+orig fitness of Species28(Size 4): 120 last improved 2
+orig fitness of Species26(Size 5): 80 last improved 5
+orig fitness of Species27(Size 2): 80 last improved 2
+orig fitness of Species23(Size 4): 0 last improved 8
+17 generations since last population fitness record: 360
+Generation 32
+Number of Species: 15
+compat_thresh: 3
+Generation 32: overall_average = 6.18178
+orig fitness of Species15(Size 24): 360 last improved 3
+orig fitness of Species32(Size 11): 300 last improved 1
+orig fitness of Species18(Size 17): 260 last improved 10
+orig fitness of Species34(Size 1): 260 last improved 0
+orig fitness of Species8(Size 11): 220 last improved 2
+orig fitness of Species3(Size 16): 200 last improved 12
+orig fitness of Species12(Size 21): 200 last improved 0
+orig fitness of Species19(Size 18): 200 last improved 4
+orig fitness of Species29(Size 4): 200 last improved 3
+orig fitness of Species30(Size 6): 200 last improved 2
+orig fitness of Species31(Size 9): 200 last improved 2
+orig fitness of Species33(Size 1): 160 last improved 0
+orig fitness of Species28(Size 4): 120 last improved 3
+orig fitness of Species26(Size 3): 80 last improved 6
+orig fitness of Species27(Size 4): 80 last improved 3
+18 generations since last population fitness record: 360
+Generation 33
+Number of Species: 15
+compat_thresh: 3
+Generation 33: overall_average = 5.96337
+orig fitness of Species15(Size 20): 360 last improved 4
+orig fitness of Species29(Size 7): 300 last improved 4
+orig fitness of Species32(Size 9): 300 last improved 2
+orig fitness of Species18(Size 12): 260 last improved 11
+orig fitness of Species34(Size 22): 260 last improved 1
+orig fitness of Species35(Size 1): 260 last improved 0
+orig fitness of Species8(Size 14): 220 last improved 3
+orig fitness of Species3(Size 13): 200 last improved 13
+orig fitness of Species19(Size 15): 200 last improved 5
+orig fitness of Species30(Size 7): 200 last improved 3
+orig fitness of Species31(Size 7): 200 last improved 3
+orig fitness of Species33(Size 12): 160 last improved 1
+orig fitness of Species28(Size 5): 120 last improved 4
+orig fitness of Species26(Size 3): 80 last improved 7
+orig fitness of Species27(Size 3): 80 last improved 4
+19 generations since last population fitness record: 360
+Generation 34
+Number of Species: 17
+compat_thresh: 3
+Generation 34: overall_average = 6.0057
+orig fitness of Species15(Size 14): 360 last improved 5
+orig fitness of Species29(Size 9): 300 last improved 5
+orig fitness of Species30(Size 9): 300 last improved 0
+orig fitness of Species32(Size 6): 300 last improved 3
+orig fitness of Species8(Size 12): 260 last improved 0
+orig fitness of Species18(Size 14): 260 last improved 12
+orig fitness of Species34(Size 7): 260 last improved 2
+orig fitness of Species35(Size 22): 260 last improved 1
+orig fitness of Species3(Size 14): 200 last improved 14
+orig fitness of Species19(Size 9): 200 last improved 6
+orig fitness of Species31(Size 10): 200 last improved 4
+orig fitness of Species36(Size 1): 200 last improved 0
+orig fitness of Species37(Size 1): 200 last improved 0
+orig fitness of Species28(Size 7): 180 last improved 0
+orig fitness of Species33(Size 6): 160 last improved 2
+orig fitness of Species26(Size 7): 80 last improved 8
+orig fitness of Species27(Size 2): 80 last improved 5
+20 generations since last population fitness record: 360
+Generation 35
+Number of Species: 2
+compat_thresh: 3
+Generation 35: overall_average = 1.03289
+orig fitness of Species15(Size 75): 360 last improved 1
+orig fitness of Species29(Size 75): 340 last improved 0
+1 generations since last population fitness record: 360
+Generation 36
+Number of Species: 11
+compat_thresh: 3
+Generation 36: overall_average = 11.504
+orig fitness of Species15(Size 106): 360 last improved 2
+orig fitness of Species38(Size 1): 360 last improved 0
+orig fitness of Species39(Size 1): 360 last improved 0
+orig fitness of Species40(Size 1): 360 last improved 0
+orig fitness of Species41(Size 1): 360 last improved 0
+orig fitness of Species42(Size 1): 360 last improved 0
+orig fitness of Species44(Size 1): 360 last improved 0
+orig fitness of Species29(Size 35): 340 last improved 1
+orig fitness of Species43(Size 1): 340 last improved 0
+orig fitness of Species45(Size 1): 300 last improved 0
+orig fitness of Species46(Size 1): 300 last improved 0
+2 generations since last population fitness record: 360
+Generation 37
+Number of Species: 13
+compat_thresh: 3
+Generation 37: overall_average = 6.06387
+orig fitness of Species15(Size 9): 360 last improved 3
+orig fitness of Species38(Size 15): 360 last improved 1
+orig fitness of Species39(Size 16): 360 last improved 1
+orig fitness of Species40(Size 16): 360 last improved 1
+orig fitness of Species41(Size 15): 360 last improved 1
+orig fitness of Species42(Size 16): 360 last improved 1
+orig fitness of Species44(Size 15): 360 last improved 1
+orig fitness of Species47(Size 1): 360 last improved 0
+orig fitness of Species48(Size 1): 360 last improved 0
+orig fitness of Species29(Size 4): 340 last improved 2
+orig fitness of Species43(Size 15): 340 last improved 1
+orig fitness of Species45(Size 13): 300 last improved 1
+orig fitness of Species46(Size 14): 300 last improved 1
+3 generations since last population fitness record: 360
+Generation 38
+Number of Species: 13
+compat_thresh: 3
+Generation 38: overall_average = 5.96529
+orig fitness of Species15(Size 10): 360 last improved 4
+orig fitness of Species38(Size 8): 360 last improved 2
+orig fitness of Species39(Size 10): 360 last improved 2
+orig fitness of Species40(Size 10): 360 last improved 2
+orig fitness of Species41(Size 9): 360 last improved 2
+orig fitness of Species42(Size 6): 360 last improved 2
+orig fitness of Species44(Size 8): 360 last improved 2
+orig fitness of Species47(Size 31): 360 last improved 1
+orig fitness of Species48(Size 29): 360 last improved 1
+orig fitness of Species29(Size 7): 340 last improved 3
+orig fitness of Species43(Size 8): 340 last improved 2
+orig fitness of Species45(Size 6): 300 last improved 2
+orig fitness of Species46(Size 8): 300 last improved 2
+4 generations since last population fitness record: 360
+Generation 39
+Number of Species: 14
+compat_thresh: 3
+Generation 39: overall_average = 6.65281
+orig fitness of Species15(Size 17): 360 last improved 5
+orig fitness of Species38(Size 9): 360 last improved 3
+orig fitness of Species39(Size 9): 360 last improved 3
+orig fitness of Species40(Size 9): 360 last improved 3
+orig fitness of Species41(Size 10): 360 last improved 3
+orig fitness of Species42(Size 17): 360 last improved 3
+orig fitness of Species44(Size 8): 360 last improved 3
+orig fitness of Species47(Size 8): 360 last improved 2
+orig fitness of Species48(Size 12): 360 last improved 2
+orig fitness of Species49(Size 1): 360 last improved 0
+orig fitness of Species29(Size 10): 340 last improved 4
+orig fitness of Species43(Size 12): 340 last improved 3
+orig fitness of Species45(Size 17): 300 last improved 3
+orig fitness of Species46(Size 11): 300 last improved 3
+5 generations since last population fitness record: 360
+Generation 40
+Number of Species: 15
+compat_thresh: 3
+Generation 40: overall_average = 5.68412
+orig fitness of Species15(Size 13): 360 last improved 6
+orig fitness of Species38(Size 7): 360 last improved 4
+orig fitness of Species39(Size 15): 360 last improved 4
+orig fitness of Species40(Size 7): 360 last improved 4
+orig fitness of Species41(Size 8): 360 last improved 4
+orig fitness of Species42(Size 12): 360 last improved 4
+orig fitness of Species44(Size 5): 360 last improved 4
+orig fitness of Species47(Size 8): 360 last improved 3
+orig fitness of Species48(Size 11): 360 last improved 3
+orig fitness of Species49(Size 28): 360 last improved 1
+orig fitness of Species29(Size 16): 340 last improved 5
+orig fitness of Species46(Size 10): 300 last improved 4
+orig fitness of Species43(Size 4): 100 last improved 4
+orig fitness of Species45(Size 5): 80 last improved 4
+orig fitness of Species50(Size 1): 80 last improved 0
+6 generations since last population fitness record: 360
+Generation 41
+Number of Species: 16
+compat_thresh: 3
+Generation 41: overall_average = 7.69018
+orig fitness of Species15(Size 21): 360 last improved 7
+orig fitness of Species38(Size 9): 360 last improved 5
+orig fitness of Species39(Size 17): 360 last improved 5
+orig fitness of Species40(Size 11): 360 last improved 5
+orig fitness of Species41(Size 8): 360 last improved 5
+orig fitness of Species42(Size 13): 360 last improved 5
+orig fitness of Species44(Size 13): 360 last improved 5
+orig fitness of Species47(Size 6): 360 last improved 4
+orig fitness of Species48(Size 8): 360 last improved 4
+orig fitness of Species49(Size 12): 360 last improved 2
+orig fitness of Species51(Size 1): 360 last improved 0
+orig fitness of Species29(Size 10): 340 last improved 6
+orig fitness of Species46(Size 7): 300 last improved 5
+orig fitness of Species45(Size 3): 140 last improved 5
+orig fitness of Species50(Size 7): 140 last improved 0
+orig fitness of Species43(Size 4): 80 last improved 5
+7 generations since last population fitness record: 360
+Generation 42
+Number of Species: 17
+compat_thresh: 3
+Generation 42: overall_average = 7.52428
+orig fitness of Species15(Size 12): 360 last improved 8
+orig fitness of Species38(Size 8): 360 last improved 6
+orig fitness of Species39(Size 9): 360 last improved 6
+orig fitness of Species40(Size 6): 360 last improved 6
+orig fitness of Species41(Size 12): 360 last improved 6
+orig fitness of Species42(Size 13): 360 last improved 6
+orig fitness of Species44(Size 8): 360 last improved 6
+orig fitness of Species47(Size 11): 360 last improved 5
+orig fitness of Species49(Size 12): 360 last improved 3
+orig fitness of Species51(Size 24): 360 last improved 1
+orig fitness of Species52(Size 1): 360 last improved 0
+orig fitness of Species29(Size 9): 340 last improved 7
+orig fitness of Species46(Size 9): 300 last improved 6
+orig fitness of Species45(Size 3): 140 last improved 6
+orig fitness of Species48(Size 5): 140 last improved 5
+orig fitness of Species50(Size 6): 140 last improved 1
+orig fitness of Species43(Size 2): 20 last improved 6
+8 generations since last population fitness record: 360
+Generation 43
+Number of Species: 17
+compat_thresh: 3
+Generation 43: overall_average = 6.59398
+orig fitness of Species15(Size 11): 360 last improved 9
+orig fitness of Species38(Size 6): 360 last improved 7
+orig fitness of Species39(Size 11): 360 last improved 7
+orig fitness of Species40(Size 7): 360 last improved 7
+orig fitness of Species41(Size 7): 360 last improved 7
+orig fitness of Species42(Size 10): 360 last improved 7
+orig fitness of Species44(Size 12): 360 last improved 7
+orig fitness of Species49(Size 9): 360 last improved 4
+orig fitness of Species51(Size 10): 360 last improved 2
+orig fitness of Species52(Size 24): 360 last improved 1
+orig fitness of Species29(Size 13): 340 last improved 8
+orig fitness of Species46(Size 10): 300 last improved 7
+orig fitness of Species45(Size 3): 160 last improved 7
+orig fitness of Species50(Size 7): 160 last improved 0
+orig fitness of Species47(Size 5): 80 last improved 6
+orig fitness of Species48(Size 4): 80 last improved 6
+orig fitness of Species43(Size 1): 0 last improved 7
+9 generations since last population fitness record: 360
+Generation 44
+Number of Species: 17
+compat_thresh: 3
+Generation 44: overall_average = 7.10266
+orig fitness of Species15(Size 17): 360 last improved 10
+orig fitness of Species38(Size 8): 360 last improved 8
+orig fitness of Species39(Size 8): 360 last improved 8
+orig fitness of Species40(Size 8): 360 last improved 8
+orig fitness of Species41(Size 11): 360 last improved 8
+orig fitness of Species42(Size 10): 360 last improved 8
+orig fitness of Species44(Size 11): 360 last improved 8
+orig fitness of Species49(Size 12): 360 last improved 5
+orig fitness of Species51(Size 14): 360 last improved 3
+orig fitness of Species52(Size 9): 360 last improved 2
+orig fitness of Species29(Size 15): 340 last improved 9
+orig fitness of Species47(Size 5): 240 last improved 7
+orig fitness of Species45(Size 8): 160 last improved 8
+orig fitness of Species50(Size 8): 160 last improved 1
+orig fitness of Species53(Size 1): 160 last improved 0
+orig fitness of Species46(Size 3): 80 last improved 8
+orig fitness of Species48(Size 2): 80 last improved 7
+10 generations since last population fitness record: 360
+Generation 45
+Number of Species: 18
+compat_thresh: 3
+Generation 45: overall_average = 7.22775
+orig fitness of Species15(Size 10): 360 last improved 11
+orig fitness of Species38(Size 9): 360 last improved 9
+orig fitness of Species39(Size 11): 360 last improved 9
+orig fitness of Species41(Size 12): 360 last improved 9
+orig fitness of Species42(Size 7): 360 last improved 9
+orig fitness of Species44(Size 9): 360 last improved 9
+orig fitness of Species49(Size 14): 360 last improved 6
+orig fitness of Species51(Size 10): 360 last improved 4
+orig fitness of Species52(Size 10): 360 last improved 3
+orig fitness of Species54(Size 1): 360 last improved 0
+orig fitness of Species29(Size 20): 340 last improved 10
+orig fitness of Species53(Size 11): 220 last improved 0
+orig fitness of Species45(Size 4): 160 last improved 9
+orig fitness of Species47(Size 5): 160 last improved 8
+orig fitness of Species50(Size 7): 160 last improved 2
+orig fitness of Species40(Size 4): 80 last improved 9
+orig fitness of Species46(Size 3): 60 last improved 9
+orig fitness of Species48(Size 3): 60 last improved 8
+11 generations since last population fitness record: 360
+Generation 46
+Number of Species: 19
+compat_thresh: 3
+Generation 46: overall_average = 9.32849
+orig fitness of Species15(Size 12): 360 last improved 12
+orig fitness of Species38(Size 8): 360 last improved 10
+orig fitness of Species39(Size 7): 360 last improved 10
+orig fitness of Species41(Size 11): 360 last improved 10
+orig fitness of Species42(Size 7): 360 last improved 10
+orig fitness of Species44(Size 12): 360 last improved 10
+orig fitness of Species49(Size 7): 360 last improved 7
+orig fitness of Species51(Size 13): 360 last improved 5
+orig fitness of Species52(Size 11): 360 last improved 4
+orig fitness of Species54(Size 25): 360 last improved 1
+orig fitness of Species55(Size 1): 360 last improved 0
+orig fitness of Species29(Size 9): 340 last improved 11
+orig fitness of Species53(Size 8): 220 last improved 1
+orig fitness of Species45(Size 6): 160 last improved 10
+orig fitness of Species40(Size 2): 40 last improved 10
+orig fitness of Species46(Size 1): 0 last improved 10
+orig fitness of Species47(Size 3): 0 last improved 9
+orig fitness of Species48(Size 3): 0 last improved 9
+orig fitness of Species50(Size 4): 0 last improved 3
+12 generations since last population fitness record: 360
+Generation 47
+Number of Species: 15
+compat_thresh: 3
+Generation 47: overall_average = 8.33198
+orig fitness of Species15(Size 13): 360 last improved 13
+orig fitness of Species38(Size 17): 360 last improved 11
+orig fitness of Species39(Size 15): 360 last improved 11
+orig fitness of Species41(Size 14): 360 last improved 11
+orig fitness of Species42(Size 13): 360 last improved 11
+orig fitness of Species44(Size 11): 360 last improved 11
+orig fitness of Species49(Size 4): 360 last improved 8
+orig fitness of Species51(Size 7): 360 last improved 6
+orig fitness of Species52(Size 9): 360 last improved 5
+orig fitness of Species55(Size 20): 360 last improved 1
+orig fitness of Species29(Size 13): 340 last improved 12
+orig fitness of Species45(Size 6): 160 last improved 11
+orig fitness of Species53(Size 4): 120 last improved 2
+orig fitness of Species54(Size 2): 20 last improved 2
+orig fitness of Species40(Size 2): 0 last improved 11
+13 generations since last population fitness record: 360
+Generation 48
+Number of Species: 15
+compat_thresh: 3
+Generation 48: overall_average = 9.33211
+orig fitness of Species15(Size 10): 360 last improved 14
+orig fitness of Species38(Size 17): 360 last improved 12
+orig fitness of Species39(Size 18): 360 last improved 12
+orig fitness of Species41(Size 19): 360 last improved 12
+orig fitness of Species42(Size 20): 360 last improved 12
+orig fitness of Species44(Size 17): 360 last improved 12
+orig fitness of Species49(Size 8): 360 last improved 9
+orig fitness of Species51(Size 8): 360 last improved 7
+orig fitness of Species52(Size 6): 360 last improved 6
+orig fitness of Species55(Size 6): 360 last improved 2
+orig fitness of Species56(Size 1): 360 last improved 0
+orig fitness of Species29(Size 6): 340 last improved 13
+orig fitness of Species45(Size 10): 220 last improved 12
+orig fitness of Species53(Size 3): 120 last improved 3
+orig fitness of Species54(Size 1): 0 last improved 3
+14 generations since last population fitness record: 360
+Generation 49
+Number of Species: 14
+compat_thresh: 3
+Generation 49: overall_average = 7.82286
+orig fitness of Species38(Size 15): 360 last improved 13
+orig fitness of Species39(Size 12): 360 last improved 13
+orig fitness of Species41(Size 12): 360 last improved 13
+orig fitness of Species42(Size 14): 360 last improved 13
+orig fitness of Species44(Size 18): 360 last improved 13
+orig fitness of Species49(Size 9): 360 last improved 10
+orig fitness of Species51(Size 9): 360 last improved 8
+orig fitness of Species52(Size 8): 360 last improved 7
+orig fitness of Species55(Size 10): 360 last improved 3
+orig fitness of Species56(Size 20): 360 last improved 1
+orig fitness of Species29(Size 13): 340 last improved 14
+orig fitness of Species45(Size 7): 220 last improved 13
+orig fitness of Species57(Size 1): 160 last improved 0
+orig fitness of Species53(Size 2): 120 last improved 4
+15 generations since last population fitness record: 360
+Generation 50
+Number of Species: 13
+compat_thresh: 3
+Generation 50: overall_average = 3.37821
+orig fitness of Species38(Size 12): 360 last improved 14
+orig fitness of Species39(Size 11): 360 last improved 14
+orig fitness of Species41(Size 17): 360 last improved 14
+orig fitness of Species42(Size 20): 360 last improved 14
+orig fitness of Species44(Size 17): 360 last improved 14
+orig fitness of Species49(Size 16): 360 last improved 11
+orig fitness of Species51(Size 9): 360 last improved 9
+orig fitness of Species52(Size 8): 360 last improved 8
+orig fitness of Species55(Size 12): 360 last improved 4
+orig fitness of Species56(Size 7): 360 last improved 2
+orig fitness of Species45(Size 7): 220 last improved 14
+orig fitness of Species53(Size 4): 180 last improved 5
+orig fitness of Species57(Size 10): 160 last improved 1
+16 generations since last population fitness record: 360
+Generation 51
+Number of Species: 11
+compat_thresh: 3
+Generation 51: overall_average = 5.33927
+orig fitness of Species41(Size 1): 360 last improved 15
+orig fitness of Species49(Size 26): 360 last improved 12
+orig fitness of Species51(Size 31): 360 last improved 10
+orig fitness of Species52(Size 27): 360 last improved 9
+orig fitness of Species55(Size 23): 360 last improved 5
+orig fitness of Species56(Size 23): 360 last improved 3
+orig fitness of Species58(Size 1): 360 last improved 0
+orig fitness of Species59(Size 1): 360 last improved 0
+orig fitness of Species53(Size 11): 260 last improved 0
+orig fitness of Species44(Size 1): 80 last improved 15
+orig fitness of Species57(Size 5): 0 last improved 2
+17 generations since last population fitness record: 360
+Generation 52
+Number of Species: 8
+compat_thresh: 3
+Generation 52: overall_average = 3.92725
+orig fitness of Species49(Size 16): 360 last improved 13
+orig fitness of Species51(Size 21): 360 last improved 11
+orig fitness of Species52(Size 17): 360 last improved 10
+orig fitness of Species55(Size 14): 360 last improved 6
+orig fitness of Species56(Size 7): 360 last improved 4
+orig fitness of Species58(Size 35): 360 last improved 1
+orig fitness of Species59(Size 33): 360 last improved 1
+orig fitness of Species53(Size 7): 260 last improved 1
+18 generations since last population fitness record: 360
+Generation 53
+Number of Species: 9
+compat_thresh: 3
+Generation 53: overall_average = 3.964
+orig fitness of Species49(Size 29): 360 last improved 14
+orig fitness of Species51(Size 20): 360 last improved 12
+orig fitness of Species52(Size 33): 360 last improved 11
+orig fitness of Species55(Size 20): 360 last improved 7
+orig fitness of Species56(Size 11): 360 last improved 5
+orig fitness of Species58(Size 11): 360 last improved 2
+orig fitness of Species59(Size 11): 360 last improved 2
+orig fitness of Species53(Size 14): 260 last improved 2
+orig fitness of Species60(Size 1): 200 last improved 0
+19 generations since last population fitness record: 360
+Generation 54
+Number of Species: 8
+compat_thresh: 3
+Generation 54: overall_average = 3.65954
+orig fitness of Species51(Size 16): 360 last improved 13
+orig fitness of Species52(Size 39): 360 last improved 12
+orig fitness of Species55(Size 12): 360 last improved 8
+orig fitness of Species56(Size 8): 360 last improved 6
+orig fitness of Species58(Size 16): 360 last improved 3
+orig fitness of Species59(Size 25): 360 last improved 3
+orig fitness of Species53(Size 9): 260 last improved 3
+orig fitness of Species60(Size 25): 220 last improved 0
+20 generations since last population fitness record: 360
+Generation 55
+Number of Species: 2
+compat_thresh: 3
+Generation 55: overall_average = 1.47911
+orig fitness of Species51(Size 75): 360 last improved 1
+orig fitness of Species52(Size 75): 360 last improved 1
+1 generations since last population fitness record: 360
+Generation 56
+Number of Species: 16
+compat_thresh: 3
+Generation 56: overall_average = 16.3038
+orig fitness of Species51(Size 56): 360 last improved 2
+orig fitness of Species52(Size 80): 360 last improved 2
+orig fitness of Species61(Size 1): 360 last improved 0
+orig fitness of Species63(Size 1): 360 last improved 0
+orig fitness of Species64(Size 1): 360 last improved 0
+orig fitness of Species66(Size 1): 360 last improved 0
+orig fitness of Species68(Size 1): 360 last improved 0
+orig fitness of Species69(Size 1): 360 last improved 0
+orig fitness of Species70(Size 1): 360 last improved 0
+orig fitness of Species71(Size 1): 360 last improved 0
+orig fitness of Species72(Size 1): 360 last improved 0
+orig fitness of Species73(Size 1): 360 last improved 0
+orig fitness of Species74(Size 1): 360 last improved 0
+orig fitness of Species62(Size 1): 160 last improved 0
+orig fitness of Species67(Size 1): 160 last improved 0
+orig fitness of Species65(Size 1): 140 last improved 0
+2 generations since last population fitness record: 360
+Generation 57
+Number of Species: 16
+compat_thresh: 3
+Generation 57: overall_average = 7.51485
+orig fitness of Species51(Size 6): 360 last improved 3
+orig fitness of Species52(Size 8): 360 last improved 3
+orig fitness of Species61(Size 11): 360 last improved 1
+orig fitness of Species63(Size 11): 360 last improved 1
+orig fitness of Species64(Size 11): 360 last improved 1
+orig fitness of Species66(Size 11): 360 last improved 1
+orig fitness of Species68(Size 11): 360 last improved 1
+orig fitness of Species69(Size 11): 360 last improved 1
+orig fitness of Species70(Size 11): 360 last improved 1
+orig fitness of Species71(Size 11): 360 last improved 1
+orig fitness of Species72(Size 11): 360 last improved 1
+orig fitness of Species73(Size 11): 360 last improved 1
+orig fitness of Species74(Size 12): 360 last improved 1
+orig fitness of Species67(Size 5): 160 last improved 1
+orig fitness of Species65(Size 4): 140 last improved 1
+orig fitness of Species62(Size 5): 80 last improved 1
+3 generations since last population fitness record: 360
+Generation 58
+Number of Species: 17
+compat_thresh: 3
+Generation 58: overall_average = 7.36102
+orig fitness of Species51(Size 19): 360 last improved 4
+orig fitness of Species52(Size 25): 360 last improved 4
+orig fitness of Species61(Size 8): 360 last improved 2
+orig fitness of Species63(Size 10): 360 last improved 2
+orig fitness of Species64(Size 7): 360 last improved 2
+orig fitness of Species66(Size 8): 360 last improved 2
+orig fitness of Species68(Size 7): 360 last improved 2
+orig fitness of Species69(Size 12): 360 last improved 2
+orig fitness of Species70(Size 8): 360 last improved 2
+orig fitness of Species72(Size 7): 360 last improved 2
+orig fitness of Species73(Size 8): 360 last improved 2
+orig fitness of Species74(Size 11): 360 last improved 2
+orig fitness of Species65(Size 5): 220 last improved 0
+orig fitness of Species67(Size 7): 160 last improved 2
+orig fitness of Species75(Size 1): 160 last improved 0
+orig fitness of Species71(Size 5): 40 last improved 2
+orig fitness of Species62(Size 2): 20 last improved 2
+4 generations since last population fitness record: 360
+Generation 59
+Number of Species: 18
+compat_thresh: 3
+Generation 59: overall_average = 10.0787
+orig fitness of Species51(Size 15): 360 last improved 5
+orig fitness of Species52(Size 14): 360 last improved 5
+orig fitness of Species61(Size 10): 360 last improved 3
+orig fitness of Species63(Size 12): 360 last improved 3
+orig fitness of Species64(Size 6): 360 last improved 3
+orig fitness of Species66(Size 6): 360 last improved 3
+orig fitness of Species68(Size 6): 360 last improved 3
+orig fitness of Species69(Size 13): 360 last improved 3
+orig fitness of Species70(Size 14): 360 last improved 3
+orig fitness of Species72(Size 6): 360 last improved 3
+orig fitness of Species73(Size 8): 360 last improved 3
+orig fitness of Species74(Size 12): 360 last improved 3
+orig fitness of Species77(Size 1): 360 last improved 0
+orig fitness of Species65(Size 8): 320 last improved 0
+orig fitness of Species67(Size 6): 260 last improved 0
+orig fitness of Species75(Size 11): 160 last improved 1
+orig fitness of Species76(Size 1): 140 last improved 0
+orig fitness of Species62(Size 1): 80 last improved 3
+5 generations since last population fitness record: 360
+Generation 60
+Number of Species: 19
+compat_thresh: 3
+Generation 60: overall_average = 6.83745
+orig fitness of Species51(Size 16): 360 last improved 6
+orig fitness of Species52(Size 15): 360 last improved 6
+orig fitness of Species61(Size 7): 360 last improved 4
+orig fitness of Species63(Size 9): 360 last improved 4
+orig fitness of Species66(Size 10): 360 last improved 4
+orig fitness of Species67(Size 5): 360 last improved 0
+orig fitness of Species68(Size 10): 360 last improved 4
+orig fitness of Species70(Size 7): 360 last improved 4
+orig fitness of Species73(Size 11): 360 last improved 4
+orig fitness of Species74(Size 8): 360 last improved 4
+orig fitness of Species77(Size 18): 360 last improved 1
+orig fitness of Species78(Size 1): 360 last improved 0
+orig fitness of Species65(Size 6): 320 last improved 1
+orig fitness of Species69(Size 4): 140 last improved 4
+orig fitness of Species72(Size 5): 140 last improved 4
+orig fitness of Species76(Size 7): 140 last improved 1
+orig fitness of Species62(Size 4): 80 last improved 4
+orig fitness of Species64(Size 4): 80 last improved 4
+orig fitness of Species75(Size 3): 80 last improved 2
+6 generations since last population fitness record: 360
+Generation 61
+Number of Species: 18
+compat_thresh: 3
+Generation 61: overall_average = 5.99172
+orig fitness of Species52(Size 24): 360 last improved 7
+orig fitness of Species61(Size 9): 360 last improved 5
+orig fitness of Species66(Size 7): 360 last improved 5
+orig fitness of Species67(Size 12): 360 last improved 1
+orig fitness of Species68(Size 13): 360 last improved 5
+orig fitness of Species70(Size 7): 360 last improved 5
+orig fitness of Species73(Size 5): 360 last improved 5
+orig fitness of Species77(Size 6): 360 last improved 2
+orig fitness of Species78(Size 27): 360 last improved 1
+orig fitness of Species65(Size 7): 320 last improved 2
+orig fitness of Species63(Size 4): 140 last improved 5
+orig fitness of Species64(Size 2): 140 last improved 5
+orig fitness of Species69(Size 6): 140 last improved 5
+orig fitness of Species72(Size 6): 140 last improved 5
+orig fitness of Species74(Size 3): 100 last improved 5
+orig fitness of Species76(Size 5): 100 last improved 2
+orig fitness of Species75(Size 4): 80 last improved 3
+orig fitness of Species62(Size 3): 40 last improved 5
+7 generations since last population fitness record: 360
+Generation 62
+Number of Species: 20
+compat_thresh: 3
+Generation 62: overall_average = 8.37576
+orig fitness of Species52(Size 24): 360 last improved 8
+orig fitness of Species61(Size 7): 360 last improved 6
+orig fitness of Species66(Size 9): 360 last improved 6
+orig fitness of Species67(Size 8): 360 last improved 2
+orig fitness of Species68(Size 13): 360 last improved 6
+orig fitness of Species70(Size 9): 360 last improved 6
+orig fitness of Species73(Size 12): 360 last improved 6
+orig fitness of Species77(Size 12): 360 last improved 3
+orig fitness of Species78(Size 7): 360 last improved 2
+orig fitness of Species79(Size 1): 360 last improved 0
+orig fitness of Species80(Size 1): 360 last improved 0
+orig fitness of Species65(Size 8): 320 last improved 3
+orig fitness of Species74(Size 6): 160 last improved 6
+orig fitness of Species63(Size 5): 140 last improved 6
+orig fitness of Species64(Size 9): 140 last improved 6
+orig fitness of Species69(Size 5): 140 last improved 6
+orig fitness of Species76(Size 4): 100 last improved 3
+orig fitness of Species72(Size 4): 80 last improved 6
+orig fitness of Species75(Size 5): 80 last improved 4
+orig fitness of Species62(Size 1): 20 last improved 6
+8 generations since last population fitness record: 360
+Generation 63
+Number of Species: 20
+compat_thresh: 3
+Generation 63: overall_average = 6.37958
+orig fitness of Species52(Size 18): 360 last improved 9
+orig fitness of Species61(Size 7): 360 last improved 7
+orig fitness of Species66(Size 6): 360 last improved 7
+orig fitness of Species67(Size 8): 360 last improved 3
+orig fitness of Species70(Size 8): 360 last improved 7
+orig fitness of Species73(Size 6): 360 last improved 7
+orig fitness of Species78(Size 7): 360 last improved 3
+orig fitness of Species79(Size 21): 360 last improved 1
+orig fitness of Species80(Size 22): 360 last improved 1
+orig fitness of Species65(Size 10): 320 last improved 4
+orig fitness of Species63(Size 6): 220 last improved 7
+orig fitness of Species68(Size 5): 160 last improved 7
+orig fitness of Species69(Size 6): 140 last improved 7
+orig fitness of Species74(Size 5): 140 last improved 7
+orig fitness of Species75(Size 1): 100 last improved 5
+orig fitness of Species72(Size 2): 80 last improved 7
+orig fitness of Species76(Size 3): 80 last improved 4
+orig fitness of Species77(Size 4): 80 last improved 4
+orig fitness of Species62(Size 2): 0 last improved 7
+orig fitness of Species64(Size 3): 0 last improved 7
+9 generations since last population fitness record: 360
+Generation 64
+Number of Species: 19
+compat_thresh: 3
+Generation 64: overall_average = 7.19586
+orig fitness of Species52(Size 12): 360 last improved 10
+orig fitness of Species61(Size 10): 360 last improved 8
+orig fitness of Species66(Size 13): 360 last improved 8
+orig fitness of Species67(Size 10): 360 last improved 4
+orig fitness of Species70(Size 11): 360 last improved 8
+orig fitness of Species73(Size 14): 360 last improved 8
+orig fitness of Species78(Size 9): 360 last improved 4
+orig fitness of Species79(Size 8): 360 last improved 2
+orig fitness of Species80(Size 9): 360 last improved 2
+orig fitness of Species81(Size 1): 360 last improved 0
+orig fitness of Species65(Size 4): 320 last improved 5
+orig fitness of Species63(Size 9): 220 last improved 8
+orig fitness of Species68(Size 6): 160 last improved 8
+orig fitness of Species69(Size 8): 140 last improved 8
+orig fitness of Species76(Size 4): 140 last improved 5
+orig fitness of Species77(Size 5): 140 last improved 5
+orig fitness of Species74(Size 4): 120 last improved 8
+orig fitness of Species72(Size 6): 100 last improved 8
+orig fitness of Species75(Size 7): 100 last improved 6
+10 generations since last population fitness record: 360
+Generation 65
+Number of Species: 20
+compat_thresh: 3
+Generation 65: overall_average = 7.86397
+orig fitness of Species52(Size 14): 360 last improved 11
+orig fitness of Species61(Size 7): 360 last improved 9
+orig fitness of Species66(Size 8): 360 last improved 9
+orig fitness of Species67(Size 7): 360 last improved 5
+orig fitness of Species70(Size 8): 360 last improved 9
+orig fitness of Species78(Size 8): 360 last improved 5
+orig fitness of Species79(Size 6): 360 last improved 3
+orig fitness of Species80(Size 8): 360 last improved 3
+orig fitness of Species81(Size 26): 360 last improved 1
+orig fitness of Species65(Size 6): 320 last improved 6
+orig fitness of Species69(Size 7): 300 last improved 9
+orig fitness of Species73(Size 5): 280 last improved 9
+orig fitness of Species63(Size 8): 220 last improved 9
+orig fitness of Species76(Size 6): 220 last improved 0
+orig fitness of Species68(Size 6): 160 last improved 9
+orig fitness of Species82(Size 1): 160 last improved 0
+orig fitness of Species77(Size 4): 140 last improved 6
+orig fitness of Species74(Size 7): 120 last improved 9
+orig fitness of Species72(Size 5): 100 last improved 9
+orig fitness of Species75(Size 3): 100 last improved 7
+11 generations since last population fitness record: 360
+Generation 66
+Number of Species: 20
+compat_thresh: 3
+Generation 66: overall_average = 10.4356
+orig fitness of Species52(Size 19): 360 last improved 12
+orig fitness of Species61(Size 6): 360 last improved 10
+orig fitness of Species66(Size 7): 360 last improved 10
+orig fitness of Species67(Size 10): 360 last improved 6
+orig fitness of Species70(Size 8): 360 last improved 10
+orig fitness of Species79(Size 9): 360 last improved 4
+orig fitness of Species80(Size 12): 360 last improved 4
+orig fitness of Species81(Size 6): 360 last improved 2
+orig fitness of Species65(Size 9): 320 last improved 7
+orig fitness of Species69(Size 8): 300 last improved 10
+orig fitness of Species73(Size 6): 280 last improved 10
+orig fitness of Species63(Size 4): 240 last improved 10
+orig fitness of Species72(Size 3): 240 last improved 10
+orig fitness of Species76(Size 9): 220 last improved 1
+orig fitness of Species82(Size 11): 160 last improved 1
+orig fitness of Species74(Size 6): 120 last improved 10
+orig fitness of Species77(Size 5): 100 last improved 7
+orig fitness of Species78(Size 5): 100 last improved 6
+orig fitness of Species68(Size 3): 80 last improved 10
+orig fitness of Species75(Size 4): 80 last improved 8
+12 generations since last population fitness record: 360
+Generation 67
+Number of Species: 20
+compat_thresh: 3
+Generation 67: overall_average = 9.68962
+orig fitness of Species52(Size 13): 360 last improved 13
+orig fitness of Species61(Size 10): 360 last improved 11
+orig fitness of Species66(Size 16): 360 last improved 11
+orig fitness of Species67(Size 15): 360 last improved 7
+orig fitness of Species80(Size 6): 360 last improved 5
+orig fitness of Species65(Size 6): 320 last improved 8
+orig fitness of Species69(Size 11): 300 last improved 11
+orig fitness of Species73(Size 10): 280 last improved 11
+orig fitness of Species63(Size 6): 240 last improved 11
+orig fitness of Species72(Size 12): 240 last improved 11
+orig fitness of Species76(Size 6): 220 last improved 2
+orig fitness of Species79(Size 4): 180 last improved 5
+orig fitness of Species74(Size 8): 160 last improved 11
+orig fitness of Species82(Size 5): 160 last improved 2
+orig fitness of Species81(Size 4): 140 last improved 3
+orig fitness of Species77(Size 2): 120 last improved 8
+orig fitness of Species68(Size 7): 100 last improved 11
+orig fitness of Species70(Size 5): 80 last improved 11
+orig fitness of Species75(Size 2): 80 last improved 9
+orig fitness of Species78(Size 2): 0 last improved 7
+13 generations since last population fitness record: 360
+Generation 68
+Number of Species: 20
+compat_thresh: 3
+Generation 68: overall_average = 11.1049
+orig fitness of Species52(Size 12): 360 last improved 14
+orig fitness of Species61(Size 13): 360 last improved 12
+orig fitness of Species66(Size 14): 360 last improved 12
+orig fitness of Species67(Size 6): 360 last improved 8
+orig fitness of Species83(Size 1): 360 last improved 0
+orig fitness of Species80(Size 4): 340 last improved 6
+orig fitness of Species65(Size 18): 320 last improved 9
+orig fitness of Species69(Size 11): 300 last improved 12
+orig fitness of Species73(Size 10): 280 last improved 12
+orig fitness of Species74(Size 6): 260 last improved 12
+orig fitness of Species63(Size 12): 240 last improved 12
+orig fitness of Species72(Size 9): 240 last improved 12
+orig fitness of Species76(Size 5): 240 last improved 0
+orig fitness of Species79(Size 4): 180 last improved 6
+orig fitness of Species82(Size 5): 160 last improved 3
+orig fitness of Species81(Size 5): 140 last improved 4
+orig fitness of Species68(Size 8): 100 last improved 12
+orig fitness of Species70(Size 2): 80 last improved 12
+orig fitness of Species77(Size 3): 80 last improved 9
+orig fitness of Species75(Size 2): 0 last improved 10
+14 generations since last population fitness record: 360
+Generation 69
+Number of Species: 19
+compat_thresh: 3
+Generation 69: overall_average = 10.0281
+orig fitness of Species61(Size 16): 360 last improved 13
+orig fitness of Species66(Size 12): 360 last improved 13
+orig fitness of Species67(Size 14): 360 last improved 9
+orig fitness of Species83(Size 17): 360 last improved 1
+orig fitness of Species84(Size 1): 360 last improved 0
+orig fitness of Species80(Size 6): 340 last improved 7
+orig fitness of Species65(Size 7): 320 last improved 10
+orig fitness of Species69(Size 10): 300 last improved 13
+orig fitness of Species73(Size 7): 280 last improved 13
+orig fitness of Species74(Size 10): 260 last improved 13
+orig fitness of Species63(Size 7): 240 last improved 13
+orig fitness of Species72(Size 9): 240 last improved 13
+orig fitness of Species79(Size 8): 180 last improved 7
+orig fitness of Species68(Size 8): 100 last improved 13
+orig fitness of Species82(Size 3): 100 last improved 4
+orig fitness of Species70(Size 7): 80 last improved 13
+orig fitness of Species77(Size 2): 80 last improved 10
+orig fitness of Species81(Size 1): 80 last improved 5
+orig fitness of Species76(Size 5): 40 last improved 1
+15 generations since last population fitness record: 360
+Generation 70
+Number of Species: 19
+compat_thresh: 3
+Generation 70: overall_average = 4.45469
+orig fitness of Species61(Size 10): 360 last improved 14
+orig fitness of Species66(Size 15): 360 last improved 14
+orig fitness of Species67(Size 6): 360 last improved 10
+orig fitness of Species83(Size 7): 360 last improved 2
+orig fitness of Species84(Size 18): 360 last improved 1
+orig fitness of Species80(Size 9): 340 last improved 8
+orig fitness of Species65(Size 13): 320 last improved 11
+orig fitness of Species69(Size 6): 300 last improved 14
+orig fitness of Species73(Size 9): 280 last improved 14
+orig fitness of Species74(Size 7): 260 last improved 14
+orig fitness of Species63(Size 8): 240 last improved 14
+orig fitness of Species72(Size 9): 240 last improved 14
+orig fitness of Species79(Size 5): 180 last improved 8
+orig fitness of Species68(Size 7): 100 last improved 14
+orig fitness of Species81(Size 4): 100 last improved 6
+orig fitness of Species70(Size 7): 80 last improved 14
+orig fitness of Species77(Size 8): 80 last improved 11
+orig fitness of Species76(Size 1): 20 last improved 2
+orig fitness of Species82(Size 1): 0 last improved 5
+16 generations since last population fitness record: 360
+Generation 71
+Number of Species: 13
+compat_thresh: 3
+Generation 71: overall_average = 5.87471
+orig fitness of Species67(Size 34): 360 last improved 11
+orig fitness of Species83(Size 20): 360 last improved 3
+orig fitness of Species84(Size 14): 360 last improved 2
+orig fitness of Species86(Size 1): 360 last improved 0
+orig fitness of Species80(Size 16): 340 last improved 9
+orig fitness of Species65(Size 27): 320 last improved 12
+orig fitness of Species79(Size 9): 180 last improved 9
+orig fitness of Species87(Size 1): 180 last improved 0
+orig fitness of Species85(Size 1): 120 last improved 0
+orig fitness of Species81(Size 10): 100 last improved 7
+orig fitness of Species77(Size 12): 80 last improved 12
+orig fitness of Species76(Size 4): 20 last improved 3
+orig fitness of Species72(Size 1): 0 last improved 15
+17 generations since last population fitness record: 360
+Generation 72
+Number of Species: 14
+compat_thresh: 3
+Generation 72: overall_average = 8.02013
+orig fitness of Species81(Size 6): 420 last improved 0
+orig fitness of Species67(Size 21): 360 last improved 12
+orig fitness of Species83(Size 10): 360 last improved 4
+orig fitness of Species84(Size 16): 360 last improved 3
+orig fitness of Species86(Size 30): 360 last improved 1
+orig fitness of Species89(Size 1): 360 last improved 0
+orig fitness of Species80(Size 9): 340 last improved 10
+orig fitness of Species85(Size 11): 340 last improved 0
+orig fitness of Species65(Size 12): 320 last improved 13
+orig fitness of Species79(Size 5): 180 last improved 10
+orig fitness of Species87(Size 16): 180 last improved 1
+orig fitness of Species88(Size 1): 180 last improved 0
+orig fitness of Species77(Size 10): 160 last improved 13
+orig fitness of Species76(Size 2): 100 last improved 4
+NEW POPULATION RECORD FITNESS: 420
+Generation 73
+Number of Species: 14
+compat_thresh: 3
+Generation 73: overall_average = 6.08113
+orig fitness of Species81(Size 8): 420 last improved 1
+orig fitness of Species67(Size 15): 360 last improved 13
+orig fitness of Species83(Size 11): 360 last improved 5
+orig fitness of Species86(Size 6): 360 last improved 2
+orig fitness of Species89(Size 22): 360 last improved 1
+orig fitness of Species80(Size 26): 340 last improved 11
+orig fitness of Species85(Size 7): 340 last improved 1
+orig fitness of Species65(Size 7): 320 last improved 14
+orig fitness of Species79(Size 11): 180 last improved 11
+orig fitness of Species87(Size 6): 180 last improved 2
+orig fitness of Species88(Size 11): 180 last improved 1
+orig fitness of Species77(Size 8): 160 last improved 14
+orig fitness of Species76(Size 7): 100 last improved 5
+orig fitness of Species84(Size 5): 100 last improved 4
+1 generations since last population fitness record: 420
+Generation 74
+Number of Species: 14
+compat_thresh: 3
+Generation 74: overall_average = 6.86347
+orig fitness of Species81(Size 12): 420 last improved 2
+orig fitness of Species67(Size 21): 360 last improved 14
+orig fitness of Species83(Size 13): 360 last improved 6
+orig fitness of Species86(Size 12): 360 last improved 3
+orig fitness of Species89(Size 10): 360 last improved 2
+orig fitness of Species90(Size 1): 360 last improved 0
+orig fitness of Species80(Size 19): 340 last improved 12
+orig fitness of Species85(Size 14): 340 last improved 2
+orig fitness of Species88(Size 12): 260 last improved 0
+orig fitness of Species79(Size 9): 180 last improved 12
+orig fitness of Species87(Size 9): 180 last improved 3
+orig fitness of Species91(Size 1): 120 last improved 0
+orig fitness of Species76(Size 11): 100 last improved 6
+orig fitness of Species84(Size 6): 100 last improved 5
+2 generations since last population fitness record: 420
+Generation 75
+Number of Species: 14
+compat_thresh: 3
+Generation 75: overall_average = 6.75785
+orig fitness of Species81(Size 25): 420 last improved 3
+orig fitness of Species83(Size 8): 360 last improved 7
+orig fitness of Species86(Size 9): 360 last improved 4
+orig fitness of Species89(Size 13): 360 last improved 3
+orig fitness of Species90(Size 27): 360 last improved 1
+orig fitness of Species92(Size 1): 360 last improved 0
+orig fitness of Species80(Size 14): 340 last improved 13
+orig fitness of Species85(Size 7): 340 last improved 3
+orig fitness of Species88(Size 9): 260 last improved 1
+orig fitness of Species79(Size 12): 240 last improved 13
+orig fitness of Species87(Size 4): 180 last improved 4
+orig fitness of Species76(Size 9): 160 last improved 7
+orig fitness of Species91(Size 8): 120 last improved 1
+orig fitness of Species84(Size 4): 80 last improved 6
+3 generations since last population fitness record: 420
+Generation 76
+Number of Species: 15
+compat_thresh: 3
+Generation 76: overall_average = 6.09621
+orig fitness of Species81(Size 19): 420 last improved 4
+orig fitness of Species83(Size 7): 360 last improved 8
+orig fitness of Species86(Size 7): 360 last improved 5
+orig fitness of Species89(Size 8): 360 last improved 4
+orig fitness of Species90(Size 10): 360 last improved 2
+orig fitness of Species92(Size 27): 360 last improved 1
+orig fitness of Species80(Size 16): 340 last improved 14
+orig fitness of Species85(Size 7): 340 last improved 4
+orig fitness of Species93(Size 1): 280 last improved 0
+orig fitness of Species88(Size 11): 260 last improved 2
+orig fitness of Species79(Size 13): 240 last improved 14
+orig fitness of Species76(Size 10): 200 last improved 8
+orig fitness of Species91(Size 3): 200 last improved 0
+orig fitness of Species87(Size 8): 180 last improved 5
+orig fitness of Species84(Size 3): 80 last improved 7
+4 generations since last population fitness record: 420
+Generation 77
+Number of Species: 14
+compat_thresh: 3
+Generation 77: overall_average = 4.99195
+orig fitness of Species81(Size 16): 420 last improved 5
+orig fitness of Species83(Size 7): 360 last improved 9
+orig fitness of Species86(Size 9): 360 last improved 6
+orig fitness of Species89(Size 14): 360 last improved 5
+orig fitness of Species90(Size 13): 360 last improved 3
+orig fitness of Species92(Size 7): 360 last improved 2
+orig fitness of Species85(Size 10): 340 last improved 5
+orig fitness of Species93(Size 22): 280 last improved 1
+orig fitness of Species88(Size 8): 260 last improved 3
+orig fitness of Species76(Size 24): 200 last improved 9
+orig fitness of Species91(Size 9): 200 last improved 1
+orig fitness of Species87(Size 7): 180 last improved 6
+orig fitness of Species84(Size 3): 80 last improved 8
+orig fitness of Species79(Size 1): 0 last improved 15
+5 generations since last population fitness record: 420
+Generation 78
+Number of Species: 15
+compat_thresh: 3
+Generation 78: overall_average = 7.30114
+orig fitness of Species81(Size 18): 420 last improved 6
+orig fitness of Species83(Size 11): 360 last improved 10
+orig fitness of Species86(Size 9): 360 last improved 7
+orig fitness of Species89(Size 10): 360 last improved 6
+orig fitness of Species90(Size 14): 360 last improved 4
+orig fitness of Species92(Size 10): 360 last improved 3
+orig fitness of Species95(Size 1): 360 last improved 0
+orig fitness of Species85(Size 15): 340 last improved 6
+orig fitness of Species87(Size 15): 320 last improved 0
+orig fitness of Species93(Size 6): 280 last improved 2
+orig fitness of Species88(Size 11): 260 last improved 4
+orig fitness of Species76(Size 19): 240 last improved 10
+orig fitness of Species91(Size 6): 200 last improved 2
+orig fitness of Species94(Size 1): 200 last improved 0
+orig fitness of Species84(Size 4): 80 last improved 9
+6 generations since last population fitness record: 420
+Generation 79
+Number of Species: 15
+compat_thresh: 3
+Generation 79: overall_average = 6.67276
+orig fitness of Species81(Size 17): 420 last improved 7
+orig fitness of Species83(Size 15): 360 last improved 11
+orig fitness of Species86(Size 8): 360 last improved 8
+orig fitness of Species90(Size 7): 360 last improved 5
+orig fitness of Species92(Size 9): 360 last improved 4
+orig fitness of Species95(Size 25): 360 last improved 1
+orig fitness of Species85(Size 7): 340 last improved 7
+orig fitness of Species76(Size 18): 280 last improved 0
+orig fitness of Species93(Size 6): 280 last improved 3
+orig fitness of Species88(Size 7): 260 last improved 5
+orig fitness of Species91(Size 6): 200 last improved 3
+orig fitness of Species94(Size 14): 200 last improved 1
+orig fitness of Species87(Size 4): 140 last improved 1
+orig fitness of Species89(Size 5): 140 last improved 7
+orig fitness of Species84(Size 2): 40 last improved 10
+7 generations since last population fitness record: 420
+Generation 80
+Number of Species: 15
+compat_thresh: 3
+Generation 80: overall_average = 6.53716
+orig fitness of Species81(Size 24): 420 last improved 8
+orig fitness of Species76(Size 18): 360 last improved 0
+orig fitness of Species83(Size 14): 360 last improved 12
+orig fitness of Species86(Size 9): 360 last improved 9
+orig fitness of Species90(Size 15): 360 last improved 6
+orig fitness of Species92(Size 8): 360 last improved 5
+orig fitness of Species95(Size 10): 360 last improved 2
+orig fitness of Species85(Size 9): 340 last improved 8
+orig fitness of Species93(Size 6): 280 last improved 4
+orig fitness of Species88(Size 7): 260 last improved 6
+orig fitness of Species91(Size 13): 200 last improved 4
+orig fitness of Species94(Size 6): 200 last improved 2
+orig fitness of Species87(Size 5): 140 last improved 2
+orig fitness of Species84(Size 3): 80 last improved 11
+orig fitness of Species89(Size 3): 80 last improved 8
+8 generations since last population fitness record: 420
+Generation 81
+Number of Species: 16
+compat_thresh: 3
+Generation 81: overall_average = 9.76287
+orig fitness of Species81(Size 19): 420 last improved 9
+orig fitness of Species96(Size 1): 420 last improved 0
+orig fitness of Species76(Size 22): 360 last improved 1
+orig fitness of Species83(Size 19): 360 last improved 13
+orig fitness of Species86(Size 12): 360 last improved 10
+orig fitness of Species90(Size 6): 360 last improved 7
+orig fitness of Species95(Size 15): 360 last improved 3
+orig fitness of Species85(Size 7): 340 last improved 9
+orig fitness of Species87(Size 7): 280 last improved 3
+orig fitness of Species93(Size 7): 280 last improved 5
+orig fitness of Species88(Size 5): 260 last improved 7
+orig fitness of Species91(Size 6): 200 last improved 5
+orig fitness of Species94(Size 7): 200 last improved 3
+orig fitness of Species92(Size 5): 100 last improved 6
+orig fitness of Species84(Size 8): 80 last improved 12
+orig fitness of Species89(Size 4): 80 last improved 9
+9 generations since last population fitness record: 420
+Generation 82
+Number of Species: 16
+compat_thresh: 3
+Generation 82: overall_average = 7.53418
+orig fitness of Species81(Size 18): 420 last improved 10
+orig fitness of Species96(Size 22): 420 last improved 1
+orig fitness of Species76(Size 12): 360 last improved 2
+orig fitness of Species83(Size 12): 360 last improved 14
+orig fitness of Species86(Size 9): 360 last improved 11
+orig fitness of Species90(Size 6): 360 last improved 8
+orig fitness of Species95(Size 9): 360 last improved 4
+orig fitness of Species85(Size 17): 340 last improved 10
+orig fitness of Species87(Size 12): 280 last improved 4
+orig fitness of Species93(Size 7): 280 last improved 6
+orig fitness of Species91(Size 5): 200 last improved 6
+orig fitness of Species92(Size 4): 120 last improved 7
+orig fitness of Species89(Size 3): 100 last improved 10
+orig fitness of Species94(Size 5): 100 last improved 4
+orig fitness of Species84(Size 6): 80 last improved 13
+orig fitness of Species88(Size 3): 80 last improved 8
+10 generations since last population fitness record: 420
+Generation 83
+Number of Species: 15
+compat_thresh: 3
+Generation 83: overall_average = 6.48731
+orig fitness of Species81(Size 15): 420 last improved 11
+orig fitness of Species96(Size 8): 420 last improved 2
+orig fitness of Species76(Size 18): 360 last improved 3
+orig fitness of Species86(Size 15): 360 last improved 12
+orig fitness of Species90(Size 10): 360 last improved 9
+orig fitness of Species95(Size 13): 360 last improved 5
+orig fitness of Species85(Size 13): 340 last improved 11
+orig fitness of Species87(Size 10): 280 last improved 5
+orig fitness of Species93(Size 12): 280 last improved 7
+orig fitness of Species91(Size 8): 200 last improved 7
+orig fitness of Species92(Size 4): 120 last improved 8
+orig fitness of Species89(Size 8): 100 last improved 11
+orig fitness of Species84(Size 4): 80 last improved 14
+orig fitness of Species88(Size 11): 80 last improved 9
+orig fitness of Species94(Size 1): 0 last improved 5
+11 generations since last population fitness record: 420
+Generation 84
+Number of Species: 15
+compat_thresh: 3
+Generation 84: overall_average = 8.41092
+orig fitness of Species81(Size 24): 420 last improved 12
+orig fitness of Species96(Size 9): 420 last improved 3
+orig fitness of Species76(Size 16): 360 last improved 4
+orig fitness of Species86(Size 20): 360 last improved 13
+orig fitness of Species90(Size 11): 360 last improved 10
+orig fitness of Species95(Size 6): 360 last improved 6
+orig fitness of Species85(Size 21): 340 last improved 12
+orig fitness of Species97(Size 1): 300 last improved 0
+orig fitness of Species87(Size 14): 280 last improved 6
+orig fitness of Species91(Size 6): 200 last improved 8
+orig fitness of Species92(Size 5): 120 last improved 9
+orig fitness of Species89(Size 6): 100 last improved 12
+orig fitness of Species98(Size 1): 100 last improved 0
+orig fitness of Species88(Size 5): 80 last improved 10
+orig fitness of Species93(Size 5): 80 last improved 8
+12 generations since last population fitness record: 420
+Generation 85
+Number of Species: 16
+compat_thresh: 3
+Generation 85: overall_average = 7.25035
+orig fitness of Species81(Size 17): 420 last improved 13
+orig fitness of Species96(Size 8): 420 last improved 4
+orig fitness of Species76(Size 17): 360 last improved 5
+orig fitness of Species86(Size 15): 360 last improved 14
+orig fitness of Species90(Size 13): 360 last improved 11
+orig fitness of Species85(Size 8): 340 last improved 13
+orig fitness of Species97(Size 19): 300 last improved 1
+orig fitness of Species87(Size 14): 280 last improved 7
+orig fitness of Species91(Size 13): 200 last improved 9
+orig fitness of Species95(Size 4): 200 last improved 7
+orig fitness of Species89(Size 5): 160 last improved 13
+orig fitness of Species92(Size 4): 120 last improved 10
+orig fitness of Species98(Size 5): 100 last improved 1
+orig fitness of Species88(Size 4): 80 last improved 11
+orig fitness of Species99(Size 1): 80 last improved 0
+orig fitness of Species93(Size 3): 0 last improved 9
+13 generations since last population fitness record: 420
+Generation 86
+Number of Species: 15
+compat_thresh: 3
+Generation 86: overall_average = 4.59052
+orig fitness of Species81(Size 23): 420 last improved 14
+orig fitness of Species96(Size 12): 420 last improved 5
+orig fitness of Species76(Size 13): 360 last improved 6
+orig fitness of Species90(Size 19): 360 last improved 12
+orig fitness of Species85(Size 17): 340 last improved 14
+orig fitness of Species97(Size 7): 300 last improved 2
+orig fitness of Species87(Size 15): 280 last improved 8
+orig fitness of Species91(Size 13): 200 last improved 10
+orig fitness of Species89(Size 7): 160 last improved 14
+orig fitness of Species92(Size 8): 120 last improved 11
+orig fitness of Species99(Size 5): 100 last improved 0
+orig fitness of Species88(Size 3): 80 last improved 12
+orig fitness of Species95(Size 4): 80 last improved 8
+orig fitness of Species100(Size 2): 20 last improved 0
+orig fitness of Species98(Size 2): 0 last improved 2
+14 generations since last population fitness record: 420
+Generation 87
+Number of Species: 14
+compat_thresh: 3
+Generation 87: overall_average = 5.33944
+orig fitness of Species96(Size 12): 420 last improved 6
+orig fitness of Species76(Size 22): 360 last improved 7
+orig fitness of Species90(Size 16): 360 last improved 13
+orig fitness of Species92(Size 15): 320 last improved 12
+orig fitness of Species97(Size 10): 300 last improved 3
+orig fitness of Species87(Size 25): 280 last improved 9
+orig fitness of Species91(Size 20): 200 last improved 11
+orig fitness of Species101(Size 1): 140 last improved 0
+orig fitness of Species88(Size 17): 80 last improved 13
+orig fitness of Species89(Size 1): 80 last improved 15
+orig fitness of Species95(Size 4): 80 last improved 9
+orig fitness of Species99(Size 5): 80 last improved 1
+orig fitness of Species100(Size 1): 20 last improved 1
+orig fitness of Species85(Size 1): 0 last improved 15
+15 generations since last population fitness record: 420
+Generation 88
+Number of Species: 12
+compat_thresh: 3
+Generation 88: overall_average = 4.38684
+orig fitness of Species96(Size 16): 420 last improved 7
+orig fitness of Species76(Size 23): 360 last improved 8
+orig fitness of Species90(Size 21): 360 last improved 14
+orig fitness of Species92(Size 14): 320 last improved 13
+orig fitness of Species91(Size 21): 300 last improved 0
+orig fitness of Species97(Size 6): 300 last improved 4
+orig fitness of Species87(Size 19): 280 last improved 10
+orig fitness of Species101(Size 13): 200 last improved 0
+orig fitness of Species88(Size 6): 80 last improved 14
+orig fitness of Species95(Size 5): 80 last improved 10
+orig fitness of Species99(Size 5): 80 last improved 2
+orig fitness of Species100(Size 1): 0 last improved 2
+16 generations since last population fitness record: 420
+Generation 89
+Number of Species: 11
+compat_thresh: 3
+Generation 89: overall_average = 4.44856
+orig fitness of Species96(Size 14): 420 last improved 8
+orig fitness of Species76(Size 26): 360 last improved 9
+orig fitness of Species102(Size 1): 360 last improved 0
+orig fitness of Species92(Size 20): 320 last improved 14
+orig fitness of Species91(Size 25): 300 last improved 1
+orig fitness of Species97(Size 20): 300 last improved 5
+orig fitness of Species87(Size 22): 280 last improved 11
+orig fitness of Species101(Size 10): 200 last improved 1
+orig fitness of Species95(Size 5): 80 last improved 11
+orig fitness of Species99(Size 6): 80 last improved 3
+orig fitness of Species90(Size 1): 0 last improved 15
+17 generations since last population fitness record: 420
+Generation 90
+Number of Species: 11
+compat_thresh: 3
+Generation 90: overall_average = 5.1461
+orig fitness of Species96(Size 15): 420 last improved 9
+orig fitness of Species76(Size 21): 360 last improved 10
+orig fitness of Species102(Size 41): 360 last improved 1
+orig fitness of Species91(Size 19): 300 last improved 2
+orig fitness of Species97(Size 11): 300 last improved 6
+orig fitness of Species104(Size 1): 300 last improved 0
+orig fitness of Species87(Size 16): 280 last improved 12
+orig fitness of Species103(Size 1): 280 last improved 0
+orig fitness of Species101(Size 12): 240 last improved 0
+orig fitness of Species95(Size 7): 80 last improved 12
+orig fitness of Species99(Size 6): 80 last improved 4
+18 generations since last population fitness record: 420
+Generation 91
+Number of Species: 10
+compat_thresh: 3
+Generation 91: overall_average = 3.60587
+orig fitness of Species96(Size 11): 420 last improved 10
+orig fitness of Species76(Size 22): 360 last improved 11
+orig fitness of Species102(Size 9): 360 last improved 2
+orig fitness of Species91(Size 16): 300 last improved 3
+orig fitness of Species97(Size 14): 300 last improved 7
+orig fitness of Species104(Size 30): 300 last improved 1
+orig fitness of Species103(Size 27): 280 last improved 1
+orig fitness of Species101(Size 11): 240 last improved 1
+orig fitness of Species99(Size 5): 80 last improved 5
+orig fitness of Species95(Size 5): 40 last improved 13
+19 generations since last population fitness record: 420
+Generation 92
+Number of Species: 10
+compat_thresh: 3
+Generation 92: overall_average = 3.54094
+orig fitness of Species96(Size 24): 440 last improved 0
+orig fitness of Species76(Size 32): 360 last improved 12
+orig fitness of Species102(Size 14): 360 last improved 3
+orig fitness of Species91(Size 18): 300 last improved 4
+orig fitness of Species97(Size 14): 300 last improved 8
+orig fitness of Species104(Size 16): 300 last improved 2
+orig fitness of Species103(Size 14): 280 last improved 2
+orig fitness of Species101(Size 13): 240 last improved 2
+orig fitness of Species95(Size 2): 0 last improved 14
+orig fitness of Species99(Size 3): 0 last improved 6
+NEW POPULATION RECORD FITNESS: 440
+Generation 93
+Number of Species: 9
+compat_thresh: 3
+Generation 93: overall_average = 4.34213
+orig fitness of Species96(Size 36): 440 last improved 1
+orig fitness of Species76(Size 30): 360 last improved 13
+orig fitness of Species102(Size 12): 360 last improved 4
+orig fitness of Species91(Size 19): 300 last improved 5
+orig fitness of Species97(Size 11): 300 last improved 9
+orig fitness of Species104(Size 15): 300 last improved 3
+orig fitness of Species103(Size 16): 280 last improved 3
+orig fitness of Species101(Size 9): 240 last improved 3
+orig fitness of Species105(Size 2): 120 last improved 0
+1 generations since last population fitness record: 440
+Generation 94
+Number of Species: 10
+compat_thresh: 3
+Generation 94: overall_average = 4.24163
+orig fitness of Species96(Size 22): 440 last improved 2
+orig fitness of Species76(Size 17): 360 last improved 14
+orig fitness of Species102(Size 12): 360 last improved 5
+orig fitness of Species91(Size 28): 300 last improved 6
+orig fitness of Species97(Size 14): 300 last improved 10
+orig fitness of Species104(Size 16): 300 last improved 4
+orig fitness of Species103(Size 14): 280 last improved 4
+orig fitness of Species101(Size 13): 240 last improved 4
+orig fitness of Species105(Size 13): 140 last improved 0
+orig fitness of Species106(Size 1): 100 last improved 0
+2 generations since last population fitness record: 440
+Generation 95
+Number of Species: 9
+compat_thresh: 3
+Generation 95: overall_average = 3.92314
+orig fitness of Species96(Size 19): 440 last improved 3
+orig fitness of Species102(Size 16): 440 last improved 0
+orig fitness of Species91(Size 16): 300 last improved 7
+orig fitness of Species97(Size 33): 300 last improved 11
+orig fitness of Species104(Size 16): 300 last improved 5
+orig fitness of Species103(Size 18): 280 last improved 5
+orig fitness of Species101(Size 11): 240 last improved 5
+orig fitness of Species105(Size 9): 140 last improved 1
+orig fitness of Species106(Size 12): 100 last improved 1
+3 generations since last population fitness record: 440
+Generation 96
+Number of Species: 10
+compat_thresh: 3
+Generation 96: overall_average = 4.6072
+orig fitness of Species96(Size 26): 440 last improved 4
+orig fitness of Species102(Size 20): 440 last improved 1
+orig fitness of Species91(Size 14): 300 last improved 8
+orig fitness of Species97(Size 27): 300 last improved 12
+orig fitness of Species104(Size 13): 300 last improved 6
+orig fitness of Species103(Size 20): 280 last improved 6
+orig fitness of Species101(Size 15): 260 last improved 0
+orig fitness of Species107(Size 1): 160 last improved 0
+orig fitness of Species105(Size 7): 140 last improved 2
+orig fitness of Species106(Size 7): 100 last improved 2
+4 generations since last population fitness record: 440
+Generation 97
+Number of Species: 12
+compat_thresh: 3
+Generation 97: overall_average = 6.17235
+orig fitness of Species96(Size 18): 440 last improved 5
+orig fitness of Species102(Size 8): 440 last improved 2
+orig fitness of Species97(Size 24): 340 last improved 0
+orig fitness of Species91(Size 19): 300 last improved 9
+orig fitness of Species104(Size 14): 300 last improved 7
+orig fitness of Species103(Size 17): 280 last improved 7
+orig fitness of Species101(Size 16): 260 last improved 1
+orig fitness of Species109(Size 1): 260 last improved 0
+orig fitness of Species108(Size 1): 220 last improved 0
+orig fitness of Species107(Size 18): 160 last improved 1
+orig fitness of Species105(Size 9): 140 last improved 3
+orig fitness of Species106(Size 5): 100 last improved 3
+5 generations since last population fitness record: 440
+Generation 98
+Number of Species: 12
+compat_thresh: 3
+Generation 98: overall_average = 5.50211
+orig fitness of Species96(Size 20): 440 last improved 6
+orig fitness of Species102(Size 9): 440 last improved 3
+orig fitness of Species108(Size 17): 420 last improved 0
+orig fitness of Species97(Size 17): 340 last improved 1
+orig fitness of Species91(Size 12): 300 last improved 10
+orig fitness of Species101(Size 20): 300 last improved 0
+orig fitness of Species104(Size 11): 300 last improved 8
+orig fitness of Species103(Size 7): 280 last improved 8
+orig fitness of Species109(Size 22): 260 last improved 1
+orig fitness of Species107(Size 6): 160 last improved 2
+orig fitness of Species105(Size 4): 140 last improved 4
+orig fitness of Species106(Size 5): 140 last improved 0
+6 generations since last population fitness record: 440
+Generation 99
+Number of Species: 14
+compat_thresh: 3
+Generation 99: overall_average = 6.77434
+orig fitness of Species96(Size 17): 440 last improved 7
+orig fitness of Species102(Size 16): 440 last improved 4
+orig fitness of Species108(Size 12): 420 last improved 1
+orig fitness of Species103(Size 10): 360 last improved 0
+orig fitness of Species97(Size 16): 340 last improved 2
+orig fitness of Species91(Size 22): 300 last improved 11
+orig fitness of Species101(Size 25): 300 last improved 1
+orig fitness of Species104(Size 11): 300 last improved 9
+orig fitness of Species109(Size 8): 260 last improved 2
+orig fitness of Species110(Size 1): 260 last improved 0
+orig fitness of Species107(Size 6): 200 last improved 0
+orig fitness of Species111(Size 1): 140 last improved 0
+orig fitness of Species105(Size 3): 0 last improved 5
+orig fitness of Species106(Size 2): 0 last improved 1
+7 generations since last population fitness record: 440
+Generation 100
+Number of Species: 16
+compat_thresh: 3
+Generation 100: overall_average = 11.313
+orig fitness of Species96(Size 21): 440 last improved 8
+orig fitness of Species102(Size 18): 440 last improved 5
+orig fitness of Species108(Size 9): 420 last improved 2
+orig fitness of Species101(Size 12): 360 last improved 0
+orig fitness of Species103(Size 11): 360 last improved 1
+orig fitness of Species97(Size 12): 340 last improved 3
+orig fitness of Species91(Size 10): 300 last improved 12
+orig fitness of Species104(Size 10): 300 last improved 10
+orig fitness of Species112(Size 1): 300 last improved 0
+orig fitness of Species113(Size 1): 300 last improved 0
+orig fitness of Species111(Size 10): 280 last improved 0
+orig fitness of Species109(Size 6): 260 last improved 3
+orig fitness of Species110(Size 19): 260 last improved 1
+orig fitness of Species114(Size 1): 260 last improved 0
+orig fitness of Species115(Size 1): 260 last improved 0
+orig fitness of Species107(Size 8): 200 last improved 1
+8 generations since last population fitness record: 440
+Generation 101
+Number of Species: 17
+compat_thresh: 3
+Generation 101: overall_average = 9.07922
+orig fitness of Species96(Size 11): 440 last improved 9
+orig fitness of Species102(Size 11): 440 last improved 6
+orig fitness of Species108(Size 6): 420 last improved 3
+orig fitness of Species101(Size 10): 360 last improved 1
+orig fitness of Species103(Size 11): 360 last improved 2
+orig fitness of Species97(Size 10): 340 last improved 4
+orig fitness of Species91(Size 6): 300 last improved 13
+orig fitness of Species104(Size 17): 300 last improved 11
+orig fitness of Species112(Size 13): 300 last improved 1
+orig fitness of Species113(Size 14): 300 last improved 1
+orig fitness of Species110(Size 4): 260 last improved 2
+orig fitness of Species114(Size 11): 260 last improved 1
+orig fitness of Species115(Size 11): 260 last improved 1
+orig fitness of Species107(Size 5): 140 last improved 2
+orig fitness of Species111(Size 5): 140 last improved 1
+orig fitness of Species116(Size 1): 140 last improved 0
+orig fitness of Species109(Size 4): 80 last improved 4
+9 generations since last population fitness record: 440
+Generation 102
+Number of Species: 18
+compat_thresh: 3
+Generation 102: overall_average = 8.26435
+orig fitness of Species96(Size 12): 440 last improved 10
+orig fitness of Species102(Size 22): 440 last improved 7
+orig fitness of Species108(Size 8): 420 last improved 4
+orig fitness of Species101(Size 11): 360 last improved 2
+orig fitness of Species103(Size 16): 360 last improved 3
+orig fitness of Species97(Size 10): 340 last improved 5
+orig fitness of Species91(Size 11): 300 last improved 14
+orig fitness of Species104(Size 13): 300 last improved 12
+orig fitness of Species112(Size 8): 300 last improved 2
+orig fitness of Species113(Size 5): 300 last improved 2
+orig fitness of Species110(Size 5): 260 last improved 3
+orig fitness of Species115(Size 6): 260 last improved 2
+orig fitness of Species111(Size 4): 160 last improved 2
+orig fitness of Species107(Size 4): 140 last improved 3
+orig fitness of Species109(Size 2): 140 last improved 5
+orig fitness of Species114(Size 3): 140 last improved 2
+orig fitness of Species116(Size 9): 140 last improved 1
+orig fitness of Species117(Size 1): 140 last improved 0
+10 generations since last population fitness record: 440
+Generation 103
+Number of Species: 17
+compat_thresh: 3
+Generation 103: overall_average = 8.29172
+orig fitness of Species96(Size 14): 440 last improved 11
+orig fitness of Species102(Size 18): 440 last improved 8
+orig fitness of Species108(Size 6): 420 last improved 5
+orig fitness of Species101(Size 10): 360 last improved 3
+orig fitness of Species103(Size 15): 360 last improved 4
+orig fitness of Species97(Size 10): 340 last improved 6
+orig fitness of Species104(Size 12): 300 last improved 13
+orig fitness of Species112(Size 6): 300 last improved 3
+orig fitness of Species113(Size 8): 300 last improved 3
+orig fitness of Species110(Size 9): 260 last improved 4
+orig fitness of Species115(Size 10): 260 last improved 3
+orig fitness of Species111(Size 4): 220 last improved 3
+orig fitness of Species107(Size 3): 140 last improved 4
+orig fitness of Species109(Size 7): 140 last improved 6
+orig fitness of Species114(Size 7): 140 last improved 3
+orig fitness of Species117(Size 8): 140 last improved 1
+orig fitness of Species116(Size 3): 60 last improved 2
+11 generations since last population fitness record: 440
+Generation 104
+Number of Species: 22
+compat_thresh: 3
+Generation 104: overall_average = 10.2425
+orig fitness of Species96(Size 13): 440 last improved 12
+orig fitness of Species102(Size 17): 440 last improved 9
+orig fitness of Species108(Size 9): 420 last improved 6
+orig fitness of Species101(Size 16): 360 last improved 4
+orig fitness of Species103(Size 13): 360 last improved 5
+orig fitness of Species97(Size 12): 340 last improved 7
+orig fitness of Species104(Size 18): 300 last improved 14
+orig fitness of Species110(Size 6): 260 last improved 5
+orig fitness of Species115(Size 6): 260 last improved 4
+orig fitness of Species121(Size 1): 240 last improved 0
+orig fitness of Species111(Size 7): 220 last improved 4
+orig fitness of Species122(Size 1): 220 last improved 0
+orig fitness of Species119(Size 1): 200 last improved 0
+orig fitness of Species107(Size 4): 180 last improved 5
+orig fitness of Species117(Size 5): 160 last improved 0
+orig fitness of Species109(Size 3): 140 last improved 7
+orig fitness of Species112(Size 4): 140 last improved 4
+orig fitness of Species113(Size 5): 140 last improved 4
+orig fitness of Species114(Size 5): 140 last improved 4
+orig fitness of Species116(Size 2): 140 last improved 3
+orig fitness of Species118(Size 1): 140 last improved 0
+orig fitness of Species120(Size 1): 140 last improved 0
+12 generations since last population fitness record: 440
+Generation 105
+Number of Species: 22
+compat_thresh: 3
+Generation 105: overall_average = 9.87785
+orig fitness of Species96(Size 20): 440 last improved 13
+orig fitness of Species102(Size 8): 440 last improved 10
+orig fitness of Species101(Size 11): 360 last improved 5
+orig fitness of Species103(Size 9): 360 last improved 6
+orig fitness of Species97(Size 8): 340 last improved 8
+orig fitness of Species123(Size 1): 280 last improved 0
+orig fitness of Species110(Size 6): 260 last improved 6
+orig fitness of Species115(Size 8): 260 last improved 5
+orig fitness of Species119(Size 10): 260 last improved 0
+orig fitness of Species121(Size 12): 240 last improved 1
+orig fitness of Species111(Size 4): 220 last improved 5
+orig fitness of Species122(Size 10): 220 last improved 1
+orig fitness of Species114(Size 2): 200 last improved 5
+orig fitness of Species118(Size 6): 200 last improved 0
+orig fitness of Species120(Size 7): 200 last improved 0
+orig fitness of Species107(Size 4): 180 last improved 6
+orig fitness of Species112(Size 4): 140 last improved 5
+orig fitness of Species116(Size 7): 140 last improved 4
+orig fitness of Species108(Size 4): 80 last improved 7
+orig fitness of Species117(Size 4): 80 last improved 1
+orig fitness of Species109(Size 2): 0 last improved 8
+orig fitness of Species113(Size 3): 0 last improved 5
+13 generations since last population fitness record: 440
+Generation 106
+Number of Species: 20
+compat_thresh: 3
+Generation 106: overall_average = 9.01081
+orig fitness of Species96(Size 17): 440 last improved 14
+orig fitness of Species102(Size 13): 440 last improved 11
+orig fitness of Species101(Size 11): 360 last improved 6
+orig fitness of Species103(Size 13): 360 last improved 7
+orig fitness of Species97(Size 10): 340 last improved 9
+orig fitness of Species123(Size 15): 280 last improved 1
+orig fitness of Species110(Size 7): 260 last improved 7
+orig fitness of Species115(Size 6): 260 last improved 6
+orig fitness of Species119(Size 6): 260 last improved 1
+orig fitness of Species111(Size 9): 220 last improved 6
+orig fitness of Species122(Size 6): 220 last improved 2
+orig fitness of Species114(Size 8): 200 last improved 6
+orig fitness of Species118(Size 6): 200 last improved 1
+orig fitness of Species120(Size 6): 200 last improved 1
+orig fitness of Species107(Size 6): 180 last improved 7
+orig fitness of Species112(Size 1): 140 last improved 6
+orig fitness of Species116(Size 3): 140 last improved 5
+orig fitness of Species108(Size 1): 80 last improved 8
+orig fitness of Species117(Size 3): 80 last improved 2
+orig fitness of Species121(Size 3): 80 last improved 2
+14 generations since last population fitness record: 440
+Generation 107
+Number of Species: 19
+compat_thresh: 3
+Generation 107: overall_average = 9.41857
+orig fitness of Species102(Size 21): 440 last improved 12
+orig fitness of Species101(Size 16): 360 last improved 7
+orig fitness of Species103(Size 15): 360 last improved 8
+orig fitness of Species97(Size 11): 340 last improved 10
+orig fitness of Species122(Size 6): 280 last improved 0
+orig fitness of Species123(Size 6): 280 last improved 2
+orig fitness of Species110(Size 6): 260 last improved 8
+orig fitness of Species115(Size 6): 260 last improved 7
+orig fitness of Species119(Size 8): 260 last improved 2
+orig fitness of Species107(Size 13): 220 last improved 0
+orig fitness of Species111(Size 4): 220 last improved 7
+orig fitness of Species114(Size 7): 200 last improved 7
+orig fitness of Species118(Size 7): 200 last improved 2
+orig fitness of Species120(Size 6): 200 last improved 2
+orig fitness of Species112(Size 7): 140 last improved 7
+orig fitness of Species116(Size 4): 140 last improved 6
+orig fitness of Species121(Size 1): 100 last improved 3
+orig fitness of Species108(Size 4): 80 last improved 9
+orig fitness of Species117(Size 2): 80 last improved 3
+15 generations since last population fitness record: 440
+Generation 108
+Number of Species: 19
+compat_thresh: 3
+Generation 108: overall_average = 8.14036
+orig fitness of Species102(Size 18): 440 last improved 13
+orig fitness of Species101(Size 9): 360 last improved 8
+orig fitness of Species103(Size 15): 360 last improved 9
+orig fitness of Species97(Size 14): 340 last improved 11
+orig fitness of Species122(Size 5): 300 last improved 0
+orig fitness of Species123(Size 8): 280 last improved 3
+orig fitness of Species115(Size 9): 260 last improved 8
+orig fitness of Species119(Size 7): 260 last improved 3
+orig fitness of Species107(Size 11): 220 last improved 1
+orig fitness of Species111(Size 4): 220 last improved 8
+orig fitness of Species114(Size 9): 200 last improved 8
+orig fitness of Species118(Size 5): 200 last improved 3
+orig fitness of Species120(Size 6): 200 last improved 3
+orig fitness of Species110(Size 5): 140 last improved 9
+orig fitness of Species112(Size 4): 140 last improved 8
+orig fitness of Species116(Size 5): 140 last improved 7
+orig fitness of Species121(Size 5): 100 last improved 4
+orig fitness of Species108(Size 8): 80 last improved 10
+orig fitness of Species117(Size 3): 80 last improved 4
+16 generations since last population fitness record: 440
+Generation 109
+Number of Species: 20
+compat_thresh: 3
+Generation 109: overall_average = 8.2948
+orig fitness of Species102(Size 20): 440 last improved 14
+orig fitness of Species101(Size 16): 360 last improved 9
+orig fitness of Species103(Size 17): 360 last improved 10
+orig fitness of Species97(Size 10): 340 last improved 12
+orig fitness of Species122(Size 6): 300 last improved 1
+orig fitness of Species112(Size 7): 280 last improved 9
+orig fitness of Species123(Size 6): 280 last improved 4
+orig fitness of Species115(Size 8): 260 last improved 9
+orig fitness of Species119(Size 7): 260 last improved 4
+orig fitness of Species124(Size 1): 240 last improved 0
+orig fitness of Species107(Size 10): 220 last improved 2
+orig fitness of Species111(Size 4): 220 last improved 9
+orig fitness of Species114(Size 6): 200 last improved 9
+orig fitness of Species120(Size 9): 200 last improved 4
+orig fitness of Species110(Size 7): 160 last improved 10
+orig fitness of Species116(Size 4): 160 last improved 0
+orig fitness of Species121(Size 3): 120 last improved 5
+orig fitness of Species108(Size 4): 80 last improved 11
+orig fitness of Species117(Size 2): 80 last improved 5
+orig fitness of Species118(Size 3): 0 last improved 4
+17 generations since last population fitness record: 440
+Generation 110
+Number of Species: 20
+compat_thresh: 3
+Generation 110: overall_average = 10.8042
+orig fitness of Species101(Size 12): 360 last improved 10
+orig fitness of Species103(Size 11): 360 last improved 11
+orig fitness of Species97(Size 12): 340 last improved 13
+orig fitness of Species110(Size 8): 300 last improved 0
+orig fitness of Species122(Size 6): 300 last improved 2
+orig fitness of Species124(Size 14): 300 last improved 0
+orig fitness of Species112(Size 6): 280 last improved 10
+orig fitness of Species115(Size 9): 260 last improved 10
+orig fitness of Species116(Size 7): 260 last improved 0
+orig fitness of Species119(Size 9): 260 last improved 5
+orig fitness of Species107(Size 15): 220 last improved 3
+orig fitness of Species111(Size 9): 220 last improved 10
+orig fitness of Species123(Size 5): 220 last improved 5
+orig fitness of Species114(Size 8): 200 last improved 10
+orig fitness of Species120(Size 5): 180 last improved 5
+orig fitness of Species125(Size 1): 160 last improved 0
+orig fitness of Species126(Size 1): 140 last improved 0
+orig fitness of Species108(Size 5): 80 last improved 12
+orig fitness of Species117(Size 2): 80 last improved 6
+orig fitness of Species121(Size 5): 80 last improved 6
+18 generations since last population fitness record: 440
+Generation 111
+Number of Species: 22
+compat_thresh: 3
+Generation 111: overall_average = 10.3316
+orig fitness of Species114(Size 9): 380 last improved 0
+orig fitness of Species101(Size 10): 360 last improved 11
+orig fitness of Species103(Size 10): 360 last improved 12
+orig fitness of Species97(Size 12): 340 last improved 14
+orig fitness of Species110(Size 13): 300 last improved 1
+orig fitness of Species124(Size 8): 300 last improved 1
+orig fitness of Species112(Size 17): 280 last improved 11
+orig fitness of Species111(Size 11): 260 last improved 11
+orig fitness of Species115(Size 8): 260 last improved 11
+orig fitness of Species107(Size 7): 220 last improved 4
+orig fitness of Species116(Size 5): 200 last improved 1
+orig fitness of Species119(Size 4): 180 last improved 6
+orig fitness of Species127(Size 1): 180 last improved 0
+orig fitness of Species128(Size 3): 180 last improved 0
+orig fitness of Species122(Size 4): 160 last improved 3
+orig fitness of Species125(Size 7): 160 last improved 1
+orig fitness of Species126(Size 6): 160 last improved 0
+orig fitness of Species123(Size 3): 120 last improved 6
+orig fitness of Species108(Size 3): 80 last improved 13
+orig fitness of Species117(Size 4): 80 last improved 7
+orig fitness of Species121(Size 4): 80 last improved 7
+orig fitness of Species120(Size 1): 20 last improved 6
+19 generations since last population fitness record: 440
+Generation 112
+Number of Species: 23
+compat_thresh: 3
+Generation 112: overall_average = 11.9423
+orig fitness of Species114(Size 18): 380 last improved 1
+orig fitness of Species101(Size 11): 360 last improved 12
+orig fitness of Species103(Size 7): 360 last improved 13
+orig fitness of Species112(Size 13): 340 last improved 0
+orig fitness of Species110(Size 11): 300 last improved 2
+orig fitness of Species124(Size 6): 300 last improved 2
+orig fitness of Species129(Size 1): 280 last improved 0
+orig fitness of Species130(Size 1): 280 last improved 0
+orig fitness of Species115(Size 8): 260 last improved 12
+orig fitness of Species107(Size 13): 220 last improved 5
+orig fitness of Species111(Size 5): 220 last improved 12
+orig fitness of Species127(Size 8): 220 last improved 0
+orig fitness of Species116(Size 9): 200 last improved 2
+orig fitness of Species125(Size 5): 200 last improved 0
+orig fitness of Species108(Size 5): 180 last improved 14
+orig fitness of Species119(Size 6): 180 last improved 7
+orig fitness of Species128(Size 6): 180 last improved 1
+orig fitness of Species122(Size 4): 160 last improved 4
+orig fitness of Species120(Size 1): 140 last improved 7
+orig fitness of Species126(Size 5): 140 last improved 1
+orig fitness of Species121(Size 3): 80 last improved 8
+orig fitness of Species123(Size 3): 80 last improved 7
+orig fitness of Species117(Size 1): 0 last improved 8
+20 generations since last population fitness record: 440
+Generation 113
+Number of Species: 2
+compat_thresh: 3
+Generation 113: overall_average = 1.90044
+orig fitness of Species114(Size 75): 380 last improved 1
+orig fitness of Species101(Size 75): 360 last improved 1
+1 generations since last population fitness record: 440
+Generation 114
+Number of Species: 14
+compat_thresh: 3
+Generation 114: overall_average = 15.3125
+orig fitness of Species114(Size 80): 380 last improved 2
+orig fitness of Species138(Size 1): 380 last improved 0
+orig fitness of Species139(Size 1): 380 last improved 0
+orig fitness of Species141(Size 1): 380 last improved 0
+orig fitness of Species101(Size 58): 360 last improved 2
+orig fitness of Species131(Size 1): 360 last improved 0
+orig fitness of Species134(Size 1): 360 last improved 0
+orig fitness of Species135(Size 1): 360 last improved 0
+orig fitness of Species136(Size 1): 360 last improved 0
+orig fitness of Species137(Size 1): 360 last improved 0
+orig fitness of Species140(Size 1): 360 last improved 0
+orig fitness of Species142(Size 1): 300 last improved 0
+orig fitness of Species132(Size 1): 200 last improved 0
+orig fitness of Species133(Size 1): 140 last improved 0
+2 generations since last population fitness record: 440
+Generation 115
+Number of Species: 15
+compat_thresh: 3
+Generation 115: overall_average = 8.65556
+orig fitness of Species114(Size 10): 380 last improved 3
+orig fitness of Species138(Size 12): 380 last improved 1
+orig fitness of Species139(Size 13): 380 last improved 1
+orig fitness of Species141(Size 14): 380 last improved 1
+orig fitness of Species143(Size 1): 380 last improved 0
+orig fitness of Species101(Size 10): 360 last improved 3
+orig fitness of Species131(Size 12): 360 last improved 1
+orig fitness of Species134(Size 11): 360 last improved 1
+orig fitness of Species135(Size 12): 360 last improved 1
+orig fitness of Species136(Size 12): 360 last improved 1
+orig fitness of Species137(Size 12): 360 last improved 1
+orig fitness of Species140(Size 11): 360 last improved 1
+orig fitness of Species142(Size 9): 300 last improved 1
+orig fitness of Species132(Size 6): 200 last improved 1
+orig fitness of Species133(Size 5): 140 last improved 1
+3 generations since last population fitness record: 440
+Generation 116
+Number of Species: 17
+compat_thresh: 3
+Generation 116: overall_average = 8.83667
+orig fitness of Species114(Size 16): 380 last improved 4
+orig fitness of Species138(Size 6): 380 last improved 2
+orig fitness of Species139(Size 9): 380 last improved 2
+orig fitness of Species141(Size 8): 380 last improved 2
+orig fitness of Species143(Size 22): 380 last improved 1
+orig fitness of Species101(Size 15): 360 last improved 4
+orig fitness of Species134(Size 12): 360 last improved 2
+orig fitness of Species135(Size 9): 360 last improved 2
+orig fitness of Species136(Size 12): 360 last improved 2
+orig fitness of Species137(Size 9): 360 last improved 2
+orig fitness of Species140(Size 8): 360 last improved 2
+orig fitness of Species142(Size 8): 300 last improved 2
+orig fitness of Species145(Size 1): 260 last improved 0
+orig fitness of Species132(Size 6): 200 last improved 2
+orig fitness of Species144(Size 1): 180 last improved 0
+orig fitness of Species133(Size 4): 140 last improved 2
+orig fitness of Species131(Size 4): 80 last improved 2
+4 generations since last population fitness record: 440
+Generation 117
+Number of Species: 17
+compat_thresh: 3
+Generation 117: overall_average = 8.83967
+orig fitness of Species140(Size 6): 460 last improved 0
+orig fitness of Species114(Size 11): 380 last improved 5
+orig fitness of Species138(Size 11): 380 last improved 3
+orig fitness of Species139(Size 11): 380 last improved 3
+orig fitness of Species141(Size 8): 380 last improved 3
+orig fitness of Species143(Size 9): 380 last improved 2
+orig fitness of Species101(Size 13): 360 last improved 5
+orig fitness of Species134(Size 8): 360 last improved 3
+orig fitness of Species135(Size 8): 360 last improved 3
+orig fitness of Species136(Size 7): 360 last improved 3
+orig fitness of Species137(Size 10): 360 last improved 3
+orig fitness of Species142(Size 8): 300 last improved 3
+orig fitness of Species145(Size 15): 260 last improved 1
+orig fitness of Species132(Size 8): 200 last improved 3
+orig fitness of Species133(Size 5): 180 last improved 0
+orig fitness of Species144(Size 10): 180 last improved 1
+orig fitness of Species131(Size 2): 80 last improved 3
+NEW POPULATION RECORD FITNESS: 460
+Generation 118
+Number of Species: 19
+compat_thresh: 3
+Generation 118: overall_average = 10.4577
+orig fitness of Species140(Size 9): 460 last improved 1
+orig fitness of Species114(Size 17): 380 last improved 6
+orig fitness of Species141(Size 12): 380 last improved 4
+orig fitness of Species143(Size 7): 380 last improved 3
+orig fitness of Species146(Size 1): 380 last improved 0
+orig fitness of Species101(Size 16): 360 last improved 6
+orig fitness of Species134(Size 7): 360 last improved 4
+orig fitness of Species135(Size 14): 360 last improved 4
+orig fitness of Species136(Size 14): 360 last improved 4
+orig fitness of Species137(Size 7): 360 last improved 4
+orig fitness of Species147(Size 1): 360 last improved 0
+orig fitness of Species142(Size 7): 300 last improved 4
+orig fitness of Species145(Size 7): 260 last improved 2
+orig fitness of Species133(Size 7): 240 last improved 0
+orig fitness of Species132(Size 8): 220 last improved 0
+orig fitness of Species138(Size 4): 200 last improved 4
+orig fitness of Species139(Size 4): 200 last improved 4
+orig fitness of Species144(Size 3): 180 last improved 2
+orig fitness of Species131(Size 5): 140 last improved 4
+1 generations since last population fitness record: 460
+Generation 119
+Number of Species: 20
+compat_thresh: 3
+Generation 119: overall_average = 9.61764
+orig fitness of Species140(Size 8): 460 last improved 2
+orig fitness of Species114(Size 11): 380 last improved 7
+orig fitness of Species141(Size 12): 380 last improved 5
+orig fitness of Species143(Size 8): 380 last improved 4
+orig fitness of Species146(Size 19): 380 last improved 1
+orig fitness of Species101(Size 8): 360 last improved 7
+orig fitness of Species135(Size 6): 360 last improved 5
+orig fitness of Species136(Size 6): 360 last improved 5
+orig fitness of Species137(Size 8): 360 last improved 5
+orig fitness of Species147(Size 17): 360 last improved 1
+orig fitness of Species145(Size 6): 320 last improved 0
+orig fitness of Species142(Size 8): 300 last improved 5
+orig fitness of Species133(Size 6): 240 last improved 1
+orig fitness of Species132(Size 6): 220 last improved 1
+orig fitness of Species134(Size 5): 220 last improved 5
+orig fitness of Species139(Size 3): 200 last improved 5
+orig fitness of Species144(Size 6): 180 last improved 3
+orig fitness of Species148(Size 1): 180 last improved 0
+orig fitness of Species131(Size 3): 80 last improved 5
+orig fitness of Species138(Size 3): 0 last improved 5
+2 generations since last population fitness record: 460
+Generation 120
+Number of Species: 19
+compat_thresh: 3
+Generation 120: overall_average = 7.77742
+orig fitness of Species140(Size 8): 460 last improved 3
+orig fitness of Species114(Size 19): 380 last improved 8
+orig fitness of Species141(Size 8): 380 last improved 6
+orig fitness of Species143(Size 9): 380 last improved 5
+orig fitness of Species146(Size 6): 380 last improved 2
+orig fitness of Species101(Size 15): 360 last improved 8
+orig fitness of Species135(Size 9): 360 last improved 6
+orig fitness of Species136(Size 7): 360 last improved 6
+orig fitness of Species137(Size 6): 360 last improved 6
+orig fitness of Species147(Size 8): 360 last improved 2
+orig fitness of Species145(Size 8): 320 last improved 1
+orig fitness of Species142(Size 7): 300 last improved 6
+orig fitness of Species132(Size 7): 220 last improved 2
+orig fitness of Species139(Size 9): 200 last improved 6
+orig fitness of Species148(Size 9): 180 last improved 1
+orig fitness of Species134(Size 4): 160 last improved 6
+orig fitness of Species131(Size 3): 140 last improved 6
+orig fitness of Species133(Size 4): 120 last improved 2
+orig fitness of Species144(Size 4): 80 last improved 4
+3 generations since last population fitness record: 460
+Generation 121
+Number of Species: 18
+compat_thresh: 3
+Generation 121: overall_average = 7.25092
+orig fitness of Species140(Size 10): 460 last improved 4
+orig fitness of Species141(Size 14): 380 last improved 7
+orig fitness of Species143(Size 7): 380 last improved 6
+orig fitness of Species146(Size 10): 380 last improved 3
+orig fitness of Species101(Size 19): 360 last improved 9
+orig fitness of Species135(Size 8): 360 last improved 7
+orig fitness of Species136(Size 13): 360 last improved 7
+orig fitness of Species137(Size 6): 360 last improved 7
+orig fitness of Species147(Size 8): 360 last improved 3
+orig fitness of Species145(Size 9): 320 last improved 2
+orig fitness of Species142(Size 8): 300 last improved 7
+orig fitness of Species132(Size 9): 220 last improved 3
+orig fitness of Species139(Size 6): 200 last improved 7
+orig fitness of Species148(Size 5): 180 last improved 2
+orig fitness of Species134(Size 7): 160 last improved 7
+orig fitness of Species131(Size 7): 140 last improved 7
+orig fitness of Species133(Size 3): 80 last improved 3
+orig fitness of Species144(Size 1): 0 last improved 5
+4 generations since last population fitness record: 460
+Generation 122
+Number of Species: 19
+compat_thresh: 3
+Generation 122: overall_average = 8.73157
+orig fitness of Species140(Size 10): 460 last improved 5
+orig fitness of Species141(Size 9): 380 last improved 8
+orig fitness of Species143(Size 10): 380 last improved 7
+orig fitness of Species146(Size 7): 380 last improved 4
+orig fitness of Species101(Size 15): 360 last improved 10
+orig fitness of Species135(Size 12): 360 last improved 8
+orig fitness of Species136(Size 12): 360 last improved 8
+orig fitness of Species137(Size 10): 360 last improved 8
+orig fitness of Species147(Size 16): 360 last improved 4
+orig fitness of Species145(Size 12): 320 last improved 3
+orig fitness of Species150(Size 1): 320 last improved 0
+orig fitness of Species142(Size 10): 300 last improved 8
+orig fitness of Species132(Size 6): 220 last improved 4
+orig fitness of Species149(Size 1): 220 last improved 0
+orig fitness of Species139(Size 5): 200 last improved 8
+orig fitness of Species131(Size 6): 140 last improved 8
+orig fitness of Species148(Size 3): 100 last improved 3
+orig fitness of Species133(Size 2): 80 last improved 4
+orig fitness of Species134(Size 3): 0 last improved 8
+5 generations since last population fitness record: 460
+Generation 123
+Number of Species: 18
+compat_thresh: 3
+Generation 123: overall_average = 7.77902
+orig fitness of Species140(Size 14): 460 last improved 6
+orig fitness of Species141(Size 7): 380 last improved 9
+orig fitness of Species143(Size 11): 380 last improved 8
+orig fitness of Species146(Size 6): 380 last improved 5
+orig fitness of Species101(Size 10): 360 last improved 11
+orig fitness of Species135(Size 6): 360 last improved 9
+orig fitness of Species136(Size 6): 360 last improved 9
+orig fitness of Species137(Size 10): 360 last improved 9
+orig fitness of Species147(Size 8): 360 last improved 5
+orig fitness of Species145(Size 9): 320 last improved 4
+orig fitness of Species150(Size 19): 320 last improved 1
+orig fitness of Species142(Size 6): 300 last improved 9
+orig fitness of Species132(Size 6): 240 last improved 0
+orig fitness of Species149(Size 12): 220 last improved 1
+orig fitness of Species139(Size 7): 200 last improved 9
+orig fitness of Species131(Size 7): 140 last improved 9
+orig fitness of Species133(Size 2): 80 last improved 5
+orig fitness of Species148(Size 4): 80 last improved 4
+6 generations since last population fitness record: 460
+Generation 124
+Number of Species: 19
+compat_thresh: 3
+Generation 124: overall_average = 12.6301
+orig fitness of Species140(Size 14): 460 last improved 7
+orig fitness of Species141(Size 11): 380 last improved 10
+orig fitness of Species143(Size 12): 380 last improved 9
+orig fitness of Species146(Size 7): 380 last improved 6
+orig fitness of Species101(Size 14): 360 last improved 12
+orig fitness of Species135(Size 13): 360 last improved 10
+orig fitness of Species136(Size 10): 360 last improved 10
+orig fitness of Species147(Size 7): 360 last improved 6
+orig fitness of Species132(Size 9): 320 last improved 0
+orig fitness of Species145(Size 9): 320 last improved 5
+orig fitness of Species150(Size 8): 320 last improved 2
+orig fitness of Species142(Size 6): 300 last improved 10
+orig fitness of Species139(Size 7): 280 last improved 10
+orig fitness of Species149(Size 8): 260 last improved 0
+orig fitness of Species151(Size 1): 200 last improved 0
+orig fitness of Species131(Size 4): 140 last improved 10
+orig fitness of Species137(Size 4): 140 last improved 10
+orig fitness of Species133(Size 5): 80 last improved 6
+orig fitness of Species148(Size 1): 80 last improved 5
+7 generations since last population fitness record: 460
+Generation 125
+Number of Species: 19
+compat_thresh: 3
+Generation 125: overall_average = 11.1151
+orig fitness of Species140(Size 22): 460 last improved 8
+orig fitness of Species141(Size 9): 380 last improved 11
+orig fitness of Species101(Size 8): 360 last improved 13
+orig fitness of Species135(Size 8): 360 last improved 11
+orig fitness of Species136(Size 7): 360 last improved 11
+orig fitness of Species147(Size 5): 360 last improved 7
+orig fitness of Species132(Size 12): 320 last improved 1
+orig fitness of Species145(Size 8): 320 last improved 6
+orig fitness of Species150(Size 7): 320 last improved 3
+orig fitness of Species142(Size 10): 300 last improved 11
+orig fitness of Species139(Size 10): 280 last improved 11
+orig fitness of Species149(Size 7): 260 last improved 1
+orig fitness of Species151(Size 8): 240 last improved 0
+orig fitness of Species131(Size 3): 140 last improved 11
+orig fitness of Species137(Size 9): 140 last improved 11
+orig fitness of Species133(Size 6): 100 last improved 7
+orig fitness of Species143(Size 4): 80 last improved 10
+orig fitness of Species146(Size 4): 80 last improved 7
+orig fitness of Species148(Size 3): 80 last improved 6
+8 generations since last population fitness record: 460
+Generation 126
+Number of Species: 20
+compat_thresh: 3
+Generation 126: overall_average = 11.0666
+orig fitness of Species140(Size 9): 460 last improved 9
+orig fitness of Species141(Size 9): 380 last improved 12
+orig fitness of Species101(Size 15): 360 last improved 14
+orig fitness of Species135(Size 12): 360 last improved 12
+orig fitness of Species136(Size 8): 360 last improved 12
+orig fitness of Species147(Size 4): 360 last improved 8
+orig fitness of Species132(Size 16): 320 last improved 2
+orig fitness of Species150(Size 7): 320 last improved 4
+orig fitness of Species142(Size 10): 300 last improved 12
+orig fitness of Species139(Size 11): 280 last improved 12
+orig fitness of Species149(Size 8): 260 last improved 2
+orig fitness of Species151(Size 5): 220 last improved 1
+orig fitness of Species143(Size 3): 180 last improved 11
+orig fitness of Species131(Size 7): 160 last improved 12
+orig fitness of Species137(Size 4): 140 last improved 12
+orig fitness of Species145(Size 5): 140 last improved 7
+orig fitness of Species152(Size 5): 120 last improved 0
+orig fitness of Species133(Size 6): 100 last improved 8
+orig fitness of Species146(Size 4): 80 last improved 8
+orig fitness of Species148(Size 2): 0 last improved 7
+9 generations since last population fitness record: 460
+Generation 127
+Number of Species: 18
+compat_thresh: 3
+Generation 127: overall_average = 10.0395
+orig fitness of Species140(Size 17): 460 last improved 10
+orig fitness of Species141(Size 15): 380 last improved 13
+orig fitness of Species135(Size 11): 360 last improved 13
+orig fitness of Species136(Size 15): 360 last improved 13
+orig fitness of Species147(Size 6): 360 last improved 9
+orig fitness of Species132(Size 13): 320 last improved 3
+orig fitness of Species142(Size 11): 300 last improved 13
+orig fitness of Species139(Size 11): 280 last improved 13
+orig fitness of Species151(Size 5): 220 last improved 2
+orig fitness of Species143(Size 10): 180 last improved 12
+orig fitness of Species131(Size 10): 160 last improved 13
+orig fitness of Species137(Size 7): 140 last improved 13
+orig fitness of Species152(Size 2): 120 last improved 1
+orig fitness of Species133(Size 6): 100 last improved 9
+orig fitness of Species145(Size 3): 80 last improved 8
+orig fitness of Species149(Size 4): 80 last improved 3
+orig fitness of Species150(Size 2): 80 last improved 5
+orig fitness of Species146(Size 2): 20 last improved 9
+10 generations since last population fitness record: 460
+Generation 128
+Number of Species: 18
+compat_thresh: 3
+Generation 128: overall_average = 5.04444
+orig fitness of Species140(Size 13): 460 last improved 11
+orig fitness of Species141(Size 19): 380 last improved 14
+orig fitness of Species135(Size 14): 360 last improved 14
+orig fitness of Species136(Size 11): 360 last improved 14
+orig fitness of Species147(Size 10): 360 last improved 10
+orig fitness of Species132(Size 15): 320 last improved 4
+orig fitness of Species139(Size 13): 300 last improved 14
+orig fitness of Species142(Size 9): 300 last improved 14
+orig fitness of Species151(Size 6): 220 last improved 3
+orig fitness of Species137(Size 5): 200 last improved 14
+orig fitness of Species143(Size 8): 180 last improved 13
+orig fitness of Species131(Size 7): 160 last improved 14
+orig fitness of Species133(Size 9): 120 last improved 10
+orig fitness of Species145(Size 4): 80 last improved 9
+orig fitness of Species149(Size 2): 80 last improved 4
+orig fitness of Species150(Size 2): 80 last improved 6
+orig fitness of Species146(Size 1): 20 last improved 10
+orig fitness of Species152(Size 2): 0 last improved 2
+11 generations since last population fitness record: 460
+Generation 129
+Number of Species: 12
+compat_thresh: 3
+Generation 129: overall_average = 4.98875
+orig fitness of Species140(Size 31): 460 last improved 12
+orig fitness of Species147(Size 25): 360 last improved 11
+orig fitness of Species132(Size 27): 320 last improved 5
+orig fitness of Species143(Size 20): 180 last improved 14
+orig fitness of Species153(Size 1): 180 last improved 0
+orig fitness of Species133(Size 10): 160 last improved 11
+orig fitness of Species145(Size 14): 120 last improved 10
+orig fitness of Species151(Size 5): 120 last improved 4
+orig fitness of Species149(Size 8): 100 last improved 5
+orig fitness of Species135(Size 1): 80 last improved 15
+orig fitness of Species146(Size 4): 80 last improved 11
+orig fitness of Species150(Size 4): 80 last improved 7
+12 generations since last population fitness record: 460
+Generation 130
+Number of Species: 11
+compat_thresh: 3
+Generation 130: overall_average = 4.42864
+orig fitness of Species140(Size 25): 460 last improved 13
+orig fitness of Species147(Size 21): 360 last improved 12
+orig fitness of Species132(Size 27): 320 last improved 6
+orig fitness of Species153(Size 18): 180 last improved 1
+orig fitness of Species133(Size 14): 160 last improved 12
+orig fitness of Species145(Size 17): 120 last improved 11
+orig fitness of Species151(Size 5): 120 last improved 5
+orig fitness of Species149(Size 6): 100 last improved 6
+orig fitness of Species146(Size 12): 80 last improved 12
+orig fitness of Species150(Size 4): 80 last improved 8
+orig fitness of Species135(Size 1): 40 last improved 16
+13 generations since last population fitness record: 460
+Generation 131
+Number of Species: 10
+compat_thresh: 3
+Generation 131: overall_average = 4.39393
+orig fitness of Species140(Size 39): 460 last improved 14
+orig fitness of Species147(Size 21): 360 last improved 13
+orig fitness of Species132(Size 32): 320 last improved 7
+orig fitness of Species153(Size 7): 180 last improved 2
+orig fitness of Species145(Size 16): 140 last improved 12
+orig fitness of Species146(Size 12): 140 last improved 13
+orig fitness of Species150(Size 5): 120 last improved 9
+orig fitness of Species151(Size 8): 120 last improved 6
+orig fitness of Species133(Size 4): 100 last improved 13
+orig fitness of Species149(Size 6): 100 last improved 7
+14 generations since last population fitness record: 460
+Generation 132
+Number of Species: 11
+compat_thresh: 3
+Generation 132: overall_average = 3.46685
+orig fitness of Species147(Size 31): 360 last improved 14
+orig fitness of Species132(Size 43): 340 last improved 0
+orig fitness of Species154(Size 1): 320 last improved 0
+orig fitness of Species145(Size 16): 240 last improved 13
+orig fitness of Species153(Size 10): 180 last improved 3
+orig fitness of Species150(Size 9): 160 last improved 10
+orig fitness of Species146(Size 16): 140 last improved 14
+orig fitness of Species133(Size 10): 120 last improved 14
+orig fitness of Species151(Size 6): 120 last improved 7
+orig fitness of Species149(Size 7): 100 last improved 8
+orig fitness of Species140(Size 1): 0 last improved 15
+15 generations since last population fitness record: 460
+Generation 133
+Number of Species: 10
+compat_thresh: 3
+Generation 133: overall_average = 3.51617
+orig fitness of Species132(Size 36): 340 last improved 1
+orig fitness of Species154(Size 47): 320 last improved 1
+orig fitness of Species151(Size 10): 280 last improved 0
+orig fitness of Species150(Size 20): 260 last improved 11
+orig fitness of Species145(Size 10): 240 last improved 14
+orig fitness of Species153(Size 8): 220 last improved 0
+orig fitness of Species155(Size 1): 140 last improved 0
+orig fitness of Species149(Size 16): 100 last improved 9
+orig fitness of Species156(Size 1): 100 last improved 0
+orig fitness of Species146(Size 1): 80 last improved 15
+16 generations since last population fitness record: 460
+Generation 134
+Number of Species: 9
+compat_thresh: 3
+Generation 134: overall_average = 4.05441
+orig fitness of Species132(Size 36): 340 last improved 2
+orig fitness of Species150(Size 23): 320 last improved 12
+orig fitness of Species154(Size 18): 320 last improved 2
+orig fitness of Species151(Size 11): 280 last improved 1
+orig fitness of Species153(Size 12): 220 last improved 1
+orig fitness of Species157(Size 1): 180 last improved 0
+orig fitness of Species155(Size 20): 140 last improved 1
+orig fitness of Species149(Size 15): 100 last improved 10
+orig fitness of Species156(Size 14): 100 last improved 1
+17 generations since last population fitness record: 460
+Generation 135
+Number of Species: 9
+compat_thresh: 3
+Generation 135: overall_average = 3.65265
+orig fitness of Species132(Size 33): 340 last improved 3
+orig fitness of Species150(Size 26): 320 last improved 13
+orig fitness of Species154(Size 19): 320 last improved 3
+orig fitness of Species151(Size 22): 280 last improved 2
+orig fitness of Species153(Size 5): 200 last improved 2
+orig fitness of Species157(Size 22): 180 last improved 1
+orig fitness of Species155(Size 8): 140 last improved 2
+orig fitness of Species149(Size 10): 100 last improved 11
+orig fitness of Species156(Size 5): 100 last improved 2
+18 generations since last population fitness record: 460
+Generation 136
+Number of Species: 10
+compat_thresh: 3
+Generation 136: overall_average = 3.32544
+orig fitness of Species132(Size 41): 340 last improved 4
+orig fitness of Species150(Size 25): 320 last improved 14
+orig fitness of Species154(Size 15): 320 last improved 4
+orig fitness of Species151(Size 27): 280 last improved 3
+orig fitness of Species153(Size 7): 200 last improved 3
+orig fitness of Species157(Size 8): 180 last improved 2
+orig fitness of Species155(Size 7): 140 last improved 3
+orig fitness of Species149(Size 11): 100 last improved 12
+orig fitness of Species156(Size 8): 100 last improved 3
+orig fitness of Species158(Size 1): 80 last improved 0
+19 generations since last population fitness record: 460
+Generation 137
+Number of Species: 13
+compat_thresh: 3
+Generation 137: overall_average = 5.86145
+orig fitness of Species132(Size 34): 340 last improved 5
+orig fitness of Species154(Size 19): 320 last improved 5
+orig fitness of Species159(Size 1): 320 last improved 0
+orig fitness of Species160(Size 1): 320 last improved 0
+orig fitness of Species151(Size 33): 300 last improved 0
+orig fitness of Species153(Size 10): 200 last improved 4
+orig fitness of Species158(Size 12): 200 last improved 0
+orig fitness of Species157(Size 11): 180 last improved 3
+orig fitness of Species161(Size 1): 180 last improved 0
+orig fitness of Species156(Size 7): 140 last improved 0
+orig fitness of Species149(Size 15): 100 last improved 13
+orig fitness of Species155(Size 5): 80 last improved 4
+orig fitness of Species150(Size 1): 0 last improved 15
+20 generations since last population fitness record: 460
+Generation 138
+Number of Species: 2
+compat_thresh: 3
+Generation 138: overall_average = 1.23289
+orig fitness of Species132(Size 75): 340 last improved 1
+orig fitness of Species154(Size 75): 340 last improved 0
+1 generations since last population fitness record: 460
+Generation 139
+Number of Species: 8
+compat_thresh: 3
+Generation 139: overall_average = 7.60974
+orig fitness of Species132(Size 88): 340 last improved 2
+orig fitness of Species154(Size 56): 340 last improved 1
+orig fitness of Species162(Size 1): 340 last improved 0
+orig fitness of Species164(Size 1): 340 last improved 0
+orig fitness of Species165(Size 1): 340 last improved 0
+orig fitness of Species166(Size 1): 320 last improved 0
+orig fitness of Species167(Size 1): 320 last improved 0
+orig fitness of Species163(Size 1): 260 last improved 0
+2 generations since last population fitness record: 460
+Generation 140
+Number of Species: 9
+compat_thresh: 3
+Generation 140: overall_average = 4.48691
+orig fitness of Species132(Size 15): 360 last improved 0
+orig fitness of Species167(Size 21): 360 last improved 0
+orig fitness of Species154(Size 7): 340 last improved 2
+orig fitness of Species162(Size 24): 340 last improved 1
+orig fitness of Species164(Size 22): 340 last improved 1
+orig fitness of Species165(Size 22): 340 last improved 1
+orig fitness of Species166(Size 21): 320 last improved 1
+orig fitness of Species168(Size 1): 300 last improved 0
+orig fitness of Species163(Size 17): 280 last improved 0
+3 generations since last population fitness record: 460
+Generation 141
+Number of Species: 11
+compat_thresh: 3
+Generation 141: overall_average = 5.8437
+orig fitness of Species165(Size 13): 520 last improved 0
+orig fitness of Species132(Size 31): 360 last improved 1
+orig fitness of Species167(Size 15): 360 last improved 1
+orig fitness of Species154(Size 7): 340 last improved 3
+orig fitness of Species162(Size 13): 340 last improved 2
+orig fitness of Species164(Size 11): 340 last improved 2
+orig fitness of Species166(Size 12): 320 last improved 2
+orig fitness of Species168(Size 34): 300 last improved 1
+orig fitness of Species163(Size 12): 280 last improved 1
+orig fitness of Species169(Size 1): 280 last improved 0
+orig fitness of Species170(Size 1): 160 last improved 0
+NEW POPULATION RECORD FITNESS: 520
+Generation 142
+Number of Species: 12
+compat_thresh: 3
+Generation 142: overall_average = 6.2064
+orig fitness of Species165(Size 15): 520 last improved 1
+orig fitness of Species166(Size 13): 380 last improved 0
+orig fitness of Species132(Size 19): 360 last improved 2
+orig fitness of Species167(Size 9): 360 last improved 2
+orig fitness of Species154(Size 11): 340 last improved 4
+orig fitness of Species162(Size 11): 340 last improved 3
+orig fitness of Species163(Size 8): 340 last improved 0
+orig fitness of Species164(Size 14): 340 last improved 3
+orig fitness of Species171(Size 1): 340 last improved 0
+orig fitness of Species169(Size 24): 320 last improved 0
+orig fitness of Species168(Size 11): 300 last improved 2
+orig fitness of Species170(Size 14): 280 last improved 0
+1 generations since last population fitness record: 520
+Generation 143
+Number of Species: 13
+compat_thresh: 3
+Generation 143: overall_average = 7.2431
+orig fitness of Species165(Size 12): 520 last improved 2
+orig fitness of Species166(Size 12): 380 last improved 1
+orig fitness of Species132(Size 12): 360 last improved 3
+orig fitness of Species167(Size 12): 360 last improved 3
+orig fitness of Species154(Size 19): 340 last improved 5
+orig fitness of Species162(Size 10): 340 last improved 4
+orig fitness of Species163(Size 10): 340 last improved 1
+orig fitness of Species164(Size 11): 340 last improved 4
+orig fitness of Species168(Size 8): 340 last improved 0
+orig fitness of Species171(Size 28): 340 last improved 1
+orig fitness of Species169(Size 7): 320 last improved 1
+orig fitness of Species170(Size 8): 280 last improved 1
+orig fitness of Species172(Size 1): 200 last improved 0
+2 generations since last population fitness record: 520
+Generation 144
+Number of Species: 13
+compat_thresh: 3
+Generation 144: overall_average = 5.32487
+orig fitness of Species165(Size 6): 520 last improved 3
+orig fitness of Species166(Size 12): 380 last improved 2
+orig fitness of Species132(Size 20): 360 last improved 4
+orig fitness of Species167(Size 9): 360 last improved 4
+orig fitness of Species154(Size 25): 340 last improved 6
+orig fitness of Species162(Size 11): 340 last improved 5
+orig fitness of Species163(Size 9): 340 last improved 2
+orig fitness of Species164(Size 13): 340 last improved 5
+orig fitness of Species168(Size 11): 340 last improved 1
+orig fitness of Species171(Size 7): 340 last improved 2
+orig fitness of Species169(Size 9): 320 last improved 2
+orig fitness of Species172(Size 13): 200 last improved 1
+orig fitness of Species170(Size 5): 180 last improved 2
+3 generations since last population fitness record: 520
+Generation 145
+Number of Species: 16
+compat_thresh: 3
+Generation 145: overall_average = 6.95366
+orig fitness of Species165(Size 13): 520 last improved 4
+orig fitness of Species166(Size 14): 380 last improved 3
+orig fitness of Species132(Size 25): 360 last improved 5
+orig fitness of Species167(Size 10): 360 last improved 5
+orig fitness of Species154(Size 10): 340 last improved 7
+orig fitness of Species162(Size 9): 340 last improved 6
+orig fitness of Species163(Size 10): 340 last improved 3
+orig fitness of Species164(Size 11): 340 last improved 6
+orig fitness of Species168(Size 4): 340 last improved 2
+orig fitness of Species171(Size 11): 340 last improved 3
+orig fitness of Species173(Size 1): 340 last improved 0
+orig fitness of Species169(Size 13): 320 last improved 3
+orig fitness of Species172(Size 8): 200 last improved 2
+orig fitness of Species170(Size 6): 180 last improved 3
+orig fitness of Species175(Size 4): 140 last improved 0
+orig fitness of Species174(Size 1): 100 last improved 0
+4 generations since last population fitness record: 520
+Generation 146
+Number of Species: 19
+compat_thresh: 3
+Generation 146: overall_average = 8.42597
+orig fitness of Species165(Size 10): 520 last improved 5
+orig fitness of Species166(Size 10): 380 last improved 4
+orig fitness of Species132(Size 12): 360 last improved 6
+orig fitness of Species167(Size 6): 360 last improved 6
+orig fitness of Species170(Size 4): 360 last improved 0
+orig fitness of Species154(Size 10): 340 last improved 8
+orig fitness of Species162(Size 9): 340 last improved 7
+orig fitness of Species163(Size 9): 340 last improved 4
+orig fitness of Species164(Size 11): 340 last improved 7
+orig fitness of Species168(Size 10): 340 last improved 3
+orig fitness of Species171(Size 8): 340 last improved 4
+orig fitness of Species173(Size 25): 340 last improved 1
+orig fitness of Species174(Size 7): 300 last improved 0
+orig fitness of Species178(Size 1): 240 last improved 0
+orig fitness of Species169(Size 4): 200 last improved 4
+orig fitness of Species172(Size 9): 200 last improved 3
+orig fitness of Species176(Size 1): 180 last improved 0
+orig fitness of Species177(Size 1): 180 last improved 0
+orig fitness of Species175(Size 3): 140 last improved 1
+5 generations since last population fitness record: 520
+Generation 147
+Number of Species: 19
+compat_thresh: 3
+Generation 147: overall_average = 8.5689
+orig fitness of Species165(Size 6): 520 last improved 6
+orig fitness of Species132(Size 12): 360 last improved 7
+orig fitness of Species154(Size 14): 360 last improved 0
+orig fitness of Species170(Size 11): 360 last improved 1
+orig fitness of Species162(Size 7): 340 last improved 8
+orig fitness of Species163(Size 7): 340 last improved 5
+orig fitness of Species164(Size 6): 340 last improved 8
+orig fitness of Species168(Size 9): 340 last improved 4
+orig fitness of Species171(Size 9): 340 last improved 5
+orig fitness of Species173(Size 7): 340 last improved 2
+orig fitness of Species174(Size 7): 300 last improved 1
+orig fitness of Species176(Size 11): 240 last improved 0
+orig fitness of Species177(Size 10): 240 last improved 0
+orig fitness of Species178(Size 15): 240 last improved 1
+orig fitness of Species169(Size 3): 200 last improved 5
+orig fitness of Species166(Size 5): 180 last improved 5
+orig fitness of Species172(Size 3): 160 last improved 4
+orig fitness of Species167(Size 5): 140 last improved 7
+orig fitness of Species175(Size 3): 140 last improved 2
+6 generations since last population fitness record: 520
+Generation 148
+Number of Species: 21
+compat_thresh: 3
+Generation 148: overall_average = 8.85907
+orig fitness of Species165(Size 7): 520 last improved 7
+orig fitness of Species132(Size 16): 360 last improved 8
+orig fitness of Species154(Size 18): 360 last improved 1
+orig fitness of Species170(Size 10): 360 last improved 2
+orig fitness of Species173(Size 7): 360 last improved 0
+orig fitness of Species162(Size 6): 340 last improved 9
+orig fitness of Species163(Size 10): 340 last improved 6
+orig fitness of Species164(Size 9): 340 last improved 9
+orig fitness of Species171(Size 13): 340 last improved 6
+orig fitness of Species180(Size 1): 340 last improved 0
+orig fitness of Species174(Size 6): 300 last improved 2
+orig fitness of Species176(Size 7): 240 last improved 1
+orig fitness of Species177(Size 6): 240 last improved 1
+orig fitness of Species169(Size 4): 200 last improved 6
+orig fitness of Species178(Size 4): 200 last improved 2
+orig fitness of Species167(Size 5): 160 last improved 8
+orig fitness of Species172(Size 9): 160 last improved 5
+orig fitness of Species166(Size 2): 140 last improved 6
+orig fitness of Species168(Size 4): 120 last improved 5
+orig fitness of Species179(Size 1): 100 last improved 0
+orig fitness of Species175(Size 5): 0 last improved 3
+7 generations since last population fitness record: 520
+Generation 149
+Number of Species: 20
+compat_thresh: 3
+Generation 149: overall_average = 11.1433
+orig fitness of Species165(Size 8): 520 last improved 8
+orig fitness of Species132(Size 11): 360 last improved 9
+orig fitness of Species154(Size 8): 360 last improved 2
+orig fitness of Species170(Size 10): 360 last improved 3
+orig fitness of Species173(Size 11): 360 last improved 1
+orig fitness of Species162(Size 7): 340 last improved 10
+orig fitness of Species163(Size 8): 340 last improved 7
+orig fitness of Species164(Size 8): 340 last improved 10
+orig fitness of Species171(Size 9): 340 last improved 7
+orig fitness of Species180(Size 20): 340 last improved 1
+orig fitness of Species178(Size 5): 320 last improved 0
+orig fitness of Species174(Size 7): 300 last improved 3
+orig fitness of Species176(Size 6): 240 last improved 2
+orig fitness of Species177(Size 6): 240 last improved 2
+orig fitness of Species169(Size 6): 200 last improved 7
+orig fitness of Species166(Size 7): 160 last improved 7
+orig fitness of Species167(Size 4): 160 last improved 9
+orig fitness of Species179(Size 5): 160 last improved 0
+orig fitness of Species168(Size 1): 0 last improved 6
+orig fitness of Species172(Size 3): 0 last improved 6
+8 generations since last population fitness record: 520
+Generation 150
+Number of Species: 18
+compat_thresh: 3
+Generation 150: overall_average = 8.74494
+orig fitness of Species165(Size 21): 520 last improved 9
+orig fitness of Species132(Size 11): 360 last improved 10
+orig fitness of Species154(Size 11): 360 last improved 3
+orig fitness of Species170(Size 9): 360 last improved 4
+orig fitness of Species162(Size 16): 340 last improved 11
+orig fitness of Species163(Size 8): 340 last improved 8
+orig fitness of Species164(Size 16): 340 last improved 11
+orig fitness of Species171(Size 9): 340 last improved 8
+orig fitness of Species180(Size 6): 340 last improved 2
+orig fitness of Species178(Size 7): 320 last improved 1
+orig fitness of Species166(Size 8): 300 last improved 8
+orig fitness of Species173(Size 4): 300 last improved 2
+orig fitness of Species169(Size 4): 200 last improved 8
+orig fitness of Species167(Size 6): 160 last improved 10
+orig fitness of Species177(Size 2): 120 last improved 3
+orig fitness of Species179(Size 4): 120 last improved 1
+orig fitness of Species174(Size 4): 80 last improved 4
+orig fitness of Species176(Size 4): 60 last improved 3
+9 generations since last population fitness record: 520
+Elapsed time: 24217

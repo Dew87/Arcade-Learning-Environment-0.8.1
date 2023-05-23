@@ -200,19 +200,19 @@ void Program::Play(size_t games, bool screen)
 	NEAT::Network *network = mAgent->net;
 	if (network->inputs.size() != SENSOR_INPUTS)
 	{
-		cout << "Mismatch number of sensors: " << network->inputs.size() << "//" << SENSOR_INPUTS << "\n";
+		cout << "Mismatch number of sensors " << network->inputs.size() << " expected " << SENSOR_INPUTS << "\n\n";
 		return;
 	}
 	if (network->outputs.size() != legal_actions.size())
 	{
-		cout << "Mismatch number of outputs: " << network->outputs.size() << "//" << legal_actions.size() << "\n";
+		cout << "Mismatch number of outputs " << network->outputs.size() << " expected " << legal_actions.size() << "\n\n";
 		return;
 	}
 
 	// Create input screen
 	if (screen && mInputScreen == NULL)
 	{
-		mInputScreen = new MonochromeScreen("Input", PIXELS_DOWNSCALED_X, PIXELS_DOWNSCALED_Y);
+		mInputScreen = new MonochromeScreen("Input", PIXELS_X, PIXELS_Y, PIXELS_DOWNSCALED_X, PIXELS_DOWNSCALED_Y);
 	}
 
 	for (size_t i = 1; i <= games; i++)
@@ -298,7 +298,7 @@ void Program::Run()
 		cout << "5: LoadRom\n";
 		cout << "6: LoadConfig\n";
 		cout << "7: PrintConfig\n";
-		cout << "8: Play100\n";
+		//cout << "8: Play100\n";
 		cout << "Any other character to quit\n";
 
 		char answer = _getch();
@@ -313,7 +313,7 @@ void Program::Run()
 		case '5': LoadRom(); break;
 		case '6': Config(); break;
 		case '7': Print(); break;
-		case '8': Play(100, false); break;
+		//case '8': Play(100, false); break;
 		default: return;
 		}
 	}

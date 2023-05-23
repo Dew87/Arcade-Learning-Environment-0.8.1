@@ -1,10 +1,10 @@
 #include "MonochromeScreen.hpp"
 #include <SDL.h>
 
-MonochromeScreen::MonochromeScreen(const char *title, int width, int height) : mWidth(width), mHeight(height)
+MonochromeScreen::MonochromeScreen(const char *title, int width, int height, int x, int y) : mX(x), mY(y)
 {
 	// Create SDL window
-	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mWidth, mHeight, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
 	if (window == NULL)
 	{
 		SDL_Log("Unable to create window: %s", SDL_GetError());
@@ -17,10 +17,10 @@ MonochromeScreen::MonochromeScreen(const char *title, int width, int height) : m
 		SDL_Log("Unabel to create renderer: %s", SDL_GetError());
 	}
 
-	SDL_RenderSetLogicalSize(renderer, mWidth, mHeight);
+	SDL_RenderSetLogicalSize(renderer, mX, mY);
 
 	// Create texture
-	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, mWidth, mHeight);
+	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, mX, mY);
 	if (texture == NULL)
 	{
 		SDL_Log("Unable to create texture: %s", SDL_GetError());
@@ -56,7 +56,7 @@ void MonochromeScreen::Render(const std::vector<unsigned char> &input)
 	}
 	else
 	{
-		SDL_memcpy(texture_pixels, &output[0], texture_pitch * mHeight);
+		SDL_memcpy(texture_pixels, &output[0], texture_pitch * mY);
 	}
 	SDL_UnlockTexture(texture);
 
