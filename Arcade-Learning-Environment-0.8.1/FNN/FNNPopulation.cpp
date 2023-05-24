@@ -8,15 +8,15 @@
 using namespace FNN;
 using namespace std;
 
-FNNPopulation::FNNPopulation(int num_in, int num_out, int num_hidden, int size)
+FNNPopulation::FNNPopulation(NEAT::Genome *genome, int size)
 {
 	highest_fitness = 0.0;
 	highest_last_changed = 0;
 
 	for (int i = 1; i <= size; i++)
 	{
-		NEAT::Genome *new_genome = new NEAT::Genome(num_in, num_out, num_hidden, 3);
-		new_genome->genome_id = i;
+		NEAT::Genome *new_genome = genome->duplicate(i);
+		new_genome->mutate_link_weights(1.0, 1.0, NEAT::COLDGAUSSIAN);
 		NEAT::Organism *new_organism = new NEAT::Organism(0.0, new_genome, 1);
 		organisms.push_back(new_organism);
 	}

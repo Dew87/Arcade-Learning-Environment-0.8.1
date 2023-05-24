@@ -9,7 +9,7 @@ namespace FNN
 	class FNNPopulation
 	{
 	public:
-		FNNPopulation(int num_in, int num_out, int num_hidden, int size);
+		FNNPopulation(NEAT::Genome *genome, int size);
 		~FNNPopulation();
 
 		// Turnover the population to a new generation using fitness 
@@ -21,7 +21,6 @@ namespace FNN
 
 		std::vector<NEAT::Organism*> organisms; // The organisms in the Population
 
-		// ******* When do we need to delta code? *******
 		double highest_fitness;  // Stagnation detector
 		int highest_last_changed;
 

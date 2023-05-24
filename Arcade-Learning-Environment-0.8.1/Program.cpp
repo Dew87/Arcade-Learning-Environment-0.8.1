@@ -1,11 +1,12 @@
-#include <conio.h>
-#include <iostream>
-#include <SDL.h>
 #include "Program.hpp"
 #include "MonochromeScreen.hpp"
 #include "FNN/FNN.h"
 #include "FNN/FNNPopulation.h"
 #include "NEAT/population.h"
+#include <conio.h>
+#include <cmath>
+#include <iostream>
+#include <SDL.h>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ const char* CONFIG = "Config";
 const char* CONFIG_FNN = "Config_FNN";
 const char* CONFIG_NEAT = "Config_NEAT";
 
-Program::Program() : mIsRomLoaded(false), mALE(false), mAgent(NULL), mInputScreen(NULL)
+Program::Program() : mIsRomLoaded(false), mAgent(NULL), mInputScreen(NULL)
 {
 	// SDL init
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -88,7 +89,7 @@ vector<float> Program::ConvertOutputBuffer(const vector<unsigned char> &input) c
 	return output;
 }
 
-vector<unsigned char> Program::DownscaleOutputBuffer(const vector<unsigned char> &input) const
+vector<unsigned char> Program::DownsampleOutputBuffer(const vector<unsigned char> &input) const
 {
 	vector<unsigned int> sum(SENSOR_INPUTS, 0);
 	vector<unsigned char> output;
@@ -151,42 +152,42 @@ void Program::LoadAgent()
 void Program::LoadRom()
 {
 	cout << "Input rom file name: ";
-	string rom;
-	getline(cin, rom);
-	mALE.loadROM(rom);
+	string str;
+	getline(cin, str);
+	mALE.loadROM(str);
 	mIsRomLoaded = true;
 }
 
 void Program::LogStart(ofstream &log)
 {
-	string line;
+	string str;
 	ifstream ifs;
 
-	line = CONFIG;
+	str = CONFIG;
 	log << "CONFIG" << "\n";
-	ifs.open(line);
-	while (getline(ifs, line)) { log << line << "\n"; }
+	ifs.open(str);
+	while (getline(ifs, str)) { log << str << "\n"; }
 	ifs.close();
 	log << "\n";
 
-	line = CONFIG_FNN;
+	str = CONFIG_FNN;
 	log << "FNN" << "\n";
-	ifs.open(line);
-	while (getline(ifs, line)) { log << line << "\n"; }
+	ifs.open(str);
+	while (getline(ifs, str)) { log << str << "\n"; }
 	ifs.close();
 	log << "\n";
 
-	line = CONFIG_NEAT;
+	str = CONFIG_NEAT;
 	log << "NEAT" << "\n";
-	ifs.open(line);
-	while (getline(ifs, line)) { log << line << "\n"; }
+	ifs.open(str);
+	while (getline(ifs, str)) { log << str << "\n"; }
 	ifs.close();
 	log << "\n";
 
 	log << "LOG\n";
 }
 
-void Program::Play(size_t games, bool screen)
+void Program::Play(size_t runs, bool screen)
 {
 	// ALE
 	cout << "\nALE\n";
@@ -215,7 +216,7 @@ void Program::Play(size_t games, bool screen)
 		mInputScreen = new MonochromeScreen("Input", PIXELS_X, PIXELS_Y, PIXELS_DOWNSCALED_X, PIXELS_DOWNSCALED_Y);
 	}
 
-	for (size_t i = 1; i <= games; i++)
+	for (size_t i = 1; i <= runs; i++)
 	{
 		mALE.reset_game();
 		ale::reward_t totalReward = 0;
@@ -224,7 +225,7 @@ void Program::Play(size_t games, bool screen)
 			// Get grayscale screen and downsample
 			vector<unsigned char> grayscale_output_buffer;
 			mALE.getScreenGrayscale(grayscale_output_buffer);
-			vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+			vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 			vector<float> input = ConvertOutputBuffer(downscaled_output);
 
 			// Input sensor data and read output
@@ -292,8 +293,8 @@ void Program::Run()
 	while (true)
 	{
 		cout << "1: Play\n";
-		cout << "2: Train NEAT\n";
-		cout << "3: Train FNN\n";
+		cout << "2: Train FNN\n";
+		cout << "3: Train NEAT\n";
 		cout << "4: LoadAgent\n";
 		cout << "5: LoadRom\n";
 		cout << "6: LoadConfig\n";
@@ -307,8 +308,8 @@ void Program::Run()
 		switch (answer)
 		{
 		case '1': Play(1, true); break;
-		case '2': TrainNEAT(); break;
-		case '3': TrainFNN(); break;
+		case '2': TrainFNN(); break;
+		case '3': TrainNEAT(); break;
 		case '4': LoadAgent(); break;
 		case '5': LoadRom(); break;
 		case '6': Config(); break;
@@ -321,6 +322,9 @@ void Program::Run()
 
 void Program::TrainFNN()
 {
+	// Don't run if pop is 0 or below
+	if (FNN::pop_size <= 0) { return; }
+
 	// ALE
 	cout << "\nALE\n";
 	mALE.setBool("display_screen", false);
@@ -328,9 +332,11 @@ void Program::TrainFNN()
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
 
+	// FNN
 	cout << "\nFNN\n";
 	cout << "Spawning Population of Genome\n";
-	FNN::FNNPopulation population(SENSOR_INPUTS, (int)legal_actions.size(), FNN::hidden_nodes, FNN::pop_size);
+	NEAT::Genome start_genome(SENSOR_INPUTS, (int)legal_actions.size(), FNN::hidden_nodes, 3);
+	FNN::FNNPopulation population(&start_genome, FNN::pop_size);
 	cout << "Verifying Spawned Pop\n";
 	population.verify();
 
@@ -343,18 +349,15 @@ void Program::TrainFNN()
 	ofstream log(filename + ".txt", ofstream::app);
 	LogStart(log);
 
-	if (mAgent != NULL) { delete mAgent; }
-	mAgent = NULL;
+	// Reset agent
+	if (mAgent != NULL) { delete mAgent; mAgent = NULL; }
 	double agentFitness = -DBL_MAX;
 
 	time_t start = time(NULL);
 	for (size_t generation = 1; generation <= GENERATIONS; generation++)
 	{
 		cout << "Generation " << generation << "\n";
-
-		NEAT::Organism *champion = NULL;
-		double championFitness = -DBL_MAX;
-		double generationFitness = 0;
+		double fitnessSum = 0.0;
 
 		for (vector<NEAT::Organism*>::iterator i = population.organisms.begin(); i != population.organisms.end(); ++i)
 		{
@@ -365,16 +368,17 @@ void Program::TrainFNN()
 			ale::reward_t totalReward = 0;
 			while (!mALE.game_over())
 			{
-				// Get grayscale screen and downsample
+				// Get grayscale screen and downsample into input
 				vector<unsigned char> grayscale_output_buffer;
 				mALE.getScreenGrayscale(grayscale_output_buffer);
-				vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+				vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
-				// Input sensor data and read output
+				// Input sensor data
 				network->load_sensors(input);
 				network->activate();
 
+				// Find and perform highest output action
 				size_t highestActivationIndex = 0;
 				double highestActivationValue = -DBL_MAX;
 				for (size_t j = 0; j < network->outputs.size(); j++)
@@ -386,31 +390,41 @@ void Program::TrainFNN()
 						highestActivationValue = activation;
 					}
 				}
-
 				ale::Action action = legal_actions[highestActivationIndex];
 				totalReward += mALE.act(action);
 			}
-			organism->fitness = (double)totalReward;
-			generationFitness += (double)totalReward;
-			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 
-			if (championFitness < organism->fitness)
-			{
-				champion = organism;
-				championFitness = organism->fitness;
-			}
+			// Fitness organism
+			double fitness = (double)totalReward;
+			organism->fitness = fitness;
+			fitnessSum += fitness;
+
+			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 		}
 
-		// New champion. If true copy champion to agent
-		if (agentFitness < championFitness)
+		// Sort population on fitness and get champion
+		sort(population.organisms.begin(), population.organisms.end(), NEAT::order_orgs);
+		NEAT::Organism *champion = *population.organisms.begin();
+
+		// Replace agent with champion if champion is better
+		if (agentFitness < champion->fitness)
 		{
 			if (mAgent != NULL) { delete mAgent; }
 			mAgent = new NEAT::Organism(*champion);
-			agentFitness = championFitness;
+			agentFitness = champion->fitness;
 		}
 
+		// Fitness average and deviation
+		double fitnessAverage = fitnessSum / (double)population.organisms.size();
+		double sumSquared = 0.0;
+		for (vector<NEAT::Organism*>::iterator i = population.organisms.begin(); i != population.organisms.end(); ++i)
+		{
+			sumSquared += ((*i)->fitness - fitnessAverage) * ((*i)->fitness - fitnessAverage);
+		}
+		double fitnessDeviation = sqrt(sumSquared / (double)population.organisms.size());
+
 		// Log output
-		log << "Generation " << generation << ": fitness average " << generationFitness / (double)FNN::pop_size << " max " << championFitness << "\n";
+		log << "Generation " << generation << ": fitness average " << fitnessAverage << " deviation " << fitnessDeviation << " max " << champion->fitness << "\n";
 
 		// Create the next generation
 		population.epoch((int)generation);
@@ -434,6 +448,9 @@ void Program::TrainFNN()
 
 void Program::TrainNEAT()
 {
+	// Don't run if pop is 0 or below
+	if (NEAT::pop_size <= 0) { return; }
+
 	// ALE
 	cout << "\nALE\n";
 	mALE.setBool("display_screen", false);
@@ -441,6 +458,7 @@ void Program::TrainNEAT()
 	ale::ActionVect legal_actions = mALE.getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
 
+	// NEAT
 	cout << "\nNEAT\n";
 	cout << "Spawning Population of Genome\n";
 	NEAT::Genome start_genome(SENSOR_INPUTS, (int)legal_actions.size(), 0, 0);
@@ -457,18 +475,15 @@ void Program::TrainNEAT()
 	ofstream log(filename + ".txt", ofstream::app);
 	LogStart(log);
 
-	if (mAgent != NULL) { delete mAgent; }
-	mAgent = NULL;
+	// Reset agent
+	if (mAgent != NULL) { delete mAgent; mAgent = NULL; }
 	double agentFitness = -DBL_MAX;
 
 	time_t start = time(NULL);
 	for (size_t generation = 1; generation <= GENERATIONS; generation++)
 	{
 		cout << "Generation " << generation << "\n";
-
-		NEAT::Organism *champion = NULL;
-		double championFitness = -DBL_MAX;
-		double generationFitness = 0;
+		double fitnessSum = 0;
 
 		for (vector<NEAT::Organism*>::iterator i = population.organisms.begin(); i != population.organisms.end(); ++i)
 		{
@@ -479,16 +494,17 @@ void Program::TrainNEAT()
 			ale::reward_t totalReward = 0;
 			while (!mALE.game_over())
 			{
-				// Get grayscale screen and downsample
+				// Get grayscale screen and downsample into input
 				vector<unsigned char> grayscale_output_buffer;
 				mALE.getScreenGrayscale(grayscale_output_buffer);
-				vector<unsigned char> downscaled_output = DownscaleOutputBuffer(grayscale_output_buffer);
+				vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
-				// Input sensor data and read output
+				// Input sensor data
 				network->load_sensors(input);
 				network->activate();
 
+				// Find and perform highest output action
 				size_t highestActivationIndex = 0;
 				double highestActivationValue = -DBL_MAX;
 				for (size_t j = 0; j < network->outputs.size(); j++)
@@ -500,31 +516,41 @@ void Program::TrainNEAT()
 						highestActivationValue = activation;
 					}
 				}
-
 				ale::Action action = legal_actions[highestActivationIndex];
 				totalReward += mALE.act(action);
 			}
-			organism->fitness = (double)totalReward;
-			generationFitness += (double)totalReward;
-			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 
-			if (championFitness < organism->fitness)
-			{
-				champion = organism;
-				championFitness = organism->fitness;
-			}
+			// Fitness organism
+			double fitness = (double)totalReward;
+			organism->fitness = fitness;
+			fitnessSum += fitness;
+
+			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
 		}
 
-		// New champion. If true copy champion to agent
-		if (agentFitness < championFitness)
+		// Sort population on fitness and get champion
+		sort(population.organisms.begin(), population.organisms.end(), NEAT::order_orgs);
+		NEAT::Organism *champion = *population.organisms.begin();
+
+		// Replace agent with champion if champion is better
+		if (agentFitness < champion->fitness)
 		{
 			if (mAgent != NULL) { delete mAgent; }
 			mAgent = new NEAT::Organism(*champion);
-			agentFitness = championFitness;
+			agentFitness = champion->fitness;
 		}
 
+		// Fitness average and deviation
+		double fitnessAverage = fitnessSum / (double)population.organisms.size();
+		double sumSquared = 0.0;
+		for (vector<NEAT::Organism*>::iterator i = population.organisms.begin(); i != population.organisms.end(); ++i)
+		{
+			sumSquared += ((*i)->fitness - fitnessAverage) * ((*i)->fitness - fitnessAverage);
+		}
+		double fitnessDeviation = sqrt(sumSquared / (double)population.organisms.size());
+
 		// Log output
-		log << "Generation " << generation << " species[" << population.species.size() << "]: fitness average " << generationFitness / (double)NEAT::pop_size << " max " << championFitness << "\n";
+		log << "Generation " << generation << " species[" << population.species.size() << "]: fitness average " << fitnessAverage << " deviation " << fitnessDeviation << " max " << champion->fitness << "\n";
 
 		// Create the next generation
 		population.epoch((int)generation);

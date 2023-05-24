@@ -1,8 +1,8 @@
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
 
-#include <ale_interface.hpp>
-#include <NEAT/organism.h>
+#include "ale_interface.hpp"
+#include "NEAT/organism.h"
 
 class MonochromeScreen;
 
@@ -17,11 +17,11 @@ private:
 	// Functions
 	void Config();
 	std::vector<float> ConvertOutputBuffer(const std::vector<unsigned char> &input) const;
-	std::vector<unsigned char> DownscaleOutputBuffer(const std::vector<unsigned char> &input) const;
+	std::vector<unsigned char> DownsampleOutputBuffer(const std::vector<unsigned char> &input) const;
 	void LoadAgent();
 	void LoadRom();
 	void LogStart(std::ofstream &log);
-	void Play(size_t games, bool screen);
+	void Play(size_t runs, bool screen);
 	void Print() const;
 	void TrainFNN();
 	void TrainNEAT();
