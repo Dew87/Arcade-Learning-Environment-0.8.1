@@ -5989,3 +5989,5 @@ orig fitness of Species324(Size 6): 12 last improved 2
 orig fitness of Species326(Size 3): 9 last improved 0
 12 generations since last population fitness record: 89
 Elapsed time: 105456
+
+Game 1 score: 105 time: 13312

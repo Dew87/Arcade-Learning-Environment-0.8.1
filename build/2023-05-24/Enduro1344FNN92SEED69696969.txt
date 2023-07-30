@@ -641,3 +641,5 @@ Generation 150
 Generation 150: fitness average 58.6467 max 90
 128 generations since last population fitness record: 90
 Elapsed time: 1051582
+
+Game 1 score: 92 time: 13312

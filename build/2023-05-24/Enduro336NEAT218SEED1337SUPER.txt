@@ -3094,3 +3094,5 @@ orig fitness of Species164(Size 3): 14 last improved 8
 orig fitness of Species167(Size 2): 0 last improved 5
 16 generations since last population fitness record: 179
 Elapsed time: 51742
+
+Game 1 score: 218 time: 26624

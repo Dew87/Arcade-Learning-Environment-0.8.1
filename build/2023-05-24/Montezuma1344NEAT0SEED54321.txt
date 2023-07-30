@@ -347,7 +347,6 @@ Generation 298 species[20]: fitness average 0 deviation 0 max 0
 Generation 299 species[21]: fitness average 0 deviation 0 max 0
 Generation 300 species[26]: fitness average 0 deviation 0 max 0
 
-
 ALE
 Input rom file name: Montezuma's Revenge.bin
 Game console created:

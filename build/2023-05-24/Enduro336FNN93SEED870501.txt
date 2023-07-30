@@ -1241,3 +1241,5 @@ Generation 300
 Generation 300: fitness average 32.3067 max 89
 214 generations since last population fitness record: 89
 Elapsed time: 199606
+
+Game 1 score: 93 time: 13312

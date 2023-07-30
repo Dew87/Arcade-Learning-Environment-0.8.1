@@ -5578,3 +5578,5 @@ orig fitness of Species339(Size 1): 2 last improved 5
 orig fitness of Species338(Size 2): 0 last improved 6
 15 generations since last population fitness record: 100
 Elapsed time: 333313
+
+Game 1 score: 93 time: 13312

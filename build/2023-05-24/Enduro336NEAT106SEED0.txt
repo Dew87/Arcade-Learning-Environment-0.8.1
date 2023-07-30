@@ -5886,3 +5886,5 @@ orig fitness of Species315(Size 22): 31 last improved 1
 orig fitness of Species310(Size 10): 30 last improved 8
 20 generations since last population fitness record: 89
 Elapsed time: 105812
+
+Game 1 score: 106 time: 13312
