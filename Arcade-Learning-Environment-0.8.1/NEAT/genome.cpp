@@ -1440,6 +1440,50 @@ void Genome::mutate_link_weights(double power, double rate, mutator mut_type)
 
 }
 
+void Genome::mutate_link_weights(double power, double rate, double ratioGaussianToColdgaussian, double cap)
+{
+	// Loop on all genes
+	for (std::vector<Gene*>::iterator curgene = genes.begin(); curgene != genes.end(); curgene++)
+	{
+		// Don't mutate weights of frozen links
+		if (!((*curgene)->frozen))
+		{
+			// Chance for gene mutation
+			double randchoice = randfloat();
+
+			if (randchoice < rate)
+			{
+				// Chance for gaussian or coldgaussian
+				randchoice = randfloat();
+
+				double randnum = randposneg() * randfloat() * power;
+
+				if (randchoice < ratioGaussianToColdgaussian)
+				{
+					((*curgene)->lnk)->weight += randnum;
+				}
+				else
+				{
+					((*curgene)->lnk)->weight = randnum;
+				}
+
+				// Cap the weights
+				if (((*curgene)->lnk)->weight > cap)
+				{
+					((*curgene)->lnk)->weight = cap;
+				}
+				else if (((*curgene)->lnk)->weight < -cap)
+				{
+					((*curgene)->lnk)->weight = -cap;
+				}
+
+				// Record the innovation
+				(*curgene)->mutation_num = ((*curgene)->lnk)->weight;
+			}
+		}
+	}
+}
+
 void Genome::mutate_toggle_enable(int times)
 {
 	int genenum;

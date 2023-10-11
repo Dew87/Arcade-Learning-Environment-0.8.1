@@ -1,4 +1,5 @@
 #include "Program.hpp"
+#include "ale_interface.hpp"
 #include "MonochromeScreen.hpp"
 #include "FNN/FNN.h"
 #include "FNN/FNNPopulation.h"
@@ -27,12 +28,7 @@ Program::Program() : mIsRomLoaded(false), mAgent(NULL), mInputScreen(NULL)
 
 Program::~Program()
 {
-	if (mInputScreen != NULL)
-	{
-		delete mInputScreen;
-		mInputScreen = NULL;
-	}
-
+	Reset();
 	SDL_Quit();
 }
 
@@ -42,12 +38,15 @@ void Program::Config()
 	string temp;
 	ifstream ifs(CONFIG);
 	ifs >> temp >> SRAND_SEED;
+	ifs >> temp >> PLAY_RUNS;
+	ifs >> temp >> SCREEN;
+	ifs >> temp >> SCREEN_OUTPUT;
+	ifs >> temp >> ALE_FRAME_SKIP;
 	ifs >> temp >> ALE_MAX_NUM_FRAMES_PER_EPISODE;
 	ifs >> temp >> ALE_RANDOM_SEED;
 	ifs >> temp >> ALE_REPEAT_ACTION_PROBABILITY;
 	ifs >> temp >> FACTOR_DOWNSCALE_X;
 	ifs >> temp >> FACTOR_DOWNSCALE_Y;
-	ifs >> temp >> FACTOR_DOWNSCALE_MULTIPLE;
 	ifs >> temp >> GENERATIONS;
 	ifs >> temp >> PIXELS_X;
 	ifs >> temp >> PIXELS_Y;
@@ -57,16 +56,12 @@ void Program::Config()
 	srand(SRAND_SEED);
 
 	// Calculations
+	CONVERSION_UCHAR_FLOAT = 1.0f / (float)(256);
+	FACTOR_DOWNSCALE = FACTOR_DOWNSCALE_X * FACTOR_DOWNSCALE_Y;
+	FACTOR_DOWNSCALE_INVERSE = 1.0f / (float)(FACTOR_DOWNSCALE);
 	PIXELS_DOWNSCALED_X = PIXELS_X / FACTOR_DOWNSCALE_X;
 	PIXELS_DOWNSCALED_Y = PIXELS_Y / FACTOR_DOWNSCALE_Y;
-	DOWNSCALE_FACTOR = 1.0f / (float)(FACTOR_DOWNSCALE_X * FACTOR_DOWNSCALE_Y);
-	DOWNSCALE_MULTIPLE = 1.0f / (float)(FACTOR_DOWNSCALE_MULTIPLE);
-	SENSOR_INPUTS = PIXELS_DOWNSCALED_X * PIXELS_DOWNSCALED_Y;
-
-	// ALE
-	mALE.setInt("max_num_frames_per_episode", ALE_MAX_NUM_FRAMES_PER_EPISODE);
-	mALE.setInt("random_seed", ALE_RANDOM_SEED);
-	mALE.setFloat("repeat_action_probability", ALE_REPEAT_ACTION_PROBABILITY);
+	PIXELS_DOWNSCALED = PIXELS_DOWNSCALED_X * PIXELS_DOWNSCALED_Y;
 
 	// FNN
 	FNN::load_fnn_params(CONFIG_FNN);
@@ -82,7 +77,7 @@ vector<float> Program::ConvertOutputBuffer(const vector<unsigned char> &input) c
 
 	for (vector<unsigned char>::const_iterator i = input.begin(); i != input.end(); i++)
 	{
-		float value = (float)(*i) * DOWNSCALE_MULTIPLE;
+		float value = (float)(*i) * CONVERSION_UCHAR_FLOAT;
 		output.push_back(value);
 	}
 
@@ -91,32 +86,23 @@ vector<float> Program::ConvertOutputBuffer(const vector<unsigned char> &input) c
 
 vector<unsigned char> Program::DownsampleOutputBuffer(const vector<unsigned char> &input) const
 {
-	vector<unsigned int> sum(SENSOR_INPUTS, 0);
+	vector<unsigned int> sum(PIXELS_DOWNSCALED, 0);
 	vector<unsigned char> output;
-	output.reserve(SENSOR_INPUTS);
+	output.reserve(PIXELS_DOWNSCALED);
 
-	size_t i = 0;
-	size_t j = 0;
-	size_t k = 0;
-	size_t x = 0;
-	size_t y = 0;
-	while (i < input.size())
+	for (size_t y = 0; y < PIXELS_DOWNSCALED_Y; ++y)
 	{
-		sum[x + (y * PIXELS_DOWNSCALED_X)] += input[i];
-		i++;
-		j++;
-		if (j == FACTOR_DOWNSCALE_X)
+		size_t sumOffsetY = y * PIXELS_DOWNSCALED_X;
+		for (size_t x = 0; x < PIXELS_DOWNSCALED_X; ++x)
 		{
-			j = 0;
-			x++;
-			if (x == PIXELS_DOWNSCALED_X)
+			size_t sumOffset = x + sumOffsetY;
+			size_t inputOffsetXY = (x * FACTOR_DOWNSCALE_X) + (y * FACTOR_DOWNSCALE_Y * PIXELS_X);
+			for (size_t j = 0; j < FACTOR_DOWNSCALE_Y; ++j)
 			{
-				x = 0;
-				k++;
-				if (k == FACTOR_DOWNSCALE_Y)
+				size_t inputOffset = (j * PIXELS_X) + inputOffsetXY;
+				for (size_t i = 0; i < FACTOR_DOWNSCALE_X; ++i)
 				{
-					k = 0;
-					y++;
+					sum[sumOffset] += input[i + inputOffset];
 				}
 			}
 		}
@@ -124,11 +110,21 @@ vector<unsigned char> Program::DownsampleOutputBuffer(const vector<unsigned char
 
 	for (vector<unsigned int>::iterator i = sum.begin(); i != sum.end(); i++)
 	{
-		unsigned char value = (unsigned char)((*i) * DOWNSCALE_FACTOR);
+		unsigned char value = (unsigned char)((*i) * FACTOR_DOWNSCALE_INVERSE);
 		output.push_back(value);
 	}
 
 	return output;
+}
+
+void Program::InitializeALE(bool screen)
+{
+	mALE = new ale::ALEInterface(screen);
+
+	mALE->setInt("frame_skip", ALE_FRAME_SKIP);
+	mALE->setInt("max_num_frames_per_episode", ALE_MAX_NUM_FRAMES_PER_EPISODE);
+	mALE->setInt("random_seed", ALE_RANDOM_SEED);
+	mALE->setFloat("repeat_action_probability", ALE_REPEAT_ACTION_PROBABILITY);
 }
 
 void Program::LoadAgent()
@@ -154,7 +150,8 @@ void Program::LoadRom()
 	cout << "Input rom file name: ";
 	string str;
 	getline(cin, str);
-	mALE.loadROM(str);
+	if (mALE == NULL) { InitializeALE(false); }
+	mALE->loadROM(str);
 	mIsRomLoaded = true;
 }
 
@@ -187,21 +184,21 @@ void Program::LogStart(ofstream &log)
 	log << "LOG\n";
 }
 
-void Program::Play(size_t runs, bool screen)
+void Program::Play()
 {
 	// ALE
 	cout << "\nALE\n";
-	mALE.setBool("display_screen", screen);
+	if (mALE == NULL) { InitializeALE(SCREEN); }
 	while (!mIsRomLoaded) { LoadRom(); }
-	ale::ActionVect legal_actions = mALE.getLegalActionSet();
+	ale::ActionVect legal_actions = mALE->getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
 
 	// NEAT
 	while (mAgent == NULL) { LoadAgent(); }
 	NEAT::Network *network = mAgent->net;
-	if (network->inputs.size() != SENSOR_INPUTS)
+	if (network->inputs.size() != PIXELS_DOWNSCALED)
 	{
-		cout << "Mismatch number of sensors " << network->inputs.size() << " expected " << SENSOR_INPUTS << "\n\n";
+		cout << "Mismatch number of sensors " << network->inputs.size() << " expected " << PIXELS_DOWNSCALED << "\n\n";
 		return;
 	}
 	if (network->outputs.size() != legal_actions.size())
@@ -211,20 +208,20 @@ void Program::Play(size_t runs, bool screen)
 	}
 
 	// Create input screen
-	if (screen && mInputScreen == NULL)
+	if (SCREEN && SCREEN_OUTPUT && mInputScreen == NULL)
 	{
 		mInputScreen = new MonochromeScreen("Input", PIXELS_X, PIXELS_Y, PIXELS_DOWNSCALED_X, PIXELS_DOWNSCALED_Y);
 	}
 
-	for (size_t i = 1; i <= runs; i++)
+	for (size_t i = 1; i <= PLAY_RUNS; i++)
 	{
-		mALE.reset_game();
+		mALE->reset_game();
 		ale::reward_t totalReward = 0;
-		while (!mALE.game_over())
+		while (!mALE->game_over())
 		{
 			// Get grayscale screen and downsample
 			vector<unsigned char> grayscale_output_buffer;
-			mALE.getScreenGrayscale(grayscale_output_buffer);
+			mALE->getScreenGrayscale(grayscale_output_buffer);
 			vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 			vector<float> input = ConvertOutputBuffer(downscaled_output);
 
@@ -251,9 +248,9 @@ void Program::Play(size_t runs, bool screen)
 			}
 
 			ale::Action action = legal_actions[highestActivationIndex];
-			totalReward += mALE.act(action);
+			totalReward += mALE->act(action);
 		}
-		cout << "Game " << i << " score: " << totalReward << " time: " << mALE.getEpisodeFrameNumber() << "\n";
+		cout << "Game " << i << " score: " << totalReward << " time: " << mALE->getEpisodeFrameNumber() << "\n";
 	}
 
 	cout << "\n";
@@ -263,20 +260,23 @@ void Program::Print() const
 {
 	cout << "ALE Agent made by David Erikssen\n";
 	cout << "SRAND_SEED = " << SRAND_SEED << "\n";
+	cout << "PLAY_RUNS = " << PLAY_RUNS << "\n";
+	cout << "SCREEN = " << SCREEN << "\n";
+	cout << "SCREEN_OUTPUT = " << SCREEN_OUTPUT << "\n";
+	cout << "ALE_FRAME_SKIP = " << ALE_FRAME_SKIP << "\n";
 	cout << "ALE_MAX_NUM_FRAMES_PER_EPISODE = " << ALE_MAX_NUM_FRAMES_PER_EPISODE << "\n";
 	cout << "ALE_RANDOM_SEED = " << ALE_RANDOM_SEED << "\n";
 	cout << "ALE_REPEAT_ACTION_PROBABILITY = " << ALE_REPEAT_ACTION_PROBABILITY << "\n";
 	cout << "FACTOR_DOWNSCALE_X = " << FACTOR_DOWNSCALE_X << "\n";
 	cout << "FACTOR_DOWNSCALE_Y = " << FACTOR_DOWNSCALE_Y << "\n";
-	cout << "FACTOR_DOWNSCALE_MULTIPLE = " << FACTOR_DOWNSCALE_MULTIPLE << "\n";
 	cout << "GENERATIONS = " << GENERATIONS << "\n";
 	cout << "PIXELS_X = " << PIXELS_X << "\n";
 	cout << "PIXELS_Y = " << PIXELS_Y << "\n";
+	cout << "CONVERSION_UCHAR_FLOAT = " << CONVERSION_UCHAR_FLOAT << "\n";
+	cout << "FACTOR_DOWNSCALE_INVERSE = " << FACTOR_DOWNSCALE_INVERSE << "\n";
+	cout << "PIXELS_DOWNSCALED = " << PIXELS_DOWNSCALED << "\n";
 	cout << "PIXELS_DOWNSCALED_X = " << PIXELS_DOWNSCALED_X << "\n";
 	cout << "PIXELS_DOWNSCALED_Y = " << PIXELS_DOWNSCALED_Y << "\n";
-	cout << "DOWNSCALE_FACTOR = " << DOWNSCALE_FACTOR << "\n";
-	cout << "DOWNSCALE_MULTIPLE = " << DOWNSCALE_MULTIPLE << "\n";
-	cout << "SENSOR_INPUTS = " << SENSOR_INPUTS << "\n";
 
 	cout << "\nFNN\n";
 	FNN::print_fnn_params();
@@ -285,6 +285,26 @@ void Program::Print() const
 	NEAT::print_neat_params();
 
 	cout << "\n";
+}
+
+void Program::Reset()
+{
+	mIsRomLoaded = false;
+	if (mAgent != NULL)
+	{
+		delete mAgent;
+		mAgent = NULL;
+	}
+	if (mALE != NULL)
+	{
+		delete mALE;
+		mALE = NULL;
+	}
+	if (mInputScreen != NULL)
+	{
+		delete mInputScreen;
+		mInputScreen = NULL;
+	}
 }
 
 void Program::Run()
@@ -299,7 +319,7 @@ void Program::Run()
 		cout << "5: LoadRom\n";
 		cout << "6: LoadConfig\n";
 		cout << "7: PrintConfig\n";
-		//cout << "8: Play100\n";
+		cout << "8: Reset\n";
 		cout << "Any other character to quit\n";
 
 		char answer = _getch();
@@ -307,14 +327,14 @@ void Program::Run()
 
 		switch (answer)
 		{
-		case '1': Play(1, true); break;
+		case '1': Play(); break;
 		case '2': TrainFNN(); break;
 		case '3': TrainNEAT(); break;
-		case '4': LoadAgent(); break;
-		case '5': LoadRom(); break;
+		case '4': LoadAgent(); cout << "\n"; break;
+		case '5': LoadRom();  cout << "\n"; break;
 		case '6': Config(); break;
 		case '7': Print(); break;
-		//case '8': Play(100, false); break;
+		case '8': Reset(); break;
 		default: return;
 		}
 	}
@@ -327,15 +347,15 @@ void Program::TrainFNN()
 
 	// ALE
 	cout << "\nALE\n";
-	mALE.setBool("display_screen", false);
+	if (mALE == NULL) { InitializeALE(false); }
 	while (!mIsRomLoaded) { LoadRom(); }
-	ale::ActionVect legal_actions = mALE.getLegalActionSet();
+	ale::ActionVect legal_actions = mALE->getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
 
 	// FNN
 	cout << "\nFNN\n";
 	cout << "Spawning Population of Genome\n";
-	NEAT::Genome start_genome(SENSOR_INPUTS, (int)legal_actions.size(), FNN::hidden_nodes, 3);
+	NEAT::Genome start_genome(PIXELS_DOWNSCALED, (int)legal_actions.size(), FNN::hidden_nodes, 3);
 	FNN::FNNPopulation population(&start_genome, FNN::pop_size);
 	cout << "Verifying Spawned Pop\n";
 	population.verify();
@@ -364,13 +384,13 @@ void Program::TrainFNN()
 			NEAT::Organism *organism = *i;
 			NEAT::Network *network = organism->net;
 
-			mALE.reset_game();
+			mALE->reset_game();
 			ale::reward_t totalReward = 0;
-			while (!mALE.game_over())
+			while (!mALE->game_over())
 			{
 				// Get grayscale screen and downsample into input
 				vector<unsigned char> grayscale_output_buffer;
-				mALE.getScreenGrayscale(grayscale_output_buffer);
+				mALE->getScreenGrayscale(grayscale_output_buffer);
 				vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
@@ -391,7 +411,7 @@ void Program::TrainFNN()
 					}
 				}
 				ale::Action action = legal_actions[highestActivationIndex];
-				totalReward += mALE.act(action);
+				totalReward += mALE->act(action);
 			}
 
 			// Fitness organism
@@ -399,7 +419,8 @@ void Program::TrainFNN()
 			organism->fitness = fitness;
 			fitnessSum += fitness;
 
-			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
+			// Organism output
+			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE->getEpisodeFrameNumber() << "\n";
 		}
 
 		// Sort population on fitness and get champion
@@ -453,15 +474,15 @@ void Program::TrainNEAT()
 
 	// ALE
 	cout << "\nALE\n";
-	mALE.setBool("display_screen", false);
+	if (mALE == NULL) { InitializeALE(false); }
 	while (!mIsRomLoaded) { LoadRom(); }
-	ale::ActionVect legal_actions = mALE.getLegalActionSet();
+	ale::ActionVect legal_actions = mALE->getLegalActionSet();
 	cout << "Number of legal actions: " << legal_actions.size() << "\n";
 
 	// NEAT
 	cout << "\nNEAT\n";
 	cout << "Spawning Population of Genome\n";
-	NEAT::Genome start_genome(SENSOR_INPUTS, (int)legal_actions.size(), 0, 0);
+	NEAT::Genome start_genome(PIXELS_DOWNSCALED, (int)legal_actions.size(), 0, 0);
 	NEAT::Population population(&start_genome, NEAT::pop_size);
 	cout << "Verifying Spawned Pop\n";
 	population.verify();
@@ -490,13 +511,13 @@ void Program::TrainNEAT()
 			NEAT::Organism *organism = *i;
 			NEAT::Network *network = organism->net;
 
-			mALE.reset_game();
+			mALE->reset_game();
 			ale::reward_t totalReward = 0;
-			while (!mALE.game_over())
+			while (!mALE->game_over())
 			{
 				// Get grayscale screen and downsample into input
 				vector<unsigned char> grayscale_output_buffer;
-				mALE.getScreenGrayscale(grayscale_output_buffer);
+				mALE->getScreenGrayscale(grayscale_output_buffer);
 				vector<unsigned char> downscaled_output = DownsampleOutputBuffer(grayscale_output_buffer);
 				vector<float> input = ConvertOutputBuffer(downscaled_output);
 
@@ -517,7 +538,7 @@ void Program::TrainNEAT()
 					}
 				}
 				ale::Action action = legal_actions[highestActivationIndex];
-				totalReward += mALE.act(action);
+				totalReward += mALE->act(action);
 			}
 
 			// Fitness organism
@@ -525,7 +546,8 @@ void Program::TrainNEAT()
 			organism->fitness = fitness;
 			fitnessSum += fitness;
 
-			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE.getEpisodeFrameNumber() << "\n";
+			// Organism output
+			//cout << "Organism " << (organism->gnome)->genome_id << " fitness: " << organism->fitness << " time: " << mALE->getEpisodeFrameNumber() << "\n";
 		}
 
 		// Sort population on fitness and get champion

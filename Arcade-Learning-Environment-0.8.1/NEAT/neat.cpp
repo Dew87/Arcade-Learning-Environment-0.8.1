@@ -35,7 +35,9 @@ double NEAT::mutate_only_prob = 0; // Prob. of a non-mating reproduction
 double NEAT::mutate_random_trait_prob = 0;
 double NEAT::mutate_link_trait_prob = 0;
 double NEAT::mutate_node_trait_prob = 0;
+double NEAT::mutate_link_weights_cap = 0;
 double NEAT::mutate_link_weights_prob = 0;
+double NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian = 0;
 double NEAT::mutate_toggle_enable_prob = 0;
 double NEAT::mutate_gene_reenable_prob = 0;
 double NEAT::mutate_add_node_prob = 0;
@@ -264,10 +266,24 @@ bool NEAT::load_neat_params(const char *filename, bool output)
 	//curwordnum += 2;
 
 	paramFile >> curword;
+	paramFile >> NEAT::mutate_link_weights_cap;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+	//NEAT::mutate_link_weights_cap  = atof(curword);
+	//curwordnum += 2;
+
+	paramFile >> curword;
 	paramFile >> NEAT::mutate_link_weights_prob;
 
 	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
 	//NEAT::mutate_link_weights_prob = atof(curword);
+	//curwordnum += 2;
+
+	paramFile >> curword;
+	paramFile >> NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian;
+
+	//strcpy(curword, getUnit(filestring, curwordnum, delimiters));
+	//NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian  = atof(curword);
 	//curwordnum += 2;
 
 	paramFile >> curword;
@@ -406,7 +422,9 @@ void NEAT::print_neat_params()
 	printf("mutate_random_trait_prob = %f\n", mutate_random_trait_prob);
 	printf("mutate_link_trait_prob = %f\n", mutate_link_trait_prob);
 	printf("mutate_node_trait_prob = %f\n", mutate_node_trait_prob);
+	printf("mutate_link_weights_cap  = %f\n", mutate_link_weights_cap);
 	printf("mutate_link_weights_prob = %f\n", mutate_link_weights_prob);
+	printf("mutate_link_weights_ratio_gaussian_to_coldgaussian  = %f\n", mutate_link_weights_ratio_gaussian_to_coldgaussian);
 	printf("mutate_toggle_enable_prob = %f\n", mutate_toggle_enable_prob);
 	printf("mutate_gene_reenable_prob = %f\n", mutate_gene_reenable_prob);
 	printf("mutate_add_node_prob = %f\n", mutate_add_node_prob);

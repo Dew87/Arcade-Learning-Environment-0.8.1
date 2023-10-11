@@ -539,11 +539,13 @@ bool Species::reproduce(int generation, Population *pop, std::vector<Species*> &
 			//      Settings used for published experiments did not use this
 			if ((thechamp->super_champ_offspring) > 1)
 			{
-				if ((randfloat() < 0.8) ||
-					(NEAT::mutate_add_link_prob == 0.0))
+				if ((randfloat() < 0.8) || (NEAT::mutate_add_link_prob == 0.0))
+				{
 					//ABOVE LINE IS FOR:
 					//Make sure no links get added when the system has link adding disabled
-					new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
+					//new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
+					new_genome->mutate_link_weights(mut_power, NEAT::mutate_link_weights_prob, NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian, NEAT::mutate_link_weights_cap);
+				}
 				else
 				{
 					//Sometimes we add a link to a superchamp
@@ -653,11 +655,12 @@ bool Species::reproduce(int generation, Population *pop, std::vector<Species*> &
 					//std::cout<<"mutate_node_trait"<<std::endl;
 					new_genome->mutate_node_trait(1);
 				}
-				if (randfloat() < NEAT::mutate_link_weights_prob)
-				{
-					//std::cout<<"mutate_link_weights"<<std::endl;
-					new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
-				}
+				//if (randfloat() < NEAT::mutate_link_weights_prob)
+				//{
+				//	//std::cout<<"mutate_link_weights"<<std::endl;
+				//	new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
+				//}
+				new_genome->mutate_link_weights(mut_power, NEAT::mutate_link_weights_prob, NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian, NEAT::mutate_link_weights_cap);
 				if (randfloat() < NEAT::mutate_toggle_enable_prob)
 				{
 					//std::cout<<"mutate toggle enable"<<std::endl;
@@ -831,11 +834,12 @@ bool Species::reproduce(int generation, Population *pop, std::vector<Species*> &
 						new_genome->mutate_node_trait(1);
 						//std::cout<<"mutate_node_trait: "<<new_genome<<std::endl;
 					}
-					if (randfloat() < NEAT::mutate_link_weights_prob)
-					{
-						new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
-						//std::cout<<"mutate_link_weights: "<<new_genome<<std::endl;
-					}
+					//if (randfloat() < NEAT::mutate_link_weights_prob)
+					//{
+					//	new_genome->mutate_link_weights(mut_power, 1.0, GAUSSIAN);
+					//	//std::cout<<"mutate_link_weights: "<<new_genome<<std::endl;
+					//}
+					new_genome->mutate_link_weights(mut_power, NEAT::mutate_link_weights_prob, NEAT::mutate_link_weights_ratio_gaussian_to_coldgaussian, NEAT::mutate_link_weights_cap);
 					if (randfloat() < NEAT::mutate_toggle_enable_prob)
 					{
 						new_genome->mutate_toggle_enable(1);

@@ -79,7 +79,8 @@ bool FNNPopulation::epoch(int generation)
 			// Mutate babies except the first
 			if (1 < count)
 			{
-				new_genome->mutate_link_weights(FNN::weight_mut_power, 1.0, NEAT::GAUSSIAN);
+				//new_genome->mutate_link_weights(FNN::weight_mut_power, 1.0, NEAT::GAUSSIAN);
+				new_genome->mutate_link_weights(FNN::weight_mut_power, FNN::mutate_link_weights_prob, FNN::mutate_link_weights_ratio_gaussian_to_coldgaussian, FNN::mutate_link_weights_cap);
 			}
 		}
 		else
@@ -103,10 +104,11 @@ bool FNNPopulation::epoch(int generation)
 			}
 
 			// Mutation
-			if (NEAT::randfloat() < FNN::mutate_link_weights_prob)
-			{
-				new_genome->mutate_link_weights(FNN::weight_mut_power, 1.0, NEAT::GAUSSIAN);
-			}
+			//if (NEAT::randfloat() < FNN::mutate_link_weights_prob)
+			//{
+			//	new_genome->mutate_link_weights(FNN::weight_mut_power, 1.0, NEAT::GAUSSIAN);
+			//}
+			new_genome->mutate_link_weights(FNN::weight_mut_power, FNN::mutate_link_weights_prob, FNN::mutate_link_weights_ratio_gaussian_to_coldgaussian, FNN::mutate_link_weights_cap);
 		}
 
 		// Create baby and add to next generation
