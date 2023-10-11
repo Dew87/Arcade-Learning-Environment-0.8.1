@@ -15,7 +15,7 @@ const char* CONFIG = "Config";
 const char* CONFIG_FNN = "Config_FNN";
 const char* CONFIG_NEAT = "Config_NEAT";
 
-Program::Program() : mIsRomLoaded(false), mAgent(NULL), mInputScreen(NULL)
+Program::Program() : mIsRomLoaded(false), mAgent(NULL), mALE(NULL), mInputScreen(NULL)
 {
 	// SDL init
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
