@@ -6,7 +6,7 @@ ALE_REPEAT_ACTION_PROBABILITY 0.0
 FACTOR_DOWNSCALED_X 5
 FACTOR_DOWNSCALED_Y 5
 FACTOR_DOWNSCALED_MULTIPLE 64
-GENERATIONS 150
+GENERATIONS 300
 PIXELS_X 160
 PIXELS_Y 210
 
@@ -171,6 +171,156 @@ Generation 147: fitness average 255.967 deviation 127.653 max 1030
 Generation 148: fitness average 248.367 deviation 120.641 max 1030
 Generation 149: fitness average 271.1 deviation 135.301 max 1030
 Generation 150: fitness average 239.767 deviation 123.187 max 1030
+Generation 151: fitness average 249.3 deviation 145.561 max 1030
+Generation 152: fitness average 238.1 deviation 140.832 max 1030
+Generation 153: fitness average 238.933 deviation 120.717 max 1030
+Generation 154: fitness average 257.2 deviation 128.533 max 1030
+Generation 155: fitness average 235.767 deviation 136.383 max 1030
+Generation 156: fitness average 249.833 deviation 129.866 max 1030
+Generation 157: fitness average 234.967 deviation 124.23 max 1030
+Generation 158: fitness average 248.133 deviation 115.015 max 1030
+Generation 159: fitness average 236.467 deviation 127.26 max 1030
+Generation 160: fitness average 262.867 deviation 126.088 max 1030
+Generation 161: fitness average 245.6 deviation 129.891 max 1030
+Generation 162: fitness average 247.467 deviation 136.446 max 1030
+Generation 163: fitness average 253.833 deviation 146.338 max 1030
+Generation 164: fitness average 248.6 deviation 147.075 max 1030
+Generation 165: fitness average 237.4 deviation 129.12 max 1030
+Generation 166: fitness average 251.667 deviation 122.692 max 1030
+Generation 167: fitness average 254.633 deviation 129.212 max 1030
+Generation 168: fitness average 257.033 deviation 117.31 max 1030
+Generation 169: fitness average 253.233 deviation 114.454 max 1030
+Generation 170: fitness average 246.933 deviation 127.275 max 1030
+Generation 171: fitness average 258.3 deviation 126.62 max 1030
+Generation 172: fitness average 258.433 deviation 112.383 max 1030
+Generation 173: fitness average 245.433 deviation 124.115 max 1030
+Generation 174: fitness average 247.333 deviation 106.346 max 1030
+Generation 175: fitness average 265.167 deviation 115.234 max 1030
+Generation 176: fitness average 264.167 deviation 100.217 max 1030
+Generation 177: fitness average 264.467 deviation 123.313 max 1030
+Generation 178: fitness average 261.6 deviation 107.08 max 1030
+Generation 179: fitness average 249.4 deviation 125.931 max 1030
+Generation 180: fitness average 248.467 deviation 114.035 max 1030
+Generation 181: fitness average 253.9 deviation 128.377 max 1030
+Generation 182: fitness average 247.9 deviation 138.701 max 1030
+Generation 183: fitness average 245.367 deviation 120.708 max 1030
+Generation 184: fitness average 245.733 deviation 131.261 max 1030
+Generation 185: fitness average 258.067 deviation 118.039 max 1030
+Generation 186: fitness average 250.267 deviation 123.505 max 1030
+Generation 187: fitness average 272.533 deviation 110.007 max 1030
+Generation 188: fitness average 253.733 deviation 111.186 max 1030
+Generation 189: fitness average 244.567 deviation 125.902 max 1030
+Generation 190: fitness average 252.4 deviation 132.928 max 1030
+Generation 191: fitness average 244.233 deviation 121.008 max 1030
+Generation 192: fitness average 272.167 deviation 157.536 max 1030
+Generation 193: fitness average 249.667 deviation 122.208 max 1030
+Generation 194: fitness average 261.333 deviation 127.71 max 1030
+Generation 195: fitness average 251.9 deviation 122.863 max 1030
+Generation 196: fitness average 262.533 deviation 117.582 max 1030
+Generation 197: fitness average 247.5 deviation 137.661 max 1030
+Generation 198: fitness average 242.633 deviation 124.579 max 1030
+Generation 199: fitness average 249.2 deviation 123.222 max 1030
+Generation 200: fitness average 271.733 deviation 129.951 max 1030
+Generation 201: fitness average 243.4 deviation 117.05 max 1030
+Generation 202: fitness average 236.9 deviation 122.475 max 1030
+Generation 203: fitness average 230.733 deviation 126.7 max 1030
+Generation 204: fitness average 247.867 deviation 142.646 max 1030
+Generation 205: fitness average 250.9 deviation 117.401 max 1030
+Generation 206: fitness average 254.4 deviation 122.304 max 1030
+Generation 207: fitness average 242.767 deviation 126.431 max 1030
+Generation 208: fitness average 248.633 deviation 124.353 max 1030
+Generation 209: fitness average 246.633 deviation 142.297 max 1030
+Generation 210: fitness average 259.333 deviation 133.856 max 1030
+Generation 211: fitness average 239.067 deviation 112.076 max 1030
+Generation 212: fitness average 254.4 deviation 110.544 max 1030
+Generation 213: fitness average 252.633 deviation 127.213 max 1030
+Generation 214: fitness average 237.667 deviation 131.415 max 1030
+Generation 215: fitness average 241.3 deviation 122.389 max 1030
+Generation 216: fitness average 249 deviation 127.022 max 1030
+Generation 217: fitness average 242.833 deviation 130.654 max 1030
+Generation 218: fitness average 244 deviation 126.215 max 1030
+Generation 219: fitness average 249.833 deviation 121.823 max 1030
+Generation 220: fitness average 261.8 deviation 149.544 max 1030
+Generation 221: fitness average 255.4 deviation 139.162 max 1030
+Generation 222: fitness average 240.367 deviation 120.107 max 1030
+Generation 223: fitness average 259.6 deviation 112.685 max 1030
+Generation 224: fitness average 256.133 deviation 115.139 max 1030
+Generation 225: fitness average 238.9 deviation 125.41 max 1030
+Generation 226: fitness average 253.433 deviation 151.8 max 1030
+Generation 227: fitness average 258.367 deviation 138.951 max 1030
+Generation 228: fitness average 247.8 deviation 124.331 max 1030
+Generation 229: fitness average 236.733 deviation 128.548 max 1030
+Generation 230: fitness average 238.767 deviation 137.061 max 1030
+Generation 231: fitness average 237.3 deviation 131.567 max 1030
+Generation 232: fitness average 235.233 deviation 123.302 max 1030
+Generation 233: fitness average 240.033 deviation 130.903 max 1030
+Generation 234: fitness average 262.067 deviation 136.222 max 1030
+Generation 235: fitness average 254.367 deviation 124.305 max 1030
+Generation 236: fitness average 262 deviation 129.818 max 1030
+Generation 237: fitness average 250.2 deviation 134.377 max 1030
+Generation 238: fitness average 244.067 deviation 119.764 max 1030
+Generation 239: fitness average 245.633 deviation 132.416 max 1030
+Generation 240: fitness average 264.167 deviation 136.597 max 1030
+Generation 241: fitness average 261.033 deviation 124.988 max 1030
+Generation 242: fitness average 239.567 deviation 129.647 max 1030
+Generation 243: fitness average 256.533 deviation 134.173 max 1030
+Generation 244: fitness average 234.767 deviation 130.42 max 1030
+Generation 245: fitness average 233.667 deviation 118.885 max 1030
+Generation 246: fitness average 239.1 deviation 115.71 max 1030
+Generation 247: fitness average 247.3 deviation 135.087 max 1030
+Generation 248: fitness average 227.433 deviation 130.514 max 1030
+Generation 249: fitness average 237.1 deviation 130.272 max 1030
+Generation 250: fitness average 246.833 deviation 110.959 max 1030
+Generation 251: fitness average 242.3 deviation 124.181 max 1030
+Generation 252: fitness average 248.5 deviation 129.339 max 1030
+Generation 253: fitness average 250.767 deviation 106.531 max 1030
+Generation 254: fitness average 257.533 deviation 120.936 max 1030
+Generation 255: fitness average 245 deviation 127.214 max 1030
+Generation 256: fitness average 230.267 deviation 117.317 max 1030
+Generation 257: fitness average 258.967 deviation 122.242 max 1030
+Generation 258: fitness average 252.933 deviation 122.228 max 1030
+Generation 259: fitness average 268.567 deviation 102.451 max 1030
+Generation 260: fitness average 249.667 deviation 105.231 max 1030
+Generation 261: fitness average 251.5 deviation 119.955 max 1030
+Generation 262: fitness average 252.1 deviation 125.951 max 1030
+Generation 263: fitness average 238.933 deviation 117.861 max 1030
+Generation 264: fitness average 258.867 deviation 127.63 max 1030
+Generation 265: fitness average 265.7 deviation 125.592 max 1030
+Generation 266: fitness average 256.733 deviation 123.4 max 1030
+Generation 267: fitness average 257.4 deviation 120.276 max 1030
+Generation 268: fitness average 259.7 deviation 105.72 max 1030
+Generation 269: fitness average 245.533 deviation 118.003 max 1030
+Generation 270: fitness average 247.933 deviation 125.574 max 1030
+Generation 271: fitness average 264.267 deviation 132.224 max 1030
+Generation 272: fitness average 252.3 deviation 112.395 max 1030
+Generation 273: fitness average 261.333 deviation 109.024 max 1030
+Generation 274: fitness average 244.7 deviation 127.78 max 1030
+Generation 275: fitness average 275.033 deviation 126.551 max 1030
+Generation 276: fitness average 250.167 deviation 117.674 max 1030
+Generation 277: fitness average 236.967 deviation 121.75 max 1030
+Generation 278: fitness average 258.567 deviation 116.999 max 1030
+Generation 279: fitness average 250.6 deviation 120.078 max 1030
+Generation 280: fitness average 241.7 deviation 119.071 max 1030
+Generation 281: fitness average 243.767 deviation 116.57 max 1030
+Generation 282: fitness average 232.067 deviation 117.92 max 1030
+Generation 283: fitness average 236.367 deviation 117.182 max 1030
+Generation 284: fitness average 256.633 deviation 121.602 max 1030
+Generation 285: fitness average 254.433 deviation 125.583 max 1030
+Generation 286: fitness average 259.267 deviation 116.58 max 1030
+Generation 287: fitness average 262.667 deviation 105.933 max 1030
+Generation 288: fitness average 266.667 deviation 126.753 max 1030
+Generation 289: fitness average 261.167 deviation 119.062 max 1030
+Generation 290: fitness average 250.2 deviation 130.184 max 1030
+Generation 291: fitness average 265 deviation 120.128 max 1030
+Generation 292: fitness average 267.567 deviation 107.508 max 1030
+Generation 293: fitness average 258.567 deviation 116.858 max 1030
+Generation 294: fitness average 256.467 deviation 135.331 max 1030
+Generation 295: fitness average 261.967 deviation 117.139 max 1030
+Generation 296: fitness average 271.767 deviation 142.828 max 1030
+Generation 297: fitness average 250.6 deviation 118.954 max 1030
+Generation 298: fitness average 265.533 deviation 121.117 max 1030
+Generation 299: fitness average 254.867 deviation 113.839 max 1030
+Generation 300: fitness average 258.9 deviation 131.331 max 1030
 
 ALE
 Input rom file name: Space Invaders.bin
@@ -640,4 +790,454 @@ Generation 149: fitness average 271.1 max 1030
 Generation 150
 Generation 150: fitness average 239.767 max 1030
 6 generations since last population fitness record: 1030
-Elapsed time: 798091
+Generation 151
+Generation 151: fitness average 249.3 max 1030
+7 generations since last population fitness record: 1030
+Generation 152
+Generation 152: fitness average 238.1 max 1030
+8 generations since last population fitness record: 1030
+Generation 153
+Generation 153: fitness average 238.933 max 1030
+9 generations since last population fitness record: 1030
+Generation 154
+Generation 154: fitness average 257.2 max 1030
+10 generations since last population fitness record: 1030
+Generation 155
+Generation 155: fitness average 235.767 max 1030
+11 generations since last population fitness record: 1030
+Generation 156
+Generation 156: fitness average 249.833 max 1030
+12 generations since last population fitness record: 1030
+Generation 157
+Generation 157: fitness average 234.967 max 1030
+13 generations since last population fitness record: 1030
+Generation 158
+Generation 158: fitness average 248.133 max 1030
+14 generations since last population fitness record: 1030
+Generation 159
+Generation 159: fitness average 236.467 max 1030
+15 generations since last population fitness record: 1030
+Generation 160
+Generation 160: fitness average 262.867 max 1030
+16 generations since last population fitness record: 1030
+Generation 161
+Generation 161: fitness average 245.6 max 1030
+17 generations since last population fitness record: 1030
+Generation 162
+Generation 162: fitness average 247.467 max 1030
+18 generations since last population fitness record: 1030
+Generation 163
+Generation 163: fitness average 253.833 max 1030
+19 generations since last population fitness record: 1030
+Generation 164
+Generation 164: fitness average 248.6 max 1030
+20 generations since last population fitness record: 1030
+Generation 165
+Generation 165: fitness average 237.4 max 1030
+21 generations since last population fitness record: 1030
+Generation 166
+Generation 166: fitness average 251.667 max 1030
+22 generations since last population fitness record: 1030
+Generation 167
+Generation 167: fitness average 254.633 max 1030
+23 generations since last population fitness record: 1030
+Generation 168
+Generation 168: fitness average 257.033 max 1030
+24 generations since last population fitness record: 1030
+Generation 169
+Generation 169: fitness average 253.233 max 1030
+25 generations since last population fitness record: 1030
+Generation 170
+Generation 170: fitness average 246.933 max 1030
+26 generations since last population fitness record: 1030
+Generation 171
+Generation 171: fitness average 258.3 max 1030
+27 generations since last population fitness record: 1030
+Generation 172
+Generation 172: fitness average 258.433 max 1030
+28 generations since last population fitness record: 1030
+Generation 173
+Generation 173: fitness average 245.433 max 1030
+29 generations since last population fitness record: 1030
+Generation 174
+Generation 174: fitness average 247.333 max 1030
+30 generations since last population fitness record: 1030
+Generation 175
+Generation 175: fitness average 265.167 max 1030
+31 generations since last population fitness record: 1030
+Generation 176
+Generation 176: fitness average 264.167 max 1030
+32 generations since last population fitness record: 1030
+Generation 177
+Generation 177: fitness average 264.467 max 1030
+33 generations since last population fitness record: 1030
+Generation 178
+Generation 178: fitness average 261.6 max 1030
+34 generations since last population fitness record: 1030
+Generation 179
+Generation 179: fitness average 249.4 max 1030
+35 generations since last population fitness record: 1030
+Generation 180
+Generation 180: fitness average 248.467 max 1030
+36 generations since last population fitness record: 1030
+Generation 181
+Generation 181: fitness average 253.9 max 1030
+37 generations since last population fitness record: 1030
+Generation 182
+Generation 182: fitness average 247.9 max 1030
+38 generations since last population fitness record: 1030
+Generation 183
+Generation 183: fitness average 245.367 max 1030
+39 generations since last population fitness record: 1030
+Generation 184
+Generation 184: fitness average 245.733 max 1030
+40 generations since last population fitness record: 1030
+Generation 185
+Generation 185: fitness average 258.067 max 1030
+41 generations since last population fitness record: 1030
+Generation 186
+Generation 186: fitness average 250.267 max 1030
+42 generations since last population fitness record: 1030
+Generation 187
+Generation 187: fitness average 272.533 max 1030
+43 generations since last population fitness record: 1030
+Generation 188
+Generation 188: fitness average 253.733 max 1030
+44 generations since last population fitness record: 1030
+Generation 189
+Generation 189: fitness average 244.567 max 1030
+45 generations since last population fitness record: 1030
+Generation 190
+Generation 190: fitness average 252.4 max 1030
+46 generations since last population fitness record: 1030
+Generation 191
+Generation 191: fitness average 244.233 max 1030
+47 generations since last population fitness record: 1030
+Generation 192
+Generation 192: fitness average 272.167 max 1030
+48 generations since last population fitness record: 1030
+Generation 193
+Generation 193: fitness average 249.667 max 1030
+49 generations since last population fitness record: 1030
+Generation 194
+Generation 194: fitness average 261.333 max 1030
+50 generations since last population fitness record: 1030
+Generation 195
+Generation 195: fitness average 251.9 max 1030
+51 generations since last population fitness record: 1030
+Generation 196
+Generation 196: fitness average 262.533 max 1030
+52 generations since last population fitness record: 1030
+Generation 197
+Generation 197: fitness average 247.5 max 1030
+53 generations since last population fitness record: 1030
+Generation 198
+Generation 198: fitness average 242.633 max 1030
+54 generations since last population fitness record: 1030
+Generation 199
+Generation 199: fitness average 249.2 max 1030
+55 generations since last population fitness record: 1030
+Generation 200
+Generation 200: fitness average 271.733 max 1030
+56 generations since last population fitness record: 1030
+Generation 201
+Generation 201: fitness average 243.4 max 1030
+57 generations since last population fitness record: 1030
+Generation 202
+Generation 202: fitness average 236.9 max 1030
+58 generations since last population fitness record: 1030
+Generation 203
+Generation 203: fitness average 230.733 max 1030
+59 generations since last population fitness record: 1030
+Generation 204
+Generation 204: fitness average 247.867 max 1030
+60 generations since last population fitness record: 1030
+Generation 205
+Generation 205: fitness average 250.9 max 1030
+61 generations since last population fitness record: 1030
+Generation 206
+Generation 206: fitness average 254.4 max 1030
+62 generations since last population fitness record: 1030
+Generation 207
+Generation 207: fitness average 242.767 max 1030
+63 generations since last population fitness record: 1030
+Generation 208
+Generation 208: fitness average 248.633 max 1030
+64 generations since last population fitness record: 1030
+Generation 209
+Generation 209: fitness average 246.633 max 1030
+65 generations since last population fitness record: 1030
+Generation 210
+Generation 210: fitness average 259.333 max 1030
+66 generations since last population fitness record: 1030
+Generation 211
+Generation 211: fitness average 239.067 max 1030
+67 generations since last population fitness record: 1030
+Generation 212
+Generation 212: fitness average 254.4 max 1030
+68 generations since last population fitness record: 1030
+Generation 213
+Generation 213: fitness average 252.633 max 1030
+69 generations since last population fitness record: 1030
+Generation 214
+Generation 214: fitness average 237.667 max 1030
+70 generations since last population fitness record: 1030
+Generation 215
+Generation 215: fitness average 241.3 max 1030
+71 generations since last population fitness record: 1030
+Generation 216
+Generation 216: fitness average 249 max 1030
+72 generations since last population fitness record: 1030
+Generation 217
+Generation 217: fitness average 242.833 max 1030
+73 generations since last population fitness record: 1030
+Generation 218
+Generation 218: fitness average 244 max 1030
+74 generations since last population fitness record: 1030
+Generation 219
+Generation 219: fitness average 249.833 max 1030
+75 generations since last population fitness record: 1030
+Generation 220
+Generation 220: fitness average 261.8 max 1030
+76 generations since last population fitness record: 1030
+Generation 221
+Generation 221: fitness average 255.4 max 1030
+77 generations since last population fitness record: 1030
+Generation 222
+Generation 222: fitness average 240.367 max 1030
+78 generations since last population fitness record: 1030
+Generation 223
+Generation 223: fitness average 259.6 max 1030
+79 generations since last population fitness record: 1030
+Generation 224
+Generation 224: fitness average 256.133 max 1030
+80 generations since last population fitness record: 1030
+Generation 225
+Generation 225: fitness average 238.9 max 1030
+81 generations since last population fitness record: 1030
+Generation 226
+Generation 226: fitness average 253.433 max 1030
+82 generations since last population fitness record: 1030
+Generation 227
+Generation 227: fitness average 258.367 max 1030
+83 generations since last population fitness record: 1030
+Generation 228
+Generation 228: fitness average 247.8 max 1030
+84 generations since last population fitness record: 1030
+Generation 229
+Generation 229: fitness average 236.733 max 1030
+85 generations since last population fitness record: 1030
+Generation 230
+Generation 230: fitness average 238.767 max 1030
+86 generations since last population fitness record: 1030
+Generation 231
+Generation 231: fitness average 237.3 max 1030
+87 generations since last population fitness record: 1030
+Generation 232
+Generation 232: fitness average 235.233 max 1030
+88 generations since last population fitness record: 1030
+Generation 233
+Generation 233: fitness average 240.033 max 1030
+89 generations since last population fitness record: 1030
+Generation 234
+Generation 234: fitness average 262.067 max 1030
+90 generations since last population fitness record: 1030
+Generation 235
+Generation 235: fitness average 254.367 max 1030
+91 generations since last population fitness record: 1030
+Generation 236
+Generation 236: fitness average 262 max 1030
+92 generations since last population fitness record: 1030
+Generation 237
+Generation 237: fitness average 250.2 max 1030
+93 generations since last population fitness record: 1030
+Generation 238
+Generation 238: fitness average 244.067 max 1030
+94 generations since last population fitness record: 1030
+Generation 239
+Generation 239: fitness average 245.633 max 1030
+95 generations since last population fitness record: 1030
+Generation 240
+Generation 240: fitness average 264.167 max 1030
+96 generations since last population fitness record: 1030
+Generation 241
+Generation 241: fitness average 261.033 max 1030
+97 generations since last population fitness record: 1030
+Generation 242
+Generation 242: fitness average 239.567 max 1030
+98 generations since last population fitness record: 1030
+Generation 243
+Generation 243: fitness average 256.533 max 1030
+99 generations since last population fitness record: 1030
+Generation 244
+Generation 244: fitness average 234.767 max 1030
+100 generations since last population fitness record: 1030
+Generation 245
+Generation 245: fitness average 233.667 max 1030
+101 generations since last population fitness record: 1030
+Generation 246
+Generation 246: fitness average 239.1 max 1030
+102 generations since last population fitness record: 1030
+Generation 247
+Generation 247: fitness average 247.3 max 1030
+103 generations since last population fitness record: 1030
+Generation 248
+Generation 248: fitness average 227.433 max 1030
+104 generations since last population fitness record: 1030
+Generation 249
+Generation 249: fitness average 237.1 max 1030
+105 generations since last population fitness record: 1030
+Generation 250
+Generation 250: fitness average 246.833 max 1030
+106 generations since last population fitness record: 1030
+Generation 251
+Generation 251: fitness average 242.3 max 1030
+107 generations since last population fitness record: 1030
+Generation 252
+Generation 252: fitness average 248.5 max 1030
+108 generations since last population fitness record: 1030
+Generation 253
+Generation 253: fitness average 250.767 max 1030
+109 generations since last population fitness record: 1030
+Generation 254
+Generation 254: fitness average 257.533 max 1030
+110 generations since last population fitness record: 1030
+Generation 255
+Generation 255: fitness average 245 max 1030
+111 generations since last population fitness record: 1030
+Generation 256
+Generation 256: fitness average 230.267 max 1030
+112 generations since last population fitness record: 1030
+Generation 257
+Generation 257: fitness average 258.967 max 1030
+113 generations since last population fitness record: 1030
+Generation 258
+Generation 258: fitness average 252.933 max 1030
+114 generations since last population fitness record: 1030
+Generation 259
+Generation 259: fitness average 268.567 max 1030
+115 generations since last population fitness record: 1030
+Generation 260
+Generation 260: fitness average 249.667 max 1030
+116 generations since last population fitness record: 1030
+Generation 261
+Generation 261: fitness average 251.5 max 1030
+117 generations since last population fitness record: 1030
+Generation 262
+Generation 262: fitness average 252.1 max 1030
+118 generations since last population fitness record: 1030
+Generation 263
+Generation 263: fitness average 238.933 max 1030
+119 generations since last population fitness record: 1030
+Generation 264
+Generation 264: fitness average 258.867 max 1030
+120 generations since last population fitness record: 1030
+Generation 265
+Generation 265: fitness average 265.7 max 1030
+121 generations since last population fitness record: 1030
+Generation 266
+Generation 266: fitness average 256.733 max 1030
+122 generations since last population fitness record: 1030
+Generation 267
+Generation 267: fitness average 257.4 max 1030
+123 generations since last population fitness record: 1030
+Generation 268
+Generation 268: fitness average 259.7 max 1030
+124 generations since last population fitness record: 1030
+Generation 269
+Generation 269: fitness average 245.533 max 1030
+125 generations since last population fitness record: 1030
+Generation 270
+Generation 270: fitness average 247.933 max 1030
+126 generations since last population fitness record: 1030
+Generation 271
+Generation 271: fitness average 264.267 max 1030
+127 generations since last population fitness record: 1030
+Generation 272
+Generation 272: fitness average 252.3 max 1030
+128 generations since last population fitness record: 1030
+Generation 273
+Generation 273: fitness average 261.333 max 1030
+129 generations since last population fitness record: 1030
+Generation 274
+Generation 274: fitness average 244.7 max 1030
+130 generations since last population fitness record: 1030
+Generation 275
+Generation 275: fitness average 275.033 max 1030
+131 generations since last population fitness record: 1030
+Generation 276
+Generation 276: fitness average 250.167 max 1030
+132 generations since last population fitness record: 1030
+Generation 277
+Generation 277: fitness average 236.967 max 1030
+133 generations since last population fitness record: 1030
+Generation 278
+Generation 278: fitness average 258.567 max 1030
+134 generations since last population fitness record: 1030
+Generation 279
+Generation 279: fitness average 250.6 max 1030
+135 generations since last population fitness record: 1030
+Generation 280
+Generation 280: fitness average 241.7 max 1030
+136 generations since last population fitness record: 1030
+Generation 281
+Generation 281: fitness average 243.767 max 1030
+137 generations since last population fitness record: 1030
+Generation 282
+Generation 282: fitness average 232.067 max 1030
+138 generations since last population fitness record: 1030
+Generation 283
+Generation 283: fitness average 236.367 max 1030
+139 generations since last population fitness record: 1030
+Generation 284
+Generation 284: fitness average 256.633 max 1030
+140 generations since last population fitness record: 1030
+Generation 285
+Generation 285: fitness average 254.433 max 1030
+141 generations since last population fitness record: 1030
+Generation 286
+Generation 286: fitness average 259.267 max 1030
+142 generations since last population fitness record: 1030
+Generation 287
+Generation 287: fitness average 262.667 max 1030
+143 generations since last population fitness record: 1030
+Generation 288
+Generation 288: fitness average 266.667 max 1030
+144 generations since last population fitness record: 1030
+Generation 289
+Generation 289: fitness average 261.167 max 1030
+145 generations since last population fitness record: 1030
+Generation 290
+Generation 290: fitness average 250.2 max 1030
+146 generations since last population fitness record: 1030
+Generation 291
+Generation 291: fitness average 265 max 1030
+147 generations since last population fitness record: 1030
+Generation 292
+Generation 292: fitness average 267.567 max 1030
+148 generations since last population fitness record: 1030
+Generation 293
+Generation 293: fitness average 258.567 max 1030
+149 generations since last population fitness record: 1030
+Generation 294
+Generation 294: fitness average 256.467 max 1030
+150 generations since last population fitness record: 1030
+Generation 295
+Generation 295: fitness average 261.967 max 1030
+151 generations since last population fitness record: 1030
+Generation 296
+Generation 296: fitness average 271.767 max 1030
+152 generations since last population fitness record: 1030
+Generation 297
+Generation 297: fitness average 250.6 max 1030
+153 generations since last population fitness record: 1030
+Generation 298
+Generation 298: fitness average 265.533 max 1030
+154 generations since last population fitness record: 1030
+Generation 299
+Generation 299: fitness average 254.867 max 1030
+155 generations since last population fitness record: 1030
+Generation 300
+Generation 300: fitness average 258.9 max 1030
+156 generations since last population fitness record: 1030
+Elapsed time: 1633377
